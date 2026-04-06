@@ -259,6 +259,45 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .match-fill{height:100%;border-radius:7px}
 .match-fill.mn{background:var(--gr)}.match-fill.mc{background:var(--tc)}
 @media(min-width:901px){.ppip-i-new{width:56px;height:56px;font-size:26px}.ppip-n-new{font-size:10px}.ppip-l-new{font-size:13px}.spill-new{padding:13px 0}.sps-new{font-size:15px}.spt-new{font-size:14px}.bstart-new{font-size:18px;padding:19px 32px}.cv-btn-new{font-size:15px;padding:15px 32px}}
+/* ── Pathway Explorer panel ── */
+.path-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:none;border:1.5px solid var(--sand);border-radius:50px;padding:7px 16px;font-size:13px;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;font-weight:500}
+.path-btn:hover{border-color:var(--gr);color:var(--gr)}
+.path-btn:disabled{opacity:.4;cursor:not-allowed}
+.path-panel{margin-top:10px;background:linear-gradient(135deg,#F8F5F0,#EFF7F2);border:1.5px solid var(--sand);border-radius:13px;padding:16px 18px;display:none}
+.path-panel.open{display:block}
+.path-loading{text-align:center;padding:16px 0;font-size:13px;color:var(--lt);font-style:italic}
+.path-section{margin-bottom:13px}
+.path-section:last-child{margin-bottom:0}
+.path-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lt);margin-bottom:6px}
+.path-body{font-size:14px;color:var(--mid);line-height:1.65}
+.path-item{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--mid);line-height:1.55;margin-bottom:5px}
+.path-num{width:18px;height:18px;border-radius:50%;background:var(--gr);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.path-tag{display:inline-block;font-size:11px;background:var(--warm);border:1px solid var(--sand);color:var(--mid);padding:3px 9px;border-radius:20px;margin:2px 3px 2px 0}
+/* ── Resonance check ── */
+.resonance-wrap{margin-top:14px;padding-top:12px;border-top:1px solid var(--sand)}
+.resonance-q{font-size:13px;font-weight:600;color:var(--ch);margin-bottom:10px}
+.resonance-opts{display:flex;flex-direction:column;gap:6px}
+.resonance-opt{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--sand);border-radius:10px;padding:9px 13px;cursor:pointer;font-size:13px;color:var(--ch);font-family:'DM Sans',sans-serif;transition:all .15s;text-align:left;width:100%}
+.resonance-opt:hover{border-color:var(--tcl);background:#FEF8F4}
+.resonance-opt.sel-pos{border-color:var(--gr);background:#EFF7F2;color:var(--gr)}
+.resonance-opt.sel-neu{border-color:var(--bl);background:var(--bll);color:var(--bl)}
+.resonance-opt.sel-neg{border-color:var(--tc);background:#FEF3EC;color:var(--tc)}
+.resonance-ack{font-size:13px;color:var(--mid);font-style:italic;padding:8px 0;line-height:1.5}
+/* ── Rejection follow-up ── */
+.reject-wrap{margin-top:12px;padding:14px;background:#FEF3EC;border:1.5px solid #F5DDB8;border-radius:10px}
+.reject-q{font-size:13px;font-weight:600;color:var(--ch);margin-bottom:10px}
+.reject-opts{display:grid;gap:6px}
+.reject-opt{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--sand);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:13px;color:var(--ch);font-family:'DM Sans',sans-serif;transition:all .15s;text-align:left;width:100%}
+.reject-opt:hover{border-color:var(--tc);background:#FEF8F4}
+.reject-opt.sel{border-color:var(--tc);background:#FEF3EC}
+/* ── Reframe card ── */
+.reframe-wrap{margin-top:12px;background:linear-gradient(135deg,#EFF7F2,#F8F5F0);border:1.5px solid #C8DECE;border-radius:12px;padding:14px 16px}
+.reframe-lbl{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gr);margin-bottom:8px}
+.reframe-title{font-family:'Fraunces',serif;font-size:17px;font-weight:400;color:var(--ch);margin-bottom:4px}
+.reframe-desc{font-size:13px;color:var(--mid);line-height:1.55;margin-bottom:6px}
+.reframe-why{font-size:12px;color:var(--gr);font-style:italic;margin-bottom:10px;line-height:1.5}
+.reframe-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:1.5px solid var(--gr);border-radius:50px;padding:7px 14px;font-size:12px;color:var(--gr);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.reframe-btn:hover{background:var(--gr);color:#fff}
 .cv-fork{display:grid;gap:9px;margin-bottom:16px}
 .cv-fork-opt{background:var(--warm);border:2px solid var(--sand);border-radius:13px;padding:14px 15px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;position:relative}
 .cv-fork-opt:hover{border-color:var(--tcl);background:#FEF8F4}
@@ -341,6 +380,8 @@ var P1=[
   {id:'name',ph:'p1',type:'text',lbl:"Let's begin",q:"What&rsquo;s your first name?",hint:"We&rsquo;ll use it throughout &mdash; this is your journey.",pl:'Type your name here\u2026'},
   {id:'age',ph:'p1',type:'opts',cols:2,lbl:'About you',q:'How old are you?',
    os:[{v:'15_17',e:'&#x1F392;',l:'15&ndash;17',d:'Still at school'},{v:'18_20',e:'&#x1F331;',l:'18&ndash;20',d:'Just finished or figuring it out'},{v:'21_25',e:'&#x1F680;',l:'21&ndash;25',d:'Early days of work or study'}]},
+  {id:'schoolYear',ph:'p1',type:'opts',cols:2,lbl:'Where you\'re at',q:'What year are you in at school?',showIf:function(){return A.age==='15_17';},
+   os:[{v:'yr9',e:'&#x1F4DA;',l:'Year 9 or below',d:'Still figuring out my subjects'},{v:'yr10',e:'&#x1F3AF;',l:'Year 10',d:'Thinking about subject selection soon'},{v:'yr11',e:'&#x1F4D6;',l:'Year 11',d:'In VCE / HSC / QCE now'},{v:'yr12',e:'&#x1F3C1;',l:'Year 12',d:'Finishing up this year'},{v:'finished',e:'&#x2705;',l:'Just finished school',d:'Completed Year 12 recently'},{v:'other',e:'&#x1F500;',l:'Not at school \/ it\'s complicated',d:'Different path'}]},
   {id:'study',ph:'p1',type:'multi',cols:1,lbl:'Right now',q:'What are you doing at the moment?',
    os:[{v:'highschool',e:'&#x1F392;',l:'High school',d:'VCE, VCE VM, VCAL or similar'},{v:'tafe',e:'&#x1F527;',l:'TAFE or vocational training',d:'Certificate, diploma or trade'},{v:'uni',e:'&#x1F4DA;',l:'University',d:'Degree or diploma'},{v:'working',e:'&#x1F4BC;',l:'I already have a job',d:'Part-time, casual or full-time'},{v:'gap',e:'&#x1F30F;',l:'Gap year or taking a break',d:'Travelling or time out'},{v:'none',e:'&#x1F50D;',l:'Not studying or working yet',d:'Looking for my next step'}]},
   {id:'goal',ph:'p1',type:'path',lbl:'Your goal',q:'What do you want help with today?',hint:'You can pick more than one.'},
@@ -489,7 +530,7 @@ function buildQL(enjoys,challenge,noticed,age,subjects,place){
   var list=p1WithIps.concat(P2A).concat([visionQ]).concat(P2B).concat(branchList).concat(P3).concat([DRAIN_Q]);
   FC_PAIRS.forEach(function(fc){list.push(fc);});
   list.push(QUIT_Q);
-  return list;
+  return list.filter(function(q){return !q.showIf||q.showIf();});
 }
 
 // ── STATE ──
@@ -738,6 +779,7 @@ function buildSys(isPT){
   }
   return 'You are a warm, empathetic career advisor for young Australians 15-25. Call them Explorers. Philosophy: Honest Hope - realistic AND genuinely encouraging.\n\n'+
     'PROFILE: sensitive='+isSensitive+' commercial='+isCommercial+' creative='+isCreative+' academic='+isAcademic+' simple='+sim+' needsSupport='+needsSupport+'\n\n'+
+    'SCHOOL YEAR: '+(A.schoolYear||'unknown')+'. Adapt pathway steps accordingly: yr9/yr10=subject choices and exploration; yr11=current study direction; yr12/finished=immediate post-school entry steps; other/unknown=treat as post-school.\n\n'+
     'AVERSION: drain='+(A.drain||'?')+' fc1='+(A.fc1||'?')+' fc2='+(A.fc2||'?')+' fc3='+(A.fc3||'?')+' fc4='+(A.fc4||'?')+' fc5='+(A.fc5||'?')+' fc6='+(A.fc6||'?')+' quit='+(A.quit||'?')+'\n\n'+
     'IPSATIVE interest scores: '+JSON.stringify(scoreIpsative(A))+'\n\n'+
     'ENVIRONMENT RULES - match role CHARACTERISTICS:\n'+
@@ -1048,6 +1090,8 @@ function jcard(job,rank,typ,cardId){
     (job.thisWeek?'<div class="thiswk"><strong>This week:</strong> '+job.thisWeek+'</div>':'')+
     '<button class="occ-btn" id="occBtn'+cid+'" onclick="exploreRole(\''+job.title.replace(/'/g,'\\\'')+'\'  ,\''+cid+'\',\''+(A&&A.name||'')+'\'  )">&#x1F50D; Tell me more about this role</button>'+
     '<div class="occ-panel" id="occPanel'+cid+'"></div>'+
+    '<button class="path-btn" id="pathBtn'+cid+'" onclick="explorePath(\''+job.title.replace(/'/g,'\\\'')+'\'  ,\''+cid+'\')">&#x1F393; How do I get there from where I am?</button>'+
+    '<div class="path-panel" id="pathPanel'+cid+'"></div>'+
     '</div>';
 }
 
@@ -1391,6 +1435,163 @@ function exportCVPDF(){
   .catch(function(){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}window.print();});
 }
 
+
+// ── PATHWAY EXPLORER ──
+function getPathwayHeading(sy){
+  var heads={yr9:'Subjects and steps — starting from Year 9',yr10:'Subjects to choose — from Year 10',yr11:'Your path from Year 11',yr12:'What to do when you finish Year 12',finished:'Getting into this career right now',other:'Getting into this career from where you are'};
+  return heads[sy]||heads['other'];
+}
+function explorePath(jobTitle,cardId){
+  var btn=g('pathBtn'+cardId);var panel=g('pathPanel'+cardId);
+  if(!panel)return;
+  if(panel.classList.contains('open')){
+    panel.classList.remove('open');
+    if(btn)btn.innerHTML='&#x1F393; How do I get there from where I am?';
+    return;
+  }
+  panel.classList.add('open');
+  if(btn){btn.disabled=true;btn.innerHTML='Loading pathway\u2026';}
+  if(panel.dataset.loaded==='1'){if(btn){btn.disabled=false;btn.innerHTML='&#x2715; Close pathway';}return;}
+  var sy=A.schoolYear||'other';
+  var heading=getPathwayHeading(sy);
+  panel.innerHTML='<div class="path-loading">Building your pathway for '+jobTitle+'\u2026</div>';
+  var syLabel={yr9:'Year 9',yr10:'Year 10',yr11:'Year 11',yr12:'Year 12',finished:'just finished school',other:'not currently in mainstream school'};
+  var schemaByYear={
+    yr9:'{"heading":"'+heading+'","subjects":["subject1","subject2","subject3"],"dontDrop":["subject1"],"doNow":["action1","action2","action3"],"timeline":"1 honest sentence about how long this path typically takes from Year 9"}',
+    yr10:'{"heading":"'+heading+'","subjects":["subject1","subject2","subject3"],"dontDrop":["subject1"],"doNow":["action1","action2","action3"],"timeline":"1 honest sentence about how long this path typically takes from Year 10"}',
+    yr11:'{"heading":"'+heading+'","studyConnection":"1-2 sentences on how current study connects to this career","entryOptions":["list whichever apply: University, TAFE, Apprenticeship, Direct entry"],"uniPath":"1 sentence on relevant study area if university applies — omit if not","tafePath":"1 sentence on certificate or diploma path if not university","doThisYear":["action1","action2"]}',
+    yr12:'{"heading":"'+heading+'","entryOptions":["list whichever apply: University, TAFE, Apprenticeship, Direct entry"],"fastestPath":"1 sentence on the clearest recommended starting point","nextThreeMonths":["action1 with real Australian resource","action2","action3"],"rolNotes":"1 sentence on recognition of prior learning only if directly relevant — otherwise empty string"}',
+    finished:'{"heading":"'+heading+'","entryOptions":["list whichever apply: University, TAFE, Apprenticeship, Direct entry"],"fastestPath":"1 sentence on the clearest recommended starting point","nextThreeMonths":["action1 with real Australian resource","action2","action3"],"rolNotes":"1 sentence on recognition of prior learning only if directly relevant — otherwise empty string"}',
+    other:'{"heading":"'+heading+'","noYear12":["pathway1","pathway2"],"tafeOptions":"1 sentence on certificate level entry options","directEntry":"1 sentence on direct entry possibilities if any","doThisWeek":"one specific action naming a real Australian website or organisation"}'
+  };
+  var schema=schemaByYear[sy]||schemaByYear['other'];
+  var sysMsg='You are a warm, practical Australian career advisor.\nExplorer is interested in: '+jobTitle+'.\nSchool year: '+syLabel[sy]+'.\nProfile: name='+(A.name||'Explorer')+' noticed='+(A.noticed||'unknown')+' challenge='+(A.challenge||'moderate')+' subjects='+JSON.stringify(A.subjects||[])+' branch='+(A.branch||'unknown')+'.\nGenerate a personalised pathway guide. Use generic Australian subject names — not state-specific (e.g. "Maths" not "Mathematical Methods"). Reference real Australian pathways — TAFE, apprenticeships, university, direct entry. Be warm, honest and specific. No false promises.\nReturn ONLY valid JSON, zero markdown:\n'+schema;
+  fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:sysMsg,messages:[{role:'user',content:'Explorer wants to get into: '+jobTitle+'. School year: '+sy+'. Build their personalised pathway.'}]})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var raw=d.content.map(function(b){return b.text||'';}).join('').replace(/```json\s*/g,'').replace(/```/g,'').trim();
+    var info=JSON.parse(raw);
+    var html='<div style="font-family:\'Fraunces\',serif;font-size:16px;font-weight:400;color:var(--ch);margin-bottom:14px;line-height:1.3">'+(info.heading||heading)+'</div>';
+    if(sy==='yr9'||sy==='yr10'){
+      if(info.subjects&&info.subjects.length){html+='<div class="path-section"><div class="path-label">Subjects that help</div><div>'+info.subjects.map(function(s){return '<span class="path-tag">'+s+'</span>';}).join('')+'</div></div>';}
+      if(info.dontDrop&&info.dontDrop.length){html+='<div class="path-section"><div class="path-label">Don\'t drop these</div><div>'+info.dontDrop.map(function(s){return '<span class="path-tag" style="border-color:var(--tc);color:var(--tc)">'+s+'</span>';}).join('')+'</div></div>';}
+      if(info.doNow&&info.doNow.length){html+='<div class="path-section"><div class="path-label">Things to do now</div>';info.doNow.forEach(function(a,i){html+='<div class="path-item"><span class="path-num">'+(i+1)+'</span><span>'+a+'</span></div>';});html+='</div>';}
+      if(info.timeline)html+='<div class="path-section"><div class="path-label">Honest timeline</div><div class="path-body">'+info.timeline+'</div></div>';
+    } else if(sy==='yr11'){
+      if(info.studyConnection)html+='<div class="path-section"><div class="path-label">How your current study connects</div><div class="path-body">'+info.studyConnection+'</div></div>';
+      if(info.entryOptions&&info.entryOptions.length){html+='<div class="path-section"><div class="path-label">Your entry options after school</div><div>'+info.entryOptions.map(function(o){return '<span class="path-tag">'+o+'</span>';}).join('')+'</div></div>';}
+      if(info.uniPath)html+='<div class="path-section"><div class="path-label">University pathway</div><div class="path-body">'+info.uniPath+'</div></div>';
+      if(info.tafePath)html+='<div class="path-section"><div class="path-label">TAFE / apprenticeship pathway</div><div class="path-body">'+info.tafePath+'</div></div>';
+      if(info.doThisYear&&info.doThisYear.length){html+='<div class="path-section"><div class="path-label">Do this year</div>';info.doThisYear.forEach(function(a,i){html+='<div class="path-item"><span class="path-num">'+(i+1)+'</span><span>'+a+'</span></div>';});html+='</div>';}
+    } else if(sy==='yr12'||sy==='finished'){
+      if(info.entryOptions&&info.entryOptions.length){html+='<div class="path-section"><div class="path-label">Your entry options right now</div><div>'+info.entryOptions.map(function(o){return '<span class="path-tag">'+o+'</span>';}).join('')+'</div></div>';}
+      if(info.fastestPath)html+='<div class="path-section"><div class="path-label">Fastest path in</div><div class="path-body">'+info.fastestPath+'</div></div>';
+      if(info.nextThreeMonths&&info.nextThreeMonths.length){html+='<div class="path-section"><div class="path-label">Next 3 months</div>';info.nextThreeMonths.forEach(function(a,i){html+='<div class="path-item"><span class="path-num">'+(i+1)+'</span><span>'+a+'</span></div>';});html+='</div>';}
+      if(info.rolNotes)html+='<div class="path-section"><div class="path-label">Recognition of prior learning</div><div class="path-body">'+info.rolNotes+'</div></div>';
+    } else {
+      if(info.noYear12&&info.noYear12.length){html+='<div class="path-section"><div class="path-label">Pathways without Year 12</div><div>'+info.noYear12.map(function(o){return '<span class="path-tag">'+o+'</span>';}).join('')+'</div></div>';}
+      if(info.tafeOptions)html+='<div class="path-section"><div class="path-label">TAFE and study options</div><div class="path-body">'+info.tafeOptions+'</div></div>';
+      if(info.directEntry)html+='<div class="path-section"><div class="path-label">Direct entry</div><div class="path-body">'+info.directEntry+'</div></div>';
+      if(info.doThisWeek)html+='<div class="path-section"><div class="path-label">Do this week</div><div class="path-body">'+info.doThisWeek+'</div></div>';
+    }
+    /* Resonance check — cards 1 and 2 only (cardId ends in 0 or 1 for now/career) */
+    var cardNum=parseInt((cardId||'').replace(/[^0-9]/g,'').slice(-1),10);
+    if(cardNum===0||cardNum===1){
+      var safeTitleR=jobTitle.replace(/\\/g,'\\\\').replace(/'/g,'\\\'');
+      html+='<div class="resonance-wrap" id="resWrap'+cardId+'">'+
+        '<div class="resonance-q">Does this direction feel right for you?</div>'+
+        '<div class="resonance-opts">'+
+        '<button class="resonance-opt" id="resPos'+cardId+'" onclick="resSelect(\'pos\',\''+cardId+'\',\''+safeTitleR+'\')">&#x2705; Yes \u2014 I could see myself doing this</button>'+
+        '<button class="resonance-opt" id="resNeu'+cardId+'" onclick="resSelect(\'neu\',\''+cardId+'\',\''+safeTitleR+'\')">&#x1F914; Not sure yet \u2014 I need to think</button>'+
+        '<button class="resonance-opt" id="resNeg'+cardId+'" onclick="resSelect(\'neg\',\''+cardId+'\',\''+safeTitleR+'\')">&#x274C; Not really \u2014 this doesn\'t feel like me</button>'+
+        '</div><div id="resFollow'+cardId+'"></div></div>';
+    }
+    panel.innerHTML=html;
+    panel.dataset.loaded='1';
+    if(btn){btn.disabled=false;btn.innerHTML='&#x2715; Close pathway';}
+  })
+  .catch(function(){
+    panel.innerHTML='<div class="path-loading">Couldn\'t load the pathway right now \u2014 try again.</div>';
+    if(btn){btn.disabled=false;btn.innerHTML='&#x1F393; How do I get there from where I am?';}
+  });
+}
+
+// ── RESONANCE CHECK ──
+function resSelect(val,cardId,jobTitle){
+  if(!A.rejections)A.rejections=[];
+  ['resPos','resNeu','resNeg'].forEach(function(pfx){var b=g(pfx+cardId);if(b)b.className='resonance-opt';});
+  var follow=g('resFollow'+cardId);
+  if(val==='pos'){
+    var b=g('resPos'+cardId);if(b)b.classList.add('sel-pos');
+    if(follow)follow.innerHTML='<div class="resonance-ack">Great \u2014 keep that feeling in mind as you explore further.</div>';
+  } else if(val==='neu'){
+    var b=g('resNeu'+cardId);if(b)b.classList.add('sel-neu');
+    if(follow)follow.innerHTML='<div class="resonance-ack">That\'s completely fine. Sit with it \u2014 sometimes things grow on you, sometimes they don\'t.</div>';
+  } else if(val==='neg'){
+    var b=g('resNeg'+cardId);if(b)b.classList.add('sel-neg');
+    if(follow)follow.innerHTML=
+      '<div class="reject-wrap">'+
+      '<div class="reject-q">Good to know \u2014 that actually helps us. What put you off?</div>'+
+      '<div class="reject-opts" id="rejectOpts'+cardId+'">'+
+      '<button class="reject-opt" data-v="subjects" onclick="rejectToggle(this,\'subjects\',\''+cardId+'\',\''+jobTitle.replace(/'/g,'\\\'')+'\')" >&#x1F4DA; The subjects required don\'t appeal to me</button>'+
+      '<button class="reject-opt" data-v="daytoday" onclick="rejectToggle(this,\'daytoday\',\''+cardId+'\',\''+jobTitle.replace(/'/g,'\\\'')+'\')" >&#x1F4BC; The day-to-day work doesn\'t sound right</button>'+
+      '<button class="reject-opt" data-v="timeline" onclick="rejectToggle(this,\'timeline\',\''+cardId+'\',\''+jobTitle.replace(/'/g,'\\\'')+'\')" >&#x23F3; It feels too long or too hard to get into</button>'+
+      '<button class="reject-opt" data-v="enjoyment" onclick="rejectToggle(this,\'enjoyment\',\''+cardId+'\',\''+jobTitle.replace(/'/g,'\\\'')+'\')" >&#x1F615; I don\'t think I\'d enjoy it</button>'+
+      '<button class="reject-opt" data-v="other" onclick="rejectToggle(this,\'other\',\''+cardId+'\',\''+jobTitle.replace(/'/g,'\\\'')+'\')" >&#x1F937; Something else</button>'+
+      '</div><div id="rejectResult'+cardId+'"></div></div>';
+  }
+}
+
+var _rejectTimers={};
+function rejectToggle(btn,reason,cardId,jobTitle){
+  btn.classList.toggle('sel');
+  clearTimeout(_rejectTimers[cardId]);
+  _rejectTimers[cardId]=setTimeout(function(){
+    var opts=document.getElementById('rejectOpts'+cardId);
+    if(!opts)return;
+    var selected=[];
+    opts.querySelectorAll('.reject-opt.sel').forEach(function(b){selected.push(b.dataset.v);});
+    if(!selected.length)return;
+    if(!A.rejections)A.rejections=[];
+    A.rejections.push({role:jobTitle,reasons:selected});
+    getReframe(jobTitle,selected,cardId);
+  },800);
+}
+
+function getReframe(jobTitle,reasons,cardId){
+  var resultEl=g('rejectResult'+cardId);
+  if(!resultEl)return;
+  resultEl.innerHTML='<div class="path-loading" style="padding:10px 0">Finding an alternative for you\u2026</div>';
+  var shownRoles=[];
+  if(RS){(RS.nowJobs||[]).concat(RS.careerJobs||[]).forEach(function(j){shownRoles.push(j.title);});}
+  var rejectedRoles=(A.rejections||[]).map(function(r){return r.role;});
+  var reasonLabels={subjects:'the subjects required',daytoday:'the day-to-day work',timeline:'the time or difficulty to enter',enjoyment:'not enjoying the work',other:'general misfit'};
+  var reasonText=reasons.map(function(r){return reasonLabels[r]||r;}).join(' and ');
+  var sysMsg='You are a warm Australian career advisor.\nExplorer rejected "'+jobTitle+'" because of: '+reasonText+'.\nProfile: name='+(A.name||'Explorer')+' noticed='+(A.noticed||'')+' branch='+(A.branch||'')+' challenge='+(A.challenge||'moderate')+' values='+JSON.stringify(A.values||[])+'.\nRoles already shown: '+shownRoles.join(', ')+'.\nRoles already rejected: '+rejectedRoles.join(', ')+'.\nSuggest ONE genuinely different alternative — do NOT reframe the rejected role, do NOT suggest anything already shown or rejected. The alternative must directly address their rejection reason and fit their broader profile.\nReturn ONLY valid JSON, zero markdown:\n{"title":"role name","desc":"2 sentences about the role","whyInstead":"1 sentence referencing their specific rejection reason and something from their profile"}';
+  fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:sysMsg,messages:[{role:'user',content:'Suggest one alternative to '+jobTitle+' for an Explorer who disliked it because of '+reasonText+'.'}]})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var raw=d.content.map(function(b){return b.text||'';}).join('').replace(/```json\s*/g,'').replace(/```/g,'').trim();
+    var info=JSON.parse(raw);
+    var altId='alt_'+cardId+'_'+Date.now();
+    resultEl.innerHTML=
+      '<div class="reframe-wrap">'+
+      '<div class="reframe-lbl">Based on what you\'ve told us, you might also consider:</div>'+
+      '<div class="reframe-title">'+info.title+'</div>'+
+      '<div class="reframe-desc">'+info.desc+'</div>'+
+      '<div class="reframe-why">'+info.whyInstead+'</div>'+
+      '<button class="reframe-btn" id="occBtn'+altId+'" onclick="exploreRole(\''+info.title.replace(/'/g,'\\\'')+'\'  ,\''+altId+'\',\''+(A.name||'')+'\')">&#x1F50D; Tell me more about this role</button>'+
+      '<div class="occ-panel" id="occPanel'+altId+'"></div>'+
+      '</div>';
+  })
+  .catch(function(){
+    resultEl.innerHTML='<div class="resonance-ack">Noted \u2014 your other matches might be a better fit.</div>';
+  });
+}
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
 
