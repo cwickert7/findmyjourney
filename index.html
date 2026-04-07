@@ -1171,14 +1171,16 @@ function jcard(job,rank,typ,cardId){
       if(entryNums.length&&expNums.length){
         var eMin=Math.min.apply(null,entryNums);
         var eMax=Math.max.apply(null,expNums);
-        var AVG=65,SCALE_MIN=30,SCALE_MAX=150,SPAN=SCALE_MAX-SCALE_MIN;
+        /* Scale in full dollar values: $30,000 to $150,000 */
+        var AVG=65000,SCALE_MIN=30000,SCALE_MAX=150000,SPAN=SCALE_MAX-SCALE_MIN;
         var toPct=function(v){return Math.max(1,Math.min(99,(v-SCALE_MIN)/SPAN*100));};
         var leftPct=toPct(eMin);
         var widthPct=Math.max(3,toPct(eMax)-leftPct);
         var avgPct=toPct(AVG);
         var fmtK=function(v){return '$'+v.toLocaleString('en-AU');};
         var caption=fmtK(eMin)+' to '+fmtK(eMax);
-        var ticks=[{v:40,lbl:'$40k'},{v:100,lbl:'$100k'},{v:150,lbl:'$150k'}];
+        /* Tick marks — values in full dollars to match scale */
+        var ticks=[{v:40000,lbl:'$40k'},{v:100000,lbl:'$100k'},{v:150000,lbl:'$150k'}];
         var tickHTML='';
         ticks.forEach(function(t){
           var pct=toPct(t.v);
