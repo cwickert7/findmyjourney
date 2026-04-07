@@ -862,7 +862,7 @@ function buildSys(isPT){
       (isSensitive?'SENSITIVE: ONLY calm, supportive, low-pressure roles. Never loud worksites, competitive environments.\n':'')+
       'Return ONLY valid JSON:\n'+
       '{"encouragement":"2 warm sentences.","summary":"1 sentence with their name.","nowJobs":[2 job objects],"tips":["tip1","tip2"]}\n'+
-      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"e.g. $22 - $26/hr or $45,000 - $52,000","salaryExperienced":"e.g. $28 - $32/hr or $55,000 - $62,000","outlook":"growing|stable|declining"}\n'+
+      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"for casual/PT use hourly e.g. $22 - $26/hr, for salaried use annual e.g. $45,000 - $52,000","salaryExperienced":"for casual/PT use hourly e.g. $26 - $32/hr, for salaried use annual e.g. $55,000 - $65,000","outlook":"growing|stable|declining"}\n'+
       'Include nowJobs only (2 jobs). No careerJobs.';
   }
   return 'You are a warm, empathetic career advisor for young Australians 15-25. Call them Explorers. Philosophy: Honest Hope - realistic AND genuinely encouraging.\n\n'+
@@ -1150,37 +1150,52 @@ function jcard(job,rank,typ,cardId){
     /* Salary bar — map range onto $30k–$150k spectrum */
     if(job.salaryEntry&&job.salaryExperienced){
       /* Parse ALL numbers from both range strings, take lowest and highest */
-      var allNums=function(s){var r=[];var m;var re=/\$?([\d,]+)/g;while((m=re.exec(s))!==null){r.push(parseInt(m[1].replace(/,/g,''),10));}return r;};
-      var entryNums=allNums(job.salaryEntry);
-      var expNums=allNums(job.salaryExperienced);
-      var eMin=entryNums.length?Math.min.apply(null,entryNums):0;
-      var eMax=expNums.length?Math.max.apply(null,expNums):0;
-      var AVG=65,SCALE_MIN=30,SCALE_MAX=150,SPAN=SCALE_MAX-SCALE_MIN;
-      var toPct=function(v){return Math.max(1,Math.min(99,(v-SCALE_MIN)/SPAN*100));};
-      var leftPct=toPct(eMin);
-      var widthPct=Math.max(3,toPct(eMax)-leftPct);
-      var avgPct=toPct(AVG);
-      /* Format caption as $55,000 to $85,000 */
-      var fmtK=function(v){return '$'+v.toLocaleString('en-AU');};
-      var caption=fmtK(eMin)+' to '+fmtK(eMax);
-      /* Scale markers at $40k, $65k (avg), $100k, $150k */
-      var ticks=[{v:40,lbl:'$40k'},{v:100,lbl:'$100k'},{v:150,lbl:'$150k'}];
-      var tickHTML='';
-      ticks.forEach(function(t){
-        var pct=toPct(t.v);
-        tickHTML+='<div class="sal-tick" style="left:'+pct+'%"></div>';
-        tickHTML+='<span class="sal-tick-lbl" style="left:'+pct+'%">'+t.lbl+'</span>';
-      });
-      salHTML+='<div class="sal-bar-section">';
-      salHTML+='<div class="sal-bar-hdr"><span class="sal-bar-lbl">Pay range</span><span class="sal-bar-range">'+caption+'</span></div>';
-      salHTML+='<div class="sal-bar-outer">';
-      salHTML+=tickHTML;
-      salHTML+='<div class="sal-bar-fill" style="left:'+leftPct+'%;width:'+widthPct+'%"></div>';
-      salHTML+='<div class="sal-avg-mk" style="left:'+avgPct+'%"></div>';
-      salHTML+='</div>';
-      salHTML+='<div class="sal-bar-ends"><span>'+fmtK(eMin)+' entry</span><span>'+fmtK(eMax)+' experienced</span></div>';
-      salHTML+='<div class="sal-note">Indicative estimates \u2014 Australian market.</div>';
-      salHTML+='</div>';
+      /* Parse salary numbers — returns empty array if hourly (skip bar, keep display string) */
+      var parseSalary=function(s){
+        var r=[];
+        /* If hourly rate — skip bar entirely, display string shown as-is in stat row */
+        if(/\/h(ou)?r/i.test(s))return r;
+        /* Match $45,000 style — digits with commas */
+        var m1=s.match(/\$([\d]{1,3}(?:,[\d]{3})+)/g);
+        if(m1)m1.forEach(function(v){r.push(parseInt(v.replace(/[$,]/g,''),10));});
+        /* Match $45k style */
+        var m2=s.match(/\$([\d]+)k/gi);
+        if(m2)m2.forEach(function(v){r.push(parseInt(v.replace(/[$k]/gi,''),10)*1000);});
+        /* Match plain numbers over 1000 if nothing else found */
+        if(!r.length){var m3=s.match(/[\d]{4,6}/g);if(m3)m3.forEach(function(v){r.push(parseInt(v,10));});}
+        return r;
+      };
+      var entryNums=parseSalary(job.salaryEntry);
+      var expNums=parseSalary(job.salaryExperienced);
+      /* Only render bar if both are annual figures — if either is hourly, entryNums/expNums will be empty */
+      if(entryNums.length&&expNums.length){
+        var eMin=Math.min.apply(null,entryNums);
+        var eMax=Math.max.apply(null,expNums);
+        var AVG=65,SCALE_MIN=30,SCALE_MAX=150,SPAN=SCALE_MAX-SCALE_MIN;
+        var toPct=function(v){return Math.max(1,Math.min(99,(v-SCALE_MIN)/SPAN*100));};
+        var leftPct=toPct(eMin);
+        var widthPct=Math.max(3,toPct(eMax)-leftPct);
+        var avgPct=toPct(AVG);
+        var fmtK=function(v){return '$'+v.toLocaleString('en-AU');};
+        var caption=fmtK(eMin)+' to '+fmtK(eMax);
+        var ticks=[{v:40,lbl:'$40k'},{v:100,lbl:'$100k'},{v:150,lbl:'$150k'}];
+        var tickHTML='';
+        ticks.forEach(function(t){
+          var pct=toPct(t.v);
+          tickHTML+='<div class="sal-tick" style="left:'+pct+'%"></div>';
+          tickHTML+='<span class="sal-tick-lbl" style="left:'+pct+'%">'+t.lbl+'</span>';
+        });
+        salHTML+='<div class="sal-bar-section">';
+        salHTML+='<div class="sal-bar-hdr"><span class="sal-bar-lbl">Pay range</span><span class="sal-bar-range">'+caption+'</span></div>';
+        salHTML+='<div class="sal-bar-outer">';
+        salHTML+=tickHTML;
+        salHTML+='<div class="sal-bar-fill" style="left:'+leftPct+'%;width:'+widthPct+'%"></div>';
+        salHTML+='<div class="sal-avg-mk" style="left:'+avgPct+'%"></div>';
+        salHTML+='</div>';
+        salHTML+='<div class="sal-bar-ends"><span>'+fmtK(eMin)+' entry</span><span>'+fmtK(eMax)+' exp.</span></div>';
+        salHTML+='<div class="sal-note">Indicative estimates \u2014 Australian market.</div>';
+        salHTML+='</div>';
+      }
     }
   }
   /* Match bar */
