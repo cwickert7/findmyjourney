@@ -1149,19 +1149,36 @@ function jcard(job,rank,typ,cardId){
     salHTML+='</div>';
     /* Salary bar — map range onto $30k–$150k spectrum */
     if(job.salaryEntry&&job.salaryExperienced){
-      var parseK=function(s){var m=s.match(/\$?([\d,]+)/);return m?parseInt(m[1].replace(/,/g,''),10):0;};
-      var eMin=parseK(job.salaryEntry),eMax=parseK(job.salaryExperienced);
+      /* Parse ALL numbers from both range strings, take lowest and highest */
+      var allNums=function(s){var r=[];var m;var re=/\$?([\d,]+)/g;while((m=re.exec(s))!==null){r.push(parseInt(m[1].replace(/,/g,''),10));}return r;};
+      var entryNums=allNums(job.salaryEntry);
+      var expNums=allNums(job.salaryExperienced);
+      var eMin=entryNums.length?Math.min.apply(null,entryNums):0;
+      var eMax=expNums.length?Math.max.apply(null,expNums):0;
       var AVG=65,SCALE_MIN=30,SCALE_MAX=150,SPAN=SCALE_MAX-SCALE_MIN;
-      var leftPct=Math.max(0,Math.min(95,(eMin-SCALE_MIN)/SPAN*100));
-      var widthPct=Math.max(5,Math.min(95-leftPct,(eMax-eMin)/SPAN*100));
-      var avgPct=Math.max(2,Math.min(97,(AVG-SCALE_MIN)/SPAN*100));
+      var toPct=function(v){return Math.max(1,Math.min(99,(v-SCALE_MIN)/SPAN*100));};
+      var leftPct=toPct(eMin);
+      var widthPct=Math.max(3,toPct(eMax)-leftPct);
+      var avgPct=toPct(AVG);
+      /* Format caption as $55,000 to $85,000 */
+      var fmtK=function(v){return '$'+v.toLocaleString('en-AU');};
+      var caption=fmtK(eMin)+' to '+fmtK(eMax);
+      /* Scale markers at $40k, $65k (avg), $100k, $150k */
+      var ticks=[{v:40,lbl:'$40k'},{v:100,lbl:'$100k'},{v:150,lbl:'$150k'}];
+      var tickHTML='';
+      ticks.forEach(function(t){
+        var pct=toPct(t.v);
+        tickHTML+='<div class="sal-tick" style="left:'+pct+'%"></div>';
+        tickHTML+='<span class="sal-tick-lbl" style="left:'+pct+'%">'+t.lbl+'</span>';
+      });
       salHTML+='<div class="sal-bar-section">';
-      salHTML+='<div class="sal-bar-hdr"><span class="sal-bar-lbl">Pay range</span><span class="sal-bar-range">'+job.salaryEntry+' \u2014 '+job.salaryExperienced+'</span></div>';
+      salHTML+='<div class="sal-bar-hdr"><span class="sal-bar-lbl">Pay range</span><span class="sal-bar-range">'+caption+'</span></div>';
       salHTML+='<div class="sal-bar-outer">';
+      salHTML+=tickHTML;
       salHTML+='<div class="sal-bar-fill" style="left:'+leftPct+'%;width:'+widthPct+'%"></div>';
       salHTML+='<div class="sal-avg-mk" style="left:'+avgPct+'%"></div>';
       salHTML+='</div>';
-      salHTML+='<div class="sal-bar-ends"><span>'+job.salaryEntry+' entry</span><span>'+job.salaryExperienced+' exp.</span></div>';
+      salHTML+='<div class="sal-bar-ends"><span>'+fmtK(eMin)+' entry</span><span>'+fmtK(eMax)+' experienced</span></div>';
       salHTML+='<div class="sal-note">Indicative estimates \u2014 Australian market.</div>';
       salHTML+='</div>';
     }
@@ -1462,30 +1479,26 @@ function genCV(){
 }
 
 function buildCVHTML(data,tpl){
-  var nm=data.name||'Your Name';
-  var role=data.role||'';
-  var loc=data.location||'';
-  var contact=data.contact||'';
-  var about=data.about||'';
+  var nm=escHTML(data.name||'Your Name');
+  var role=escHTML(data.role||'');
+  var loc=escHTML(data.location||'');
+  var contact=escHTML(data.contact||'');
+  var about=escHTML(data.about||'');
   var exp=data.experience||[];
   var edu=data.education||[];
   var skills=data.skills||[];
-  var proud=data.proud||'';
-  var isGrad=(tpl===3);
-  var isSchool=(tpl===2);
 
   if(tpl===1){
-    /* Template 1 — Junior: dark header */
     var h='<div class="cv-t1">';
     h+='<div class="cv-t1-hdr">';
-    h+='<div class="cv-t1-name">'+escHTML(nm)+'</div>';
-    if(role)h+='<div class="cv-t1-role">'+escHTML(role)+'</div>';
+    h+='<div class="cv-t1-name">'+nm+'</div>';
+    if(role)h+='<div class="cv-t1-role">'+role+'</div>';
     h+='<div class="cv-t1-contact">';
-    if(loc)h+=escHTML(loc)+'<br>';
-    if(contact)h+=escHTML(contact);
+    if(loc)h+=loc+'<br>';
+    if(contact)h+=contact;
     h+='</div></div>';
     h+='<div class="cv-t1-body">';
-    if(about){h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">About me</div><div class="cv-t1-body-text">'+escHTML(about)+'</div></div>';}
+    if(about)h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">About me</div><div class="cv-t1-body-text">'+about+'</div></div>';
     if(skills.length){
       h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Key skills</div><div class="cv-t1-skill-grid">';
       skills.forEach(function(s){h+='<div class="cv-t1-skill">'+escHTML(s)+'</div>';});
@@ -1494,9 +1507,10 @@ function buildCVHTML(data,tpl){
     if(exp.length){
       h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Experience</div>';
       exp.forEach(function(e){
-        h+='<div class="cv-t1-entry"><div class="cv-t1-entry-top"><div class="cv-t1-entry-ttl">'+escHTML(e.title||'')+'</div><div class="cv-t1-entry-date">'+escHTML(e.date||'')+'</div></div>';
+        h+='<div class="cv-t1-entry">';
+        h+='<div class="cv-t1-entry-top"><div class="cv-t1-entry-ttl">'+escHTML(e.title||'')+'</div><div class="cv-t1-entry-date">'+escHTML(e.date||'')+'</div></div>';
         if(e.org)h+='<div class="cv-t1-entry-org">'+escHTML(e.org)+'</div>';
-        if(e.body)h+='<div class="cv-t1-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
+        if(e.body&&e.body.length)h+='<div class="cv-t1-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
         h+='</div>';
       });
       h+='</div>';
@@ -1504,7 +1518,10 @@ function buildCVHTML(data,tpl){
     if(edu.length){
       h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Education</div>';
       edu.forEach(function(e){
-        h+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:14px;font-weight:600;color:#2c2422">'+escHTML(e.qual||'')+'</div><div style="font-size:12px;color:#6b6058">'+escHTML(e.inst||'')+'</div></div><div style="font-size:11px;color:#9a8e84;flex-shrink:0;margin-left:8px;margin-top:2px">'+escHTML(e.date||'')+'</div></div>';
+        h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">';
+        h+='<div><div style="font-size:14px;font-weight:600;color:#2c2422">'+escHTML(e.qual||'')+'</div>';
+        h+='<div style="font-size:12px;color:#6b6058">'+escHTML(e.inst||'')+'</div></div>';
+        h+='<div style="font-size:11px;color:#9a8e84;flex-shrink:0;padding-left:8px;padding-top:2px">'+escHTML(e.date||'')+'</div></div>';
       });
       h+='</div>';
     }
@@ -1516,85 +1533,101 @@ function buildCVHTML(data,tpl){
   }
 
   if(tpl===2){
-    /* Template 2 — School leaver: green header, 2-col */
+    /* Template 2 — table layout for reliable two-column rendering */
     var h='<div class="cv-t2">';
     h+='<div class="cv-t2-hdr">';
-    h+='<div class="cv-t2-name">'+escHTML(nm)+'</div>';
-    if(role)h+='<div class="cv-t2-tagline">'+escHTML(role)+'</div>';
+    h+='<div class="cv-t2-name">'+nm+'</div>';
+    if(role)h+='<div class="cv-t2-tagline">'+role+'</div>';
     h+='<div class="cv-t2-contact">';
-    if(loc)h+=escHTML(loc)+'<br>';
-    if(contact)h+=escHTML(contact);
+    if(loc)h+=loc+'<br>';
+    if(contact)h+=contact;
     h+='</div></div>';
-    h+='<div class="cv-t2-cols">';
-    h+='<div class="cv-t2-sidebar">';
+    h+='<table style="width:100%;border-collapse:collapse;table-layout:fixed"><colgroup><col style="width:138px"><col></colgroup><tr style="vertical-align:top">';
+    /* Sidebar cell */
+    h+='<td style="padding:18px 14px 18px 18px;border-right:1px solid #E8DFD0;vertical-align:top">';
     if(skills.length){
-      h+='<div style="margin-bottom:18px"><div class="cv-t2-sec-ttl">Skills</div><ul class="cv-t2-skill-list">';
-      skills.forEach(function(s){h+='<li>'+escHTML(s)+'</li>';});
+      h+='<div style="margin-bottom:18px"><div class="cv-t2-sec-ttl">Skills</div><ul style="list-style:none;padding:0;margin:0">';
+      skills.forEach(function(s){
+        h+='<li style="font-size:12px;color:#4a4240;padding:4px 0;border-bottom:1px solid #ede5d8;display:flex;align-items:center;gap:5px">';
+        h+='<span style="width:5px;height:5px;min-width:5px;border-radius:50%;background:#3d6b4f;display:inline-block"></span>'+escHTML(s)+'</li>';
+      });
       h+='</ul></div>';
     }
     if(edu.length){
-      h+='<div><div class="cv-t2-sec-ttl">Education</div>';
+      h+='<div class="cv-t2-sec-ttl">Education</div>';
       edu.forEach(function(e){
-        h+='<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:600;color:#4a4240">'+escHTML(e.qual||'')+'</div>';
-        if(e.inst)h+='<div style="font-size:12px;color:#3d6b4f;font-weight:500">'+escHTML(e.inst)+'</div>';
-        if(e.date)h+='<div style="font-size:11px;color:#9a8e84">'+escHTML(e.date)+'</div></div>';
+        h+='<div style="margin-bottom:12px">';
+        h+='<div style="font-size:12px;font-weight:600;color:#4a4240;line-height:1.4">'+escHTML(e.qual||'')+'</div>';
+        if(e.inst)h+='<div style="font-size:11px;color:#3d6b4f;font-weight:500">'+escHTML(e.inst)+'</div>';
+        if(e.date)h+='<div style="font-size:10px;color:#9a8e84">'+escHTML(e.date)+'</div>';
+        h+='</div>';
       });
-      h+='</div>';
     }
-    h+='</div>';
-    h+='<div class="cv-t2-main">';
-    if(about){h+='<div class="cv-t2-sec"><div class="cv-t2-sec-ttl">About me</div><div class="cv-t2-about">'+escHTML(about)+'</div></div>';}
+    h+='</td>';
+    /* Main content cell */
+    h+='<td style="padding:18px 20px;vertical-align:top">';
+    if(about)h+='<div style="margin-bottom:16px"><div class="cv-t2-sec-ttl">About me</div><div style="font-size:13px;color:#4a4240;line-height:1.65">'+about+'</div></div>';
     if(exp.length){
-      h+='<div class="cv-t2-sec"><div class="cv-t2-sec-ttl">Experience</div>';
+      h+='<div><div class="cv-t2-sec-ttl">Experience</div>';
       exp.forEach(function(e){
-        h+='<div style="margin-bottom:14px"><div class="cv-t2-entry-ttl">'+escHTML(e.title||'')+'</div>';
-        if(e.org)h+='<div class="cv-t2-entry-org">'+escHTML(e.org)+'</div>';
-        if(e.date)h+='<div class="cv-t2-entry-date">'+escHTML(e.date)+'</div>';
-        if(e.body)h+='<div class="cv-t2-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
+        h+='<div style="margin-bottom:14px">';
+        h+='<div style="font-size:13px;font-weight:600;color:#2c2422">'+escHTML(e.title||'')+'</div>';
+        if(e.org)h+='<div style="font-size:11px;color:#3d6b4f;font-weight:500">'+escHTML(e.org)+'</div>';
+        if(e.date)h+='<div style="font-size:10px;color:#9a8e84;margin-bottom:4px">'+escHTML(e.date)+'</div>';
+        if(e.body&&e.body.length)h+='<ul style="font-size:12px;color:#6b6058;line-height:1.6;padding-left:14px">'+e.body.map(function(b){return '<li style="margin-bottom:2px">'+escHTML(b)+'</li>';}).join('')+'</ul>';
         h+='</div>';
       });
       h+='</div>';
     }
-    h+='<div class="cv-t2-ref">References available upon request.</div>';
-    h+='</div></div>';
+    h+='<div style="font-size:11px;color:#9a8e84;font-style:italic;margin-top:6px">References available upon request.</div>';
+    h+='</td></tr></table>';
     h+='<div class="cv-t2-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
     h+='</div>';
     return h;
   }
 
-  /* Template 3 — Graduate: editorial */
+  /* Template 3 — Graduate: table-based header and entries */
   var h='<div class="cv-t3">';
-  h+='<div class="cv-t3-hdr">';
-  h+='<div><div class="cv-t3-name">'+escHTML(nm)+'</div>';
-  if(role)h+='<div class="cv-t3-title">'+escHTML(role)+'</div></div>';
-  h+='<div class="cv-t3-contact">';
-  if(contact)h+=escHTML(contact).replace(/[,;]/g,'<br>');
-  if(loc)h+='<br>'+escHTML(loc);
-  h+='</div></div>';
+  /* Header — table for reliable left/right split */
+  h+='<div style="padding:28px 28px 20px;border-bottom:2.5px solid #2c2422">';
+  h+='<table style="width:100%;border-collapse:collapse"><tr style="vertical-align:bottom">';
+  h+='<td style="vertical-align:bottom">';
+  h+='<div class="cv-t3-name">'+nm+'</div>';
+  if(role)h+='<div class="cv-t3-title">'+role+'</div>';
+  h+='</td>';
+  h+='<td style="text-align:right;vertical-align:bottom;white-space:nowrap;padding-left:20px">';
+  h+='<div style="font-size:11px;color:#6b6058;line-height:1.9">';
+  if(contact)h+=contact;
+  if(loc)h+='<br>'+loc;
+  h+='</div></td></tr></table></div>';
   h+='<div class="cv-t3-body">';
-  if(about){h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Profile</div><div class="cv-t3-about">'+escHTML(about)+'</div></div>';}
+  if(about)h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Profile</div><div class="cv-t3-about">'+about+'</div></div>';
   if(exp.length){
     h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Experience</div>';
     exp.forEach(function(e){
-      h+='<div class="cv-t3-entry"><div class="cv-t3-meta"><span class="cv-t3-meta-date">'+escHTML(e.date||'')+'</span><span class="cv-t3-meta-place">'+escHTML(e.org||'')+'</span></div>';
-      h+='<div><div class="cv-t3-entry-ttl">'+escHTML(e.title||'')+'</div>';
-      if(e.body)h+='<div class="cv-t3-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
-      h+='</div></div>';
+      h+='<table style="width:100%;border-collapse:collapse;margin-bottom:14px"><tr style="vertical-align:top">';
+      h+='<td style="width:110px;padding-right:14px;vertical-align:top;font-size:11px;color:#9a8e84;line-height:1.6">';
+      h+='<strong style="color:#6b6058;display:block">'+escHTML(e.date||'')+'</strong>'+escHTML(e.org||'');
+      h+='</td><td style="vertical-align:top">';
+      h+='<div style="font-size:14px;font-weight:600;color:#2c2422;margin-bottom:5px">'+escHTML(e.title||'')+'</div>';
+      if(e.body&&e.body.length)h+='<ul style="font-size:12px;color:#6b6058;line-height:1.65;padding-left:14px">'+e.body.map(function(b){return '<li style="margin-bottom:3px">'+escHTML(b)+'</li>';}).join('')+'</ul>';
+      h+='</td></tr></table>';
     });
     h+='</div>';
   }
   if(edu.length){
     h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Education</div>';
     edu.forEach(function(e){
-      h+='<div class="cv-t3-entry"><div class="cv-t3-meta"><span class="cv-t3-meta-date">'+escHTML(e.date||'')+'</span></div>';
-      h+='<div><div class="cv-t3-entry-ttl">'+escHTML(e.qual||'')+'</div>';
+      h+='<table style="width:100%;border-collapse:collapse;margin-bottom:10px"><tr style="vertical-align:top">';
+      h+='<td style="width:110px;padding-right:14px;font-size:11px;color:#9a8e84;vertical-align:top">'+escHTML(e.date||'')+'</td>';
+      h+='<td><div style="font-size:14px;font-weight:600;color:#2c2422">'+escHTML(e.qual||'')+'</div>';
       if(e.inst)h+='<div style="font-size:12px;color:#6b6058;margin-top:2px">'+escHTML(e.inst)+'</div>';
-      h+='</div></div>';
+      h+='</td></tr></table>';
     });
     h+='</div>';
   }
   if(skills.length){
-    h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Skills</div><div class="cv-t3-skill-tags">';
+    h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Skills</div><div style="display:flex;flex-wrap:wrap;gap:5px">';
     skills.forEach(function(s){h+='<span class="cv-t3-skill-tag">'+escHTML(s)+'</span>';});
     h+='</div></div>';
   }
@@ -1678,13 +1711,63 @@ function copyCVText(){
 }
 
 function exportCVPDF(){
-  var btn=event.target;if(btn){btn.disabled=true;btn.textContent='Generating...';}
+  var btn=event.target;if(btn){btn.disabled=true;btn.innerHTML='Generating\u2026';}
   var name=CV.answers.cv_name||'Explorer';
-  var isJunior=window._cvIsJunior;
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><style>'+
-    'body{font-family:'+(isJunior?'Arial,sans-serif':'Georgia,serif')+';color:#2C2C2C;padding:28px 36px;max-width:720px;margin:0 auto;font-size:'+(isJunior?'12px':'11.5px')+';line-height:1.7}'+
-    'pre{white-space:pre-wrap;font-family:inherit;font-size:inherit;line-height:inherit}'+
-    '</style></head><body><pre>'+(window._cvText||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</pre></body></html>';
+  var tplEl=g('CVTPLOUT');
+  var cvHTML=tplEl?tplEl.innerHTML:'';
+  var tpl=window._cvTpl||1;
+  /* Choose fonts based on template */
+  var fontUrl='https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500&family=DM+Sans:wght@400;500;600&display=swap';
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8">'+
+    '<link href="'+fontUrl+'" rel="stylesheet">'+
+    '<style>'+
+    '*{box-sizing:border-box;margin:0;padding:0}'+
+    'body{font-family:\'DM Sans\',sans-serif;color:#2c2422;background:#fff;padding:0;margin:0}'+
+    /* Template 1 styles */
+    '.cv-t1{font-family:\'DM Sans\',sans-serif}'+
+    '.cv-t1-hdr{background:#2C2422;padding:24px 28px 20px;color:#fff}'+
+    '.cv-t1-name{font-family:\'Fraunces\',serif;font-size:24pt;font-weight:400;margin-bottom:4px}'+
+    '.cv-t1-role{font-size:9pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#C4714A;margin-bottom:10px}'+
+    '.cv-t1-contact{font-size:9pt;color:#b0a090;line-height:1.8}'+
+    '.cv-t1-body{padding:20px 28px}'+
+    '.cv-t1-sec{margin-bottom:18px;page-break-inside:avoid}'+
+    '.cv-t1-sec-ttl{font-size:7pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C4714A;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #f5ede2;page-break-after:avoid}'+
+    '.cv-t1-body-text{font-size:10pt;color:#4a4240;line-height:1.7}'+
+    '.cv-t1-skill-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}'+
+    '.cv-t1-skill{background:#faf7f2;border:1px solid #E8DFD0;border-radius:4px;padding:5px 8px;font-size:9pt;color:#4a4240;font-weight:500;text-align:center}'+
+    '.cv-t1-entry{margin-bottom:12px;page-break-inside:avoid}'+
+    '.cv-t1-entry-top{display:flex;justify-content:space-between;margin-bottom:2px}'+
+    '.cv-t1-entry-ttl{font-size:11pt;font-weight:600;color:#2c2422}'+
+    '.cv-t1-entry-date{font-size:9pt;color:#9a8e84}'+
+    '.cv-t1-entry-org{font-size:9pt;color:#C4714A;font-weight:500;margin-bottom:4px}'+
+    '.cv-t1-entry-body{font-size:9pt;color:#6b6058;line-height:1.6}'+
+    '.cv-t1-entry-body li{margin-left:12px;margin-bottom:2px}'+
+    '.cv-t1-ref{font-size:9pt;color:#9a8e84;font-style:italic}'+
+    '.cv-t1-watermark{text-align:right;padding:4px 28px 8px;font-size:7pt;color:#c8beb4}'+
+    /* Template 2 styles */
+    '.cv-t2{font-family:\'DM Sans\',sans-serif}'+
+    '.cv-t2-hdr{background:#3D6B4F;padding:20px 24px 16px;color:#fff}'+
+    '.cv-t2-name{font-family:\'Fraunces\',serif;font-size:22pt;font-weight:400;margin-bottom:3px}'+
+    '.cv-t2-tagline{font-size:9pt;color:#a8d4b8;font-style:italic;margin-bottom:8px}'+
+    '.cv-t2-contact{font-size:9pt;color:#c8e8d4;line-height:1.8}'+
+    '.cv-t2-sec-ttl{font-size:7pt;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#3D6B4F;margin-bottom:7px;padding-bottom:4px;border-bottom:2px solid #dff0e8;page-break-after:avoid}'+
+    '.cv-t2-watermark{text-align:right;padding:4px 20px 6px;font-size:7pt;color:#c8beb4}'+
+    /* Template 3 styles */
+    '.cv-t3{font-family:\'DM Sans\',sans-serif}'+
+    '.cv-t3-name{font-family:\'Fraunces\',serif;font-size:28pt;font-weight:400;color:#2c2422;letter-spacing:-.01em;line-height:1;margin-bottom:5px}'+
+    '.cv-t3-title{font-size:9pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#C4714A}'+
+    '.cv-t3-body{padding:20px 28px}'+
+    '.cv-t3-sec{margin-bottom:20px;page-break-inside:avoid}'+
+    '.cv-t3-sec-ttl{font-family:\'Fraunces\',serif;font-size:14pt;font-weight:400;color:#2c2422;margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid #E8DFD0;page-break-after:avoid}'+
+    '.cv-t3-about{font-size:10pt;color:#4a4240;line-height:1.75}'+
+    '.cv-t3-skill-tag{font-size:9pt;background:#faf7f2;border:1px solid #E8DFD0;color:#4a4240;padding:2px 7px;border-radius:10px;display:inline-block;margin:2px}'+
+    '.cv-t3-ref{font-size:9pt;color:#9a8e84;font-style:italic}'+
+    '.cv-t3-watermark{text-align:right;padding:4px 28px 8px;font-size:7pt;color:#c8beb4}'+
+    /* General */
+    'table{border-collapse:collapse}td{vertical-align:top}'+
+    'ul{padding-left:14px}li{margin-bottom:2px}'+
+    '@media print{body{margin:0;padding:0}}'+
+    '</style></head><body>'+cvHTML+'</body></html>';
   fetch('/api/pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({html:html,name:name+'-CV'})})
   .then(function(r){if(!r.ok)throw new Error('PDF failed');return r.blob();})
   .then(function(blob){
@@ -1963,8 +2046,50 @@ function parseCVText(text,answers){
 }
 
 function runLiam(){
-  /* Full Liam persona — coming in Stage 3 */
-  alert('Liam test persona — coming soon in next deploy.');
+  /* Liam — Year 12, caring/nature, sensitive, moderate challenge */
+  A={
+    name:'Liam',
+    age:'15_17',
+    schoolYear:'yr12',
+    study:['highschool'],
+    goal:'career',
+    place:['outdoors','care_place'],
+    subjects:['pe','trade'],
+    enjoys:['helping','nature','building'],
+    noticed:'caring',
+    challenge:'moderate',
+    ip1:'ip1a',ip2:'ip2b',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
+    ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+    _ipsIntroShown:true,
+    proud:'helped',
+    flow:'hands_f',
+    values:['meaning','secure'],
+    vision:'stable',
+    conscientious:'gets_done',
+    social:'onebyone',
+    group:'supporter',
+    learning:'doing',
+    grit:'pushes',
+    feedback:'sensitive',
+    supervision:'checkins',
+    noise:'low',
+    culture:'kind_team',
+    need:'kind_mgr',
+    drain:'people_d',
+    fc1:'fc1a',fc2:'fc2b',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+    quit:'unsupported',
+    branch:'caring',
+    wantsNow:true,
+    wantsCareer:true
+  };
+  PS={now:true,career:true};
+  IS_PT=false;
+  QL=buildQL(
+    ['helping','nature','building'],
+    'moderate','caring','15_17',
+    ['pe','trade'],['outdoors','care_place']
+  );
+  genR();
 }
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
