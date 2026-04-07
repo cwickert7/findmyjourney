@@ -321,6 +321,97 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-out-btn.primary{background:var(--gr);color:#fff;border-color:var(--gr)}
 .cv-out-btn.primary:hover{background:var(--grl)}
 .cv-disclaimer{font-size:11px;color:var(--lt);line-height:1.6;background:var(--warm);border:1px solid var(--sand);border-radius:8px;padding:9px 12px;margin-top:8px}
+
+/* ── Floating Continue button ── */
+.float-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:860px;z-index:100;pointer-events:none}
+.float-gradient{height:52px;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none}
+.float-bar{background:var(--cream);border-top:1px solid var(--sand);padding:10px 24px 16px;display:flex;align-items:center;gap:10px;pointer-events:all}
+.float-bar .bbk{background:none;border:none;font-size:14px;color:var(--lt);cursor:pointer;padding:10px 4px;font-family:'DM Sans',sans-serif;transition:color .2s;flex-shrink:0}
+.float-bar .bbk:hover{color:var(--mid)}
+.float-bar .bnx{flex:1;background:var(--tc);color:#fff;border:none;border-radius:50px;padding:15px 32px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;min-height:52px}
+.float-bar .bnx:disabled{background:var(--sand);color:var(--lt);cursor:not-allowed}
+.float-bar .bnx:not(:disabled):hover{background:var(--tcl)}
+/* Extra bottom padding on card so content isn't hidden behind float bar */
+.card-q-pad{padding-bottom:110px!important}
+
+/* ── CV Template system ── */
+.cv-tpl-switch{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+.cv-tpl-btn{flex:1;min-width:80px;background:var(--warm);border:1.5px solid var(--sand);border-radius:10px;padding:9px 10px;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all .2s}
+.cv-tpl-btn:hover{border-color:var(--tcl);color:var(--tc)}
+.cv-tpl-btn.active{border-color:var(--tc);background:#FEF3EC;color:var(--tc)}
+
+/* Template 1 — Junior (warm dark header) */
+.cv-t1{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--sand);margin-bottom:12px}
+.cv-t1-hdr{background:#2C2422;padding:24px 24px 20px;color:#fff}
+.cv-t1-name{font-family:'Fraunces',serif;font-size:24px;font-weight:400;margin-bottom:4px;letter-spacing:-.01em}
+.cv-t1-role{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:12px}
+.cv-t1-contact{font-size:11px;color:#b0a090;line-height:1.8}
+.cv-t1-body{padding:20px 24px}
+.cv-t1-sec{margin-bottom:20px}
+.cv-t1-sec:last-child{margin-bottom:0}
+.cv-t1-sec-ttl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid #f5ede2}
+.cv-t1-body-text{font-size:13px;color:#4a4240;line-height:1.7}
+.cv-t1-skill-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.cv-t1-skill{background:#faf7f2;border:1px solid var(--sand);border-radius:6px;padding:7px 10px;font-size:12px;color:#4a4240;font-weight:500;text-align:center}
+.cv-t1-entry{margin-bottom:14px}
+.cv-t1-entry-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.cv-t1-entry-ttl{font-size:14px;font-weight:600;color:#2c2422}
+.cv-t1-entry-date{font-size:11px;color:#9a8e84;flex-shrink:0;margin-left:8px}
+.cv-t1-entry-org{font-size:12px;color:var(--tc);font-weight:500;margin-bottom:5px}
+.cv-t1-entry-body{font-size:12px;color:#6b6058;line-height:1.6}
+.cv-t1-entry-body li{margin-left:14px;margin-bottom:2px}
+.cv-t1-ref{font-size:12px;color:#9a8e84;font-style:italic}
+.cv-t1-watermark{text-align:right;padding:6px 24px 10px;font-size:9px;color:#c8beb4;letter-spacing:.05em}
+
+/* Template 2 — School leaver (green header, 2-col) */
+.cv-t2{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--sand);margin-bottom:12px}
+.cv-t2-hdr{background:var(--gr);padding:22px 24px 18px;color:#fff}
+.cv-t2-name{font-family:'Fraunces',serif;font-size:22px;font-weight:400;margin-bottom:3px}
+.cv-t2-tagline{font-size:12px;color:#a8d4b8;font-style:italic;margin-bottom:10px}
+.cv-t2-contact{font-size:11px;color:#c8e8d4;line-height:1.8}
+.cv-t2-cols{display:grid;grid-template-columns:140px 1fr}
+.cv-t2-sidebar{background:#faf7f2;padding:18px 16px;border-right:1px solid var(--sand)}
+.cv-t2-main{padding:18px 20px}
+.cv-t2-sec-ttl{font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gr);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #dff0e8}
+.cv-t2-skill-list{list-style:none}
+.cv-t2-skill-list li{font-size:12px;color:#4a4240;padding:4px 0;border-bottom:1px solid #ede5d8;display:flex;align-items:center;gap:5px}
+.cv-t2-skill-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gr);flex-shrink:0}
+.cv-t2-skill-list li:last-child{border-bottom:none}
+.cv-t2-sec{margin-bottom:16px}
+.cv-t2-entry-ttl{font-size:13px;font-weight:600;color:#2c2422}
+.cv-t2-entry-org{font-size:11px;color:var(--gr);font-weight:500}
+.cv-t2-entry-date{font-size:10px;color:#9a8e84;margin-bottom:5px}
+.cv-t2-entry-body{font-size:12px;color:#6b6058;line-height:1.6}
+.cv-t2-entry-body li{margin-left:12px;margin-bottom:2px}
+.cv-t2-about{font-size:12px;color:#4a4240;line-height:1.65}
+.cv-t2-ref{font-size:11px;color:#9a8e84;font-style:italic;margin-top:6px}
+.cv-t2-watermark{text-align:right;padding:5px 20px 8px;font-size:9px;color:#c8beb4;letter-spacing:.05em}
+
+/* Template 3 — Graduate (editorial serif) */
+.cv-t3{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--sand);margin-bottom:12px}
+.cv-t3-hdr{padding:28px 28px 22px;border-bottom:2.5px solid #2c2422;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.cv-t3-name{font-family:'Fraunces',serif;font-size:30px;font-weight:400;color:#2c2422;letter-spacing:-.02em;line-height:1;margin-bottom:5px}
+.cv-t3-title{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tc)}
+.cv-t3-contact{text-align:right;font-size:11px;color:#6b6058;line-height:1.8;flex-shrink:0}
+.cv-t3-body{padding:22px 28px}
+.cv-t3-sec{margin-bottom:22px}
+.cv-t3-sec:last-child{margin-bottom:0}
+.cv-t3-sec-ttl{font-family:'Fraunces',serif;font-size:16px;font-weight:400;color:#2c2422;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--sand)}
+.cv-t3-about{font-size:13px;color:#4a4240;line-height:1.75}
+.cv-t3-entry{display:grid;grid-template-columns:110px 1fr;gap:0 16px;margin-bottom:14px}
+.cv-t3-meta{font-size:11px;color:#9a8e84;line-height:1.6;padding-top:2px}
+.cv-t3-meta-date{font-weight:600;color:#6b6058;display:block;margin-bottom:2px}
+.cv-t3-meta-place{display:block}
+.cv-t3-entry-ttl{font-size:14px;font-weight:600;color:#2c2422;margin-bottom:2px}
+.cv-t3-entry-org{font-size:12px;color:var(--tc);font-weight:500;margin-bottom:6px}
+.cv-t3-entry-body{font-size:12px;color:#6b6058;line-height:1.65}
+.cv-t3-entry-body li{margin-left:14px;margin-bottom:3px}
+.cv-t3-skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cv-t3-skill-cat-name{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9a8e84;margin-bottom:5px}
+.cv-t3-skill-tags{display:flex;flex-wrap:wrap;gap:4px}
+.cv-t3-skill-tag{font-size:11px;background:#faf7f2;border:1px solid var(--sand);color:#4a4240;padding:2px 8px;border-radius:20px;font-weight:500}
+.cv-t3-ref{font-size:12px;color:#9a8e84;font-style:italic}
+.cv-t3-watermark{text-align:right;padding:5px 28px 10px;font-size:9px;color:#c8beb4;letter-spacing:.05em}
 </style>
 </head>
 <body>
@@ -330,11 +421,19 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
   <p class="sub">Most career tools ask what you&rsquo;re qualified for. We ask who you are.</p>
 </header>
 <div class="wrap">
-  <div class="card">
+  <div class="card" id="CARD">
     <div class="plbl"><span id="PL">Welcome</span><span></span></div>
     <div class="ptrack"><div class="pfill" id="PF"></div></div>
     <div class="pstep" id="PS"></div>
     <div id="S"></div>
+  </div>
+</div>
+<!-- Floating Continue bar — shown during questions only -->
+<div class="float-bottom" id="FLOATBAR" style="display:none">
+  <div class="float-gradient"></div>
+  <div class="float-bar">
+    <button class="bbk" id="FLOATBACK" onclick="GB()">&#x2190; Back</button>
+    <button class="bnx" id="FLOATCONT" onclick="GN()" disabled>Continue &#x2192;</button>
   </div>
 </div>
 <footer><div class="fb">
@@ -542,7 +641,7 @@ function sc(){return g('S');}
 function scrollUp(){try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}}
 function sp(p,l,s){g('PF').style.width=p+'%';g('PL').textContent=l;g('PS').innerHTML=s?'Step <strong>'+s+'</strong>':'';}
 function ri(){TV='';MS={};SS=null;PS={};FC_SEL={};}
-function en(y){var b=g('BN');if(b)b.disabled=!y;}
+function en(y){var b=g('BN');if(b)b.disabled=!y;var fc=g('FLOATCONT');if(fc)fc.disabled=!y;}
 
 function oh(o,sel){
   return '<button class="ob'+(sel?' sel':'')+'" data-v="'+o.v+'" onclick="OC(this)">'+
@@ -551,6 +650,18 @@ function oh(o,sel){
 function brow(bk){
   return '<div class="br">'+(bk?'<button class="bbk" onclick="GB()">\u2190 Back</button>':'')+
     '<button class="bnx" id="BN" onclick="GN()" disabled>Continue \u2192</button></div>';
+}
+
+function showFloatBar(show,backVisible){
+  var fb=g('FLOATBAR');if(!fb)return;
+  fb.style.display=show?'block':'none';
+  var card=g('CARD');
+  if(card){card.classList.toggle('card-q-pad',show);}
+  var bk=g('FLOATBACK');if(bk)bk.style.display=(backVisible&&QI>0)?'block':'none';
+}
+function syncFloatBtn(){
+  var fc=g('FLOATCONT');var bn=g('BN');
+  if(fc&&bn){fc.disabled=bn.disabled;}
 }
 
 function rQ(q){
@@ -566,27 +677,39 @@ function rQ(q){
     var selA=(FC_SEL[q.id]===q.a.v),selB=(FC_SEL[q.id]===q.b.v);
     h+='<div class="fc-opt'+(selA?' sel':'')+'" onclick="FCClick(\''+q.id+'\',\''+q.a.v+'\')"><span class="fc-icon">'+q.a.e+'</span><span class="fc-label">'+q.a.l+'</span></div>';
     h+='<div class="fc-opt'+(selB?' sel':'')+'" onclick="FCClick(\''+q.id+'\',\''+q.b.v+'\')"><span class="fc-icon">'+q.b.e+'</span><span class="fc-label">'+q.b.l+'</span></div>';
-    h+='</div>'+brow(QI>0);
-    sc().innerHTML=h;en(!!FC_SEL[q.id]);return;
+    h+='</div>';
+    sc().innerHTML=h;
+    showFloatBar(true,true);
+    var fc=g('FLOATCONT');if(fc)fc.disabled=!FC_SEL[q.id];
+    return;
   }
 
   if(q.type==='path'){
     var cs=[{k:'now',c:'sn',i:'&#x1F4B5;',t:'A part-time job I can start soon',d:'Start earning while I study or figure things out.'},{k:'career',c:'sc',i:'&#x1F680;',t:'A career direction to work toward',d:'Understand where I could go and how to get there.'},{k:'unsure',c:'su',i:'&#x1F937;',t:'Not sure &mdash; help me explore both',d:'Show me options and help me figure it out.'}];
     h+='<div class="pg">';
     cs.forEach(function(c){h+='<div class="pc'+(PS[c.k]?' '+c.c:'')+'" onclick="PC(\''+c.k+'\')"><div class="pck">\u2713</div><div class="pi">'+c.i+'</div><h3>'+c.t+'</h3><p>'+c.d+'</p></div>';});
-    h+='</div><div class="pmsg" id="PM"></div>'+brow(QI>0);
-    sc().innerHTML=h;en(Object.keys(PS).some(function(k){return PS[k];}));upm();
+    h+='</div><div class="pmsg" id="PM"></div>';
+    sc().innerHTML=h;
+    showFloatBar(true,true);
+    var fc=g('FLOATCONT');if(fc)fc.disabled=!Object.keys(PS).some(function(k){return PS[k];});
+    upm();
   } else if(q.type==='multi'){
     var mx=q.max||99;var cnt=Object.keys(MS).filter(function(k){return MS[k];}).length;
     h+='<p class="qn" id="QN">'+(mx<99?'Pick up to '+mx+' \u2014 '+cnt+' selected.':'Pick all that apply.')+
-      '</p><div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,!!MS[o.v]);}).join('')+'</div>'+brow(QI>0);
-    sc().innerHTML=h;en(Object.keys(MS).some(function(k){return MS[k];}));
+      '</p><div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,!!MS[o.v]);}).join('')+'</div>';
+    sc().innerHTML=h;
+    showFloatBar(true,true);
+    var fc=g('FLOATCONT');if(fc)fc.disabled=!Object.keys(MS).some(function(k){return MS[k];});
   } else if(q.type==='opts'){
-    h+='<div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,SS===o.v);}).join('')+'</div>'+brow(QI>0);
-    sc().innerHTML=h;en(!!SS);
+    h+='<div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,SS===o.v);}).join('')+'</div>';
+    sc().innerHTML=h;
+    showFloatBar(true,true);
+    var fc=g('FLOATCONT');if(fc)fc.disabled=!SS;
   } else if(q.type==='text'){
-    h+='<input type="text" class="ti" id="TI" placeholder="'+(q.pl||'')+'" value="'+(TV||'')+'" oninput="TC(this)" onkeydown="TK(event)" autocomplete="given-name">'+brow(QI>0);
-    sc().innerHTML=h;en(!!(TV||'').trim());
+    h+='<input type="text" class="ti" id="TI" placeholder="'+(q.pl||'')+'" value="'+(TV||'')+'" oninput="TC(this)" onkeydown="TK(event)" autocomplete="given-name">';
+    sc().innerHTML=h;
+    showFloatBar(true,true);
+    var fc=g('FLOATCONT');if(fc)fc.disabled=!(TV||'').trim();
     var ti=g('TI');if(ti)setTimeout(function(){ti.focus();},50);
   }
 }
@@ -699,6 +822,7 @@ function GB(){
 
 function sSf(){
   PH='safe';sp(0,'Welcome','');
+  showFloatBar(false,false);
   var arrowSVG='<svg width="32" height="48" viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="4" y1="24" x2="22" y2="24" stroke="#D9A882" stroke-width="1.5" stroke-linecap="round"/><polyline points="16,18 24,24 16,30" stroke="#C4714A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var phases='<div class="pprev-new">';
   PHS.forEach(function(p,i){
@@ -734,6 +858,7 @@ function sQ(){
 
 function sC(){
   PH='celebration';var ph=PHS.find(function(p){return p.id===CB;});
+  showFloatBar(false,false);
   if(!ph){scrollUp();sQ();return;}
   var ni=PHS.indexOf(ph),np=PHS[ni+1];var cel=ph.cel.replace('{name}',A.name||'Explorer');
   sp(Math.min(88,Math.round((QI/QL.length)*88)),ph.lbl,'');
@@ -746,6 +871,7 @@ function cC(){var nx=QI+1;ri();if(nx>=QL.length){genR();return;}QI=nx;PH='questi
 
 function sTh(){
   PH='thinking';sp(95,'Finding your matches\u2026','');
+  showFloatBar(false,false);
   sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div>'+
     '<p class="tp">Finding your matches, '+(A.name||'there')+'\u2026</p><small class="tsm" id="TM">Reading your answers\u2026</small></div>';
   var st=['Matching your strengths to roles\u2026','Building your pathways\u2026','Almost ready!'],i=0;
@@ -1121,6 +1247,7 @@ function sendFeedback(v){
 // ── RESULTS ──
 function sRes(){
   PH='results';sp(100,'Your results','');
+  showFloatBar(false,false);
   var R=RS,nm=A.name||'';
   var profileLines=buildProfileSummary();
   var h='';
@@ -1214,6 +1341,7 @@ function getCVSteps(){
 }
 
 function sCVBuilder(fromAssessment){
+  showFloatBar(false,false);
   CV={type:null,answers:{},jd:'',fromAssessment:!!fromAssessment};
   PH='cv_fork';
   sp(0,'CV Builder','');
@@ -1362,37 +1490,211 @@ function genCV(){
   .then(function(r){return r.json();})
   .then(function(d){
     var text=d.content.map(function(b){return b.text||'';}).join('');
-    sCVResult(text,isJunior);
+    var cvData=parseCVText(text,CV.answers);
+    sCVResult(text,isJunior,cvData);
   })
   .catch(function(){
     sc().innerHTML='<div class="eb"><div class="ei">&#x1F527;</div><h3 class="eh3">Something went wrong</h3>'+
       '<p class="ep">CV generation hit a hiccup. Try again.</p>'+
-      '<div class="br" style="justify-content:center"><button class="bnx" onclick="genCV()">Try again →</button></div>'+
-      '<button class="brs" onclick="sCVBuilder(false)">↺ Start over</button></div>';
+      '<div class="br" style="justify-content:center"><button class="bnx" onclick="genCV()">Try again \u2192</button></div>'+
+      '<button class="brs" onclick="sCVBuilder(false)">\u21BA Start over</button></div>';
   });
 }
 
-function sCVResult(text,isJunior){
+function buildCVHTML(data,tpl){
+  var nm=data.name||'Your Name';
+  var role=data.role||'';
+  var loc=data.location||'';
+  var contact=data.contact||'';
+  var about=data.about||'';
+  var exp=data.experience||[];
+  var edu=data.education||[];
+  var skills=data.skills||[];
+  var proud=data.proud||'';
+  var isGrad=(tpl===3);
+  var isSchool=(tpl===2);
+
+  if(tpl===1){
+    /* Template 1 — Junior: dark header */
+    var h='<div class="cv-t1">';
+    h+='<div class="cv-t1-hdr">';
+    h+='<div class="cv-t1-name">'+escHTML(nm)+'</div>';
+    if(role)h+='<div class="cv-t1-role">'+escHTML(role)+'</div>';
+    h+='<div class="cv-t1-contact">';
+    if(loc)h+=escHTML(loc)+'<br>';
+    if(contact)h+=escHTML(contact);
+    h+='</div></div>';
+    h+='<div class="cv-t1-body">';
+    if(about){h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">About me</div><div class="cv-t1-body-text">'+escHTML(about)+'</div></div>';}
+    if(skills.length){
+      h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Key skills</div><div class="cv-t1-skill-grid">';
+      skills.forEach(function(s){h+='<div class="cv-t1-skill">'+escHTML(s)+'</div>';});
+      h+='</div></div>';
+    }
+    if(exp.length){
+      h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Experience</div>';
+      exp.forEach(function(e){
+        h+='<div class="cv-t1-entry"><div class="cv-t1-entry-top"><div class="cv-t1-entry-ttl">'+escHTML(e.title||'')+'</div><div class="cv-t1-entry-date">'+escHTML(e.date||'')+'</div></div>';
+        if(e.org)h+='<div class="cv-t1-entry-org">'+escHTML(e.org)+'</div>';
+        if(e.body)h+='<div class="cv-t1-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    if(edu.length){
+      h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">Education</div>';
+      edu.forEach(function(e){
+        h+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:14px;font-weight:600;color:#2c2422">'+escHTML(e.qual||'')+'</div><div style="font-size:12px;color:#6b6058">'+escHTML(e.inst||'')+'</div></div><div style="font-size:11px;color:#9a8e84;flex-shrink:0;margin-left:8px;margin-top:2px">'+escHTML(e.date||'')+'</div></div>';
+      });
+      h+='</div>';
+    }
+    h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">References</div><div class="cv-t1-ref">References available upon request.</div></div>';
+    h+='</div>';
+    h+='<div class="cv-t1-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+    h+='</div>';
+    return h;
+  }
+
+  if(tpl===2){
+    /* Template 2 — School leaver: green header, 2-col */
+    var h='<div class="cv-t2">';
+    h+='<div class="cv-t2-hdr">';
+    h+='<div class="cv-t2-name">'+escHTML(nm)+'</div>';
+    if(role)h+='<div class="cv-t2-tagline">'+escHTML(role)+'</div>';
+    h+='<div class="cv-t2-contact">';
+    if(loc)h+=escHTML(loc)+'<br>';
+    if(contact)h+=escHTML(contact);
+    h+='</div></div>';
+    h+='<div class="cv-t2-cols">';
+    h+='<div class="cv-t2-sidebar">';
+    if(skills.length){
+      h+='<div style="margin-bottom:18px"><div class="cv-t2-sec-ttl">Skills</div><ul class="cv-t2-skill-list">';
+      skills.forEach(function(s){h+='<li>'+escHTML(s)+'</li>';});
+      h+='</ul></div>';
+    }
+    if(edu.length){
+      h+='<div><div class="cv-t2-sec-ttl">Education</div>';
+      edu.forEach(function(e){
+        h+='<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:600;color:#4a4240">'+escHTML(e.qual||'')+'</div>';
+        if(e.inst)h+='<div style="font-size:12px;color:#3d6b4f;font-weight:500">'+escHTML(e.inst)+'</div>';
+        if(e.date)h+='<div style="font-size:11px;color:#9a8e84">'+escHTML(e.date)+'</div></div>';
+      });
+      h+='</div>';
+    }
+    h+='</div>';
+    h+='<div class="cv-t2-main">';
+    if(about){h+='<div class="cv-t2-sec"><div class="cv-t2-sec-ttl">About me</div><div class="cv-t2-about">'+escHTML(about)+'</div></div>';}
+    if(exp.length){
+      h+='<div class="cv-t2-sec"><div class="cv-t2-sec-ttl">Experience</div>';
+      exp.forEach(function(e){
+        h+='<div style="margin-bottom:14px"><div class="cv-t2-entry-ttl">'+escHTML(e.title||'')+'</div>';
+        if(e.org)h+='<div class="cv-t2-entry-org">'+escHTML(e.org)+'</div>';
+        if(e.date)h+='<div class="cv-t2-entry-date">'+escHTML(e.date)+'</div>';
+        if(e.body)h+='<div class="cv-t2-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    h+='<div class="cv-t2-ref">References available upon request.</div>';
+    h+='</div></div>';
+    h+='<div class="cv-t2-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+    h+='</div>';
+    return h;
+  }
+
+  /* Template 3 — Graduate: editorial */
+  var h='<div class="cv-t3">';
+  h+='<div class="cv-t3-hdr">';
+  h+='<div><div class="cv-t3-name">'+escHTML(nm)+'</div>';
+  if(role)h+='<div class="cv-t3-title">'+escHTML(role)+'</div></div>';
+  h+='<div class="cv-t3-contact">';
+  if(contact)h+=escHTML(contact).replace(/[,;]/g,'<br>');
+  if(loc)h+='<br>'+escHTML(loc);
+  h+='</div></div>';
+  h+='<div class="cv-t3-body">';
+  if(about){h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Profile</div><div class="cv-t3-about">'+escHTML(about)+'</div></div>';}
+  if(exp.length){
+    h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Experience</div>';
+    exp.forEach(function(e){
+      h+='<div class="cv-t3-entry"><div class="cv-t3-meta"><span class="cv-t3-meta-date">'+escHTML(e.date||'')+'</span><span class="cv-t3-meta-place">'+escHTML(e.org||'')+'</span></div>';
+      h+='<div><div class="cv-t3-entry-ttl">'+escHTML(e.title||'')+'</div>';
+      if(e.body)h+='<div class="cv-t3-entry-body"><ul>'+e.body.map(function(b){return '<li>'+escHTML(b)+'</li>';}).join('')+'</ul></div>';
+      h+='</div></div>';
+    });
+    h+='</div>';
+  }
+  if(edu.length){
+    h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Education</div>';
+    edu.forEach(function(e){
+      h+='<div class="cv-t3-entry"><div class="cv-t3-meta"><span class="cv-t3-meta-date">'+escHTML(e.date||'')+'</span></div>';
+      h+='<div><div class="cv-t3-entry-ttl">'+escHTML(e.qual||'')+'</div>';
+      if(e.inst)h+='<div style="font-size:12px;color:#6b6058;margin-top:2px">'+escHTML(e.inst)+'</div>';
+      h+='</div></div>';
+    });
+    h+='</div>';
+  }
+  if(skills.length){
+    h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">Skills</div><div class="cv-t3-skill-tags">';
+    skills.forEach(function(s){h+='<span class="cv-t3-skill-tag">'+escHTML(s)+'</span>';});
+    h+='</div></div>';
+  }
+  h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">References</div><div class="cv-t3-ref">References available upon request.</div></div>';
+  h+='</div>';
+  h+='<div class="cv-t3-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+  h+='</div>';
+  return h;
+}
+
+function switchCVTpl(tpl){
+  window._cvTpl=tpl;
+  /* Update switch buttons */
+  document.querySelectorAll('.cv-tpl-btn').forEach(function(b,i){
+    b.classList.toggle('active',i+1===tpl);
+  });
+  /* Reformat — no API call, instant */
+  var container=g('CVTPLOUT');
+  if(container&&window._cvData){
+    container.innerHTML=buildCVHTML(window._cvData,tpl);
+  }
+}
+
+function sCVResult(text,isJunior,cvData){
   PH='cv_result';
+  showFloatBar(false,false);
   sp(100,'Your CV is ready','');
+  /* Determine default template from path */
+  var defaultTpl=isJunior?1:3;
+  if(CV.type==='school_leaver')defaultTpl=2;
+  window._cvTpl=defaultTpl;
+  window._cvText=text;
+  window._cvIsJunior=isJunior;
+  window._cvData=cvData||{name:CV.answers.cv_name||'',role:CV.answers.cv_target||CV.answers.cv_target_role||'',location:CV.answers.cv_location||'',contact:CV.answers.cv_contact||'',about:CV.answers.cv_about||CV.answers.cv_summary_inputs||'',skills:(CV.answers.cv_skills||'').split(/[,\n]+/).map(function(s){return s.trim();}).filter(Boolean),experience:[],education:[]};
+
   var h='<div class="rh"><h2 class="rh2">Your CV is ready &#x1F389;</h2>';
-  h+='<p class="rp">Copy the text below into Word, Google Docs, PowerPoint — wherever you\'d like to build it out.</p></div>';
+  h+='<p class="rp">Switch styles, copy to clipboard, or save as a PDF.</p></div>';
+  /* Template switcher */
+  h+='<div class="cv-tpl-switch">';
+  h+='<button class="cv-tpl-btn'+(defaultTpl===1?' active':'')+'" onclick="switchCVTpl(1)">&#x1F31F; Warm</button>';
+  h+='<button class="cv-tpl-btn'+(defaultTpl===2?' active':'')+'" onclick="switchCVTpl(2)">&#x1F4CB; Structured</button>';
+  h+='<button class="cv-tpl-btn'+(defaultTpl===3?' active':'')+'" onclick="switchCVTpl(3)">&#x1F454; Professional</button>';
+  h+='</div>';
+  /* Action buttons */
   h+='<div class="cv-out-actions">';
   h+='<button class="cv-out-btn primary" onclick="copyCVText()">&#x1F4CB; Copy to clipboard</button>';
   h+='<button class="cv-out-btn" onclick="exportCVPDF()">&#x1F4C4; Save as PDF</button>';
   h+='</div>';
-  h+='<div class="cv-out-wrap'+(isJunior?'':' grad')+'" id="CVOUT">'+escHTML(text)+'</div>';
-  h+='<div class="cv-out-actions" style="margin-top:4px">';
+  /* CV output — renders chosen template */
+  h+='<div id="CVTPLOUT">'+buildCVHTML(window._cvData,defaultTpl)+'</div>';
+  /* Plain text fallback (hidden, used for copy/PDF) */
+  h+='<div class="cv-out-wrap'+(isJunior?'':' grad')+'" id="CVOUT" style="display:none">'+escHTML(text)+'</div>';
+  h+='<div class="cv-out-actions" style="margin-top:12px">';
   h+='<button class="cv-out-btn primary" onclick="copyCVText()">&#x1F4CB; Copy to clipboard</button>';
   h+='<button class="cv-out-btn" onclick="exportCVPDF()">&#x1F4C4; Save as PDF</button>';
   h+='</div>';
   h+='<div class="cv-disclaimer">&#x26A0;&#xFE0F; <strong>Important:</strong> This CV was AI-generated from the information you provided. Please review it carefully before sending. Career Compass does not fabricate experience or qualifications — always ensure the content accurately reflects you.</div>';
-  h+='<button class="brs" onclick="sCVBuilder(false)">↺ Build another CV</button>';
-  if(CV.fromAssessment)h+='<button class="brs" style="margin-top:6px" onclick="sRes()">← Back to my results</button>';
+  h+='<button class="brs" onclick="sCVBuilder(false)">\u21BA Build another CV</button>';
+  if(CV.fromAssessment)h+='<button class="brs" style="margin-top:6px" onclick="sRes()">\u2190 Back to my results</button>';
   sc().innerHTML=h;
-  // Store for PDF
-  window._cvText=text;
-  window._cvIsJunior=isJunior;
   scrollUp();
 }
 
@@ -1591,6 +1893,114 @@ function getReframe(jobTitle,reasons,cardId){
   .catch(function(){
     resultEl.innerHTML='<div class="resonance-ack">Noted \u2014 your other matches might be a better fit.</div>';
   });
+}
+
+// ── CV TEXT PARSER ──
+// Extracts structured data from plain text CV output for template rendering
+function parseCVText(text,answers){
+  var lines=text.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
+  var data={name:'',role:'',location:'',contact:'',about:'',skills:[],experience:[],education:[]};
+
+  // Name: first non-empty line
+  if(lines.length>0)data.name=lines[0].replace(/^#+\s*/,'').trim();
+
+  // Use known answers to fill key fields reliably
+  if(answers){
+    if(answers.cv_name)data.name=answers.cv_name;
+    if(answers.cv_location)data.location=answers.cv_location;
+    if(answers.cv_contact)data.contact=answers.cv_contact;
+    if(answers.cv_target)data.role=answers.cv_target;
+    if(answers.cv_target_role)data.role=answers.cv_target_role;
+    if(answers.cv_summary_inputs)data.about=answers.cv_summary_inputs;
+    if(answers.cv_about)data.about=answers.cv_about;
+    // Skills from plain text answer
+    if(answers.cv_skills){
+      data.skills=answers.cv_skills.split(/[,;\n]+/).map(function(s){return s.trim();}).filter(function(s){return s.length>2&&s.length<60;}).slice(0,9);
+    }
+  }
+
+  // Parse sections from plain text for experience/education/skills fallback
+  var sectionHeaders=/^(EXPERIENCE|WORK EXPERIENCE|EMPLOYMENT|EDUCATION|SKILLS|KEY SKILLS|OBJECTIVE|PROFILE|SUMMARY|ACHIEVEMENTS?|VOLUNTEER|REFERENCES?)/i;
+  var currentSection='';
+  var currentEntry=null;
+  var aboutLines=[];
+  var skillLines=[];
+
+  lines.forEach(function(line){
+    if(sectionHeaders.test(line)){
+      // Save any open entry
+      if(currentEntry){
+        if(currentSection.match(/EXPERIENCE|EMPLOYMENT|VOLUNTEER/i))data.experience.push(currentEntry);
+        if(currentSection.match(/EDUCATION/i))data.education.push(currentEntry);
+        currentEntry=null;
+      }
+      currentSection=line.toUpperCase();
+      return;
+    }
+
+    if(currentSection.match(/SKILLS/i)){
+      // Collect skill lines — bullets or comma separated
+      var cleaned=line.replace(/^[\-\•\*]\s*/,'').trim();
+      if(cleaned&&cleaned.length>2&&cleaned.length<80){
+        cleaned.split(/[,;]/).forEach(function(s){
+          s=s.trim();if(s.length>2)skillLines.push(s);
+        });
+      }
+      return;
+    }
+
+    if(currentSection.match(/EXPERIENCE|EMPLOYMENT|VOLUNTEER/i)||currentSection.match(/EDUCATION/i)){
+      var isEdu=currentSection.match(/EDUCATION/i);
+      // Detect a new entry: line that isn't a bullet and has substance
+      var isBullet=/^[\-\•\*]/.test(line);
+      var hasDate=/\b(20\d\d|19\d\d|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|present|current)/i.test(line);
+
+      if(!isBullet&&line.length>4&&!hasDate&&(!currentEntry||line.length>20)){
+        // Save previous entry
+        if(currentEntry){
+          if(isEdu)data.education.push(currentEntry);
+          else data.experience.push(currentEntry);
+        }
+        currentEntry=isEdu?{qual:line,inst:'',date:''}:{title:line,org:'',date:'',body:[]};
+      } else if(currentEntry&&hasDate&&!isBullet){
+        if(isEdu)currentEntry.date=line;
+        else{
+          if(!currentEntry.org)currentEntry.org=line;
+          else currentEntry.date=line;
+        }
+      } else if(currentEntry&&isBullet){
+        if(!isEdu){
+          var b=line.replace(/^[\-\•\*]\s*/,'');
+          if(!currentEntry.body)currentEntry.body=[];
+          currentEntry.body.push(b);
+        }
+      } else if(currentEntry&&!isBullet&&isEdu&&!currentEntry.inst){
+        currentEntry.inst=line;
+      }
+      return;
+    }
+
+    if(currentSection.match(/OBJECTIVE|PROFILE|SUMMARY|ABOUT/i)){
+      if(!line.match(sectionHeaders))aboutLines.push(line);
+      return;
+    }
+  });
+
+  // Save any trailing open entry
+  if(currentEntry){
+    if(currentSection.match(/EDUCATION/i))data.education.push(currentEntry);
+    else if(currentSection.match(/EXPERIENCE|EMPLOYMENT|VOLUNTEER/i))data.experience.push(currentEntry);
+  }
+
+  // Use parsed fallbacks if answers didn't provide them
+  if(!data.about&&aboutLines.length)data.about=aboutLines.join(' ');
+  if(!data.skills.length&&skillLines.length)data.skills=skillLines.slice(0,9);
+
+  // Cap lists to reasonable lengths
+  data.experience=data.experience.slice(0,4);
+  data.education=data.education.slice(0,3);
+
+  return data;
 }
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
