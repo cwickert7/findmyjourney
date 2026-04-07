@@ -805,7 +805,10 @@ function sSf(){
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
     '<p class="landing-privacy">&#x1F512; Your answers are never stored &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
-    '<button class="liam-btn" onclick="runLiam()">Test</button>'+
+    '<div style="position:absolute;bottom:10px;right:16px;display:flex;gap:10px">'+
+    '<button class="liam-btn" onclick="runLiam()">Liam</button>'+
+    '<button class="liam-btn" onclick="runElla()">Ella</button>'+
+    '</div>'+
     '</div>';
   sc().innerHTML=phases+trust+cta;
 }
@@ -2094,7 +2097,7 @@ function runLiam(){
     need:'kind_mgr',
     drain:'people_d',
     fc1:'fc1a',fc2:'fc2b',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
-    quit:'unsupported',
+    quit:'unsupported_q',
     branch:'caring'
   };
   PS={now:true,career:true};
@@ -2103,6 +2106,51 @@ function runLiam(){
     ['helping','nature','building'],
     'moderate','caring','15_17',
     ['pe','trade'],['outdoors','care_place']
+  );
+  genR();
+}
+
+function runElla(){
+  /* Ella — 15, Year 9, shy, sensitive, loves helping elderly */
+  A={
+    name:'Ella',
+    age:'15_17',
+    schoolYear:'yr9',
+    study:['highschool'],
+    goal:['career'],
+    place:['indoor','care_place'],
+    subjects:['health','humanities'],
+    enjoys:['helping','caring'],
+    noticed:'caring',
+    challenge:'simple',
+    ip1:'ip1a',ip2:'ip2a',ip3:'ip4a',ip4:'ip4a',ip5:'ip5b',
+    ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+    _ipsIntroShown:true,
+    proud:'helped',
+    flow:'helping_f',
+    values:['meaning','people_v'],
+    vision:'difference',
+    conscientious:'gets_done',
+    social:'onebyone',
+    group:'supporter',
+    learning:'watching',
+    grit:'beaten',
+    feedback:'sensitive',
+    supervision:'checkins',
+    noise:'low',
+    culture:'kind_team',
+    need:'kind_mgr',
+    drain:'chaos_d',
+    fc1:'fc1a',fc2:'fc2a',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+    quit:'unsupported_q',
+    branch:'caring'
+  };
+  PS={now:false,career:true};
+  IS_PT=false;
+  QL=buildQL(
+    ['helping','caring'],
+    'simple','caring','15_17',
+    ['health','humanities'],['indoor','care_place']
   );
   genR();
 }
