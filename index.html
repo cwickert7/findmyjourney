@@ -195,8 +195,7 @@ h1 em{font-style:italic;color:var(--tc)}
 .ed{background:#FFF5F5;border:1px solid #FFCDD2;border-radius:7px;padding:8px 11px;font-size:11px;color:#B04040;text-align:left;margin-bottom:12px;font-family:monospace;word-break:break-all}
 .print-header{display:none}
 footer{width:100%;max-width:860px;padding:0 24px 40px}
-.fb{background:var(--warm);border:1px solid var(--sand);border-radius:10px;padding:11px 14px}
-.fp{font-size:11px;color:var(--lt);line-height:1.6;margin-bottom:2px}
+.fb{display:none}.fp{display:none}
 @media print{body{background:#fff;display:block}.wrap{max-width:100%;padding:0}.card{box-shadow:none;border-radius:0;padding:0;overflow:visible}.card::before{display:none}header,footer,.more-btn,.brs,.fb-row,.p4,.cvb,.voice-btn-wrap,.pdf-btn-wrap,.occ-btn,.occ-panel{display:none!important}.print-header{display:block!important}.jc{break-inside:avoid;border:1.5px solid #E8DFD0;border-radius:8px;padding:14px 16px;margin-bottom:12px}.sh{break-after:avoid}.pip,.enc,.wy,.ef,.ns{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pip-n{background:#3D6B4F!important}.pip-c{background:#C4714A!important}}
 @media(max-width:480px){.card{padding:20px 16px}.og.two{grid-template-columns:1fr}.pprev{gap:4px}.fc-wrap{grid-template-columns:1fr 1fr}.qt{font-size:20px}}
 @media(min-width:481px) and (max-width:900px){.card{padding:26px 30px}.og.two{grid-template-columns:1fr 1fr}}
@@ -243,11 +242,13 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .sal-bar-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .sal-bar-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lt)}
 .sal-bar-range{font-size:11px;color:var(--mid);font-weight:500}
-.sal-bar-outer{position:relative;height:9px;background:var(--sand);border-radius:9px}
+.sal-bar-outer{position:relative;height:9px;background:var(--sand);border-radius:9px;margin-bottom:28px}
 .sal-bar-fill{position:absolute;height:100%;background:linear-gradient(90deg,var(--gr),var(--grl));border-radius:9px}
-.sal-avg-mk{position:absolute;top:-4px;width:2px;height:17px;background:var(--tc);border-radius:2px;transform:translateX(-50%)}
-.sal-avg-mk::after{content:'Avg all jobs';position:absolute;top:19px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--tc);white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
-.sal-bar-ends{display:flex;justify-content:space-between;margin-top:26px;font-size:10px;color:var(--mid);font-weight:500}
+.sal-avg-mk{position:absolute;top:-5px;width:2px;height:19px;background:var(--tc);border-radius:2px;transform:translateX(-50%)}
+.sal-avg-mk::after{content:'Avg $65k';position:absolute;top:21px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--tc);white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.sal-tick{position:absolute;top:0;width:1px;height:9px;background:rgba(0,0,0,.15);transform:translateX(-50%)}
+.sal-tick-lbl{position:absolute;top:13px;font-size:9px;color:var(--lt);transform:translateX(-50%);white-space:nowrap}
+.sal-bar-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--mid);font-weight:500}
 .sal-note{font-size:10px;color:var(--lt);font-style:italic;margin-top:5px}
 /* ── Match bar replaces pip dots ── */
 .match-bar{margin:8px 0 7px}
@@ -323,16 +324,10 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-disclaimer{font-size:11px;color:var(--lt);line-height:1.6;background:var(--warm);border:1px solid var(--sand);border-radius:8px;padding:9px 12px;margin-top:8px}
 
 /* ── Floating Continue button ── */
-.float-bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:860px;z-index:100;pointer-events:none}
-.float-gradient{height:52px;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none}
-.float-bar{background:var(--cream);border-top:1px solid var(--sand);padding:10px 24px 16px;display:flex;align-items:center;gap:10px;pointer-events:all}
-.float-bar .bbk{background:none;border:none;font-size:14px;color:var(--lt);cursor:pointer;padding:10px 4px;font-family:'DM Sans',sans-serif;transition:color .2s;flex-shrink:0}
-.float-bar .bbk:hover{color:var(--mid)}
-.float-bar .bnx{flex:1;background:var(--tc);color:#fff;border:none;border-radius:50px;padding:15px 32px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;min-height:52px}
-.float-bar .bnx:disabled{background:var(--sand);color:var(--lt);cursor:not-allowed}
-.float-bar .bnx:not(:disabled):hover{background:var(--tcl)}
-/* Extra bottom padding on card so content isn't hidden behind float bar */
-.card-q-pad{padding-bottom:110px!important}
+/* float bar removed */
+.liam-btn{background:none;border:none;font-size:11px;color:var(--sand);cursor:pointer;font-family:'DM Sans',sans-serif;padding:4px 0;letter-spacing:.02em;position:absolute;bottom:10px;right:16px}
+.liam-btn:hover{color:var(--lt)}
+.landing-privacy{font-size:11px;color:var(--lt);text-align:center;margin-top:10px;line-height:1.6}
 
 /* ── CV Template system ── */
 .cv-tpl-switch{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
@@ -429,13 +424,7 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
   </div>
 </div>
 <!-- Floating Continue bar — shown during questions only -->
-<div class="float-bottom" id="FLOATBAR" style="display:none">
-  <div class="float-gradient"></div>
-  <div class="float-bar">
-    <button class="bbk" id="FLOATBACK" onclick="GB()">&#x2190; Back</button>
-    <button class="bnx" id="FLOATCONT" onclick="GN()" disabled>Continue &#x2192;</button>
-  </div>
-</div>
+
 <footer><div class="fb">
   <p class="fp">&#9888; <strong>For guidance only.</strong> Not a substitute for professional career counselling.</p>
   <p class="fp">&#128274; <strong>Privacy:</strong> Answers not stored after your session. Anonymised feedback may improve results over time.</p>
@@ -641,7 +630,7 @@ function sc(){return g('S');}
 function scrollUp(){try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}}
 function sp(p,l,s){g('PF').style.width=p+'%';g('PL').textContent=l;g('PS').innerHTML=s?'Step <strong>'+s+'</strong>':'';}
 function ri(){TV='';MS={};SS=null;PS={};FC_SEL={};}
-function en(y){var b=g('BN');if(b)b.disabled=!y;var fc=g('FLOATCONT');if(fc)fc.disabled=!y;}
+function en(y){var b=g('BN');if(b)b.disabled=!y;}
 
 function oh(o,sel){
   return '<button class="ob'+(sel?' sel':'')+'" data-v="'+o.v+'" onclick="OC(this)">'+
@@ -652,18 +641,6 @@ function brow(bk){
     '<button class="bnx" id="BN" onclick="GN()" disabled>Continue \u2192</button></div>';
 }
 
-function showFloatBar(show,backVisible){
-  var fb=g('FLOATBAR');if(!fb)return;
-  fb.style.display=show?'block':'none';
-  var card=g('CARD');
-  if(card){card.classList.toggle('card-q-pad',show);}
-  var bk=g('FLOATBACK');if(bk)bk.style.display=(backVisible&&QI>0)?'block':'none';
-}
-function syncFloatBtn(){
-  var fc=g('FLOATCONT');var bn=g('BN');
-  if(fc&&bn){fc.disabled=bn.disabled;}
-}
-
 function rQ(q){
   var os=q.os||[],cols=q.cols||1;
   var ph=PHS.find(function(p){return p.id===q.ph;});
@@ -671,45 +648,31 @@ function rQ(q){
   if(ph)h+='<div class="ptag">'+ph.em+' Phase '+(PHS.indexOf(ph)+1)+': '+ph.lbl+'</div>';
   h+='<p class="qt">'+q.q+'</p>';
   if(q.hint)h+='<p class="qh">'+q.hint+'</p>';
-
   if(q.a&&q.b){
     h+='<div class="fc-wrap">';
     var selA=(FC_SEL[q.id]===q.a.v),selB=(FC_SEL[q.id]===q.b.v);
     h+='<div class="fc-opt'+(selA?' sel':'')+'" onclick="FCClick(\''+q.id+'\',\''+q.a.v+'\')"><span class="fc-icon">'+q.a.e+'</span><span class="fc-label">'+q.a.l+'</span></div>';
     h+='<div class="fc-opt'+(selB?' sel':'')+'" onclick="FCClick(\''+q.id+'\',\''+q.b.v+'\')"><span class="fc-icon">'+q.b.e+'</span><span class="fc-label">'+q.b.l+'</span></div>';
-    h+='</div>';
-    sc().innerHTML=h;
-    showFloatBar(true,true);
-    var fc=g('FLOATCONT');if(fc)fc.disabled=!FC_SEL[q.id];
-    return;
+    h+='</div>'+brow(QI>0);
+    sc().innerHTML=h;en(!!FC_SEL[q.id]);return;
   }
-
   if(q.type==='path'){
     var cs=[{k:'now',c:'sn',i:'&#x1F4B5;',t:'A part-time job I can start soon',d:'Start earning while I study or figure things out.'},{k:'career',c:'sc',i:'&#x1F680;',t:'A career direction to work toward',d:'Understand where I could go and how to get there.'},{k:'unsure',c:'su',i:'&#x1F937;',t:'Not sure &mdash; help me explore both',d:'Show me options and help me figure it out.'}];
     h+='<div class="pg">';
     cs.forEach(function(c){h+='<div class="pc'+(PS[c.k]?' '+c.c:'')+'" onclick="PC(\''+c.k+'\')"><div class="pck">\u2713</div><div class="pi">'+c.i+'</div><h3>'+c.t+'</h3><p>'+c.d+'</p></div>';});
-    h+='</div><div class="pmsg" id="PM"></div>';
-    sc().innerHTML=h;
-    showFloatBar(true,true);
-    var fc=g('FLOATCONT');if(fc)fc.disabled=!Object.keys(PS).some(function(k){return PS[k];});
-    upm();
+    h+='</div><div class="pmsg" id="PM"></div>'+brow(QI>0);
+    sc().innerHTML=h;en(Object.keys(PS).some(function(k){return PS[k];}));upm();
   } else if(q.type==='multi'){
     var mx=q.max||99;var cnt=Object.keys(MS).filter(function(k){return MS[k];}).length;
     h+='<p class="qn" id="QN">'+(mx<99?'Pick up to '+mx+' \u2014 '+cnt+' selected.':'Pick all that apply.')+
-      '</p><div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,!!MS[o.v]);}).join('')+'</div>';
-    sc().innerHTML=h;
-    showFloatBar(true,true);
-    var fc=g('FLOATCONT');if(fc)fc.disabled=!Object.keys(MS).some(function(k){return MS[k];});
+      '</p><div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,!!MS[o.v]);}).join('')+'</div>'+brow(QI>0);
+    sc().innerHTML=h;en(Object.keys(MS).some(function(k){return MS[k];}));
   } else if(q.type==='opts'){
-    h+='<div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,SS===o.v);}).join('')+'</div>';
-    sc().innerHTML=h;
-    showFloatBar(true,true);
-    var fc=g('FLOATCONT');if(fc)fc.disabled=!SS;
+    h+='<div class="og'+(os.length>5&&cols===2?' two':cols===2?' two':'')+'">'+os.map(function(o){return oh(o,SS===o.v);}).join('')+'</div>'+brow(QI>0);
+    sc().innerHTML=h;en(!!SS);
   } else if(q.type==='text'){
-    h+='<input type="text" class="ti" id="TI" placeholder="'+(q.pl||'')+'" value="'+(TV||'')+'" oninput="TC(this)" onkeydown="TK(event)" autocomplete="given-name">';
-    sc().innerHTML=h;
-    showFloatBar(true,true);
-    var fc=g('FLOATCONT');if(fc)fc.disabled=!(TV||'').trim();
+    h+='<input type="text" class="ti" id="TI" placeholder="'+(q.pl||'')+'" value="'+(TV||'')+'" oninput="TC(this)" onkeydown="TK(event)" autocomplete="given-name">'+brow(QI>0);
+    sc().innerHTML=h;en(!!(TV||'').trim());
     var ti=g('TI');if(ti)setTimeout(function(){ti.focus();},50);
   }
 }
@@ -822,7 +785,6 @@ function GB(){
 
 function sSf(){
   PH='safe';sp(0,'Welcome','');
-  showFloatBar(false,false);
   var arrowSVG='<svg width="32" height="48" viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="4" y1="24" x2="22" y2="24" stroke="#D9A882" stroke-width="1.5" stroke-linecap="round"/><polyline points="16,18 24,24 16,30" stroke="#C4714A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var phases='<div class="pprev-new">';
   PHS.forEach(function(p,i){
@@ -836,12 +798,14 @@ function sSf(){
     ['&#x1F49B;','Not knowing is completely normal','Most young people haven&rsquo;t figured this out yet. You&rsquo;re not behind.'],
     ['&#x1F512;','Your answers are private','Only used to find your matches. Never stored.']
   ].map(function(r){return '<div class="spill-new"><span class="spi-new">'+r[0]+'</span><div><span class="sps-new">'+r[1]+'</span><span class="spt-new">'+r[2]+'</span></div></div>';}).join('');
-  var cta='<div class="cta-panel-new">'+
+  var cta='<div class="cta-panel-new" style="position:relative">'+
     '<div class="cta-lbl-new">Ready when you are</div>'+
     '<p class="cta-hint-new">Answer honestly and we&rsquo;ll find something that genuinely fits &mdash; not just what sounds good.</p>'+
     '<button class="bstart-new" onclick="stQ()">Begin your career discovery \u2192</button>'+
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
+    '<p class="landing-privacy">&#x1F512; Your answers are never stored &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
+    '<button class="liam-btn" onclick="runLiam()">Test</button>'+
     '</div>';
   sc().innerHTML=phases+trust+cta;
 }
@@ -858,7 +822,6 @@ function sQ(){
 
 function sC(){
   PH='celebration';var ph=PHS.find(function(p){return p.id===CB;});
-  showFloatBar(false,false);
   if(!ph){scrollUp();sQ();return;}
   var ni=PHS.indexOf(ph),np=PHS[ni+1];var cel=ph.cel.replace('{name}',A.name||'Explorer');
   sp(Math.min(88,Math.round((QI/QL.length)*88)),ph.lbl,'');
@@ -871,7 +834,6 @@ function cC(){var nx=QI+1;ri();if(nx>=QL.length){genR();return;}QI=nx;PH='questi
 
 function sTh(){
   PH='thinking';sp(95,'Finding your matches\u2026','');
-  showFloatBar(false,false);
   sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div>'+
     '<p class="tp">Finding your matches, '+(A.name||'there')+'\u2026</p><small class="tsm" id="TM">Reading your answers\u2026</small></div>';
   var st=['Matching your strengths to roles\u2026','Building your pathways\u2026','Almost ready!'],i=0;
@@ -1247,7 +1209,6 @@ function sendFeedback(v){
 // ── RESULTS ──
 function sRes(){
   PH='results';sp(100,'Your results','');
-  showFloatBar(false,false);
   var R=RS,nm=A.name||'';
   var profileLines=buildProfileSummary();
   var h='';
@@ -1286,7 +1247,7 @@ function sRes(){
   h+='</div></div><div class="voice-controls" id="voiceControls"><button class="voice-stop" onclick="stopVoice()">&#x23F9; Stop reading</button></div></div>';
   h+='<div class="fb-row" id="fbrow">Was this helpful? <button class="thumb" onclick="sendFeedback(1)">&#x1F44D; Yes</button> <button class="thumb" onclick="sendFeedback(0)">&#x1F44E; Not quite</button></div>';
   h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
-  h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Not a substitute for professional career counselling.</p><p class="lp">&#x1F512; <strong>Privacy:</strong> Answers not stored. Anonymised feedback may improve results.</p><p class="lp">&#x1F464; <strong>Under 15?</strong> Please let a parent or guardian know.</p></div>';
+  h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Career Compass results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
   sc().innerHTML=h;
 }
 
@@ -1341,7 +1302,6 @@ function getCVSteps(){
 }
 
 function sCVBuilder(fromAssessment){
-  showFloatBar(false,false);
   CV={type:null,answers:{},jd:'',fromAssessment:!!fromAssessment};
   PH='cv_fork';
   sp(0,'CV Builder','');
@@ -1660,7 +1620,6 @@ function switchCVTpl(tpl){
 
 function sCVResult(text,isJunior,cvData){
   PH='cv_result';
-  showFloatBar(false,false);
   sp(100,'Your CV is ready','');
   /* Determine default template from path */
   var defaultTpl=isJunior?1:3;
@@ -2001,6 +1960,11 @@ function parseCVText(text,answers){
   data.education=data.education.slice(0,3);
 
   return data;
+}
+
+function runLiam(){
+  /* Full Liam persona — coming in Stage 3 */
+  alert('Liam test persona — coming soon in next deploy.');
 }
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
