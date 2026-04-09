@@ -229,6 +229,22 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-btn-new:hover{border-color:var(--tc);color:var(--tc)}
 /* ── Salary stat row on job cards ── */
 .sal-row{display:flex;border:1px solid var(--sand);border-radius:10px;overflow:hidden;margin-bottom:10px;background:#fff}
+/* ── Progressive disclosure card ── */
+.jc-compact{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:16px 18px;cursor:pointer;user-select:none}
+.jc-compact:hover .jc-expand-btn{border-color:var(--tc);color:var(--tc)}
+.jc-meta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.jc-sal-badge{font-size:12px;font-weight:600;color:var(--gr);background:#EFF7F2;border:1px solid #C8DECE;border-radius:20px;padding:3px 10px}
+.jc-match-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.jc-match-badge.mn{background:#EFF7F2;color:var(--gr);border:1px solid #C8DECE}
+.jc-match-badge.mc{background:#FEF3EC;color:var(--tc);border:1px solid #F5C9A8}
+.jc-outlook{font-size:11px;color:var(--lt)}
+.jc-expand-btn{display:flex;align-items:center;gap:5px;background:none;border:1.5px solid var(--sand);border-radius:50px;padding:7px 13px;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.jc-expand-arr{display:inline-block;transition:transform .25s ease}
+.jc.jc-open .jc-expand-arr{transform:rotate(180deg)}
+.jc.jc-open .jc-expand-btn{border-color:var(--tc);color:var(--tc);background:#FEF3EC}
+.jc-detail{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);border-top:0px solid var(--sand)}
+.jc.jc-open .jc-detail{max-height:2000px;border-top:1px solid var(--sand)}
+.jc-detail-inner{padding:16px 18px 18px}
 .sal-cell{flex:1;padding:8px 10px;text-align:center;border-right:1px solid var(--sand)}
 .sal-cell:last-child{border-right:none}
 .sal-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);margin-bottom:4px}
@@ -805,9 +821,19 @@ function sSf(){
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
     '<p class="landing-privacy">&#x1F512; Your answers are never stored &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
-    '<div style="position:absolute;bottom:10px;right:16px;display:flex;gap:10px">'+
-    '<button class="liam-btn" onclick="runLiam()">Liam</button>'+
-    '<button class="liam-btn" onclick="runElla()">Ella</button>'+
+    '<div style="position:absolute;bottom:10px;right:16px">'+
+    '<select class="liam-btn" id="personaSelect" onchange="runPersona(this.value)" style="cursor:pointer;padding:4px 6px;font-size:11px;color:var(--lt);background:none;border:none;font-family:\'DM Sans\',sans-serif;appearance:none;-webkit-appearance:none">'+
+    '<option value="">Test</option>'+
+    '<option value="liam">Liam (17)</option>'+
+    '<option value="ella">Ella (15)</option>'+
+    '<option value="jake">Jake (17)</option>'+
+    '<option value="aisha">Aisha (16)</option>'+
+    '<option value="tom">Tom (19)</option>'+
+    '<option value="priya">Priya (22)</option>'+
+    '<option value="bec">Bec (20)</option>'+
+    '<option value="luca">Luca (24)</option>'+
+    '<option value="zac">Zac (21)</option>'+
+    '</select>'+
     '</div>'+
     '</div>';
   sc().innerHTML=phases+trust+cta;
@@ -848,7 +874,7 @@ function sTh(){
 function buildSys(isPT){
   var isSensitive=(A.feedback==='sensitive'||A.noise==='low'||A.need==='kind_mgr'||A.need==='safe_exp'||A.fc1==='fc1a'||A.quit==='unsupported_q'||A.quit==='loud_q'||A.pt_safety==='harsh_pt'||A.pt_safety==='loud_pt');
   var isCommercial=(A.noticed==='driven'||A.noticed==='connector'||A.culture==='startup_c'||A.culture==='high_c'||(Array.isArray(A.values)&&(A.values.indexOf('recognition')>=0||A.values.indexOf('progress')>=0)));
-  var isCreative=(A.branch&&['visual','music_b','writing_b','perform_b','film_b','fashion_b','teaching_b'].indexOf(A.branch)>=0);
+  var isCreative=(A.branch&&['visual','music_b','writing_b','perform_b','film_b','fashion_b','teaching_b','creative'].indexOf(A.branch)>=0);
   var isAcademic=(A.challenge==='complex'&&A.vision&&['expert','lead','senior','impact'].indexOf(A.vision)>=0);
   var sim=(A.challenge==='simple');
   var needsSupport=(A.conscientious==='needsupport'||A.conscientious==='struggles'||A.grit==='beaten');
@@ -1205,9 +1231,43 @@ function jcard(job,rank,typ,cardId){
   }
   /* Match bar */
   var matchBar='<div class="match-bar"><div class="match-bar-hdr"><span class="match-bar-lbl">Your match</span><span class="match-bar-val '+mc+'">'+w+'</span></div><div class="match-track"><div class="match-fill '+mc+'" style="width:'+matchPct+'"></div></div></div>';
-  return '<div class="jc"><span class="jr">'+rank+'</span>'+
-    '<h4 class="jh4">'+job.title+'</h4>'+
-    '<p class="jd">'+job.desc+'</p>'+
+  /* Compact salary badge for header */
+  var salBadge='';
+  if(job.salaryEntry){
+    var badgeNums=[];var m1b=(job.salaryEntry||'').match(/\$([\d]{1,3}(?:,[\d]{3})+)/g);
+    if(m1b)m1b.forEach(function(v){badgeNums.push(parseInt(v.replace(/[$,]/g,''),10));});
+    var m2b=(job.salaryEntry||'').match(/\$([\d]+)k/gi);
+    if(m2b)m2b.forEach(function(v){badgeNums.push(parseInt(v.replace(/[$k]/gi,''),10)*1000);});
+    if(job.salaryExperienced){
+      var expB=[];var m3b=(job.salaryExperienced||'').match(/\$([\d]{1,3}(?:,[\d]{3})+)/g);
+      if(m3b)m3b.forEach(function(v){expB.push(parseInt(v.replace(/[$,]/g,''),10));});
+      var m4b=(job.salaryExperienced||'').match(/\$([\d]+)k/gi);
+      if(m4b)m4b.forEach(function(v){expB.push(parseInt(v.replace(/[$k]/gi,''),10)*1000);});
+      if(badgeNums.length&&expB.length){
+        var bMin=Math.min.apply(null,badgeNums),bMax=Math.max.apply(null,expB);
+        var fK=function(v){return v>=1000?'$'+(v/1000).toFixed(0)+'k':('$'+v);};
+        salBadge='<span class="jc-sal-badge">'+fK(bMin)+' \u2013 '+fK(bMax)+'</span>';
+      }
+    }
+    if(!salBadge&&(/\/h(ou)?r/i.test(job.salaryEntry))){
+      salBadge='<span class="jc-sal-badge">'+job.salaryEntry+'</span>';
+    }
+  }
+  var outlookIcon2=job.outlook==='growing'?'\u2197 Growing':job.outlook==='declining'?'\u2198 Declining':'\u2192 Stable';
+  /* Compact header — always visible */
+  var compact='<div class="jc-compact" onclick="jcToggle(\''+cid+'\')">'  +
+    '<div><div class="jr" style="margin-bottom:3px">'+rank+'</div>'+
+    '<h4 class="jh4" style="margin-bottom:4px">'+job.title+'</h4>'+
+    '<p class="jd" style="margin-bottom:0;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden">'+job.desc+'</p>'+
+    '<div class="jc-meta-row">'+salBadge+
+    '<span class="jc-match-badge '+mc+'">'+w+'</span>'+
+    '<span class="jc-outlook">'+outlookIcon2+'</span>'+
+    '</div></div>'+
+    '<button class="jc-expand-btn" onclick="jcToggle(\''+cid+'\');event.stopPropagation()">'+
+    'See why <span class="jc-expand-arr">\u2193</span></button>'+
+    '</div>';
+  /* Expandable detail */
+  var detail='<div class="jc-detail" id="jcd'+cid+'"><div class="jc-detail-inner">'+
     salHTML+
     (job.whyYou?'<p class="wy">'+job.whyYou+'</p>':'')+
     (job.envFit?'<div class="ef">&#x1F3E0; '+job.envFit+'</div>':'')+
@@ -1217,7 +1277,14 @@ function jcard(job,rank,typ,cardId){
     '<div class="occ-panel" id="occPanel'+cid+'"></div>'+
     '<button class="path-btn" id="pathBtn'+cid+'" onclick="explorePath(\''+job.title.replace(/'/g,'\\\'')+'\'  ,\''+cid+'\')">&#x1F393; How do I get there from where I am?</button>'+
     '<div class="path-panel" id="pathPanel'+cid+'"></div>'+
-    '</div>';
+    '</div></div>';
+  return '<div class="jc" id="jcc'+cid+'">'+compact+detail+'</div>';
+}
+
+// ── CARD TOGGLE ──
+function jcToggle(cid){
+  var card=g('jcc'+cid);
+  if(card)card.classList.toggle('jc-open');
 }
 
 // ── LOAD MORE ──
@@ -2085,15 +2152,15 @@ function runLiam(){
     flow:'hands_f',
     values:['meaning','secure'],
     vision:'stable',
-    conscientious:'gets_done',
+    conscientious:'needsupport',
     social:'onebyone',
     group:'supporter',
     learning:'doing',
-    grit:'pushes',
+    grit:'chunks',
     feedback:'sensitive',
-    supervision:'checkins',
+    supervision:'lots',
     noise:'low',
-    culture:'kind_team',
+    culture:'calm_c',
     need:'kind_mgr',
     drain:'people_d',
     fc1:'fc1a',fc2:'fc2b',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
@@ -2110,48 +2177,165 @@ function runLiam(){
   genR();
 }
 
+function runPersona(v){
+  var el=document.getElementById('personaSelect');if(el)el.value='';
+  if(v==='liam')runLiam();
+  else if(v==='ella')runElla();
+  else if(v==='jake')runJake();
+  else if(v==='aisha')runAisha();
+  else if(v==='tom')runTom();
+  else if(v==='priya')runPriya();
+  else if(v==='bec')runBec();
+  else if(v==='luca')runLuca();
+  else if(v==='zac')runZac();
+}
+
 function runElla(){
-  /* Ella — 15, Year 9, shy, sensitive, loves helping elderly */
-  A={
-    name:'Ella',
-    age:'15_17',
-    schoolYear:'yr9',
-    study:['highschool'],
-    goal:['career'],
-    place:['indoor','care_place'],
-    subjects:['health','humanities'],
-    enjoys:['helping','caring'],
-    noticed:'caring',
-    challenge:'simple',
+  A={name:'Ella',age:'15_17',schoolYear:'yr9',study:['highschool'],goal:['career'],
+    place:['indoor','care_place'],subjects:['health','humanities'],enjoys:['helping','caring'],
+    noticed:'caring',challenge:'simple',
     ip1:'ip1a',ip2:'ip2a',ip3:'ip4a',ip4:'ip4a',ip5:'ip5b',
     ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
-    _ipsIntroShown:true,
-    proud:'helped',
-    flow:'helping_f',
-    values:['meaning','people_v'],
-    vision:'difference',
-    conscientious:'gets_done',
-    social:'onebyone',
-    group:'supporter',
-    learning:'watching',
-    grit:'beaten',
-    feedback:'sensitive',
-    supervision:'checkins',
-    noise:'low',
-    culture:'kind_team',
-    need:'kind_mgr',
-    drain:'chaos_d',
+    _ipsIntroShown:true,proud:'helped',flow:'helping_f',
+    values:['meaning','people_v'],vision:'difference',
+    conscientious:'smallsteps',social:'onebyone',grouprole:'supporter',
+    learning:'watching',grit:'beaten',feedback:'sensitive',supervision:'lots',
+    noise:'low',culture:'calm_c',need:'kind_mgr',drain:'chaos_d',
     fc1:'fc1a',fc2:'fc2a',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
-    quit:'unsupported_q',
-    branch:'caring'
-  };
-  PS={now:false,career:true};
-  IS_PT=false;
-  QL=buildQL(
-    ['helping','caring'],
-    'simple','caring','15_17',
-    ['health','humanities'],['indoor','care_place']
-  );
+    quit:'unsupported_q',branch:'caring'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['helping','caring'],'simple','caring','15_17',['health','humanities'],['indoor','care_place']);
+  genR();
+}
+
+function runJake(){
+  A={name:'Jake',age:'15_17',schoolYear:'yr12',study:['highschool'],goal:['career'],
+    place:['outdoors','dynamic'],subjects:['trade','pe'],enjoys:['building','nature'],
+    noticed:'hands',challenge:'simple',
+    ip1:'ip1b',ip2:'ip2b',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+    ip6:'ip6a',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+    _ipsIntroShown:true,proud:'made',flow:'hands_f',
+    values:['active_v','secure'],vision:'stable',
+    conscientious:'pushthrough',social:'small_group',grouprole:'doer',
+    learning:'doing',grit:'persist',feedback:'direct',supervision:'some',
+    noise:'high',culture:'busy_c',need:'clear_exp',drain:'desk_d',
+    fc1:'fc1b',fc2:'fc2b',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6a',
+    quit:'wrong_q',branch:'trades'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['building','nature'],'simple','hands','15_17',['trade','pe'],['outdoors','dynamic']);
+  genR();
+}
+
+function runAisha(){
+  A={name:'Aisha',age:'15_17',schoolYear:'yr11',study:['highschool'],goal:['career'],
+    place:['indoor','care_place'],subjects:['science','maths','health'],enjoys:['learning','helping'],
+    noticed:'detail',challenge:'complex',
+    ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5b',
+    ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+    _ipsIntroShown:true,proud:'learned',flow:'learning_f',
+    values:['meaning','growth'],vision:'difference',
+    conscientious:'pushthrough',social:'onebyone',grouprole:'leads',
+    learning:'watching',grit:'persist',feedback:'direct',supervision:'some',
+    noise:'low',culture:'structured_c',need:'safe_exp',drain:'decisions_d',
+    fc1:'fc1a',fc2:'fc2a',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+    quit:'wrong_q',branch:'caring'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['learning','helping'],'complex','detail','15_17',['science','maths','health'],['indoor','care_place']);
+  genR();
+}
+
+function runTom(){
+  A={name:'Tom',age:'18_20',study:['none'],goal:['career'],
+    place:['indoor','home'],subjects:['none_sub'],enjoys:['learning','making'],
+    noticed:'reliable',challenge:'moderate',
+    ip1:'ip1a',ip2:'ip2a',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
+    ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+    _ipsIntroShown:true,proud:'quiet',flow:'learning_f',
+    values:['secure','flex'],vision:'stable',
+    conscientious:'eventually',social:'onebyone',grouprole:'supporter',
+    learning:'watching',grit:'beaten',feedback:'sensitive',supervision:'lots',
+    noise:'low',culture:'calm_c',need:'kind_mgr',drain:'chaos_d',
+    fc1:'fc1a',fc2:'fc2a',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+    quit:'unsupported_q',branch:'caring'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['learning','making'],'moderate','reliable','18_20',['none_sub'],['indoor','home']);
+  genR();
+}
+
+function runPriya(){
+  A={name:'Priya',age:'21_25',study:['uni'],goal:['now','career'],
+    place:['indoor','dynamic'],subjects:['commerce','humanities'],enjoys:['commerce','perform'],
+    noticed:'connector',challenge:'moderate',
+    ip1:'ip1b',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+    ip6:'ip6a',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+    _ipsIntroShown:true,proud:'together',flow:'planning',
+    values:['recognition','progress'],vision:'senior',
+    conscientious:'pushthrough',social:'anyone',grouprole:'leads',
+    learning:'doing',grit:'persist',feedback:'direct',supervision:'min',
+    noise:'high',culture:'startup_c',need:'creative_exp',drain:'alone_d',
+    fc1:'fc1b',fc2:'fc2b',fc3:'fc3b',fc4:'fc4b',fc5:'fc5b',fc6:'fc6b',
+    quit:'wrong_q',branch:'commerce',
+    pt_firstjob:'some',pt_days:['wkday_pm','wkday_eve','saturday'],
+    pt_transport:['public','self_drive'],pt_env:['retail_pt','quiet_pt'],
+    pt_social:'comfortable',pt_workstyle:'team_ws',pt_energy:'high_e',
+    pt_timeline:'now_t',pt_uniform:'fine_u',pt_safety:'pressure_pt',
+    pt_motive:['money_pt','skills_pt']};
+  PS={now:true,career:true};IS_PT=false;
+  QL=buildQL(['commerce','perform'],'moderate','connector','21_25',['commerce','humanities'],['indoor','dynamic']);
+  genR();
+}
+
+function runBec(){
+  A={name:'Bec',age:'18_20',study:['tafe'],goal:['career'],
+    place:['outdoors','nature_place'],subjects:['science','pe'],enjoys:['nature','helping'],
+    noticed:'caring',challenge:'moderate',
+    ip1:'ip1a',ip2:'ip2b',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
+    ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+    _ipsIntroShown:true,proud:'helped',flow:'outside_f',
+    values:['meaning','active_v'],vision:'impact',
+    conscientious:'pushthrough',social:'onebyone',grouprole:'supporter',
+    learning:'doing',grit:'persist',feedback:'depends',supervision:'some',
+    noise:'mid',culture:'calm_c',need:'kind_mgr',drain:'desk_d',
+    fc1:'fc1a',fc2:'fc2b',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6a',
+    quit:'wrong_q',branch:'nature'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['nature','helping'],'moderate','caring','18_20',['science','pe'],['outdoors','nature_place']);
+  genR();
+}
+
+function runLuca(){
+  A={name:'Luca',age:'21_25',study:['working'],goal:['career'],
+    place:['indoor','dynamic'],subjects:['art','music'],enjoys:['making','perform'],
+    noticed:'creative',challenge:'moderate',
+    ip1:'ip1b',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+    ip6:'ip6a',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+    _ipsIntroShown:true,proud:'made',flow:'making',
+    values:['create','variety'],vision:'expert',
+    conscientious:'pushthrough',social:'onebyone',grouprole:'ideas_g',
+    learning:'doing',grit:'persist',feedback:'direct',supervision:'min',
+    noise:'low',culture:'startup_c',need:'creative_exp',drain:'desk_d',
+    fc1:'fc1b',fc2:'fc2a',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+    quit:'wrong_q',branch:'creative'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['making','perform'],'moderate','creative','21_25',['art','music'],['indoor','dynamic']);
+  genR();
+}
+
+function runZac(){
+  A={name:'Zac',age:'21_25',study:['uni'],goal:['career'],
+    place:['indoor','dynamic'],subjects:['commerce','maths'],enjoys:['commerce','perform'],
+    noticed:'driven',challenge:'complex',
+    ip1:'ip1b',ip2:'ip2b',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+    ip6:'ip6a',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+    _ipsIntroShown:true,proud:'earned',flow:'planning',
+    values:['recognition','progress'],vision:'own',
+    conscientious:'pushthrough',social:'anyone',grouprole:'leads',
+    learning:'doing',grit:'persist',feedback:'direct',supervision:'min',
+    noise:'high',culture:'high_c',need:'freedom',drain:'alone_d',
+    fc1:'fc1b',fc2:'fc2b',fc3:'fc3b',fc4:'fc4b',fc5:'fc5b',fc6:'fc6b',
+    quit:'wrong_q',branch:'commerce'};
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(['commerce','perform'],'complex','driven','21_25',['commerce','maths'],['indoor','dynamic']);
   genR();
 }
 
