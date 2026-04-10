@@ -187,6 +187,23 @@ h1 em{font-style:italic;color:var(--tc)}
 .brs{display:block;width:100%;margin-top:11px;background:none;border:1.5px solid var(--sand);border-radius:50px;padding:11px;font-size:14px;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:border-color .2s,color .2s}
 .brs:hover{border-color:var(--tc);color:var(--tc)}
 .leg{margin-top:13px;background:var(--warm);border:1px solid var(--sand);border-radius:10px;padding:11px 14px}
+/* ── Email capture ── */
+.email-cap{background:#fff;border:2px solid var(--tc);border-radius:16px;padding:22px 22px;margin:20px 0;box-shadow:0 4px 24px rgba(196,113,74,.1)}
+.email-cap-icon{font-size:26px;margin-bottom:8px}
+.email-cap-title{font-family:'Fraunces',serif;font-size:19px;font-weight:400;color:var(--ch);margin-bottom:5px}
+.email-cap-sub{font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:16px}
+.email-cap-row{display:flex;gap:8px;flex-wrap:wrap}
+.email-cap-input{flex:1;min-width:180px;border:1.5px solid var(--sand);border-radius:10px;padding:12px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ch);background:var(--warm);outline:none;transition:border-color .15s}
+.email-cap-input:focus{border-color:var(--tc)}
+.email-cap-btn{background:var(--tc);color:#fff;border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;white-space:nowrap}
+.email-cap-btn:hover{background:var(--tcd)}
+.email-cap-btn:disabled{background:var(--sand);color:var(--lt);cursor:not-allowed}
+.email-cap-skip{display:block;text-align:center;margin-top:10px;font-size:12px;color:var(--lt);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;width:100%}
+.email-cap-skip:hover{color:var(--mid)}
+.email-cap-success{text-align:center;padding:6px 0}
+.email-cap-success-icon{font-size:30px;margin-bottom:6px}
+.email-cap-success-title{font-family:'Fraunces',serif;font-size:17px;color:var(--gr);margin-bottom:4px}
+.email-cap-success-sub{font-size:13px;color:var(--mid);line-height:1.55}
 .lp{font-size:11px;color:var(--lt);line-height:1.6;margin-bottom:2px}
 .eb{text-align:center;padding:20px 8px}
 .ei{font-size:30px;margin-bottom:10px}
@@ -245,6 +262,14 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .jc-detail{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);border-top:0px solid var(--sand)}
 .jc.jc-open .jc-detail{max-height:2000px;border-top:1px solid var(--sand)}
 .jc-detail-inner{padding:16px 18px 18px}
+/* ── See why pulse ── */
+@keyframes seewhy-pulse{
+  0%{box-shadow:0 0 0 0 rgba(196,113,74,0);border-color:var(--sand)}
+  40%{box-shadow:0 0 0 6px rgba(196,113,74,0.25);border-color:var(--tc)}
+  70%{box-shadow:0 0 0 8px rgba(196,113,74,0.12);border-color:var(--tcl)}
+  100%{box-shadow:0 0 0 0 rgba(196,113,74,0);border-color:var(--sand)}
+}
+.seewhy-pulse{animation:seewhy-pulse 1s ease-out 1 forwards}
 .sal-cell{flex:1;padding:8px 10px;text-align:center;border-right:1px solid var(--sand)}
 .sal-cell:last-child{border-right:none}
 .sal-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);margin-bottom:4px}
@@ -1352,7 +1377,67 @@ function sRes(){
   h+='<div class="fb-row" id="fbrow">Was this helpful? <button class="thumb" onclick="sendFeedback(1)">&#x1F44D; Yes</button> <button class="thumb" onclick="sendFeedback(0)">&#x1F44E; Not quite</button></div>';
   h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
   h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Career Compass results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
+  h+='<div class="email-cap" id="emailCapPanel">'+
+    '<div class="email-cap-icon">&#x1F4EC;</div>'+
+    '<div class="email-cap-title">Save your results</div>'+
+    '<div class="email-cap-sub">We\'ll send you a copy of your career matches as a PDF — so you can come back to them, share with a parent or teacher, or use them in a careers conversation.</div>'+
+    '<div class="email-cap-row">'+
+    '<input class="email-cap-input" type="email" id="emailCapInput" placeholder="Your email address">'+
+    '<button class="email-cap-btn" id="emailCapBtn" onclick="submitEmail()">Send my results \u2192</button>'+
+    '</div>'+
+    '<button class="email-cap-skip" onclick="skipEmail()">No thanks \u2014 I\'ll keep scrolling</button>'+
+    '</div>';
   sc().innerHTML=h;
+  pulseExpandBtns();
+}
+
+function pulseExpandBtns(){
+  setTimeout(function(){
+    document.querySelectorAll('.jc-expand-btn').forEach(function(btn){
+      btn.classList.add('seewhy-pulse');
+    });
+  },1500);
+}
+
+function submitEmail(){
+  var input=g('emailCapInput');var btn=g('emailCapBtn');
+  if(!input)return;
+  var email=input.value.trim();
+  if(!email||!email.includes('@')||!email.includes('.')){
+    input.style.borderColor='var(--tc)';input.focus();return;
+  }
+  if(btn){btn.disabled=true;btn.textContent='Sending\u2026';}
+  /* Build results summary for email */
+  var name=A.name||'Explorer';
+  var jobs=[];
+  if(RS){
+    (RS.nowJobs||[]).forEach(function(j){jobs.push(j.title);});
+    (RS.careerJobs||[]).forEach(function(j){jobs.push(j.title);});
+  }
+  fetch('/api/send-results',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email,name:name,jobs:jobs,encouragement:(RS&&RS.encouragement)||''})
+  })
+  .then(function(r){return r.json();})
+  .then(function(){
+    var panel=g('emailCapPanel');
+    if(panel)panel.innerHTML='<div class="email-cap-success">'+
+      '<div class="email-cap-success-icon">&#x2705;</div>'+
+      '<div class="email-cap-success-title">On its way</div>'+
+      '<div class="email-cap-success-sub">Your results are heading to <strong>'+escHTML(email)+'</strong>.<br>Check your inbox in the next few minutes.</div>'+
+      '</div>';
+  })
+  .catch(function(){
+    if(btn){btn.disabled=false;btn.textContent='Send my results \u2192';}
+    var panel=g('emailCapPanel');
+    if(panel){var err=document.createElement('p');err.style.cssText='font-size:12px;color:var(--tc);margin-top:8px;text-align:center';err.textContent='Something went wrong — please try again.';panel.appendChild(err);}
+  });
+}
+
+function skipEmail(){
+  var panel=g('emailCapPanel');
+  if(!panel)return;
+  panel.style.transition='opacity .3s';panel.style.opacity='0';
+  setTimeout(function(){panel.style.display='none';},300);
 }
 
 function sErr(){
@@ -1520,21 +1605,21 @@ function genCV(){
   var forkLabel=CV_FORKS.find(function(f){return f.v===CV.type;});
   forkLabel=forkLabel?forkLabel.title:CV.type;
 
+  var jsonSchema='{"name":"full name","role":"job title or seeking statement","location":"suburb, state","contact":"email · phone","about":"2-3 sentence professional summary","skills":["skill1","skill2","skill3","skill4","skill5","skill6"],"experience":[{"title":"job title","org":"organisation name","date":"date range e.g. Jan 2023 – present","body":["achievement bullet 1","achievement bullet 2","achievement bullet 3"]}],"education":[{"qual":"qualification name","inst":"institution name","date":"year or date range"}]}';
+
   var sysMsg=isJunior?
-    'You are a warm, expert Australian CV writer helping a young person write their very first or early CV. '+
-    'Your job is to take their casual answers and transform them into professional, honest, well-worded CV content. '+
-    'NEVER invent experience or qualifications they have not mentioned. Reframe real experiences accurately and positively. '+
-    'Format: clean plain text, easy to copy into Word or any document. '+
-    'Structure: NAME (large, centred) | Contact details | Objective (2 sentences, AI-written, warm and specific) | Education | Skills (bullet points, translated from their life experiences) | Experience (if any) | Achievements | References Available on Request. '+
-    'Tone: professional but warm. Appropriate for a young Australian applying for retail, hospitality, childcare or similar entry-level roles. '+
-    'Use Australian English. No fabrication. Output plain text CV only — no explanation, no preamble.'
+    'You are a warm, expert Australian CV writer helping a young person write their first or early CV. '+
+    'Transform their casual answers into professional, honest, well-worded CV content. '+
+    'NEVER invent experience or qualifications not mentioned. Reframe real experiences accurately and positively. '+
+    'Tone: professional but warm. Appropriate for retail, hospitality, childcare or entry-level Australian roles. '+
+    'Use Australian English. Skills should be translated from their real life experiences. '+
+    'Return ONLY valid JSON, zero markdown, zero preamble:\n'+jsonSchema
     :
     'You are an expert Australian CV writer helping a job seeker write a polished, professional CV. '+
-    'Transform their answers into sharp, impactful, well-structured CV content. '+
-    'NEVER invent experience or qualifications. Present real experience with strong action verbs and specific detail. '+
-    'Format: clean plain text, professional, easy to copy into Word, PowerPoint or any document. '+
-    'Structure: NAME | Contact details | Professional Summary (3–4 sentences) | Education | Work Experience (reverse chronological, achievement-focused bullet points) | Skills | Achievements | Referees. '+
-    'Use Australian English. Output plain text CV only — no explanation, no preamble, no markdown headers with #.';
+    'Transform their answers into sharp, impactful, achievement-focused CV content. '+
+    'NEVER invent experience or qualifications. Use strong action verbs and specific detail. '+
+    'Use Australian English. Experience bullets should be achievement-focused. '+
+    'Return ONLY valid JSON, zero markdown, zero preamble:\n'+jsonSchema;
 
   var userParts=['CV type: '+forkLabel];
   Object.keys(CV.answers).forEach(function(k){
@@ -1553,11 +1638,22 @@ function genCV(){
   })
   .then(function(r){return r.json();})
   .then(function(d){
-    var text=d.content.map(function(b){return b.text||'';}).join('');
-    var cvData=parseCVText(text,CV.answers);
-    sCVResult(text,isJunior,cvData);
+    var raw=d.content.map(function(b){return b.text||'';}).join('').replace(/```json\s*/g,'').replace(/```/g,'').trim();
+    var cvData=JSON.parse(raw);
+    /* Build plain text version for copy/PDF fallback */
+    var plainLines=[cvData.name||''];
+    if(cvData.role)plainLines.push(cvData.role);
+    if(cvData.location||cvData.contact)plainLines.push([cvData.location,cvData.contact].filter(Boolean).join(' · '));
+    plainLines.push('');
+    if(cvData.about){plainLines.push(isJunior?'ABOUT ME':'PROFESSIONAL SUMMARY');plainLines.push(cvData.about);plainLines.push('');}
+    if(cvData.skills&&cvData.skills.length){plainLines.push('KEY SKILLS');cvData.skills.forEach(function(s){plainLines.push('• '+s);});plainLines.push('');}
+    if(cvData.experience&&cvData.experience.length){plainLines.push('EXPERIENCE');cvData.experience.forEach(function(e){plainLines.push(e.title+(e.org?' — '+e.org:'')+(e.date?' ('+e.date+')':''));if(e.body)e.body.forEach(function(b){plainLines.push('  • '+b);});plainLines.push('');});}
+    if(cvData.education&&cvData.education.length){plainLines.push('EDUCATION');cvData.education.forEach(function(e){plainLines.push(e.qual+(e.inst?' — '+e.inst:'')+(e.date?' ('+e.date+')':''));});plainLines.push('');}
+    plainLines.push('References available upon request.');
+    var plainText=plainLines.join('\n');
+    sCVResult(plainText,isJunior,cvData);
   })
-  .catch(function(){
+  .catch(function(e){
     sc().innerHTML='<div class="eb"><div class="ei">&#x1F527;</div><h3 class="eh3">Something went wrong</h3>'+
       '<p class="ep">CV generation hit a hiccup. Try again.</p>'+
       '<div class="br" style="justify-content:center"><button class="bnx" onclick="genCV()">Try again \u2192</button></div>'+
