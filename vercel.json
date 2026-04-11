@@ -1,12 +1,12 @@
 {
   "rewrites": [
+    { "source": "/marketing", "destination": "/marketing.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/accessibility", "destination": "/accessibility.html" },
     { "source": "/schools", "destination": "/schools.html" },
     { "source": "/tafe", "destination": "/tafe.html" },
     { "source": "/des", "destination": "/des.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/marketing", "destination": "/marketing.html" }
+    { "source": "/contact", "destination": "/contact.html" }
   ]
 }
