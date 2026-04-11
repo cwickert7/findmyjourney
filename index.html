@@ -2592,14 +2592,15 @@ function runZac(){
 }
 
 function runCVTest(){
-  /* Zac — 21, ambitious commerce student, 3 prior roles — designed to produce a full two-page senior CV */
+  /* Zac — 21, ambitious commerce student, 3 prior roles — two-page senior CV test */
   CV={
-    type:'senior_general',
+    type:'graduate',
     fromAssessment:false,
     jd:'',
     answers:{
       cv_name:'Zachary Brennan',
-      cv_contact:'zachary.brennan@email.com | 0412 345 678 | LinkedIn: linkedin.com/in/zachbrennanthebox | Melbourne, VIC',
+      cv_contact:'zachary.brennan@email.com | 0412 345 678 | LinkedIn: linkedin.com/in/zachbrennanthebox',
+      cv_location:'Melbourne, VIC',
       cv_role:'Sales & Business Development',
       cv_summary_inputs:'I am a driven and commercially minded university student completing a Bachelor of Commerce majoring in Marketing and Management at the University of Melbourne. I have three years of progressive work experience across retail, warehousing and B2C sales, and I am seeking a graduate or entry-level sales or business development role where I can apply my commercial instincts and people skills. I am competitive, target-driven and thrive in fast-paced environments. I have consistently outperformed sales targets in my current role and was recognised as top performer in my team for two consecutive quarters.',
       cv_education:'Bachelor of Commerce (Marketing & Management) — University of Melbourne | Expected graduation: December 2025 | GPA: 3.4 | Relevant units: Consumer Behaviour, Strategic Marketing, Business Analytics, Organisational Leadership, Financial Accounting | Elected Commerce Student Society Sponsorship Officer 2024 — secured four new corporate sponsors worth $18,000 in total\n\nVictorian Certificate of Education (VCE) — Scotch College, Melbourne | Graduated 2021 | ATAR: 87 | Subjects: Business Management, Economics, Mathematical Methods, English, Physical Education',
@@ -2608,9 +2609,12 @@ function runCVTest(){
       cv_achievements:'Top Sales Performer — JB Hi-Fi Chadstone, Q2 & Q3 2024\nEmployee of the Month — Toll Group, August 2022\nCommerce Student Society Sponsorship Officer — University of Melbourne, 2024\nSponsor acquisition: secured $18,000 in new corporate partnerships for student society\nVCE Business Management Award — Scotch College, 2021',
     }
   };
-  sCVBuilder(false);
-  /* Jump straight to CV generation */
-  setTimeout(function(){genCV();},200);
+  /* Go straight to generation — bypass sCVBuilder which resets CV object */
+  PH='cv_generating';
+  sp(95,'Building your CV…','');
+  sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div><p class="tp">Writing your CV…</p><small class="tsm">Tailoring every word to you.</small></div>';
+  scrollUp();
+  genCV();
 }
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
