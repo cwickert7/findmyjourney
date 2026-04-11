@@ -195,7 +195,7 @@ h1 em{font-style:italic;color:var(--tc)}
 .email-cap-row{display:flex;gap:8px;flex-wrap:wrap}
 .email-cap-input{flex:1;min-width:180px;border:1.5px solid var(--sand);border-radius:10px;padding:12px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ch);background:var(--warm);outline:none;transition:border-color .15s}
 .email-cap-input:focus{border-color:var(--tc)}
-.email-cap-btn{background:var(--tc);color:#fff;border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;white-space:nowrap}
+.email-cap-btn{background:var(--tc);color:#fff;border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;white-space:nowrap;flex-shrink:0}
 .email-cap-btn:hover{background:var(--tcd)}
 .email-cap-btn:disabled{background:var(--tcl);color:#fff;cursor:not-allowed;opacity:.7}
 .email-cap-skip{display:block;text-align:center;margin-top:10px;font-size:12px;color:var(--lt);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;width:100%}
@@ -214,7 +214,18 @@ h1 em{font-style:italic;color:var(--tc)}
 footer{width:100%;max-width:860px;padding:0 24px 40px}
 .fb{display:none}.fp{display:none}
 @media print{body{background:#fff;display:block}.wrap{max-width:100%;padding:0}.card{box-shadow:none;border-radius:0;padding:0;overflow:visible}.card::before{display:none}header,footer,.more-btn,.brs,.fb-row,.p4,.cvb,.voice-btn-wrap,.pdf-btn-wrap,.occ-btn,.occ-panel{display:none!important}.print-header{display:block!important}.jc{break-inside:avoid;border:1.5px solid #E8DFD0;border-radius:8px;padding:14px 16px;margin-bottom:12px}.sh{break-after:avoid}.pip,.enc,.wy,.ef,.ns{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pip-n{background:#3D6B4F!important}.pip-c{background:#C4714A!important}}
-@media(max-width:480px){.card{padding:20px 16px}.og.two{grid-template-columns:1fr}.pprev{gap:4px}.fc-wrap{grid-template-columns:1fr 1fr}.qt{font-size:20px}}
+@media(max-width:480px){.card{padding:20px 16px}.og.two{grid-template-columns:1fr}.pprev{gap:4px}.fc-wrap{grid-template-columns:1fr 1fr}.qt{font-size:20px}
+/* Landing screen mobile */
+.pprev-new{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:4px;padding:12px 10px}
+.ppip-new{min-width:64px;flex-shrink:0}
+.ppip-i-new{width:40px;height:40px;font-size:18px}
+.ppip-n-new{font-size:9px}
+.ppip-l-new{font-size:10px}
+.pprev-arrow{flex-shrink:0}
+/* Email capture mobile */
+.email-cap-row{flex-direction:column}
+.email-cap-btn{width:100%;text-align:center}
+}
 @media(min-width:481px) and (max-width:900px){.card{padding:26px 30px}.og.two{grid-template-columns:1fr 1fr}}
 @media(min-width:901px){.card{padding:36px 44px;border-radius:24px}.wrap{padding:0 32px 60px}.qt{font-size:clamp(24px,2.2vw,32px)}.ob{padding:16px 18px;min-height:72px}.ol{font-size:18px}.od{font-size:15px}.oe{font-size:28px}.og{gap:10px}.og.two{grid-template-columns:1fr 1fr}.bnx{padding:16px 40px;font-size:17px;min-height:58px}.bstart{padding:18px 40px;font-size:17px;max-width:340px}.ti{font-size:18px;height:62px;padding:14px 18px}.fc-opt{min-height:110px;padding:20px 16px}.fc-icon{font-size:32px}.fc-label{font-size:16px}.jh4{font-size:22px}.jd{font-size:16px}.wy{font-size:15px;padding:10px 14px}.ef{font-size:15px;padding:10px 14px}.pws div{font-size:15px}.thiswk{font-size:15px}.nsli{font-size:16px}.rh2{font-size:28px}.encp{font-size:15px}.enc{padding:16px 20px}.jc{padding:18px 22px;margin-bottom:14px}.pprev{gap:12px}.ppip{padding:12px 10px}.ppip-i{font-size:24px}.ppip-l{font-size:13px}.spill{padding:11px 15px;margin-bottom:9px}.sps{font-size:16px}.spt{font-size:14px}}
 
@@ -2437,7 +2448,12 @@ function runZac(){
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
 
-sSf();
+// Ensure DOM is ready before rendering landing screen
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',function(){sSf();});
+} else {
+  sSf();
+}
 </script>
 </body>
 </html>
