@@ -355,8 +355,11 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 
 /* ── Scroll reveal ── */
 .reveal{
-  opacity:0;transform:translateY(28px);
+  opacity:1;transform:none;
   transition:opacity .65s ease, transform .65s ease;
+}
+@media(min-width:769px){
+  .reveal{opacity:0;transform:translateY(28px)}
 }
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-delay-1{transition-delay:.1s}
@@ -406,7 +409,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 
   /* Hero */
   .hero{
-    padding:100px 20px 56px;
+    padding:88px 20px 48px;
     min-height:auto;
   }
   .hero::before{display:none}
@@ -827,17 +830,26 @@ window.addEventListener('scroll',function(){
   if(document.getElementById('navMobile').classList.contains('open'))closeNav();
 },{passive:true});
 
-// Scroll reveal
+// Scroll reveal — with mobile fallback
 var revealEls=document.querySelectorAll('.reveal');
-var observer=new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:0.12});
-revealEls.forEach(function(el){observer.observe(el);});
+if('IntersectionObserver' in window){
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0,rootMargin:'0px 0px -40px 0px'});
+  revealEls.forEach(function(el){observer.observe(el);});
+} else {
+  // Fallback — just show everything immediately
+  revealEls.forEach(function(el){el.classList.add('visible');});
+}
+// Safety net — if anything is still hidden after 1.5s, reveal it
+setTimeout(function(){
+  revealEls.forEach(function(el){el.classList.add('visible');});
+},1500);
 </script>
 </body>
 </html>
