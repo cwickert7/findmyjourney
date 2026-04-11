@@ -6,17 +6,20 @@ export default async function handler(req, res) {
   const explorerName = name || 'Explorer';
   const jobList = (jobs || []).slice(0, 4);
 
-  // Store in Vercel KV (non-fatal if fails)
+  // Store in Upstash Redis (non-fatal if fails)
   try {
-    const { KV_REST_API_URL: url, KV_REST_API_TOKEN: token } = process.env;
+    const url = process.env.UPSTASH_REDIS_REST_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
     if (url && token) {
       const key = `cc_email_${Date.now()}`;
-      await fetch(`${url}/set/${key}/${encodeURIComponent(JSON.stringify({email,name:explorerName,jobs:jobList,ts:new Date().toISOString()}))}`,
-        { headers: { Authorization: `Bearer ${token}` } });
+      const val = JSON.stringify({ email, name: explorerName, jobs: jobList, ts: new Date().toISOString() });
+      await fetch(`${url}/set/${encodeURIComponent(key)}/${encodeURIComponent(val)}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
     }
-  } catch(e) { console.error('KV:', e.message); }
+  } catch(e) { console.error('Upstash:', e.message); }
 
-  // Build email
+  // Build email HTML
   const jobsHTML = jobList.map(j => `<li style="margin-bottom:6px;font-size:15px;color:#2C2422">${j}</li>`).join('');
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;background:#FAF7F2;font-family:Arial,sans-serif">
@@ -42,13 +45,18 @@ export default async function handler(req, res) {
 </div></body></html>`;
 
   // Send via Resend
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return res.status(500).json({ error: 'Email not configured' });
+  const resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) return res.status(500).json({ error: 'Email not configured' });
   try {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-      body: JSON.stringify({ from: 'Career Compass <results@careercompass.com.au>', to: [email], subject: `Your Career Compass results, ${explorerName}`, html })
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${resendKey}` },
+      body: JSON.stringify({
+        from: 'Career Compass <onboarding@resend.dev>',
+        to: [email],
+        subject: `Your Career Compass results, ${explorerName}`,
+        html
+      })
     });
     const data = await r.json();
     if (!r.ok) throw new Error(data.message || 'Resend error');
