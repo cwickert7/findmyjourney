@@ -8,32 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;
-  --sand:#E8DFD0;--sand2:#D4C8B4;
-  --tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;
-  --gr:#3D6B4F;
-  --ch:#2C2422;--mid:#6B6058;--lt:#9A8E84;
-}
+:root{--cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;--sand:#E8DFD0;--sand2:#D4C8B4;--tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;--gr:#3D6B4F;--ch:#2C2422;--mid:#6B6058;--lt:#9A8E84}
 html{scroll-behavior:smooth}
 body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden}
+@keyframes spin{to{transform:rotate(360deg)}}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
 .nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-ring{width:30px;height:30px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tc);animation:spin 14s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 .nav-name{font-family:"Fraunces",serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
 .nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;text-decoration:none;transition:background .2s}
 .nav-cta:hover{background:var(--tcd)}
 .page-hero{background:var(--ch);padding:120px 48px 64px;text-align:center}
 .page-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px}
-.page-h1{font-family:"Fraunces",serif;font-size:clamp(40px,5vw,68px);font-weight:300;color:#fff;line-height:1.05;margin-bottom:16px}
+.page-h1{font-family:"Fraunces",serif;font-size:clamp(40px,5vw,68px);font-weight:300;color:#fff;line-height:1.05;margin-bottom:16px;font-variant-ligatures:none}
 .page-h1 em{font-style:italic;color:var(--tcl)}
 .page-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;max-width:600px;margin:0 auto}
 .page-body{max-width:840px;margin:0 auto;padding:64px 48px 96px}
 .page-updated{font-size:12px;color:var(--lt);margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid var(--sand)}
 .page-section{margin-bottom:48px}
-.page-section h2{font-family:"Fraunces",serif;font-size:26px;font-weight:400;color:var(--ch);margin-bottom:14px;margin-top:40px}
+.page-section h2{font-family:"Fraunces",serif;font-size:26px;font-weight:400;color:var(--ch);margin-bottom:14px;margin-top:40px;font-variant-ligatures:none}
 .page-section h3{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:8px;margin-top:24px}
 .page-section p{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:14px}
 .page-section ul{padding-left:20px;margin-bottom:14px}
@@ -52,22 +46,29 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .info-card-icon{font-size:28px;margin-bottom:10px}
 .info-card-title{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:6px}
 .info-card-desc{font-size:14px;color:var(--mid);line-height:1.65}
-footer{background:#1E1613;padding:40px 48px 28px}
-.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-.footer-brand{display:flex;align-items:center;gap:8px}
-.footer-brand-name{font-family:"Fraunces",serif;font-size:14px;color:#fff}
-.footer-links{display:flex;gap:20px;flex-wrap:wrap}
-.footer-links a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:rgba(255,255,255,.7)}
-.footer-copy{font-size:11px;color:rgba(255,255,255,.18);width:100%;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);margin-top:16px}
+footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-brand-name{font-family:"Fraunces",serif;font-size:15px;color:#fff;letter-spacing:.04em}
+.footer-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
+.footer-col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.footer-col a:hover{color:rgba(255,255,255,.7)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;font-weight:300;color:rgba(255,255,255,.18);line-height:1.6;max-width:680px}
+.footer-legal{display:flex;gap:18px;flex-shrink:0}
+.footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.55)}
 @media(max-width:768px){
   .nav-inner{padding:0 20px}
   .nav-cta{display:none}
   .page-hero{padding:100px 20px 48px}
   .page-body{padding:48px 20px 64px}
-  footer{padding:32px 20px 24px}
-}
-</style>
+  footer{padding:40px 20px 24px}
+  .footer-top{grid-template-columns:1fr;gap:28px;margin-bottom:28px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}</style>
 </head>
 <body>
 <nav>
@@ -87,23 +88,22 @@ footer{background:#1E1613;padding:40px 48px 28px}
 <div class="page-body">
 <div class="page-section">
 <h2>Career Compass for DES providers</h2>
-<p>Disability Employment Services providers work with job seekers who face significant barriers to employment — including mental health challenges, learning differences, anxiety, limited work history, and difficulty in traditional interview or assessment settings.</p>
-<p>Career Compass was designed with these Explorers in mind. The Sensitive Explorer Protocol identifies job seekers who need calm, structured, low-pressure pathways — without requiring them to disclose their condition — and filters results accordingly.</p>
+<p>Disability Employment Services providers work with job seekers who face significant barriers to employment &mdash; including mental health challenges, learning differences, anxiety, limited work history, and difficulty in traditional interview or assessment settings.</p>
+<p>Career Compass was designed with these Explorers in mind. The Sensitive Explorer Protocol identifies job seekers who need calm, structured, low-pressure pathways &mdash; without requiring them to disclose their condition &mdash; and filters results accordingly.</p>
 </div>
 <div class="page-section">
 <h2>The Sensitive Explorer Protocol</h2>
-<p>When Career Compass detects signals that a job seeker may benefit from more supported employment options — through their answers about noise tolerance, supervision needs, adaptability to change and psychological safety — it activates a specialised results filter that:</p>
+<p>When Career Compass detects signals that a job seeker may benefit from more supported employment options, it activates a specialised results filter that:</p>
 <ul>
 <li>Excludes roles with high sensory load, banter-heavy cultures or unpredictable environments</li>
 <li>Prioritises roles with clear, repetitive tasks in small stable teams</li>
 <li>Surfaces pathways with structured training, patient supervision and gradual responsibility growth</li>
 <li>Uses warmer, more encouraging language in the results summary</li>
 </ul>
-<p>This happens automatically, based on the job seeker's own answers — not on a clinician's judgment or a disclosed diagnosis.</p>
+<p>This happens automatically, based on the job seeker&rsquo;s own answers &mdash; not on a clinician&rsquo;s judgment or a disclosed diagnosis.</p>
 </div>
 <div class="page-section">
 <h2>Appropriate roles for DES caseloads</h2>
-<p>Career Compass results for sensitive Explorers typically include roles across:</p>
 <div class="info-card"><div class="info-card-icon">&#x1F33F;</div><div class="info-card-title">Grounds and outdoor roles</div><div class="info-card-desc">Grounds maintenance, market gardening, nursery work, parks and reserves, car wash and vehicle detailing. Clear tasks, outdoor setting, minimal social complexity.</div></div>
 <div class="info-card"><div class="info-card-icon">&#x1F43E;</div><div class="info-card-title">Animal care</div><div class="info-card-desc">Veterinary assistant, animal shelter support, pet grooming assistant, kennel hand. Meaningful work with low human interaction pressure.</div></div>
 <div class="info-card"><div class="info-card-icon">&#x1F9F9;</div><div class="info-card-title">Cleaning and maintenance</div><div class="info-card-desc">Commercial cleaning, trolley collection, building maintenance support. Routine-based, independent, measurable output.</div></div>
@@ -118,19 +118,47 @@ footer{background:#1E1613;padding:40px 48px 28px}
 <li>A way to surface job seeker values and work environment needs in a non-clinical, non-threatening format</li>
 <li>A CV generation tool for job seekers with limited work history</li>
 </ul>
-<div class="highlight-box"><p>&#x1F4E7; To discuss a DES-specific pilot, contact <a href="/cdn-cgi/l/email-protection#583c3d2b183b392a3d3d2a3b373528392b2b763b373576392d"><span class="__cf_email__" data-cfemail="f3979680b3909281969681909c9e83928080dd909c9edd9286">[email&#160;protected]</span></a> or <a href="/contact.html">complete our contact form</a>.</p></div>
+<div class="highlight-box"><p>&#x1F4E7; To discuss a DES-specific pilot, contact <a href="mailto:des@careercompass.com.au">des@careercompass.com.au</a> or <a href="/contact.html">complete our contact form</a>.</p></div>
 </div>
 </div>
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="nav-ring" style="width:22px;height:22px;font-size:10px;border-color:rgba(196,113,74,.4);color:rgba(196,113,74,.5)">&#9670;</div>
-      <span class="footer-brand-name">Career Compass</span>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="nav-ring" style="width:24px;height:24px;font-size:11px;border-color:rgba(196,113,74,.4);color:rgba(196,113,74,.5)">&#9670;</div>
+          <span class="footer-brand-name">Career Compass</span>
+        </div>
+        <div class="footer-desc">AI-powered career discovery for young Australians aged 15&#x2013;25. Built on real psychology. Free, private and genuinely Australian.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Product</div>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">CV Builder</a>
+        <a href="/marketing.html#how">How it works</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Organisations</div>
+        <a href="/schools.html">Schools</a>
+        <a href="/tafe.html">TAFE &amp; RTOs</a>
+        <a href="/des.html">DES providers</a>
+        <a href="/contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Legal</div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/accessibility.html">Accessibility</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms of Use</a>
-      <a href="/accessibility.html">Accessibility</a>
-      <a href="/contact.html">Contact</a>
+    <div class="footer-bottom">
+      <div class="footer-copy">&#xA9; 2025 Career Compass &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
     </div>
-    <div class="footer-copy">&#xA9; 20
+  </div>
+</footer>
+</body>
+</html>

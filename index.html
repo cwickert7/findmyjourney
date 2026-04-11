@@ -462,6 +462,8 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-t3-ref{font-size:12px;color:#9a8e84;font-style:italic}
 .cv-t3-watermark{text-align:right;padding:5px 28px 10px;font-size:9px;color:#c8beb4;letter-spacing:.05em}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <header>
@@ -1289,15 +1291,38 @@ function buildReportHTML(){
 function exportPDF(){
   var btn=g('pdfBtn');if(btn){btn.disabled=true;btn.textContent='Generating PDF...';}
   var nm=A.name||'Explorer';
-  fetch('/api/pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({html:buildReportHTML(),name:nm})})
-  .then(function(r){if(!r.ok)throw new Error('PDF failed');return r.blob();})
-  .then(function(blob){
-    var url=URL.createObjectURL(blob);var a=document.createElement('a');
-    a.href=url;a.download='CareerCompass-'+nm.replace(/[^a-zA-Z0-9]/g,'')+'-Results.pdf';
-    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-    if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
-  })
-  .catch(function(e){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}console.error('PDF error:',e);alert('PDF generation failed. Please try again.');});
+  /* Render the report HTML into a hidden iframe, then capture with html2canvas */
+  var reportHTML=buildReportHTML();
+  var iframe=document.createElement('iframe');
+  iframe.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:auto;border:none;visibility:hidden';
+  document.body.appendChild(iframe);
+  iframe.contentDocument.open();
+  iframe.contentDocument.write(reportHTML);
+  iframe.contentDocument.close();
+  setTimeout(function(){
+    var body=iframe.contentDocument.body;
+    html2canvas(body,{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',windowWidth:794}).then(function(canvas){
+      var imgData=canvas.toDataURL('image/jpeg',0.92);
+      var pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      var pdfW=pdf.internal.pageSize.getWidth();
+      var pdfH=pdf.internal.pageSize.getHeight();
+      var imgW=pdfW;
+      var imgH=(canvas.height*pdfW)/canvas.width;
+      var y=0;
+      while(y<imgH){
+        if(y>0)pdf.addPage();
+        pdf.addImage(imgData,'JPEG',0,y>0?-(y):0,imgW,imgH);
+        y+=pdfH;
+      }
+      pdf.save('CareerCompass-'+nm.replace(/[^a-zA-Z0-9]/g,'')+'-Results.pdf');
+      document.body.removeChild(iframe);
+      if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
+    }).catch(function(e){
+      document.body.removeChild(iframe);
+      if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
+      console.error('PDF error:',e);alert('PDF generation failed. Please try again.');
+    });
+  },800);
 }
 
 // ── VOICE ──
@@ -2108,15 +2133,37 @@ function exportCVPDF(){
     'ul{padding-left:14px}li{margin-bottom:2px}'+
     '@media print{body{margin:0;padding:0}}'+
     '</style></head><body>'+cvHTML+'</body></html>';
-  fetch('/api/pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({html:html,name:name+'-CV'})})
-  .then(function(r){if(!r.ok)throw new Error('PDF failed');return r.blob();})
-  .then(function(blob){
-    var url=URL.createObjectURL(blob);var a=document.createElement('a');
-    a.href=url;a.download='CareerCompass-'+name.replace(/[^a-zA-Z0-9]/g,'')+'-CV.pdf';
-    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-    if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
-  })
-  .catch(function(e){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}console.error('PDF error:',e);alert('PDF generation failed. Please try again.');});
+  /* Client-side PDF using html2canvas + jsPDF */
+  var iframe=document.createElement('iframe');
+  iframe.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:auto;border:none;visibility:hidden';
+  document.body.appendChild(iframe);
+  iframe.contentDocument.open();
+  iframe.contentDocument.write(html);
+  iframe.contentDocument.close();
+  setTimeout(function(){
+    var body=iframe.contentDocument.body;
+    html2canvas(body,{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',windowWidth:794}).then(function(canvas){
+      var imgData=canvas.toDataURL('image/jpeg',0.92);
+      var pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      var pdfW=pdf.internal.pageSize.getWidth();
+      var pdfH=pdf.internal.pageSize.getHeight();
+      var imgW=pdfW;
+      var imgH=(canvas.height*pdfW)/canvas.width;
+      var y=0;
+      while(y<imgH){
+        if(y>0)pdf.addPage();
+        pdf.addImage(imgData,'JPEG',0,y>0?-(y):0,imgW,imgH);
+        y+=pdfH;
+      }
+      pdf.save('CareerCompass-'+name.replace(/[^a-zA-Z0-9]/g,'')+'-CV.pdf');
+      document.body.removeChild(iframe);
+      if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
+    }).catch(function(e){
+      document.body.removeChild(iframe);
+      if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
+      console.error('CV PDF error:',e);alert('PDF generation failed. Please try again.');
+    });
+  },800);
 }
 
 
