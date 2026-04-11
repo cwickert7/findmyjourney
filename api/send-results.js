@@ -150,7 +150,7 @@ export default async function handler(req, res) {
 
       <!-- CTA -->
       <tr><td style="background:#fff;border-radius:16px;padding:24px 28px;border:1.5px solid #E8DFD0;text-align:center;display:block">
-        <p style="font-size:14px;color:#6B6058;margin:0 0 16px;line-height:1.6">Want to go deeper? Head back to Career Compass to explore individual roles, build a personalised CV, or get a step-by-step pathway.</p>
+        <p style="font-size:14px;color:#6B6058;margin:0 0 16px;line-height:1.6">Want to explore further? Take the assessment again at any time — your next session might reveal new directions as your thinking evolves. You can also use Career Compass to build a personalised CV.</p>
         <a href="https://career-compass-chris-wickerts-projects.vercel.app" style="display:inline-block;background:#C4714A;color:#fff;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:.02em">Back to Career Compass →</a>
       </td></tr>
 
