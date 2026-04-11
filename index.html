@@ -859,7 +859,8 @@ function sSf(){
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
     '<p class="landing-privacy">&#x1F512; Your answers are never stored &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
-    '<div style="position:absolute;bottom:10px;right:16px">'+
+    '<div style="position:absolute;bottom:10px;right:16px;display:flex;align-items:center;gap:10px">'+
+    '<button class="liam-btn" onclick="runCVTest()" style="cursor:pointer;padding:4px 8px;font-size:11px;color:var(--lt);background:none;border:1px solid var(--sand);border-radius:4px;font-family:\'DM Sans\',sans-serif">CV Test</button>'+
     '<select class="liam-btn" id="personaSelect" onchange="runPersona(this.value)" style="cursor:pointer;padding:4px 6px;font-size:11px;color:var(--lt);background:none;border:none;font-family:\'DM Sans\',sans-serif;appearance:none;-webkit-appearance:none">'+
     '<option value="">Test</option>'+
     '<option value="liam">Liam (17)</option>'+
@@ -2588,6 +2589,28 @@ function runZac(){
   PS={now:false,career:true};IS_PT=false;
   QL=buildQL(['commerce','perform'],'complex','driven','21_25',['commerce','maths'],['indoor','dynamic']);
   genR();
+}
+
+function runCVTest(){
+  /* Zac — 21, ambitious commerce student, 3 prior roles — designed to produce a full two-page senior CV */
+  CV={
+    type:'senior_general',
+    fromAssessment:false,
+    jd:'',
+    answers:{
+      cv_name:'Zachary Brennan',
+      cv_contact:'zachary.brennan@email.com | 0412 345 678 | LinkedIn: linkedin.com/in/zachbrennanthebox | Melbourne, VIC',
+      cv_role:'Sales & Business Development',
+      cv_summary_inputs:'I am a driven and commercially minded university student completing a Bachelor of Commerce majoring in Marketing and Management at the University of Melbourne. I have three years of progressive work experience across retail, warehousing and B2C sales, and I am seeking a graduate or entry-level sales or business development role where I can apply my commercial instincts and people skills. I am competitive, target-driven and thrive in fast-paced environments. I have consistently outperformed sales targets in my current role and was recognised as top performer in my team for two consecutive quarters.',
+      cv_education:'Bachelor of Commerce (Marketing & Management) — University of Melbourne | Expected graduation: December 2025 | GPA: 3.4 | Relevant units: Consumer Behaviour, Strategic Marketing, Business Analytics, Organisational Leadership, Financial Accounting | Elected Commerce Student Society Sponsorship Officer 2024 — secured four new corporate sponsors worth $18,000 in total\n\nVictorian Certificate of Education (VCE) — Scotch College, Melbourne | Graduated 2021 | ATAR: 87 | Subjects: Business Management, Economics, Mathematical Methods, English, Physical Education',
+      cv_experience:'Sales Assistant & Team Leader (Acting) — JB Hi-Fi, Chadstone | January 2023 – Present\n• Consistently achieved 115–130% of monthly sales targets across consumer electronics and home appliances\n• Recognised as Top Sales Performer Q2 and Q3 2024 within a team of 22 staff\n• Stepped into acting team leader role during manager absence — coordinated rosters, resolved customer escalations and ran two team briefings per week\n• Developed product knowledge across 400+ SKUs; trained three new team members on sales floor processes and POS systems\n• Implemented a personal upsell tracking sheet that helped identify high-conversion product pairings — adopted informally by two colleagues\n\nWarehouse Pick-Pack & Dispatch Operator — Toll Group, Laverton | November 2021 – December 2022\n• Processed 180–220 orders per shift with a documented accuracy rate of 99.2%\n• Achieved company record for consecutive days without a pick error (47 days) in the B2C fulfilment stream\n• Trained in forklift operation (LF licence obtained November 2022) and operated RF scanning systems\n• Identified a recurring labelling error in the returns process and flagged to supervisor — fix reduced return processing time by approximately 15%\n• Awarded Employee of the Month, August 2022\n\nCasual Sales Assistant — Rebel Sport, Chadstone | March 2021 – October 2021\n• Provided customer service across footwear, apparel and equipment departments during peak trading periods\n• Assisted in stocktake preparation and end-of-season sale floor resets\n• Maintained a strong customer satisfaction score — received four named positive mentions in Google reviews during tenure',
+      cv_skills:'Commercial & Sales: Sales floor performance, upselling, product demonstrations, customer needs analysis, CRM basics, target tracking\nLeadership: Team coordination, onboarding and training of new staff, conflict resolution, briefing delivery\nTechnical: Microsoft Office Suite (advanced Excel and PowerPoint), Google Workspace, Salesforce (introductory), Canva\nSoft Skills: High energy, resilience under pressure, competitive mindset, clear communicator, quick learner\nLicences: Forklift Licence (LF Class) | Current Working With Children Check (Employee)',
+      cv_achievements:'Top Sales Performer — JB Hi-Fi Chadstone, Q2 & Q3 2024\nEmployee of the Month — Toll Group, August 2022\nCommerce Student Society Sponsorship Officer — University of Melbourne, 2024\nSponsor acquisition: secured $18,000 in new corporate partnerships for student society\nVCE Business Management Award — Scotch College, 2021',
+    }
+  };
+  sCVBuilder(false);
+  /* Jump straight to CV generation */
+  setTimeout(function(){genCV();},200);
 }
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
