@@ -53,7 +53,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .strip-inner{display:inline-flex;animation:marquee 24s linear infinite}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .strip-item{display:inline-flex;align-items:center;gap:14px;padding:14px 28px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.strip-item::after{content:"B7";color:var(--tc);font-size:18px}
+.strip-item::after{content:"·";color:var(--tc);font-size:18px}
 .section{padding:88px 48px}
 .section-inner{max-width:1120px;margin:0 auto}
 .sec-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px;display:flex;align-items:center;gap:10px}
@@ -414,7 +414,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
         <a href="#institutions">Schools</a>
         <a href="#institutions">TAFE &amp; RTOs</a>
         <a href="#institutions">DES providers</a>
-        <a href="mailto:hello@careercompass.com.au">Contact us</a>
+        <a href="/cdn-cgi/l/email-protection#e48c8188888ba4878596818196878b8994859797ca878b89ca8591">Contact us</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Legal</div>
@@ -432,7 +432,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     </div>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function toggleNav(){
   var m=document.getElementById("navMobile");
   var h=document.getElementById("navHam");
@@ -454,9 +454,4 @@ function closeNav(){
   m.classList.remove("open");
   h.querySelectorAll("span").forEach(function(s){s.style.transform="";s.style.opacity="";});
 }
-window.addEventListener("scroll",function(){
-  if(document.getElementById("navMobile").classList.contains("open"))closeNav();
-},{passive:true});
-</script>
-</body>
-</html>
+window.addEve
