@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — Career Compass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;
+  --sand:#E8DFD0;--sand2:#D4C8B4;
+  --tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;
+  --gr:#3D6B4F;
+  --ch:#2C2422;--mid:#6B6058;--lt:#9A8E84;
+}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-ring{width:30px;height:30px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tc);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-name{font-family:"Fraunces",serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
+.nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--tcd)}
+.page-hero{background:var(--ch);padding:120px 48px 64px;text-align:center}
+.page-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px}
+.page-h1{font-family:"Fraunces",serif;font-size:clamp(40px,5vw,68px);font-weight:300;color:#fff;line-height:1.05;margin-bottom:16px}
+.page-h1 em{font-style:italic;color:var(--tcl)}
+.page-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;max-width:600px;margin:0 auto}
+.page-body{max-width:840px;margin:0 auto;padding:64px 48px 96px}
+.page-updated{font-size:12px;color:var(--lt);margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid var(--sand)}
+.page-section{margin-bottom:48px}
+.page-section h2{font-family:"Fraunces",serif;font-size:26px;font-weight:400;color:var(--ch);margin-bottom:14px;margin-top:40px}
+.page-section h3{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:8px;margin-top:24px}
+.page-section p{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:14px}
+.page-section ul{padding-left:20px;margin-bottom:14px}
+.page-section li{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:6px}
+.page-section a{color:var(--tc);text-decoration:underline}
+.highlight-box{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:24px 28px;margin:24px 0}
+.highlight-box p{margin-bottom:0}
+.contact-field{margin-bottom:20px}
+.contact-field label{display:block;font-size:13px;font-weight:600;color:var(--ch);margin-bottom:6px;letter-spacing:.03em}
+.contact-field input,.contact-field textarea,.contact-field select{width:100%;border:1.5px solid var(--sand);border-radius:10px;padding:12px 16px;font-size:15px;font-family:"DM Sans",sans-serif;color:var(--ch);background:var(--warm);outline:none;transition:border-color .2s}
+.contact-field input:focus,.contact-field textarea:focus,.contact-field select:focus{border-color:var(--tc)}
+.contact-field textarea{min-height:140px;resize:vertical}
+.contact-submit{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:15px 36px;font-size:16px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s}
+.contact-submit:hover{background:var(--tcd)}
+.info-card{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:24px;margin-bottom:16px}
+.info-card-icon{font-size:28px;margin-bottom:10px}
+.info-card-title{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:6px}
+.info-card-desc{font-size:14px;color:var(--mid);line-height:1.65}
+footer{background:#1E1613;padding:40px 48px 28px}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-brand-name{font-family:"Fraunces",serif;font-size:14px;color:#fff}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.18);width:100%;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);margin-top:16px}
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  .nav-cta{display:none}
+  .page-hero{padding:100px 20px 48px}
+  .page-body{padding:48px 20px 64px}
+  footer{padding:32px 20px 24px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="/marketing">
+      <div class="nav-ring">&#9670;</div>
+      <span class="nav-name">Career Compass</span>
+    </a>
+    <a href="https://career-compass-chris-wickerts-projects.vercel.app" target="_blank" class="nav-cta">Try it free &#x2192;</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <div class="page-eyebrow">Legal</div>
+  <h1 class="page-h1">Terms<br><em>of Use.</em></h1>
+  <p class="page-sub">What you need to know about using Career Compass.</p>
+</div>
+<div class="page-body">
+<div class="page-updated">Last updated: April 2025</div>
+<div class="highlight-box"><p><strong>In plain English:</strong> Career Compass is a free guidance tool. The results are AI-generated suggestions — not professional career advice. Use them as a starting point, not a final answer.</p></div>
+<div class="page-section">
+<h2>1. About Career Compass</h2>
+<p>Career Compass is an AI-powered career discovery tool operated by Career Compass (ABN placeholder). It is designed to help young Australians aged 15–25 explore career options that may suit their personality, values and circumstances.</p>
+</div>
+<div class="page-section">
+<h2>2. Acceptance of terms</h2>
+<p>By using Career Compass, you agree to these Terms of Use. If you do not agree, please do not use the tool. We may update these terms from time to time — continued use constitutes acceptance of any changes.</p>
+</div>
+<div class="page-section">
+<h2>3. Nature of the service</h2>
+<p>Career Compass provides AI-generated career suggestions based on your answers to an online assessment. These suggestions are:</p>
+<ul>
+<li>For guidance and exploration purposes only</li>
+<li>Not a substitute for professional career counselling, vocational assessment or psychological advice</li>
+<li>Not guaranteed to be accurate, complete or suitable for any particular individual</li>
+<li>Generated by an AI model and may contain errors or omissions</li>
+</ul>
+<p>Salary information is indicative only and based on general Australian market data. Actual salaries vary by employer, location, experience and negotiation.</p>
+</div>
+<div class="page-section">
+<h2>4. Who can use Career Compass</h2>
+<p>Career Compass is designed for young Australians aged 15–25. Users under 15 are encouraged to use this tool with the knowledge and support of a parent or guardian. There is no account required to use Career Compass.</p>
+</div>
+<div class="page-section">
+<h2>5. CV Builder</h2>
+<p>The Career Compass CV Builder generates draft CV content based on information you provide. You are responsible for reviewing, editing and verifying all CV content before using it in a job application. Career Compass takes no responsibility for the accuracy of CV content or outcomes arising from its use.</p>
+</div>
+<div class="page-section">
+<h2>6. Acceptable use</h2>
+<p>You agree not to:</p>
+<ul>
+<li>Use Career Compass in any way that is unlawful, harmful or deceptive</li>
+<li>Attempt to reverse engineer, scrape or extract data from Career Compass</li>
+<li>Use Career Compass to generate content for commercial resale without our written permission</li>
+<li>Submit false, misleading or harmful content through the assessment</li>
+</ul>
+</div>
+<div class="page-section">
+<h2>7. Intellectual property</h2>
+<p>The Career Compass brand, methodology, assessment design, software and content are owned by Career Compass. The AI-generated results produced for you during your session are yours to use for personal career exploration purposes.</p>
+</div>
+<div class="page-section">
+<h2>8. Limitation of liability</h2>
+<p>To the maximum extent permitted by Australian law, Career Compass is not liable for any loss, damage or harm arising from use of this tool, reliance on AI-generated results, or any career decisions made based on Career Compass output. The tool is provided "as is" without warranty of any kind.</p>
+</div>
+<div class="page-section">
+<h2>9. Governing law</h2>
+<p>These terms are governed by the laws of Victoria, Australia. Any disputes will be subject to the exclusive jurisdiction of Victorian courts.</p>
+</div>
+<div class="page-section">
+<h2>10. Contact</h2>
+<p>Questions about these terms? Email <a href="mailto:hello@careercompass.com.au">hello@careercompass.com.au</a>.</p>
+</div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-ring" style="width:22px;height:22px;font-size:10px;border-color:rgba(196,113,74,.4);color:rgba(196,113,74,.5)">&#9670;</div>
+      <span class="footer-brand-name">Career Compass</span>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-copy">&#xA9; 2025 Career Compass &#xB7; For guidance only &#x2014; not a substitute for professional career counselling</div>
+  </div>
+</footer>
+</body>
+</html>
