@@ -1091,50 +1091,194 @@ function buildReportHTML(){
   var R=RS;var nm=A.name||'Explorer';
   var today=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
   var profileLines=buildProfileSummary();
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><style>'+
-    'body{font-family:Georgia,serif;color:#2C2C2C;padding:24px 32px;max-width:720px;margin:0 auto}'+
-    'h1{font-size:24px;font-weight:300;margin-bottom:3px;color:#2C2C2C}'+
-    '.subtitle{font-size:12px;color:#6B6560;margin-bottom:18px}'+
-    '.logo{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A09890;margin-bottom:4px}'+
-    '.enc-box{background:#FEF8EC;border:1.5px solid #F5DDB8;border-radius:8px;padding:12px 15px;margin-bottom:16px;font-style:italic;font-size:13px;color:#7A5C35;line-height:1.65}'+
-    '.profile-box{background:#FAF7F2;border:1.5px solid #E8DFD0;border-radius:8px;padding:11px 15px;margin-bottom:16px}'+
-    '.profile-box h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#A09890;margin-bottom:8px;font-weight:600}'+
-    '.profile-item{font-size:12px;color:#6B6560;padding-left:13px;position:relative;line-height:1.6;margin-bottom:3px}'+
-    '.profile-item::before{content:"\\2022";position:absolute;left:0;color:#C4714A}'+
-    '.sec-head{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#A09890;border-bottom:1.5px solid #E8DFD0;padding-bottom:5px;margin:18px 0 9px;font-weight:600}'+
-    '.job-card{border:1.5px solid #E8DFD0;border-radius:8px;padding:12px 14px;margin-bottom:10px}'+
-    '.job-title{font-size:17px;font-weight:400;margin-bottom:4px}'+
-    '.job-desc{font-size:12px;color:#6B6560;line-height:1.6;margin-bottom:6px}'+
-    '.why-you{background:#EFF7F2;border-radius:5px;padding:6px 9px;font-size:11px;color:#3D6B4F;font-style:italic;line-height:1.5;margin-bottom:6px}'+
-    '.env-fit{background:#EEF2FC;border-radius:5px;padding:6px 9px;font-size:11px;color:#4A6CB8;line-height:1.5;margin-bottom:6px}'+
-    '.pathway-label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#A09890;margin-bottom:5px}'+
-    '.pathway-step{display:flex;gap:7px;font-size:11px;color:#6B6560;margin-bottom:3px;align-items:flex-start}'+
-    '.step-dot{width:14px;height:14px;border-radius:50%;background:#C4714A;color:#fff;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}'+
-    '.tags{display:flex;gap:4px;flex-wrap:wrap;margin:5px 0}'+
-    '.tag{font-size:9px;background:#E8DFD0;color:#6B6560;padding:2px 7px;border-radius:20px}'+
-    '.this-week{border-top:1px solid #E8DFD0;padding-top:6px;margin-top:6px;font-size:11px;color:#6B6560}'+
-    '.this-week strong{color:#C4714A}'+
-    '.tips-box{background:#F8F4EF;border-radius:8px;padding:12px 15px;margin-top:14px}'+
-    '.tips-box h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#A09890;margin-bottom:8px}'+
-    '.tip{font-size:12px;color:#6B6560;padding-left:13px;position:relative;line-height:1.55;margin-bottom:4px}'+
-    '.tip::before{content:"\\2192";position:absolute;left:0;color:#C4714A}'+
-    '.footer-note{margin-top:28px;padding-top:14px;border-top:1px solid #E8DFD0;font-size:10px;color:#A09890;line-height:1.6}'+
-    '</style></head><body>'+
-    '<div class="logo">Career Compass</div>'+
-    '<h1>'+nm+'&rsquo;s Career Report</h1>'+
-    '<div class="subtitle">Generated '+today+'</div>';
-  if(R.encouragement)html+='<div class="enc-box">'+R.encouragement+'</div>';
-  if(profileLines.length){html+='<div class="profile-box"><h3>Your Profile</h3>';profileLines.forEach(function(l){html+='<div class="profile-item">'+l+'</div>';});html+='</div>';}
-  function jobHtml(job,i){
-    var pw='';
-    if(job.pathway&&job.pathway.length){pw='<div class="pathway-label">How to get there</div>';job.pathway.forEach(function(step,si){pw+='<div class="pathway-step"><span class="step-dot">'+(si+1)+'</span><span>'+step+'</span></div>';});}
-    var tgs='';if(job.tags&&job.tags.length)tgs='<div class="tags">'+job.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div>';
-    return '<div class="job-card"><div class="job-title">'+(i+1)+'. '+job.title+'</div><div class="job-desc">'+job.desc+'</div>'+(job.whyYou?'<div class="why-you">'+job.whyYou+'</div>':'')+(job.envFit?'<div class="env-fit">'+job.envFit+'</div>':'')+pw+tgs+(job.thisWeek?'<div class="this-week"><strong>This week:</strong> '+job.thisWeek+'</div>':'')+' </div>';
+
+  var css=[
+    '*{box-sizing:border-box;margin:0;padding:0}',
+    'body{font-family:"Helvetica Neue",Arial,sans-serif;color:#2C2422;background:#fff;font-size:13px;line-height:1.5}',
+    /* Cover header */
+    '.cover{background:#2C2422;padding:40px 48px 36px;position:relative;overflow:hidden}',
+    '.cover::after{content:"";position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:40px solid rgba(196,113,74,.12)}',
+    '.cover-brand{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:20px}',
+    '.cover-name{font-family:Georgia,serif;font-size:36px;font-weight:400;color:#fff;line-height:1.1;margin-bottom:6px}',
+    '.cover-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:0}',
+    '.cover-date{position:absolute;top:40px;right:48px;font-size:11px;color:rgba(255,255,255,.3);text-align:right}',
+    /* Body */
+    '.body{padding:36px 48px}',
+    /* Encouragement */
+    '.enc{background:#FAF7F2;border-left:4px solid #C4714A;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:24px}',
+    '.enc p{font-family:Georgia,serif;font-size:14px;font-style:italic;color:#5A4A42;line-height:1.7}',
+    /* Profile summary */
+    '.profile{background:#F0F7F3;border-radius:10px;padding:16px 18px;margin-bottom:28px}',
+    '.profile-title{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3D6B4F;margin-bottom:10px}',
+    '.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}',
+    '.profile-item{font-size:12px;color:#4A5C52;padding-left:12px;position:relative;line-height:1.5}',
+    '.profile-item::before{content:"•";position:absolute;left:0;color:#3D6B4F;font-size:14px;line-height:1.2}',
+    /* Section headers */
+    '.sec-header{display:flex;align-items:center;gap:10px;margin:28px 0 14px;padding-bottom:10px;border-bottom:2px solid #E8DFD0}',
+    '.sec-icon{font-size:18px}',
+    '.sec-title{font-size:16px;font-weight:700;color:#2C2422}',
+    '.sec-badge{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px}',
+    '.badge-now{background:#EFF7F2;color:#3D6B4F}',
+    '.badge-career{background:#FEF3EC;color:#C4714A}',
+    /* Job cards */
+    '.job-card{border:1.5px solid #E8DFD0;border-radius:12px;padding:18px 20px;margin-bottom:12px;page-break-inside:avoid}',
+    '.job-rank{display:inline-block;width:22px;height:22px;background:#2C2422;color:#fff;border-radius:50%;font-size:10px;font-weight:700;text-align:center;line-height:22px;margin-right:6px;flex-shrink:0}',
+    '.job-title-row{display:flex;align-items:center;margin-bottom:8px}',
+    '.job-title{font-family:Georgia,serif;font-size:17px;font-weight:400;color:#2C2422}',
+    '.job-match{margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}',
+    '.match-strong{background:#EFF7F2;color:#3D6B4F}',
+    '.match-good{background:#FEF3EC;color:#C4714A}',
+    '.match-worth{background:#F5F5F5;color:#6B6058}',
+    '.job-desc{font-size:13px;color:#6B6058;line-height:1.65;margin-bottom:10px}',
+    /* Salary row */
+    '.sal-row{display:flex;gap:0;border:1px solid #E8DFD0;border-radius:8px;overflow:hidden;margin-bottom:10px}',
+    '.sal-cell{flex:1;padding:8px 12px;border-right:1px solid #E8DFD0;background:#FAFAF8}',
+    '.sal-cell:last-child{border-right:none}',
+    '.sal-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9A8E84;margin-bottom:3px}',
+    '.sal-val{font-size:13px;font-weight:600;color:#2C2422}',
+    '.outlook-grow{color:#3D6B4F}',
+    '.outlook-stable{color:#6B6058}',
+    '.outlook-decline{color:#C4514A}',
+    /* Why you */
+    '.why-you{background:#EFF7F2;border-left:3px solid #3D6B4F;padding:8px 12px;border-radius:0 6px 6px 0;font-size:12px;font-style:italic;color:#3D6B4F;line-height:1.55;margin-bottom:10px}',
+    /* Pathway */
+    '.pathway-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9A8E84;margin-bottom:8px}',
+    '.pathway-steps{display:flex;gap:0;counter-reset:step}',
+    '.pathway-step{flex:1;position:relative;padding-left:0}',
+    '.step-num{width:20px;height:20px;border-radius:50%;background:#C4714A;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:5px;flex-shrink:0}',
+    '.step-text{font-size:11px;color:#6B6058;line-height:1.45;padding-right:8px}',
+    '.step-connector{position:absolute;top:10px;left:20px;right:0;height:1px;background:#E8DFD0;z-index:0}',
+    /* Tags */
+    '.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}',
+    '.tag{font-size:10px;background:#E8DFD0;color:#6B6058;padding:2px 8px;border-radius:20px}',
+    /* This week */
+    '.this-week{border-top:1px solid #E8DFD0;padding-top:8px;margin-top:10px;font-size:12px;color:#6B6058}',
+    '.this-week strong{color:#C4714A}',
+    /* Tips */
+    '.tips-box{background:#FAF7F2;border:1.5px solid #E8DFD0;border-radius:12px;padding:20px;margin-top:24px;page-break-inside:avoid}',
+    '.tips-title{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#C4714A;margin-bottom:12px}',
+    '.tip{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}',
+    '.tip-dot{width:6px;height:6px;border-radius:50%;background:#C4714A;flex-shrink:0;margin-top:5px}',
+    '.tip-text{font-size:13px;color:#6B6058;line-height:1.6}',
+    /* Disclaimer */
+    '.disclaimer{margin-top:32px;padding-top:16px;border-top:1px solid #E8DFD0;font-size:10px;color:#9A8E84;line-height:1.6;text-align:center}',
+    '@media print{.job-card{page-break-inside:avoid}.sec-header{page-break-after:avoid}}'
+  ].join('');
+
+  function matchClass(level){
+    if(!level)return 'match-good';
+    var l=level.toLowerCase();
+    if(l.includes('strong'))return 'match-strong';
+    if(l.includes('worth'))return 'match-worth';
+    return 'match-good';
   }
-  if(R.wN&&R.nowJobs&&R.nowJobs.length){html+='<div class="sec-head">Jobs you can start now</div>';R.nowJobs.forEach(function(job,i){html+=jobHtml(job,i);});}
-  if(R.wC&&R.careerJobs&&R.careerJobs.length){html+='<div class="sec-head">Future career paths</div>';R.careerJobs.forEach(function(job,i){html+=jobHtml(job,i);});}
-  if(R.tips&&R.tips.length){html+='<div class="tips-box"><h3>Your next steps</h3>';R.tips.forEach(function(t){html+='<div class="tip">'+t+'</div>';});html+='</div>';}
-  html+='<div class="footer-note">For guidance only. Career Compass is not a substitute for professional career counselling. Results are AI-generated suggestions. &copy; 2025 Career Compass.</div></body></html>';
+
+  function outlookClass(o){
+    if(!o)return 'outlook-stable';
+    if(o==='growing')return 'outlook-grow';
+    if(o==='declining')return 'outlook-decline';
+    return 'outlook-stable';
+  }
+
+  function jobHtml(job,i){
+    /* Salary row */
+    var sal='';
+    if(job.salaryEntry||job.salaryExperienced){
+      sal='<div class="sal-row">';
+      if(job.salaryEntry)sal+='<div class="sal-cell"><div class="sal-lbl">Starting salary</div><div class="sal-val">'+job.salaryEntry+'</div></div>';
+      if(job.salaryExperienced)sal+='<div class="sal-cell"><div class="sal-lbl">Experienced</div><div class="sal-val">'+job.salaryExperienced+'</div></div>';
+      if(job.outlook){
+        var oIcon=job.outlook==='growing'?'↗ ':job.outlook==='declining'?'↘ ':'→ ';
+        var oLbl=job.outlook.charAt(0).toUpperCase()+job.outlook.slice(1);
+        sal+='<div class="sal-cell"><div class="sal-lbl">Outlook</div><div class="sal-val '+outlookClass(job.outlook)+'">'+oIcon+oLbl+'</div></div>';
+      }
+      sal+='</div>';
+    }
+    /* Pathway */
+    var pw='';
+    if(job.pathway&&job.pathway.length){
+      pw='<div class="pathway-label">How to get there</div><div class="pathway-steps">';
+      job.pathway.forEach(function(step,si){
+        pw+='<div class="pathway-step" style="position:relative">';
+        if(si<job.pathway.length-1)pw+='<div class="step-connector"></div>';
+        pw+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;position:relative;z-index:1"><div class="step-num">'+(si+1)+'</div></div>';
+        pw+='<div class="step-text">'+step+'</div></div>';
+      });
+      pw+='</div>';
+    }
+    /* Tags */
+    var tgs='';
+    if(job.tags&&job.tags.length)tgs='<div class="tags">'+job.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div>';
+    /* Match level label */
+    var matchLbl=job.matchLevel||'Good match';
+    var matchLblFormatted=matchLbl.charAt(0).toUpperCase()+matchLbl.slice(1);
+
+    return '<div class="job-card">'+
+      '<div class="job-title-row">'+
+      '<span class="job-rank">'+(i+1)+'</span>'+
+      '<span class="job-title">'+job.title+'</span>'+
+      '<span class="job-match '+matchClass(job.matchLevel)+'">'+matchLblFormatted+'</span>'+
+      '</div>'+
+      '<div class="job-desc">'+job.desc+'</div>'+
+      sal+
+      (job.whyYou?'<div class="why-you">'+job.whyYou+'</div>':'')+
+      (job.envFit?'<div style="background:#EEF2FC;border-left:3px solid #4A6CB8;padding:8px 12px;border-radius:0 6px 6px 0;font-size:12px;font-style:italic;color:#4A6CB8;line-height:1.55;margin-bottom:10px">'+job.envFit+'</div>':'')+
+      pw+tgs+
+      (job.thisWeek?'<div class="this-week"><strong>This week:</strong> '+job.thisWeek+'</div>':'')+
+      '</div>';
+  }
+
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+nm+' — Career Compass Report</title><style>'+css+'</style></head><body>';
+
+  /* Cover */
+  html+='<div class="cover">'+
+    '<div class="cover-brand">Career Compass · Career Report</div>'+
+    '<div class="cover-name">'+nm+'&rsquo;s<br>Career Report</div>'+
+    '<div class="cover-sub">Personalised career discovery · Australian careers and pathways</div>'+
+    '<div class="cover-date">Generated '+today+'</div>'+
+    '</div>';
+
+  html+='<div class="body">';
+
+  /* Encouragement */
+  if(R.encouragement)html+='<div class="enc"><p>'+R.encouragement+'</p></div>';
+
+  /* Profile summary */
+  if(profileLines.length){
+    html+='<div class="profile"><div class="profile-title">Your profile at a glance</div><div class="profile-grid">';
+    profileLines.forEach(function(l){html+='<div class="profile-item">'+l+'</div>';});
+    html+='</div></div>';
+  }
+
+  /* Now jobs */
+  if(R.wN&&R.nowJobs&&R.nowJobs.length){
+    html+='<div class="sec-header">'+
+      '<span class="sec-icon">💵</span>'+
+      '<span class="sec-title">Jobs you can start now</span>'+
+      '<span class="sec-badge badge-now">Start now</span>'+
+      '</div>';
+    R.nowJobs.forEach(function(job,i){html+=jobHtml(job,i);});
+  }
+
+  /* Career jobs */
+  if(R.wC&&R.careerJobs&&R.careerJobs.length){
+    html+='<div class="sec-header">'+
+      '<span class="sec-icon">🚀</span>'+
+      '<span class="sec-title">Future career paths</span>'+
+      '<span class="sec-badge badge-career">Career path</span>'+
+      '</div>';
+    R.careerJobs.forEach(function(job,i){html+=jobHtml(job,i);});
+  }
+
+  /* Tips */
+  if(R.tips&&R.tips.length){
+    html+='<div class="tips-box"><div class="tips-title">✦ Your next steps</div>';
+    R.tips.forEach(function(t){html+='<div class="tip"><div class="tip-dot"></div><div class="tip-text">'+t+'</div></div>';});
+    html+='</div>';
+  }
+
+  html+='<div class="disclaimer">For guidance only. Career Compass results are AI-generated suggestions and are not a substitute for professional career counselling.<br>&copy; 2025 Career Compass · Free · Private · Australian</div>';
+  html+='</div></body></html>';
   return html;
 }
 
@@ -1418,15 +1562,13 @@ function submitEmail(){
     input.style.borderColor='var(--tc)';input.focus();return;
   }
   if(btn){btn.disabled=true;btn.textContent='Sending\u2026';}
-  /* Build results summary for email */
+  /* Build full results payload for email */
   var name=A.name||'Explorer';
-  var jobs=[];
-  if(RS){
-    (RS.nowJobs||[]).forEach(function(j){jobs.push(j.title);});
-    (RS.careerJobs||[]).forEach(function(j){jobs.push(j.title);});
-  }
+  var nowJobs=(RS&&RS.nowJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
+  var careerJobs=(RS&&RS.careerJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
+  var tips=(RS&&RS.tips)||[];
   fetch('/api/send-results',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:email,name:name,jobs:jobs,encouragement:(RS&&RS.encouragement)||''})
+    body:JSON.stringify({email:email,name:name,nowJobs:nowJobs,careerJobs:careerJobs,tips:tips,encouragement:(RS&&RS.encouragement)||''})
   })
   .then(function(r){return r.json();})
   .then(function(){
