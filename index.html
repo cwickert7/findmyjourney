@@ -1165,7 +1165,8 @@ function buildReportHTML(){
     '.tip-text{font-size:13px;color:#6B6058;line-height:1.6}',
     /* Disclaimer */
     '.disclaimer{margin-top:32px;padding-top:16px;border-top:1px solid #E8DFD0;font-size:10px;color:#9A8E84;line-height:1.6;text-align:center}',
-    '@media print{.job-card{page-break-inside:avoid}.sec-header{page-break-after:avoid}}'
+    '@media print{body{margin:0;padding:0}.cover{page-break-after:avoid}.job-card{page-break-inside:avoid;orphans:3;widows:3}.sec-header{page-break-after:avoid}.why-you{page-break-inside:avoid}.pathway-steps{page-break-inside:avoid}.tips-box{page-break-inside:avoid}.profile{page-break-inside:avoid}.enc{page-break-inside:avoid}}'+
+    '* {-webkit-print-color-adjust:exact;print-color-adjust:exact}'
   ].join('');
 
   function matchClass(level){
@@ -1296,7 +1297,7 @@ function exportPDF(){
     document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
     if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
   })
-  .catch(function(){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}window.print();});
+  .catch(function(e){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}console.error('PDF error:',e);alert('PDF generation failed. Please try again.');});
 }
 
 // ── VOICE ──
@@ -2115,7 +2116,7 @@ function exportCVPDF(){
     document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
     if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
   })
-  .catch(function(){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}window.print();});
+  .catch(function(e){if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}console.error('PDF error:',e);alert('PDF generation failed. Please try again.');});
 }
 
 
