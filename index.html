@@ -236,10 +236,10 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-btn-sec{display:inline-flex;align-items:center;gap:7px;background:none;border:1.5px solid var(--sand);border-radius:50px;padding:10px 22px;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:8px;width:100%;justify-content:center}
 .cv-btn-sec:hover{border-color:var(--tc);color:var(--tc)}
 /* ── Landing page redesign ── */
-.pprev-new{display:flex;align-items:flex-start;margin-bottom:22px;padding:16px 14px;background:var(--warm);border:1.5px solid var(--sand);border-radius:14px}
+.pprev-new{display:flex;align-items:center;margin-bottom:22px;padding:16px 14px;background:var(--warm);border:1.5px solid var(--sand);border-radius:14px}
 .ppip-new{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center}
-.pprev-arrow{flex:0 0 32px;display:flex;align-items:center;justify-content:center}
-.ppip-i-new{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid var(--tc);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:7px;box-shadow:0 1px 6px rgba(196,113,74,.1)}
+.pprev-arrow{flex:0 0 80px;display:flex;align-items:center;justify-content:center;padding-bottom:28px}
+.ppip-i-new{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid var(--sand);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:7px}
 .ppip-n-new{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:3px}
 .ppip-l-new{font-size:11px;color:var(--lt);line-height:1.3}
 .spill-new{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--sand)}
@@ -701,7 +701,8 @@ function rQ(q){
   var os=q.os||[],cols=q.cols||1;
   var ph=PHS.find(function(p){return p.id===q.ph;});
   var h='';
-  if(ph)h+='<div class="ptag">'+ph.em+' Phase '+(PHS.indexOf(ph)+1)+': '+ph.lbl+'</div>';
+  var ptgIcons=['<svg viewBox="0 0 72 72" fill="none" width="14" height="14"><circle cx="36" cy="24" r="10" stroke="#C4714A" stroke-width="2.5" stroke-linecap="round"/><path d="M14 62c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#C4714A" stroke-width="2.5" stroke-linecap="round"/></svg>','<svg viewBox="0 0 72 72" fill="none" width="14" height="14"><path d="M36 56S14 42 14 26a14 14 0 0 1 22-11.5A14 14 0 0 1 58 26c0 16-22 30-22 30z" stroke="#3D6B4F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>','<svg viewBox="0 0 72 72" fill="none" width="14" height="14"><circle cx="36" cy="36" r="22" stroke="#4A6CB8" stroke-width="2.5"/><circle cx="36" cy="36" r="4" fill="#4A6CB8"/><path d="M36 14v9" stroke="#4A6CB8" stroke-width="2.5" stroke-linecap="round"/><path d="M30 19l6-7 6 7" stroke="#4A6CB8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#4A6CB8"/></svg>'];
+if(ph)h+='<div class="ptag">'+(ptgIcons[PHS.indexOf(ph)]||ph.em)+' Phase '+(PHS.indexOf(ph)+1)+': '+ph.lbl+'</div>';
   h+='<p class="qt">'+q.q+'</p>';
   if(q.hint)h+='<p class="qh">'+q.hint+'</p>';
   if(q.a&&q.b){
@@ -841,10 +842,15 @@ function GB(){
 
 function sSf(){
   PH='safe';sp(0,'Welcome','');
-  var arrowSVG='<svg width="32" height="48" viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="4" y1="24" x2="22" y2="24" stroke="#D9A882" stroke-width="1.5" stroke-linecap="round"/><polyline points="16,18 24,24 16,30" stroke="#C4714A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var arrowSVG='<svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="24" x2="58" y2="24" stroke="#DFB99A" stroke-width="2.5" stroke-linecap="round"/><path d="M50 15 L62 24 L50 33" stroke="#DFB99A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
   var phases='<div class="pprev-new">';
   PHS.forEach(function(p,i){
-    phases+='<div class="ppip-new"><div class="ppip-i-new">'+p.em+'</div><div class="ppip-n-new">Phase '+(i+1)+'</div><div class="ppip-l-new">'+p.lbl+'</div></div>';
+    var iconSVGs=[
+  '<div class="ppip-i-new" style="background:linear-gradient(135deg,#FEF3EC,#FDDCC8);border-color:rgba(196,113,74,.2)"><svg viewBox="0 0 72 72" fill="none" width="26" height="26"><circle cx="36" cy="24" r="10" stroke="#C4714A" stroke-width="2.5" stroke-linecap="round"/><path d="M14 62c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#C4714A" stroke-width="2.5" stroke-linecap="round"/></svg></div>',
+  '<div class="ppip-i-new" style="background:linear-gradient(135deg,#EFF7F2,#C8DEC8);border-color:rgba(61,107,79,.2)"><svg viewBox="0 0 72 72" fill="none" width="26" height="26"><path d="M36 56S14 42 14 26a14 14 0 0 1 22-11.5A14 14 0 0 1 58 26c0 16-22 30-22 30z" stroke="#3D6B4F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 30v8M32 34h8" stroke="#3D6B4F" stroke-width="2" stroke-linecap="round" opacity=".6"/></svg></div>',
+  '<div class="ppip-i-new" style="background:linear-gradient(135deg,#EEF2FC,#C8D4F0);border-color:rgba(74,108,184,.2)"><svg viewBox="0 0 72 72" fill="none" width="26" height="26"><circle cx="36" cy="36" r="22" stroke="#4A6CB8" stroke-width="2.5"/><circle cx="36" cy="36" r="4" fill="#4A6CB8"/><path d="M36 14v9" stroke="#4A6CB8" stroke-width="2.5" stroke-linecap="round"/><path d="M30 19l6-7 6 7" stroke="#4A6CB8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#4A6CB8"/><line x1="36" y1="56" x2="36" y2="60" stroke="#4A6CB8" stroke-width="2" stroke-linecap="round" opacity=".5"/><line x1="56" y1="36" x2="60" y2="36" stroke="#4A6CB8" stroke-width="2" stroke-linecap="round" opacity=".5"/><line x1="12" y1="36" x2="16" y2="36" stroke="#4A6CB8" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg></div>'
+];
+phases+='<div class="ppip-new">'+(iconSVGs[i]||('<div class="ppip-i-new">'+p.em+'</div>'))+'<div class="ppip-n-new">Phase '+(i+1)+'</div><div class="ppip-l-new">'+p.lbl+'</div></div>';
     if(i<PHS.length-1)phases+='<div class="pprev-arrow">'+arrowSVG+'</div>';
   });
   phases+='</div>';
