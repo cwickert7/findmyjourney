@@ -461,6 +461,43 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .cv-t3-skill-tag{font-size:11px;background:#faf7f2;border:1px solid var(--sand);color:#4a4240;padding:2px 8px;border-radius:20px;font-weight:500}
 .cv-t3-ref{font-size:12px;color:#9a8e84;font-style:italic}
 .cv-t3-watermark{text-align:right;padding:5px 28px 10px;font-size:9px;color:#c8beb4;letter-spacing:.05em}
+
+/* ── SAVE RESULTS PANEL ── */
+.save-results-panel{background:var(--warm);border:1.5px solid var(--sand);border-radius:14px;padding:22px 20px;margin:16px 0}
+.save-results-title{font-size:15px;font-weight:700;color:var(--ch);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.save-results-sub{font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:14px}
+.save-link-row{display:flex;gap:8px;align-items:stretch;margin-bottom:10px}
+.save-link-input{flex:1;background:#fff;border:1.5px solid var(--sand);border-radius:9px;padding:10px 12px;font-size:13px;color:var(--ch);font-family:'DM Sans',sans-serif;outline:none}
+.save-link-copy{background:var(--ch);color:#fff;border:none;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background .2s}
+.save-link-copy:hover{background:#3d3533}
+.save-code-row{text-align:center;font-size:12px;color:var(--lt);margin-bottom:12px}
+.save-code-val{font-size:16px;font-weight:700;color:var(--mid);letter-spacing:.12em;display:block;margin-top:2px}
+.save-consent{font-size:11px;color:var(--lt);line-height:1.6;text-align:center;margin-top:8px}
+/* ── RETURN TO RESULTS (landing) ── */
+.return-toggle{font-size:13px;color:var(--tc);text-align:center;margin-top:12px;cursor:pointer;font-weight:600}
+.return-toggle:hover{text-decoration:underline}
+.return-panel{display:none;background:var(--warm2);border:1.5px solid var(--sand);border-radius:12px;padding:16px;margin-top:10px}
+.return-panel.open{display:block}
+.return-panel-title{font-size:13px;font-weight:600;color:var(--ch);margin-bottom:10px}
+.return-input-row{display:flex;gap:8px}
+.return-code-input{flex:1;background:#fff;border:1.5px solid var(--sand);border-radius:9px;padding:10px 12px;font-size:14px;color:var(--ch);font-family:'DM Sans',sans-serif;outline:none;letter-spacing:.06em;text-transform:uppercase}
+.return-code-input::placeholder{text-transform:none;letter-spacing:0;color:var(--lt)}
+.return-go-btn{background:var(--tc);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.return-go-btn:hover{background:var(--tcd)}
+.return-error{font-size:12px;color:#C4514A;margin-top:8px;display:none}
+/* ── INST CODE ── */
+.inst-toggle{font-size:12px;color:var(--lt);text-align:center;margin-top:8px;cursor:pointer}
+.inst-toggle:hover{color:var(--tc)}
+.inst-panel{display:none;margin-top:8px}
+.inst-panel.open{display:block}
+.inst-code-input{width:100%;background:#fff;border:1.5px solid var(--sand);border-radius:9px;padding:10px 12px;font-size:14px;color:var(--ch);font-family:'DM Sans',sans-serif;outline:none;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.inst-code-input::placeholder{text-transform:none;letter-spacing:0;color:var(--lt)}
+.inst-code-hint{font-size:11px;color:var(--lt);padding:0 2px}
+/* ── RETRIEVED RESULTS ── */
+.retrieved-banner{background:linear-gradient(135deg,#F0F7F3,#EFF7EC);border:1.5px solid rgba(61,107,79,.2);border-radius:12px;padding:16px 18px;margin-bottom:18px;display:flex;gap:12px;align-items:flex-start}
+.retrieved-icon{font-size:22px;flex-shrink:0}
+.retrieved-title{font-size:15px;font-weight:700;color:var(--gr);margin-bottom:3px}
+.retrieved-sub{font-size:13px;color:var(--mid);line-height:1.6}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -866,7 +903,21 @@ phases+='<div class="ppip-new">'+(iconSVGs[i]||('<div class="ppip-i-new">'+p.em+
     '<button class="bstart-new" onclick="stQ()">Begin your career discovery \u2192</button>'+
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
-    '<p class="landing-privacy">&#x1F512; Your answers are never stored &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
+    '<p class="landing-privacy">&#x1F512; Your privacy is protected &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
+    '<div class="return-toggle" onclick="toggleReturnPanel()">Returning Explorer? Access your results &#x2192;</div>'+
+    '<div class="return-panel" id="returnPanel">'+
+    '<div class="return-panel-title">Enter your personal code or paste your results link</div>'+
+    '<div class="return-input-row">'+
+    '<input class="return-code-input" id="returnCodeInput" placeholder="e.g. ABCD1234" maxlength="8" oninput="this.value=this.value.toUpperCase()">'+
+    '<button class="return-go-btn" onclick="retrieveResults()">Go &#x2192;</button>'+
+    '</div>'+
+    '<div class="return-error" id="returnError"></div>'+
+    '</div>'+
+    '<div class="inst-toggle" onclick="toggleInstPanel()">From a school or program? Enter your code &#x25BE;</div>'+
+    '<div class="inst-panel" id="instPanel">'+
+    '<input class="inst-code-input" id="instCodeInput" placeholder="School or program code" maxlength="16" oninput="this.value=this.value.toUpperCase()">'+
+    '<div class="inst-code-hint">Your advisor will have given you this code. It links your results to your school or program.</div>'+
+    '</div>'+
     '<div style="position:absolute;bottom:10px;right:16px;display:flex;align-items:center;gap:10px">'+
     '<button class="liam-btn" onclick="runCVTest()" style="cursor:pointer;padding:4px 8px;font-size:11px;color:var(--lt);background:none;border:1px solid var(--sand);border-radius:4px;font-family:\'DM Sans\',sans-serif">CV Test</button>'+
     '<select class="liam-btn" id="personaSelect" onchange="runPersona(this.value)" style="cursor:pointer;padding:4px 6px;font-size:11px;color:var(--lt);background:none;border:none;font-family:\'DM Sans\',sans-serif;appearance:none;-webkit-appearance:none">'+
@@ -1534,7 +1585,17 @@ function sRes(){
   h+='<div class="print-header" style="display:none;margin-bottom:20px">';
   h+='<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A09890;margin-bottom:4px">Career Compass</div>';
   h+='<div style="font-family:Fraunces,serif;font-size:28px;font-weight:300;margin-bottom:4px">'+nm+'&rsquo;s Career Report</div></div>';
-  h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h2><p class="rp">'+(R.summary||'')+'</p></div>';
+  if(window._isRetrieved&&window._retrievedResult){
+    var rr=window._retrievedResult;
+    var daysSince=Math.floor((Date.now()-new Date(rr.savedAt).getTime())/(1000*60*60*24));
+    h+='<div class="retrieved-banner">'+
+      '<div class="retrieved-icon">&#x1F44B;</div>'+
+      '<div><div class="retrieved-title">Welcome back, '+rr.name+'.</div>'+
+      '<div class="retrieved-sub">Here are the career matches from your last session'+(daysSince>0?' '+daysSince+' day'+(daysSince===1?'':'s')+' ago':' earlier today')+'. Your profile and interests guided these results &mdash; take your time exploring them.</div></div>'+
+    '</div>';
+    window._isRetrieved=false;
+  }
+h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h2><p class="rp">'+(R.summary||'')+'</p></div>';
   if(profileLines.length){h+='<div class="profile-summary-box"><div class="psb-title">&#x1F9ED; Your profile at a glance</div>';profileLines.forEach(function(l){h+='<div class="psb-item">'+l+'</div>';});h+='</div>';}
   if(R.encouragement)h+='<div class="enc"><span style="font-size:17px;flex-shrink:0;margin-top:2px">&#x1F49B;</span><p class="encp">'+R.encouragement+'</p></div>';
   if(R.wN&&R.nowJobs&&R.nowJobs.length){
@@ -1565,7 +1626,17 @@ function sRes(){
   h+='<div class="voice-opt" id="voiceOptmale" onclick="startVoice(\'male\')"><span class="voice-opt-icon">&#x1F468;</span><span class="voice-opt-name">Jack</span></div>';
   h+='</div></div><div class="voice-controls" id="voiceControls"><button class="voice-stop" onclick="stopVoice()">&#x23F9; Stop reading</button></div></div>';
   h+='<div class="fb-row" id="fbrow">Was this helpful? <button class="thumb" onclick="sendFeedback(1)">&#x1F44D; Yes</button> <button class="thumb" onclick="sendFeedback(0)">&#x1F44E; Not quite</button></div>';
-  h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
+  h+='<div class="save-results-panel" id="saveResultsPanel" style="display:none">'+
+    '<div class="save-results-title">&#x1F517; Keep your results</div>'+
+    '<div class="save-results-sub">Save a personal link so you can return anytime within 12 months to continue exploring your matches, build your CV, or share with a pathways advisor.</div>'+
+    '<div class="save-link-row">'+
+    '<input class="save-link-input" id="saveResultsLink" readonly placeholder="Generating your link…">'+
+    '<button class="save-link-copy" onclick="copyResultsLink()">Copy link</button>'+
+    '</div>'+
+    '<div class="save-code-row">Your personal code: <span class="save-code-val" id="saveResultsCode">—</span></div>'+
+    '<div class="save-consent">&#x1F512; Your results are stored securely for 12 months then permanently deleted. We only share them with your school or program if you entered their code. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
+    '</div>';
+h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
   h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Career Compass results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
   h+='<div class="email-cap" id="emailCapPanel">'+
     '<div class="email-cap-icon">&#x1F4EC;</div>'+
@@ -1573,7 +1644,7 @@ function sRes(){
     '<div class="email-cap-sub">We\'ll send you a copy of your career matches as a PDF — so you can come back to them, share with a parent or teacher, or use them in a careers conversation.</div>'+
     '<div class="email-cap-row">'+
     '<input class="email-cap-input" type="email" id="emailCapInput" placeholder="Your email address">'+
-    '<button class="email-cap-btn" id="emailCapBtn" onclick="submitEmail()">Send my results \u2192</button>'+
+    '<button class="email-cap-btn" id="emailCapBtn" onclick="submitEmail()">Send my results \u2192</button>'+'</div>'+'<div style="margin-top:10px">'+'<button class="email-cap-btn" style="background:var(--ch);width:100%;text-align:center" onclick="saveResults()">&#x1F517; Keep my results</button>'+
     '</div>'+
     '<button class="email-cap-skip" onclick="skipEmail()">No thanks \u2014 I\'ll keep scrolling</button>'+
     '</div>';
@@ -2673,11 +2744,132 @@ function runCVTest(){
 
 function rst(){A={};IS_PT=false;QL=buildQL([],null,null,'15_17',[],[]);QI=0;RS=null;EM='';ri();scrollUp();sSf();}
 
+// ── RETURN TO RESULTS ──
+function toggleReturnPanel(){
+  var p=document.getElementById('returnPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open'))setTimeout(function(){document.getElementById('returnCodeInput').focus();},100);
+}
+function toggleInstPanel(){
+  var p=document.getElementById('instPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open'))setTimeout(function(){document.getElementById('instCodeInput').focus();},100);
+}
+function getInstCode(){
+  var el=document.getElementById('instCodeInput');
+  return el?el.value.trim().toUpperCase():'';
+}
+async function retrieveResults(){
+  var code=document.getElementById('returnCodeInput').value.trim().toUpperCase();
+  var errEl=document.getElementById('returnError');
+  errEl.style.display='none';
+  if(!code||code.length<6){errEl.textContent='Please enter your 8-character personal code.';errEl.style.display='block';return;}
+  var btn=document.querySelector('.return-go-btn');
+  btn.disabled=true;btn.textContent='Looking…';
+  try{
+    var r=await fetch('/api/get-result?code='+encodeURIComponent(code));
+    var data=await r.json();
+    if(!r.ok||!data.result){
+      errEl.textContent=data.error||'Code not found. Please check and try again.';
+      errEl.style.display='block';
+    } else {
+      showRetrievedResults(data.result);
+    }
+  }catch(e){
+    errEl.textContent='Something went wrong. Please try again.';
+    errEl.style.display='block';
+  }
+  btn.disabled=false;btn.textContent='Go →';
+}
+function showRetrievedResults(result){
+  // Restore state from saved result
+  A.name=result.name;
+  RS=result.matches;
+  // Show results with Dr Chen reorientation banner
+  window._retrievedResult=result;
+  window._isRetrieved=true;
+  showResults();
+}
+
+// ── SAVE RESULTS ──
+var _savedUUID=null;var _savedCode=null;
+async function saveResults(){
+  if(_savedUUID){showSavePanel(_savedUUID,_savedCode);return;}
+  var R=RS;if(!R)return;
+  var matches=[];
+  if(R.nowJobs)R.nowJobs.forEach(function(j){matches.push({title:j.title,salary:j.salary,whyYou:j.whyYou,path:j.pathTitle});});
+  if(R.careerJobs)R.careerJobs.forEach(function(j){matches.push({title:j.title,salary:j.salary,whyYou:j.whyYou,path:j.pathTitle});});
+  try{
+    var r=await fetch('/api/save-result',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:A.name||'Explorer',
+        matches:matches,
+        sepTriggered:window._sepTriggered||false,
+        institutionCode:getInstCode()||null,
+        branch:A.branch||null
+      })
+    });
+    var data=await r.json();
+    if(r.ok&&data.uuid){
+      _savedUUID=data.uuid;
+      _savedCode=data.shortCode;
+      showSavePanel(data.uuid,data.shortCode);
+    } else {
+      alert('Could not save your results. Please try emailing them instead.');
+    }
+  }catch(e){
+    alert('Could not save your results. Please try emailing them instead.');
+  }
+}
+function showSavePanel(uuid,code){
+  var panel=document.getElementById('saveResultsPanel');
+  if(!panel)return;
+  var baseURL=window.location.origin;
+  var link=baseURL+'?results='+uuid;
+  var linkInput=document.getElementById('saveResultsLink');
+  var codeEl=document.getElementById('saveResultsCode');
+  if(linkInput)linkInput.value=link;
+  if(codeEl)codeEl.textContent=code;
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function copyResultsLink(){
+  var input=document.getElementById('saveResultsLink');
+  if(!input)return;
+  navigator.clipboard.writeText(input.value).then(function(){
+    var btn=document.querySelector('.save-link-copy');
+    if(btn){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy link';},2000);}
+  }).catch(function(){
+    input.select();document.execCommand('copy');
+  });
+}
+
 // Ensure DOM is ready before rendering landing screen
 if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',function(){sSf();});
+  document.addEventListener('DOMContentLoaded',function(){checkURLResult();});
 } else {
-  sSf();
+  checkURLResult();
+}
+async function checkURLResult(){
+  var params=new URLSearchParams(window.location.search);
+  var uuid=params.get('results');
+  if(uuid){
+    // Show loading state
+    sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div><p class="tp">Retrieving your results…</p></div>';
+    try{
+      var r=await fetch('/api/get-result?id='+encodeURIComponent(uuid));
+      var data=await r.json();
+      if(r.ok&&data.result){
+        showRetrievedResults(data.result);
+      } else {
+        sSf(); // Fall back to landing if not found
+      }
+    }catch(e){sSf();}
+  } else {
+    sSf();
+  }
 }
 // Defensive fallback — if #S is still empty after 600ms, try again
 setTimeout(function(){
