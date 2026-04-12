@@ -9,5 +9,6 @@
     { "source": "/des", "destination": "/des.html" },
     { "source": "/contact", "destination": "/contact.html" },
     { "source": "/dashboard", "destination": "/dashboard.html" }
+    { "source": "/impact", "destination": "/impact.html" }
   ]
 }
