@@ -52,7 +52,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .strip{background:var(--ch);overflow:hidden;white-space:nowrap}
 .hero-left{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
 .hero-brand{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:28px}
-.hero-brand-ring{width:52px;height:52px;border:2.5px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--tc);animation:spin 14s linear infinite;margin-bottom:12px}
+.hero-brand-ring{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 .hero-brand-name{font-family:"Fraunces",serif;font-size:28px;font-weight:300;letter-spacing:.04em;color:var(--ch)}
 .hero-brand-tag{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);margin-top:4px}
 .hero-photos{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-self:center}
@@ -196,14 +196,14 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
       <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
       <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
   <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
-  <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+  <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
 </div>
     </div>
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#explorers">Explorers</a>
       <a href="#institutions">For institutions</a>
-      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your discovery &#x2192;</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
     </div>
     <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -214,20 +214,20 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <a href="#how" onclick="closeNav()">How it works</a>
   <a href="#explorers" onclick="closeNav()">Explorers</a>
   <a href="#institutions" onclick="closeNav()">For institutions</a>
-  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your discovery &#x2192;</a>
+  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
 </div>
 <section class="hero">
   <div class="hero-left">
     <div class="hero-brand">
-      <div class="hero-brand-ring">&#x25C6;</div>
+      <svg width="44" height="44" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;margin-bottom:12px"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
       <div class="hero-brand-name">Find My Journey</div>
       <div class="hero-brand-tag">Australian &#xB7; AI-powered &#xB7; Psychology-backed</div>
     </div>
-    <h1 class="hero-h1">Find work that<br>fits <em>who you are.</em></h1>
+    <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(255,255,255,.45);margin-bottom:10px;font-variant-ligatures:none">“You’re worth finding.”</div><h1 class="hero-h1">Find work that<br>fits <em>who you are.</em></h1>
     <div class="hero-bottom">
       <p class="hero-sub">Most career tools ask what you&#x2019;re qualified for. Find My Journey asks who you are &#x2014; and builds a genuinely personalised direction from there. No timed tests. No pressure. No wrong answers.</p>
       <div class="hero-actions">
-        <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-primary">Begin your discovery &#x2192;</a>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-primary">Begin your journey &#x2192;</a>
         <a href="#how" class="btn-secondary">How it works</a>
       </div>
       <div class="hero-trust">
@@ -402,7 +402,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
       <div class="why-items">
         <div class="why-item">
           <div class="why-icon">&#x1F9E0;</div>
-          <div><div class="why-title">Built on real psychology</div><div class="why-desc">Holland codes, Super&#x2019;s life-span theory, Savickas &#x2014; adapted for Australian young people aged 15&#x2013;25.</div></div>
+          <div><div class="why-title">Built on real psychology</div><div class="why-desc">Holland codes, Super&#x2019;s life-span theory, Savickas &#x2014; adapted for Australian young people aged <span style="white-space:nowrap">15&#x2013;25</span>.</div></div>
         </div>
         <div class="why-item">
           <div class="why-icon">&#x1F916;</div>
@@ -452,10 +452,10 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 </section>
 <section class="cta-section">
   <div class="cta-inner">
-    <div class="cta-ring">&#x25C6;</div>
+    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;margin:0 auto 24px;display:block"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.3)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
     <h2 class="cta-h2">Ready to find your<br><em>real</em> direction?</h2>
     <p class="cta-sub">About 20 minutes. No account needed. No right or wrong answers. Just an honest conversation about who you are and where you might go.</p>
-    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-cta-large">Begin your career discovery &#x2192;</a>
+    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-cta-large">Begin your journey &#x2192;</a>
     <p class="cta-note">Private &#xB7; Australian &#xB7; Psychology-backed</p>
   </div>
 </section>
@@ -464,10 +464,10 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     <div class="footer-top">
       <div>
         <div class="footer-brand">
-          <div class="nav-ring" style="width:24px;height:24px;font-size:11px;border-color:rgba(196,113,74,.4);color:rgba(196,113,74,.5)">&#x25C6;</div>
+          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
           <span class="footer-brand-name">Find My Journey</span>
         </div>
-        <div class="footer-desc">AI-powered career discovery for young Australians aged 15&#x2013;25. Built on real psychology. Genuinely Australian.</div>
+        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Product</div>
