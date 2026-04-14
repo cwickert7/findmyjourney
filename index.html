@@ -2855,6 +2855,7 @@ if(document.readyState==='loading'){
 async function checkURLResult(){
   var params=new URLSearchParams(window.location.search);
   var uuid=params.get('results');
+  var goCV=params.get('cv');
   if(uuid){
     // Show loading state
     sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div><p class="tp">Retrieving your results…</p></div>';
@@ -2864,9 +2865,13 @@ async function checkURLResult(){
       if(r.ok&&data.result){
         showRetrievedResults(data.result);
       } else {
-        sSf(); // Fall back to landing if not found
+        sSf();
       }
     }catch(e){sSf();}
+  } else if(goCV==='true'||goCV==='1'){
+    // Jump straight to CV Builder
+    sSf();
+    setTimeout(function(){sCVBuilder(false);},80);
   } else {
     sSf();
   }
