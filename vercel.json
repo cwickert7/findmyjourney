@@ -1,15 +1,52 @@
 {
   "rewrites": [
-    { "source": "/marketing", "destination": "/marketing.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/accessibility", "destination": "/accessibility.html" },
-    { "source": "/schools", "destination": "/schools.html" },
-    { "source": "/tafe", "destination": "/tafe.html" },
-    { "source": "/des", "destination": "/des.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/impact", "destination": "/impact.html" },
-    { "source": "/cv-builder", "destination": "/cv-builder.html" }
+    {
+      "source": "/marketing",
+      "destination": "/marketing.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/accessibility",
+      "destination": "/accessibility.html"
+    },
+    {
+      "source": "/schools",
+      "destination": "/schools.html"
+    },
+    {
+      "source": "/tafe",
+      "destination": "/tafe.html"
+    },
+    {
+      "source": "/des",
+      "destination": "/des.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/how-it-works.html"
+    },
+    {
+      "source": "/real-explorers",
+      "destination": "/real-explorers.html"
+    },
+    {
+      "source": "/why-find-my-journey",
+      "destination": "/why-find-my-journey.html"
+    },
+    {
+      "source": "/cv-builder",
+      "destination": "/cv-builder.html"
+    }
   ]
 }
