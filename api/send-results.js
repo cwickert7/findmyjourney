@@ -108,7 +108,7 @@ export default async function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Your Career Compass Results, ${explorerName}</title>
+  <title>Your Find My Journey Results, ${explorerName}</title>
 </head>
 <body style="margin:0;padding:0;background:#F5F0E8;font-family:'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased">
 
@@ -121,7 +121,7 @@ export default async function handler(req, res) {
       <tr><td style="text-align:center;padding-bottom:24px">
         <div style="display:inline-flex;align-items:center;gap:8px">
           <div style="width:28px;height:28px;border:2px solid #C4714A;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#C4714A;line-height:1">◆</div>
-          <span style="font-family:Georgia,serif;font-size:15px;letter-spacing:.06em;color:#2C2422">Career Compass</span>
+          <span style="font-family:Georgia,serif;font-size:15px;letter-spacing:.06em;color:#2C2422">Find My Journey</span>
         </div>
         <div style="margin-top:6px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A8E84">Your personalised career results</div>
       </td></tr>
@@ -129,7 +129,7 @@ export default async function handler(req, res) {
       <!-- Encouragement card -->
       <tr><td style="background:#fff;border-radius:16px;padding:28px;border:1.5px solid #E8DFD0;margin-bottom:16px;display:block;margin-bottom:14px">
         <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:400;color:#2C2422;margin:0 0 14px">Hi ${explorerName} 👋</h1>
-        <p style="font-size:15px;color:#6B6058;line-height:1.75;margin:0">${encouragement || 'Here are your Career Compass results. These are starting points — not limits. Your path is yours to shape.'}</p>
+        <p style="font-size:15px;color:#6B6058;line-height:1.75;margin:0">${encouragement || 'Here are your Find My Journey results. These are starting points — not limits. Your path is yours to shape.'}</p>
       </td></tr>
 
       <tr><td style="height:14px"></td></tr>
@@ -150,8 +150,8 @@ export default async function handler(req, res) {
 
       <!-- CTA -->
       <tr><td style="background:#fff;border-radius:16px;padding:24px 28px;border:1.5px solid #E8DFD0;text-align:center;display:block">
-        <p style="font-size:14px;color:#6B6058;margin:0 0 16px;line-height:1.6">Want to explore further? Take the assessment again at any time — your next session might reveal new directions as your thinking evolves. You can also use Career Compass to build a personalised CV.</p>
-        <a href="https://career-compass-rho-ten.vercel.app" style="display:inline-block;background:#C4714A;color:#fff;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:.02em">Back to Career Compass →</a>
+        <p style="font-size:14px;color:#6B6058;margin:0 0 16px;line-height:1.6">Want to explore further? Take the assessment again at any time — your next session might reveal new directions as your thinking evolves. You can also use Find My Journey to build a personalised CV.</p>
+        <a href="https://career-compass-rho-ten.vercel.app" style="display:inline-block;background:#C4714A;color:#fff;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:.02em">Back to Find My Journey →</a>
       </td></tr>
 
       <tr><td style="height:28px"></td></tr>
@@ -161,7 +161,7 @@ export default async function handler(req, res) {
         <p style="font-size:11px;color:#9A8E84;line-height:1.7;margin:0">
           ⚠️ For guidance only — not a substitute for professional career counselling.<br>
           🔒 Your email address was used only to send this message and is not shared with anyone.<br><br>
-          <span style="color:#C8BFB5">© 2025 Career Compass · Free · Private · Australian</span>
+          <span style="color:#C8BFB5">© 2025 Find My Journey · Free · Private · Australian</span>
         </p>
       </td></tr>
 
@@ -184,9 +184,9 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${resendKey}`
       },
       body: JSON.stringify({
-        from: 'Career Compass <onboarding@resend.dev>',
+        from: 'Find My Journey <onboarding@resend.dev>',
         to: [email],
-        subject: `Your Career Compass results, ${explorerName} 🧭`,
+        subject: `You're worth finding — here are your Find My Journey results, ${explorerName} 🧭`,
         html
       })
     });
