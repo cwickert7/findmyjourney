@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Career Compass &mdash; Find Your Path</title>
+<title>Find My Journey &mdash; Find Your Path</title>
 <meta name="description" content="Most career tools ask what you're qualified for. We ask who you are.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 body{font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:var(--cream);color:var(--ch);min-height:100vh;display:flex;flex-direction:column;align-items:center;width:100%}
 header{width:100%;text-align:center;padding:36px 24px 16px}
 .logo{display:inline-flex;align-items:center;gap:9px;margin-bottom:8px}
-.ring{width:34px;height:34px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tc);animation:spin 12s linear infinite;flex-shrink:0}
+.ring{width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 .lname{font-family:'Fraunces',serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
 h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,52px);font-weight:300;line-height:1.15;max-width:760px;margin:0 auto 8px}
@@ -504,7 +504,7 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 </head>
 <body>
 <header>
-  <div class="logo"><a href="/marketing" style="text-decoration:none;display:flex;align-items:center;gap:8px;color:inherit"><div class="ring">&#9672;</div><span class="lname">Career Compass</span></a></div>
+  <div class="logo"><a href="/marketing" style="text-decoration:none;display:flex;align-items:center;gap:8px;color:inherit"><svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg><div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1"><span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span><span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span></div></a></div>
   <h1>Find your <em>path</em></h1>
   <p class="sub">Most career tools ask what you&rsquo;re qualified for. We ask who you are.</p>
 </header>
@@ -898,9 +898,9 @@ phases+='<div class="ppip-new">'+(iconSVGs[i]||('<div class="ppip-i-new">'+p.em+
     ['&#x1F512;','Your answers are private','Only used to find your matches. Never stored.']
   ].map(function(r){return '<div class="spill-new"><span class="spi-new">'+r[0]+'</span><div><span class="sps-new">'+r[1]+'</span><span class="spt-new">'+r[2]+'</span></div></div>';}).join('');
   var cta='<div class="cta-panel-new" style="position:relative">'+
-    '<div class="cta-lbl-new">Ready when you are</div>'+
+    '<div class="cta-worth" style="font-family:Fraunces,serif;font-size:16px;font-weight:300;font-style:italic;color:var(--mid);margin-bottom:8px;font-variant-ligatures:none">&ldquo;You&rsquo;re worth finding.&rdquo;</div>'+'<div class="cta-lbl-new">Ready when you are</div>'+
     '<p class="cta-hint-new">Answer honestly and we&rsquo;ll find something that genuinely fits &mdash; not just what sounds good.</p>'+
-    '<button class="bstart-new" onclick="stQ()">Begin your career discovery \u2192</button>'+
+    '<button class="bstart-new" onclick="stQ()">Begin your journey \u2192</button>'+
     '<div class="cta-divider-new"><div class="cta-divider-line"></div><span class="cta-divider-txt">or</span><div class="cta-divider-line"></div></div>'+
     '<button class="cv-btn-new" onclick="sCVBuilder(false)">Already know the role? Build your CV</button>'+
     '<p class="landing-privacy">&#x1F512; Your privacy is protected &nbsp;&middot;&nbsp; &#x1F464; Under 15? Let a parent or guardian know.</p>'+
@@ -1291,13 +1291,13 @@ function buildReportHTML(){
       '</div>';
   }
 
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+nm+' — Career Compass Report</title><style>'+css+'</style></head><body>';
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+nm+' — Find My Journey Report</title><style>'+css+'</style></head><body>';
 
   /* Cover */
   html+='<div class="cover">'+
-    '<div class="cover-brand">Career Compass · Career Report</div>'+
+    '<div class="cover-brand">Find My Journey · Career Report</div>'+
     '<div class="cover-name">'+nm+'&rsquo;s<br>Career Report</div>'+
-    '<div class="cover-sub">Personalised career discovery · Australian careers and pathways</div>'+
+    '<div class="cover-sub">Find My Journey · Australian careers and pathways</div>'+
     '<div class="cover-date">Generated '+today+'</div>'+
     '</div>';
 
@@ -1340,7 +1340,7 @@ function buildReportHTML(){
     html+='</div>';
   }
 
-  html+='<div class="disclaimer">For guidance only. Career Compass results are AI-generated suggestions and are not a substitute for professional career counselling.<br>&copy; 2025 Career Compass · Free · Private · Australian</div>';
+  html+='<div class="disclaimer">For guidance only. Find My Journey results are AI-generated suggestions and are not a substitute for professional career counselling.<br>&copy; 2025 Find My Journey · Free · Private · Australian</div>';
   html+='</div></body></html>';
   return html;
 }
@@ -1371,7 +1371,7 @@ function exportPDF(){
         pdf.addImage(imgData,'JPEG',0,y>0?-(y):0,imgW,imgH);
         y+=pdfH;
       }
-      pdf.save('CareerCompass-'+nm.replace(/[^a-zA-Z0-9]/g,'')+'-Results.pdf');
+      pdf.save('FindMyJourney-'+nm.replace(/[^a-zA-Z0-9]/g,'')+'-Results.pdf');
       document.body.removeChild(iframe);
       if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
     }).catch(function(e){
@@ -1583,7 +1583,7 @@ function sRes(){
   var profileLines=buildProfileSummary();
   var h='';
   h+='<div class="print-header" style="display:none;margin-bottom:20px">';
-  h+='<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A09890;margin-bottom:4px">Career Compass</div>';
+  h+='<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A09890;margin-bottom:4px">Find My Journey</div>';
   h+='<div style="font-family:Fraunces,serif;font-size:28px;font-weight:300;margin-bottom:4px">'+nm+'&rsquo;s Career Report</div></div>';
   if(window._isRetrieved&&window._retrievedResult){
     var rr=window._retrievedResult;
@@ -1637,7 +1637,7 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
     '<div class="save-consent">&#x1F512; Your results are stored securely for 12 months then permanently deleted. We only share them with your school or program if you entered their code. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
     '</div>';
 h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
-  h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Career Compass results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
+  h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Find My Journey results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
   h+='<div class="email-cap" id="emailCapPanel">'+
     '<div class="email-cap-icon">&#x1F4EC;</div>'+
     '<div class="email-cap-title">Save your results</div>'+
@@ -1969,7 +1969,7 @@ function buildCVHTML(data,tpl){
     }
     h+='<div class="cv-t1-sec"><div class="cv-t1-sec-ttl">References</div><div class="cv-t1-ref">References available upon request.</div></div>';
     h+='</div>';
-    h+='<div class="cv-t1-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+    h+='<div class="cv-t1-watermark">Created with Find My Journey &middot; careercompass.com.au</div>';
     h+='</div>';
     return h;
   }
@@ -2023,7 +2023,7 @@ function buildCVHTML(data,tpl){
     }
     h+='<div style="font-size:11px;color:#9a8e84;font-style:italic;margin-top:6px">References available upon request.</div>';
     h+='</td></tr></table>';
-    h+='<div class="cv-t2-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+    h+='<div class="cv-t2-watermark">Created with Find My Journey &middot; careercompass.com.au</div>';
     h+='</div>';
     return h;
   }
@@ -2075,7 +2075,7 @@ function buildCVHTML(data,tpl){
   }
   h+='<div class="cv-t3-sec"><div class="cv-t3-sec-ttl">References</div><div class="cv-t3-ref">References available upon request.</div></div>';
   h+='</div>';
-  h+='<div class="cv-t3-watermark">Created with Career Compass &middot; careercompass.com.au</div>';
+  h+='<div class="cv-t3-watermark">Created with Find My Journey &middot; careercompass.com.au</div>';
   h+='</div>';
   return h;
 }
@@ -2125,7 +2125,7 @@ function sCVResult(text,isJunior,cvData){
   h+='<button class="cv-out-btn primary" onclick="copyCVText()">&#x1F4CB; Copy to clipboard</button>';
   h+='<button class="cv-out-btn" onclick="exportCVPDF()">&#x1F4C4; Save as PDF</button>';
   h+='</div>';
-  h+='<div class="cv-disclaimer">&#x26A0;&#xFE0F; <strong>Important:</strong> This CV was AI-generated from the information you provided. Please review it carefully before sending. Career Compass does not fabricate experience or qualifications — always ensure the content accurately reflects you.</div>';
+  h+='<div class="cv-disclaimer">&#x26A0;&#xFE0F; <strong>Important:</strong> This CV was AI-generated from the information you provided. Please review it carefully before sending. Find My Journey does not fabricate experience or qualifications — always ensure the content accurately reflects you.</div>';
   h+='<button class="brs" onclick="sCVBuilder(false)">\u21BA Build another CV</button>';
   if(CV.fromAssessment)h+='<button class="brs" style="margin-top:6px" onclick="sRes()">\u2190 Back to my results</button>';
   sc().innerHTML=h;
@@ -2232,7 +2232,7 @@ function exportCVPDF(){
         pdf.addImage(imgData,'JPEG',0,y>0?-(y):0,imgW,imgH);
         y+=pdfH;
       }
-      pdf.save('CareerCompass-'+name.replace(/[^a-zA-Z0-9]/g,'')+'-CV.pdf');
+      pdf.save('FindMyJourney-'+name.replace(/[^a-zA-Z0-9]/g,'')+'-CV.pdf');
       document.body.removeChild(iframe);
       if(btn){btn.disabled=false;btn.innerHTML='&#x1F4C4; Save as PDF';}
     }).catch(function(e){

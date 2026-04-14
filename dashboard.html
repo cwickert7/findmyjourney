@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Career Compass — Pathways Advisor Dashboard</title>
+<title>Find My Journey — Pathways Advisor Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -222,8 +222,8 @@ tr.clickable:hover td{background:rgba(255,255,255,.02);cursor:pointer}
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
-      <div class="login-ring">◆</div>
-      <span class="login-brand">Career Compass</span>
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2.5" fill="none" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1917"/></svg>
+      <span class="login-brand">Find My Journey</span>
     </div>
     <h1 class="login-h1">Pathways Advisor<br>Dashboard</h1>
     <p class="login-sub">Enter your institution code and access key to view your Explorer results.</p>
@@ -237,15 +237,15 @@ tr.clickable:hover td{background:rgba(255,255,255,.02);cursor:pointer}
     </div>
     <button class="login-btn" onclick="doLogin()">Access dashboard →</button>
     <div class="login-error" id="loginError">Incorrect code or access key. Please try again.</div>
-    <p class="login-note">Contact Career Compass to set up your institution access.<br>hello@careercompass.com.au</p>
+    <p class="login-note">Contact Find My Journey to set up your institution access.<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="533b363f3f3c13303221363621303c3e233220207d303c3e7d3226">[email&#160;protected]</a></p>
   </div>
 </div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-ring">◆</div>
-    <div class="logo-name">Career Compass</div>
+    <svg width="18" height="18" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.4)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="5" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="5" fill="#C4714A"/></svg>
+    <div class="logo-name">Find My Journey</div>
     <div class="logo-sub">Advisor Portal</div>
   </div>
   <div class="sidebar-org">
@@ -311,7 +311,7 @@ tr.clickable:hover td{background:rgba(255,255,255,.02);cursor:pointer}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── STATE ──
 var INST_CODE = '';
 var ADMIN_KEY = '';
@@ -639,7 +639,7 @@ function exportCSV() {
   var blob = new Blob([csv], {type:'text/csv'});
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url; a.download = 'CareerCompass-'+INST_CODE+'-Results.csv';
+  a.href = url; a.download = 'FindMyJourney-'+INST_CODE+'-Results.csv';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
@@ -667,10 +667,4 @@ function guessCluster(title) {
 
 // ── URL PARAMS ── pre-fill login from URL
 (function() {
-  var p = new URLSearchParams(window.location.search);
-  if (p.get('code')) { document.getElementById('loginCode').value = p.get('code').toUpperCase(); }
-  if (p.get('key')) { document.getElementById('loginKey').value = p.get('key'); doLogin(); }
-})();
-</script>
-</body>
-</html>
+  var p = new URLSearchParams(window.locat
