@@ -168,34 +168,26 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   .footer-top{grid-template-columns:1fr;gap:28px}
   .footer-bottom{flex-direction:column;align-items:flex-start}
 }
+
+.fmj{color:#C4714A;font-weight:500}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">
-      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
-  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
+    <a class="nav-brand" href="/marketing.html">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span>
   <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
 </div>
-    </div>
-    <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#explorers">Explorers</a>
-      <a href="#institutions">For institutions</a>
-      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
-    </div>
-    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    </a>
+    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
   </div>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a href="#how" onclick="closeNav()">How it works</a>
-  <a href="#explorers" onclick="closeNav()">Explorers</a>
-  <a href="#institutions" onclick="closeNav()">For institutions</a>
+  <a href="/marketing.html" onclick="closeNav()">Home</a>
   <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
 </div>
 
@@ -205,7 +197,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     <div class="hero-eyebrow">CV Builder</div>
     <div class="hero-worth">&ldquo;You&rsquo;re worth finding.&rdquo;</div>
     <h1 class="hero-h1">A CV that sounds<br>like <em>you.</em></h1>
-    <p class="hero-sub">Most CVs sound the same. Find My Journey builds yours around your actual strengths, values and career matches &mdash; so it genuinely represents who you are.</p>
+    <p class="hero-sub">Most CVs sound the same. <span class="fmj">Find My Journey</span> builds yours around your actual strengths, values and career matches &mdash; so it genuinely represents who you are.</p>
     <div class="hero-actions">
       <a href="https://career-compass-rho-ten.vercel.app?cv=true" target="_blank" class="btn-primary">Build my CV &rarr;</a>
       <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-secondary">Take the assessment first</a>
@@ -219,7 +211,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <div class="section-inner">
     <div class="sec-eyebrow">How it works</div>
     <h2 class="sec-h2">Three steps to a CV<br>that actually <em>fits.</em></h2>
-    <p class="sec-lead">Whether you&rsquo;ve just completed your Find My Journey assessment or you&rsquo;re starting fresh &mdash; the CV Builder meets you where you are.</p>
+    <p class="sec-lead">Whether you&rsquo;ve just completed your <span class="fmj">Find My Journey</span> assessment or you&rsquo;re starting fresh &mdash; the CV Builder meets you where you are.</p>
 
     <div class="steps">
       <div class="step">
@@ -288,7 +280,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <div class="section-inner">
     <div class="sec-eyebrow">What makes it different</div>
     <h2 class="sec-h2">Not a template.<br>A <em>real reflection</em> of you.</h2>
-    <p class="sec-lead">The Find My Journey CV Builder isn&rsquo;t a form you fill in and format. It&rsquo;s a conversation that becomes a document.</p>
+    <p class="sec-lead">The <span class="fmj">Find My Journey</span> CV Builder isn&rsquo;t a form you fill in and format. It&rsquo;s a conversation that becomes a document.</p>
 
     <div class="features-grid">
       <div class="feature">
