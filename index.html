@@ -1787,8 +1787,152 @@ function getCVSteps(){
   return isJuniorCV(CV.type)?CV_STEPS_JUNIOR:CV_STEPS_SENIOR;
 }
 
+
+// ── Branch → Professional Skills translation ──
+var BRANCH_SKILLS={
+  // Tech
+  build_t:['Problem solving','Logical thinking','Attention to detail','Technical troubleshooting'],
+  fix_t:['Technical troubleshooting','Customer service','Methodical problem solving','Reliability'],
+  data_t:['Analytical thinking','Attention to detail','Pattern recognition','Logical reasoning'],
+  design_t:['Creative thinking','Visual communication','Attention to detail','Digital literacy'],
+  security_t:['Analytical thinking','Attention to detail','Problem solving','Reliability'],
+  emerging_t:['Intellectual curiosity','Adaptability','Research skills','Forward thinking'],
+  // Commerce
+  marketing:['Communication','Creative thinking','Research','Stakeholder awareness'],
+  finance:['Numerical reasoning','Analytical thinking','Attention to detail','Reliability'],
+  strategy:['Analytical thinking','Problem solving','Communication','Initiative'],
+  sales:['Communication','Relationship building','Resilience','Active listening'],
+  ops:['Organisation','Attention to detail','Process thinking','Reliability'],
+  startup:['Initiative','Adaptability','Problem solving','Self-motivation'],
+  // Creative
+  visual:['Creative thinking','Visual communication','Attention to detail','Self-motivation'],
+  music_b:['Discipline','Creativity','Collaboration','Performance under pressure'],
+  writing_b:['Written communication','Creativity','Attention to detail','Research'],
+  perform_b:['Communication','Confidence','Teamwork','Presentation skills'],
+  film_b:['Creative thinking','Attention to detail','Storytelling','Digital literacy'],
+  fashion_b:['Creative thinking','Attention to detail','Trend awareness','Communication'],
+  teaching_b:['Communication','Patience','Adaptability','Empathy'],
+  // Caring
+  babies:['Empathy','Patience','Reliability','Observation skills'],
+  kids:['Communication','Empathy','Patience','Adaptability'],
+  elderly:['Empathy','Patience','Active listening','Reliability'],
+  health_c:['Empathy','Attention to detail','Composure under pressure','Reliability'],
+  mental_c:['Active listening','Empathy','Composure','Discretion'],
+  animals_c:['Empathy','Patience','Reliability','Observation skills'],
+  community_c:['Empathy','Communication','Initiative','Teamwork'],
+  learning_c:['Communication','Patience','Adaptability','Empathy'],
+  // Trades
+  elec:['Attention to detail','Problem solving','Safety awareness','Reliability'],
+  plumb:['Problem solving','Attention to detail','Physical fitness','Reliability'],
+  carpentry:['Attention to detail','Spatial reasoning','Reliability','Craftsmanship'],
+  mechanic:['Problem solving','Attention to detail','Physical fitness','Mechanical aptitude'],
+  landscape_d:['Physical fitness','Reliability','Attention to detail','Outdoor adaptability'],
+  construct:['Teamwork','Physical fitness','Safety awareness','Reliability'],
+  spray:['Attention to detail','Creativity','Physical fitness','Reliability'],
+  fabrication:['Attention to detail','Physical fitness','Safety awareness','Technical aptitude'],
+  // Nature
+  farm:['Physical fitness','Reliability','Adaptability','Outdoor work ethic'],
+  conservation:['Passion for the environment','Attention to detail','Physical fitness','Research'],
+  hort:['Attention to detail','Physical fitness','Patience','Reliability'],
+  marine:['Physical fitness','Safety awareness','Adaptability','Reliability'],
+  env_sci:['Analytical thinking','Research skills','Attention to detail','Environmental awareness'],
+  animals_e:['Empathy','Reliability','Patience','Observation skills'],
+  sport_e:['Communication','Teamwork','Physical fitness','Leadership'],
+  // Sport
+  coach:['Leadership','Communication','Empathy','Motivational skills'],
+  fitness:['Communication','Motivation','Empathy','Physical fitness'],
+  outdoor_ed:['Leadership','Safety awareness','Communication','Adaptability'],
+  pe_teach:['Communication','Leadership','Patience','Physical fitness'],
+  sports_sci:['Analytical thinking','Research','Attention to detail','Physical fitness'],
+  therapy:['Empathy','Attention to detail','Communication','Physical fitness'],
+  // Sensitive/G branch
+  people_g:['Empathy','Reliability','Teamwork','Communication'],
+  outside_g:['Reliability','Physical fitness','Adaptability','Attention to detail'],
+  screen_g:['Reliability','Attention to detail','Digital literacy','Consistency'],
+  routine_g:['Reliability','Consistency','Attention to detail','Work ethic'],
+  make_g:['Creativity','Attention to detail','Reliability','Patience'],
+  animals_g:['Empathy','Patience','Reliability','Observation skills'],
+  safe_g:['Reliability','Willingness to learn','Teamwork','Adaptability']
+};
+
+// Values → professional traits translation
+var VALUES_TRAITS={
+  meaning:['Purpose-driven','Committed to making a difference'],
+  growth:['Eager to learn','Growth mindset'],
+  flex:['Adaptable','Self-motivated'],
+  create:['Creative thinking','Initiative'],
+  secure:['Reliable','Consistent'],
+  people_v:['Collaborative','Team player'],
+  variety:['Adaptable','Thrives in varied environments'],
+  support_v:['Supportive','Team-oriented'],
+  active_v:['Energetic','Physically active'],
+  recognition:['Results-oriented','High standards'],
+  progress:['Ambitious','Initiative']
+};
+
+// Noticed (how others see the explorer) → professional traits
+var NOTICED_TRAITS={
+  creative:['Creative problem solver','Imaginative','Innovative thinker'],
+  caring:['Empathetic','Supportive','People-focused'],
+  driven:['Self-motivated','Results-driven','Takes initiative'],
+  connector:['Relationship builder','Collaborative','Strong communicator'],
+  thinker:['Analytical','Methodical','Detail-oriented'],
+  doer:['Practical','Action-oriented','Gets things done'],
+  calm:['Composed under pressure','Reliable','Steady'],
+  leader:['Natural leader','Takes initiative','Motivates others']
+};
+
+// Build pre-fill data from assessment
+function buildCVPrefill(){
+  if(typeof A==='undefined'||!A||!A.name) return null;
+  var prefill={};
+
+  // Name
+  if(A.name) prefill.cv_name=A.name;
+
+  // Skills from branch — translate to professional skills
+  var skills=[];
+  var branch=A.branch;
+  if(branch){
+    var bList=Array.isArray(branch)?branch:[branch];
+    bList.forEach(function(b){
+      if(BRANCH_SKILLS[b]){
+        BRANCH_SKILLS[b].forEach(function(s){
+          if(skills.indexOf(s)<0) skills.push(s);
+        });
+      }
+    });
+  }
+
+  // Add traits from noticed (how others describe them)
+  if(A.noticed&&NOTICED_TRAITS[A.noticed]){
+    NOTICED_TRAITS[A.noticed].forEach(function(t){
+      if(skills.indexOf(t)<0&&skills.length<9) skills.push(t);
+    });
+  }
+
+  // Add traits from values (top 2 only, if they add something not already there)
+  if(Array.isArray(A.values)){
+    A.values.slice(0,2).forEach(function(v){
+      if(VALUES_TRAITS[v]){
+        VALUES_TRAITS[v].forEach(function(t){
+          if(skills.indexOf(t)<0&&skills.length<9) skills.push(t);
+        });
+      }
+    });
+  }
+
+  // Cap at 8 skills — enough to be useful, not overwhelming
+  prefill.skills=skills.slice(0,8);
+
+  return prefill;
+}
+
 function sCVBuilder(fromAssessment){
-  CV={type:null,answers:{},jd:'',fromAssessment:!!fromAssessment};
+  var prefill=fromAssessment?buildCVPrefill():null;
+  CV={type:null,answers:{},jd:'',fromAssessment:!!fromAssessment,prefill:prefill||{}};
+  // Pre-fill name if we have it
+  if(prefill&&prefill.cv_name) CV.answers.cv_name=prefill.cv_name;
   PH='cv_fork';
   sp(0,'CV Builder','');
   var h='<p class="qt" style="margin-bottom:6px">Let\'s build your CV. Where are you at right now?</p>';
@@ -1831,8 +1975,15 @@ function sCVStep(){
   var pct=Math.round(((CV_STEP_IDX+1)/totalSteps)*85);
   sp(pct,'CV Builder',(CV_STEP_IDX+1)+' of '+totalSteps);
   var saved=CV.answers[step.id]||'';
+  // Check if this is a skills step and we have pre-filled skills
+  var skillsPrefill=(step.id==='cv_skills'||step.id==='cv_life_skills')&&CV.fromAssessment&&CV.prefill&&CV.prefill.skills&&CV.prefill.skills.length>0&&!saved;
+  if(skillsPrefill) saved=CV.prefill.skills.join('\n');
+  var isPrefilled=!!(CV.fromAssessment&&CV.prefill&&(CV.prefill[step.id]||skillsPrefill));
   var h='<div class="ptag">&#x1F4C4; CV Builder</div>';
   h+='<p class="qt">'+step.q+'</p>';
+  if(isPrefilled){
+    h+='<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(196,113,74,.08);border:1px solid rgba(196,113,74,.2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--tc);margin-bottom:10px">&#x2728; Pre-filled from your assessment &mdash; edit anything you like</div>';
+  }
   h+='<div class="cv-step-wrap">';
   if(step.type==='textarea'){
     h+='<textarea class="cv-ta" id="CVTA" placeholder="'+step.pl+'" oninput="cvTA(this)">'+saved+'</textarea>';
@@ -1925,8 +2076,53 @@ function genCV(){
   });
   if(CV.jd)userParts.push('Job description to tailor toward:\n'+CV.jd);
   if(CV.fromAssessment&&A&&A.name){
-    userParts.push('Career matches from assessment: '+(RS&&RS.nowJobs?RS.nowJobs.map(function(j){return j.title;}).join(', '):''));
-    userParts.push('Explorer profile: noticed='+A.noticed+' values='+JSON.stringify(A.values||[])+' challenge='+A.challenge);
+    // Tier 3: Rich assessment context for Claude
+    var assessParts=[];
+    // Career matches with why-fit context
+    if(RS&&RS.nowJobs&&RS.nowJobs.length){
+      var matchSummary=RS.nowJobs.slice(0,3).map(function(j){
+        return j.title+(j.why?' ('+j.why.substring(0,120)+'...)':'');
+      }).join(' | ');
+      assessParts.push('Career matches (do NOT use as CV target role — Explorer chooses their own target): '+matchSummary);
+    }
+    // Full explorer narrative if available
+    if(RS&&RS.summary){
+      assessParts.push('Explorer narrative from assessment: '+RS.summary.substring(0,400));
+    }
+    // Values translated
+    if(A.values&&A.values.length){
+      var valLabels=(A.values||[]).map(function(v){
+        var m={meaning:'meaningful work',growth:'learning and growth',flex:'flexibility and autonomy',
+               create:'creative expression',secure:'job security',people_v:'great people around them',
+               variety:'variety and change',support_v:'supportive culture',active_v:'staying physically active',
+               recognition:'being recognised for results',progress:'career progression'};
+        return m[v]||v;
+      }).join(', ');
+      assessParts.push('What this Explorer values in work: '+valLabels);
+    }
+    // How others see them
+    if(A.noticed){
+      var noticedMap={creative:'creative and imaginative',caring:'empathetic and caring',
+        driven:'driven and self-motivated',connector:'a natural connector and communicator',
+        thinker:'analytical and a deep thinker',doer:'practical and action-oriented',
+        calm:'calm and steady under pressure',leader:'a natural leader'};
+      assessParts.push('How others describe this Explorer: '+(noticedMap[A.noticed]||A.noticed));
+    }
+    // Work environment preferences
+    if(A.place&&A.place.length){
+      assessParts.push('Preferred work environments: '+JSON.stringify(A.place));
+    }
+    // Challenge level / complexity
+    if(A.challenge){
+      var cMap={simple:'prefers clear, straightforward tasks',moderate:'comfortable with moderate complexity',complex:'thrives with complex, challenging work'};
+      assessParts.push('Complexity preference: '+(cMap[A.challenge]||A.challenge));
+    }
+    // Skills pre-filled from assessment
+    if(CV.prefill&&CV.prefill.skills&&CV.prefill.skills.length){
+      assessParts.push('Skills identified from assessment profile (weave into CV where genuine and relevant): '+CV.prefill.skills.join(', '));
+    }
+    userParts.push('--- ASSESSMENT CONTEXT (use to enrich the CV voice and skills — do not fabricate) ---');
+    userParts.push(assessParts.join('\n'));
   }
 
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
