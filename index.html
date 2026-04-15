@@ -498,13 +498,50 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .retrieved-icon{font-size:22px;flex-shrink:0}
 .retrieved-title{font-size:15px;font-weight:700;color:var(--gr);margin-bottom:3px}
 .retrieved-sub{font-size:13px;color:var(--mid);line-height:1.6}
+
+/* Leave-page modal */
+.leave-modal-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,34,.6);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.leave-modal-overlay.open{display:flex}
+.leave-modal{background:var(--cream);border-radius:18px;padding:36px 32px;max-width:380px;width:90%;text-align:center;border:1.5px solid var(--sand)}
+.leave-modal-icon{font-size:32px;margin-bottom:14px}
+.leave-modal-h{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--ch);margin-bottom:10px;font-variant-ligatures:none}
+.leave-modal-p{font-size:14px;color:var(--mid);line-height:1.65;margin-bottom:24px}
+.leave-modal-btns{display:flex;gap:10px;justify-content:center}
+.leave-modal-stay{background:var(--ch);color:#fff;border:none;border-radius:50px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.leave-modal-stay:hover{background:#3d3533}
+.leave-modal-go{background:transparent;color:var(--mid);border:1.5px solid var(--sand2);border-radius:50px;padding:11px 20px;font-size:14px;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.leave-modal-go:hover{border-color:var(--tc);color:var(--tc)}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+function handleLogoClick(e){
+  if(PH==="sf"||PH===null||PH===""){return true;}
+  e.preventDefault();
+  var title="Heading home?";
+  var msg;
+  if(PH==="questions"){
+    msg="You’re in the middle of your discovery. If you leave now, your progress won’t be saved — you’ll start fresh next time.";
+  } else if(PH==="cv"||PH==="cvgen"){
+    msg="Your CV is still being built. Any work in progress will be lost if you leave now.";
+  } else {
+    msg="If you leave this page, you’ll return to the home screen.";
+  }
+  document.getElementById("leaveModalTitle").textContent=title;
+  document.getElementById("leaveModalMsg").textContent=msg;
+  document.getElementById("leaveModal").classList.add("open");
+  return false;
+}
+function closeLeaveModal(){
+  document.getElementById("leaveModal").classList.remove("open");
+}
+function confirmLeave(){
+  window.location.href="/marketing.html";
+}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <header>
-  <div class="logo"><a href="/marketing" style="text-decoration:none;display:flex;align-items:center;gap:8px;color:inherit"><svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg><div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1"><span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span><span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span></div></a></div>
+  <div class="logo"><a href="/marketing.html" onclick="return handleLogoClick(event)" style="text-decoration:none;display:flex;align-items:center;gap:8px;color:inherit"><svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg><div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1"><span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span><span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span></div></a></div>
   <h1>Find your <em>path</em></h1>
   <p class="sub">Most career tools ask what you&rsquo;re qualified for. We ask who you are.</p>
 </header>
@@ -1341,7 +1378,21 @@ function buildReportHTML(){
   }
 
   html+='<div class="disclaimer">For guidance only. Find My Journey results are AI-generated suggestions and are not a substitute for professional career counselling.<br>&copy; 2025 Find My Journey · Free · Private · Australian</div>';
-  html+='</div></body></html>';
+  html+='</div>
+
+<!-- Leave-page confirmation modal -->
+<div class="leave-modal-overlay" id="leaveModal">
+  <div class="leave-modal">
+    <div class="leave-modal-icon">&#x1F9ED;</div>
+    <h3 class="leave-modal-h" id="leaveModalTitle">Heading home?</h3>
+    <p class="leave-modal-p" id="leaveModalMsg">Your progress on this page will be lost if you leave now.</p>
+    <div class="leave-modal-btns">
+      <button class="leave-modal-stay" onclick="closeLeaveModal()">Stay here</button>
+      <button class="leave-modal-go" onclick="confirmLeave()">Yes, go home</button>
+    </div>
+  </div>
+</div>
+</body></html>';
   return html;
 }
 
@@ -2209,7 +2260,20 @@ function exportCVPDF(){
     'table{border-collapse:collapse}td{vertical-align:top}'+
     'ul{padding-left:14px}li{margin-bottom:2px}'+
     '@media print{body{margin:0;padding:0}}'+
-    '</style></head><body>'+cvHTML+'</body></html>';
+    '</style></head><body>'+cvHTML+'
+<!-- Leave-page confirmation modal -->
+<div class="leave-modal-overlay" id="leaveModal">
+  <div class="leave-modal">
+    <div class="leave-modal-icon">&#x1F9ED;</div>
+    <h3 class="leave-modal-h" id="leaveModalTitle">Heading home?</h3>
+    <p class="leave-modal-p" id="leaveModalMsg">Your progress on this page will be lost if you leave now.</p>
+    <div class="leave-modal-btns">
+      <button class="leave-modal-stay" onclick="closeLeaveModal()">Stay here</button>
+      <button class="leave-modal-go" onclick="confirmLeave()">Yes, go home</button>
+    </div>
+  </div>
+</div>
+</body></html>';
   /* Client-side PDF using html2canvas + jsPDF */
   var iframe=document.createElement('iframe');
   iframe.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:auto;border:none;visibility:hidden';
@@ -2882,5 +2946,18 @@ setTimeout(function(){
   if(s&&s.innerHTML.trim()===''){sSf();}
 },600);
 </script>
+
+<!-- Leave-page confirmation modal -->
+<div class="leave-modal-overlay" id="leaveModal">
+  <div class="leave-modal">
+    <div class="leave-modal-icon">&#x1F9ED;</div>
+    <h3 class="leave-modal-h" id="leaveModalTitle">Heading home?</h3>
+    <p class="leave-modal-p" id="leaveModalMsg">Your progress on this page will be lost if you leave now.</p>
+    <div class="leave-modal-btns">
+      <button class="leave-modal-stay" onclick="closeLeaveModal()">Stay here</button>
+      <button class="leave-modal-go" onclick="confirmLeave()">Yes, go home</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
