@@ -148,6 +148,9 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 .footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
 .footer-legal a:hover{color:rgba(255,255,255,.55)}
 @media(max-width:768px){
+  .cv-inner{grid-template-columns:1fr;gap:40px}
+  .cv-card-stack{height:260px}
+  .cv-section{padding:56px 20px}
   .nav-inner{padding:0 20px}
   .nav-links{display:none}
   .nav-hamburger{display:flex}
@@ -187,6 +190,37 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   .hero-h1{font-size:clamp(38px,12vw,52px)}
   .cta-h2{font-size:38px}
 }
+
+/* CV Builder section */
+.cv-section{background:var(--ch);padding:88px 48px;position:relative;overflow:hidden}
+.cv-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px)}
+.cv-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.cv-left{}
+.cv-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.cv-label::before{content:'';width:24px;height:1.5px;background:var(--tc)}
+.cv-h2{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,58px);font-weight:200;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:18px;font-variant-ligatures:none}
+.cv-h2 em{font-style:italic;color:var(--tcl)}
+.cv-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:32px}
+.cv-steps{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.cv-step{display:flex;gap:14px;align-items:flex-start}
+.cv-step-num{width:28px;height:28px;border-radius:50%;background:var(--tc);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.cv-step-text{font-size:14px;color:rgba(255,255,255,.55);line-height:1.65}
+.cv-step-text strong{color:#fff;font-weight:600}
+.cv-cta{display:inline-block;background:var(--tc);color:#fff;border-radius:50px;padding:15px 32px;font-size:15px;font-weight:600;text-decoration:none;transition:all .2s}
+.cv-cta:hover{background:var(--tcl)}
+.cv-right{}
+.cv-card-stack{position:relative;height:340px}
+.cv-card-back{position:absolute;top:20px;left:20px;right:-20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;height:290px}
+.cv-card-front{position:absolute;top:0;left:0;right:0;background:var(--warm);border:1.5px solid var(--sand);border-radius:16px;padding:28px;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.cv-card-tag{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.cv-card-name{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--ch);margin-bottom:4px;font-variant-ligatures:none}
+.cv-card-role{font-size:13px;color:var(--tc);font-weight:500;margin-bottom:18px}
+.cv-card-divider{height:1px;background:var(--sand);margin-bottom:14px}
+.cv-card-section-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);margin-bottom:8px}
+.cv-card-body{font-size:12px;color:var(--mid);line-height:1.65;margin-bottom:14px}
+.cv-card-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cv-card-pill{background:var(--warm2);border:1px solid var(--sand);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--mid);font-weight:500}
+.cv-card-prefilled{display:inline-flex;align-items:center;gap:5px;background:rgba(196,113,74,.08);border:1px solid rgba(196,113,74,.2);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--tc);margin-bottom:12px}
 </style>
 </head>
 <body>
@@ -202,6 +236,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#explorers">Explorers</a>
+      <a href="#cv-builder">CV Builder</a>
       <a href="#institutions">For institutions</a>
       <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
     </div>
@@ -213,6 +248,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <div class="nav-mobile" id="navMobile">
   <a href="#how" onclick="closeNav()">How it works</a>
   <a href="#explorers" onclick="closeNav()">Explorers</a>
+  <a href="#cv-builder" onclick="closeNav()">CV Builder</a>
   <a href="#institutions" onclick="closeNav()">For institutions</a>
   <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
 </div>
@@ -432,6 +468,59 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <div style="text-align:center;padding:0 48px 40px;background:var(--warm2)">
   <a href="/why-find-my-journey.html" style="color:var(--tc);font-size:13px;font-weight:500;text-decoration:none">See all four proof points in detail &#x2192;</a>
 </div>
+
+<!-- CV BUILDER SECTION -->
+<section class="cv-section" id="cv-builder">
+  <div class="cv-inner">
+    <div class="cv-left">
+      <div class="cv-label">CV Builder</div>
+      <h2 class="cv-h2">Leave with<br>something <em>real.</em></h2>
+      <p class="cv-sub">You won&rsquo;t just know where you&rsquo;re headed. Find My Journey turns your career matches into a tailored CV &mdash; so you walk away with something to show for it.</p>
+      <div class="cv-steps">
+        <div class="cv-step">
+          <div class="cv-step-num">1</div>
+          <div class="cv-step-text"><strong>Complete your discovery.</strong> Your strengths, values and career matches are already captured.</div>
+        </div>
+        <div class="cv-step">
+          <div class="cv-step-num">2</div>
+          <div class="cv-step-text"><strong>We pre-fill your profile.</strong> No starting from a blank page &mdash; your results shape the whole thing.</div>
+        </div>
+        <div class="cv-step">
+          <div class="cv-step-num">3</div>
+          <div class="cv-step-text"><strong>Add your history, download and go.</strong> A clean, honest CV that actually sounds like you.</div>
+        </div>
+      </div>
+      <a href="/cv-builder.html" class="cv-cta">Build your CV &rarr;</a>
+    </div>
+    <div class="cv-right">
+      <div class="cv-card-stack">
+        <!-- Back card (shadow effect) -->
+        <div class="cv-card-back"></div>
+        <!-- Front card — CV preview -->
+        <div class="cv-card-front">
+          <div class="cv-card-prefilled">&#x2728; Pre-filled from your assessment</div>
+          <div class="cv-card-tag">&#x1F4C4; Your CV</div>
+          <div class="cv-card-name">Ella Thompson</div>
+          <div class="cv-card-role">Aspiring Aged Care Worker &nbsp;&middot;&nbsp; Melbourne</div>
+          <div class="cv-card-divider"></div>
+          <div class="cv-card-section-label">Profile</div>
+          <div class="cv-card-body">A calm, caring person who finds genuine satisfaction in supporting others. Drawn to structured environments where I can build real relationships with the people I work with.</div>
+          <div class="cv-card-section-label">Strengths</div>
+          <div class="cv-card-pills">
+            <span class="cv-card-pill">Empathy</span>
+            <span class="cv-card-pill">Patience</span>
+            <span class="cv-card-pill">Reliability</span>
+            <span class="cv-card-pill">Active listening</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="text-align:center;padding:0 48px 40px;background:var(--ch)">
+  <a href="/cv-builder.html" style="color:rgba(196,113,74,.6);font-size:13px;font-weight:500;text-decoration:none">Learn more about the CV Builder &#x2192;</a>
+</div>
+
 <section class="section inst-section" id="institutions">
   <div class="section-inner">
     <div class="sec-label">For institutions</div>
