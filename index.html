@@ -1379,21 +1379,7 @@ function buildReportHTML(){
   }
 
   html+='<div class="disclaimer">For guidance only. Find My Journey results are AI-generated suggestions and are not a substitute for professional career counselling.<br>&copy; 2025 Find My Journey · Free · Private · Australian</div>';
-  html+='</div>
-
-<!-- Leave-page confirmation modal -->
-<div class="leave-modal-overlay" id="leaveModal">
-  <div class="leave-modal">
-    <div class="leave-modal-icon">&#x1F9ED;</div>
-    <h3 class="leave-modal-h" id="leaveModalTitle">Heading home?</h3>
-    <p class="leave-modal-p" id="leaveModalMsg">Your progress on this page will be lost if you leave now.</p>
-    <div class="leave-modal-btns">
-      <button class="leave-modal-stay" onclick="closeLeaveModal()">Stay here</button>
-      <button class="leave-modal-go" onclick="confirmLeave()">Yes, go home</button>
-    </div>
-  </div>
-</div>
-</body></html>';
+  html+='</div>';
   return html;
 }
 
@@ -2257,24 +2243,11 @@ function exportCVPDF(){
     '.cv-t3-skill-tag{font-size:9pt;background:#faf7f2;border:1px solid #E8DFD0;color:#4a4240;padding:2px 7px;border-radius:10px;display:inline-block;margin:2px}'+
     '.cv-t3-ref{font-size:9pt;color:#9a8e84;font-style:italic}'+
     '.cv-t3-watermark{text-align:right;padding:4px 28px 8px;font-size:7pt;color:#c8beb4}'+
-    /* General */
+    '/* General */'+
     'table{border-collapse:collapse}td{vertical-align:top}'+
     'ul{padding-left:14px}li{margin-bottom:2px}'+
     '@media print{body{margin:0;padding:0}}'+
-    '</style></head><body>'+cvHTML+'
-<!-- Leave-page confirmation modal -->
-<div class="leave-modal-overlay" id="leaveModal">
-  <div class="leave-modal">
-    <div class="leave-modal-icon">&#x1F9ED;</div>
-    <h3 class="leave-modal-h" id="leaveModalTitle">Heading home?</h3>
-    <p class="leave-modal-p" id="leaveModalMsg">Your progress on this page will be lost if you leave now.</p>
-    <div class="leave-modal-btns">
-      <button class="leave-modal-stay" onclick="closeLeaveModal()">Stay here</button>
-      <button class="leave-modal-go" onclick="confirmLeave()">Yes, go home</button>
-    </div>
-  </div>
-</div>
-</body></html>';
+    '</style></head><body>'+cvHTML+'</body></html>';
   /* Client-side PDF using html2canvas + jsPDF */
   var iframe=document.createElement('iframe');
   iframe.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:auto;border:none;visibility:hidden';
@@ -2947,6 +2920,10 @@ setTimeout(function(){
   if(s&&s.innerHTML.trim()===''){sSf();}
 },600);
 </script>
+
+
+  </div>
+</div>
 
 <!-- Leave-page confirmation modal -->
 <div class="leave-modal-overlay" id="leaveModal">
