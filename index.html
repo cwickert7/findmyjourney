@@ -2907,9 +2907,11 @@ async function checkURLResult(){
       }
     }catch(e){sSf();}
   } else if(goCV==='true'||goCV==='1'){
-    // Jump straight to CV Builder
+    // Jump straight to CV Builder — wait for sSf() to fully render first
     sSf();
-    setTimeout(function(){sCVBuilder(false);},80);
+    setTimeout(function(){
+      if(typeof sCVBuilder==='function'){sCVBuilder(false);}
+    },300);
   } else {
     sSf();
   }
