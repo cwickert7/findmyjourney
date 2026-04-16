@@ -216,17 +216,268 @@ h1 em{font-style:italic;color:var(--tc)}
 footer{width:100%;max-width:860px;padding:0 24px 40px}
 .fb{display:none}.fp{display:none}
 @media print{body{background:#fff;display:block}.wrap{max-width:100%;padding:0}.card{box-shadow:none;border-radius:0;padding:0;overflow:visible}.card::before{display:none}header,footer,.more-btn,.brs,.fb-row,.p4,.cvb,.voice-btn-wrap,.pdf-btn-wrap,.occ-btn,.occ-panel{display:none!important}.print-header{display:block!important}.jc{break-inside:avoid;border:1.5px solid #E8DFD0;border-radius:8px;padding:14px 16px;margin-bottom:12px}.sh{break-after:avoid}.pip,.enc,.wy,.ef,.ns{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pip-n{background:#3D6B4F!important}.pip-c{background:#C4714A!important}}
-@media(max-width:480px){.card{padding:20px 16px}.og.two{grid-template-columns:1fr}.pprev{gap:4px}.fc-wrap{grid-template-columns:1fr 1fr}.qt{font-size:20px}
-/* Landing screen mobile */
-.pprev-new{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:4px;padding:12px 10px}
-.ppip-new{min-width:64px;flex-shrink:0}
-.ppip-i-new{width:40px;height:40px;font-size:18px}
-.ppip-n-new{font-size:9px}
-.ppip-l-new{font-size:10px}
-.pprev-arrow{flex-shrink:0}
-/* Email capture mobile */
-.email-cap-row{flex-direction:column}
-.email-cap-btn{width:100%;text-align:center}
+
+/* ════════════════════════════════════════════════════
+   MOBILE STYLES — max-width:480px
+   Zero effect on desktop. Additive only.
+   ════════════════════════════════════════════════════ */
+@media(max-width:480px){
+
+  /* ── GLOBAL SHELL ── */
+  body{overflow-x:hidden}
+  header{padding:20px 16px 12px}
+  h1{font-size:clamp(28px,9vw,38px);max-width:100%}
+  .sub{font-size:14px;max-width:100%;padding:0 4px}
+  .wrap{padding:0 12px 40px;max-width:100%}
+  footer{max-width:100%;padding:0 16px 28px}
+
+  /* ── CARD ── */
+  .card{padding:16px 14px;border-radius:16px}
+  .card::before{border-radius:16px 16px 0 0}
+
+  /* ── PROGRESS BAR ── */
+  .plbl{font-size:9px}
+  .pstep{font-size:11px}
+
+  /* ── QUESTION TEXT ── */
+  .qt{font-size:19px;line-height:1.3}
+  .qh{font-size:13px}
+  .qn{font-size:12px}
+
+  /* ── SINGLE CHOICE OPTIONS ── */
+  .og{gap:6px}
+  .og.two{grid-template-columns:1fr}
+  .ob{padding:12px 13px;font-size:15px;min-height:auto}
+  .oe{font-size:22px}
+  .ol{font-size:15px}
+  .od{font-size:13px}
+  .ob.sel::after{width:16px;height:16px;top:7px;right:8px}
+
+  /* ── FORCED CHOICE (ipsative) ── */
+  .fc-wrap{grid-template-columns:1fr;gap:8px}
+  .fc-opt{min-height:auto;padding:14px 12px;font-size:14px}
+  .fc-icon{font-size:24px}
+  .fc-label{font-size:14px}
+  .fc-vs{font-size:11px;margin:6px 0}
+
+  /* ── MULTI SELECT ── */
+  .pg{gap:6px}
+  .pc{height:auto;padding:11px 32px 11px 11px}
+  .pi{font-size:19px}
+  .pc h3{font-size:15px}
+  .pc p{font-size:12px}
+  .pck{width:15px;height:15px;top:8px;right:8px}
+
+  /* ── TEXT INPUT ── */
+  .ti{height:52px;font-size:16px;padding:12px 14px}
+  .cv-ta{font-size:15px;padding:12px 14px}
+
+  /* ── NEXT/BACK BUTTONS ── */
+  .br{gap:8px;margin-top:10px}
+  .bnx{height:50px;font-size:15px;padding:13px 24px;flex:1}
+  .bbk{font-size:13px;padding:8px 10px}
+
+  /* ── PHASE PIP STRIP ── */
+  .pprev{gap:3px}
+  .ppip{padding:7px 5px;max-width:none}
+  .ppip-i{font-size:17px}
+  .ppip-n{font-size:8px}
+  .ppip-l{font-size:10px}
+
+  /* ── SPILL ITEMS (phase summaries) ── */
+  .spill{padding:8px 10px}
+  .spi{font-size:14px}
+  .sps{font-size:14px}
+  .spt{font-size:12px}
+
+  /* ── LOADING STATE ── */
+  .tw{padding:16px 10px}
+  .tp{font-size:16px}
+  .tsm{font-size:11px}
+
+  /* ── SECTION HEADERS (results) ── */
+  .rh{font-size:clamp(16px,4.5vw,22px)}
+  .rh2{font-size:clamp(17px,4vw,24px)}
+  .rp{font-size:13px}
+  .sh3{font-size:15px}
+  .sbdg{font-size:8px;padding:2px 6px}
+
+  /* ── JOB CARDS ── */
+  .jc{padding:12px 14px}
+  .jr{font-size:20px;top:12px;right:12px}
+  .jh4{font-size:17px;padding-right:32px;padding-left:0;padding-top:0;padding-bottom:0;display:block;margin-bottom:4px}
+  .jd{font-size:14px}
+  .wy{font-size:13px;padding:7px 10px}
+  .ef{font-size:13px;padding:7px 10px}
+
+  /* ── JOB CARD COMPACT (results list) ── */
+  .jc-compact{grid-template-columns:1fr auto;padding:12px 14px}
+  .jc-meta-row{gap:4px}
+  .jc-sal-badge{font-size:11px;padding:2px 8px}
+  .jc-match-badge{font-size:10px;padding:2px 8px}
+  .jc-expand-btn{padding:6px 10px;font-size:11px}
+  .jc-detail-inner{padding:12px 14px 14px}
+
+  /* ── SALARY BARS ── */
+  .sal-row{flex-direction:column;gap:0}
+  .sal-cell{padding:6px 8px}
+  .sal-val{font-size:14px}
+  .sal-bar-section{padding:0 2px}
+  .sal-tick-lbl{font-size:8px}
+  .sal-avg-mk::after{font-size:8px}
+  .sal-bar-ends{font-size:9px}
+  .sal-note{font-size:9px}
+
+  /* ── MATCH BAR ── */
+  .match-bar-val{font-size:11px}
+
+  /* ── PATHWAY STEPS ── */
+  .pw{padding:8px 10px}
+  .pws div{font-size:13px;gap:6px}
+  .path-item{font-size:12px}
+  .path-body{font-size:13px}
+  .path-btn{padding:6px 13px;font-size:12px}
+
+  /* ── OCCUPATION EXPLORER ── */
+  .occ-btn{padding:6px 13px;font-size:12px}
+  .occ-panel{padding:12px 14px}
+  .occ-salary{font-size:19px}
+  .occ-body{font-size:13px}
+  .occ-tags{gap:4px}
+  .occ-tag{font-size:10px;padding:2px 7px}
+
+  /* ── TAGS / PILLS ── */
+  .jt span{font-size:10px;padding:2px 7px}
+
+  /* ── PROFILE SUMMARY ── */
+  .profile-summary-box{padding:12px 14px}
+  .psb-title{font-size:14px}
+  .psb-item{font-size:12px;padding:11px}
+
+  /* ── TAGS / NOTES ── */
+  .stag{max-width:100%}
+  .p4{padding:11px 12px}
+  .p4t strong{font-size:12px}
+  .p4p{font-size:12px}
+
+  /* ── CV BUILDER BLOCK (on results) ── */
+  .cvb{padding:10px 12px}
+  .cvb strong{font-size:12px}
+  .cvb p{font-size:11px}
+
+  /* ── SAVING / RETURN ── */
+  .save-results-panel{padding:16px 14px}
+  .save-results-title{font-size:14px}
+  .save-results-sub{font-size:12px}
+  .save-link-row{flex-direction:column;gap:6px}
+  .save-link-input{font-size:13px;padding:10px 12px}
+  .save-link-copy{width:100%;justify-content:center;font-size:13px}
+  .save-code-val{font-size:15px}
+  .return-input-row{flex-direction:column;gap:6px}
+  .return-code-input{font-size:14px}
+  .return-go-btn{width:100%;justify-content:center}
+
+  /* ── EMAIL CAPTURE ── */
+  .email-cap{padding:16px 14px}
+  .email-cap-title{font-size:17px}
+  .email-cap-sub{font-size:12px}
+  .email-cap-row{flex-direction:column;gap:8px}
+  .email-cap-input{width:100%;font-size:14px}
+  .email-cap-btn{width:100%;text-align:center;justify-content:center}
+
+  /* ── CV BUILDER FORK SCREEN ── */
+  .cv-fork{grid-template-columns:1fr;gap:7px}
+  .cv-fork-opt{padding:12px 13px}
+  .cv-fork-icon{font-size:19px}
+  .cv-fork-title{font-size:14px}
+  .cv-fork-desc{font-size:11px}
+
+  /* ── CV OUTPUT ACTIONS ── */
+  .cv-out-actions{flex-direction:column;gap:6px}
+  .cv-out-btn{width:100%;justify-content:center}
+  .pdf-btn-wrap{flex-direction:column;gap:6px}
+  .pdf-btn{width:100%;justify-content:center}
+
+  /* ── CV TEMPLATE 1 ── */
+  .cv-t1-hdr{padding:18px 16px 14px}
+  .cv-t1-name{font-size:20px}
+  .cv-t1-body{padding:14px 16px}
+  .cv-t1-skill-grid{grid-template-columns:1fr 1fr}
+  .cv-t1-entry-top{flex-direction:column;gap:2px}
+  .cv-t1-entry-date{font-size:10px}
+
+  /* ── CV TEMPLATE 2 ── */
+  .cv-t2-cols{grid-template-columns:1fr}
+  .cv-t2-sidebar{padding:14px 16px;border-right:none;border-bottom:1px solid var(--sand)}
+  .cv-t2-main{padding:14px 16px}
+  .cv-t2-hdr{padding:16px 16px 12px}
+  .cv-t2-name{font-size:19px}
+
+  /* ── CV TEMPLATE 3 ── */
+  .cv-t3-hdr{padding:20px 16px 16px;flex-direction:column;gap:8px}
+  .cv-t3-name{font-size:24px}
+  .cv-t3-body{padding:16px 16px}
+  .cv-t3-sec-ttl{font-size:13px}
+  .cv-t3-entry{grid-template-columns:1fr;gap:2px}
+  .cv-t3-meta{font-size:10px;margin-bottom:2px}
+  .cv-t3-skill-grid{grid-template-columns:1fr}
+
+  /* ── LEAVE PAGE MODAL ── */
+  .leave-modal{width:92vw;padding:28px 20px;margin:0 auto}
+  .leave-modal-h{font-size:19px}
+  .leave-modal-btns{flex-direction:column;gap:8px}
+  .leave-modal-stay{width:100%;text-align:center;justify-content:center}
+  .leave-modal-go{width:100%;text-align:center;justify-content:center}
+
+  /* ── RETRIEVED RESULTS BANNER ── */
+  .retrieved-banner{padding:12px 14px;flex-direction:column;gap:8px}
+
+  /* ── ERROR STATES ── */
+  .eb{padding:16px 8px}
+  .ei{font-size:26px}
+  .eh3{font-size:16px}
+  .ep{font-size:13px}
+
+  /* ── LANDING SCREEN (new design) ── */
+  .pprev-new{padding:10px 8px;gap:3px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ppip-new{min-width:60px;flex-shrink:0}
+  .ppip-i-new{width:38px;height:38px;font-size:17px}
+  .ppip-n-new{font-size:8px}
+  .ppip-l-new{font-size:10px}
+  .pprev-arrow{padding:20px;flex:0 0 48px}
+  .spill-new{padding:9px 0}
+  .sps-new{font-size:13px}
+  .spt-new{font-size:12px}
+  .cta-panel-new{padding:16px 0 0}
+  .bstart-new{font-size:15px;padding:15px 20px}
+  .cv-btn-new{font-size:13px;padding:11px 20px}
+  .cta-hint-new{font-size:13px}
+
+  /* ── CP/NPB ELEMENTS (confidence / nudge panels) ── */
+  .cp{max-width:100%;font-size:13px}
+  .npb{max-width:100%;padding:11px 13px}
+  .npt{font-size:15px}
+  .npd{font-size:12px}
+  .npi{font-size:20px}
+
+  /* ── ENCOURAGEMENT BLOCK ── */
+  .enc{padding:12px 14px;flex-direction:column}
+  .encp{font-size:14px}
+  .ci{font-size:38px}
+  .ch2{font-size:clamp(16px,4.5vw,22px)}
+
+  /* ── FEEDBACK ROW ── */
+  .fb-row{font-size:11px}
+
+  /* ── MISC BUTTONS ── */
+  .brs{font-size:13px;padding:10px}
+  .more-btn{font-size:13px}
+  .ptag{font-size:11px}
+
+  /* ── VOICE CONTROLS ── */
+  .voice-opt{padding:10px 6px}
+  .voice-opt-icon{font-size:20px}
+  .voice-opt-name{font-size:12px}
 }
 @media(min-width:481px) and (max-width:900px){.card{padding:26px 30px}.og.two{grid-template-columns:1fr 1fr}}
 @media(min-width:901px){.card{padding:36px 44px;border-radius:24px}.wrap{padding:0 32px 60px}.qt{font-size:clamp(24px,2.2vw,32px)}.ob{padding:16px 18px;min-height:72px}.ol{font-size:18px}.od{font-size:15px}.oe{font-size:28px}.og{gap:10px}.og.two{grid-template-columns:1fr 1fr}.bnx{padding:16px 40px;font-size:17px;min-height:58px}.bstart{padding:18px 40px;font-size:17px;max-width:340px}.ti{font-size:18px;height:62px;padding:14px 18px}.fc-opt{min-height:110px;padding:20px 16px}.fc-icon{font-size:32px}.fc-label{font-size:16px}.jh4{font-size:22px}.jd{font-size:16px}.wy{font-size:15px;padding:10px 14px}.ef{font-size:15px;padding:10px 14px}.pws div{font-size:15px}.thiswk{font-size:15px}.nsli{font-size:16px}.rh2{font-size:28px}.encp{font-size:15px}.enc{padding:16px 20px}.jc{padding:18px 22px;margin-bottom:14px}.pprev{gap:12px}.ppip{padding:12px 10px}.ppip-i{font-size:24px}.ppip-l{font-size:13px}.spill{padding:11px 15px;margin-bottom:9px}.sps{font-size:16px}.spt{font-size:14px}}
