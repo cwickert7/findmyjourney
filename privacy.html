@@ -70,6 +70,38 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   .footer-bottom{flex-direction:column;align-items:flex-start}
 }
 .fmj{color:#C4714A;font-weight:500}
+
+@media(max-width:768px){
+  /* ── NAV ── */
+  .nav-inner{padding:0 16px;max-width:100%}
+
+  /* ── PAGE HERO ── */
+  .page-hero{padding:90px 20px 52px}
+  .page-h1{font-size:clamp(36px,10vw,52px)}
+  .page-sub{font-size:15px;max-width:100%}
+
+  /* ── CONTENT ── */
+  .page-content{padding:40px 20px}
+  .page-section{margin-bottom:32px}
+  h2.page-h2,h2{font-size:clamp(20px,5vw,26px)}
+  .info-card{padding:16px}
+  .info-card-title{font-size:14px}
+  .info-card-desc{font-size:13px}
+
+  /* ── FOOTER ── */
+  .footer-inner{max-width:100%;width:100%}
+  .footer-top{grid-template-columns:1fr;gap:24px;margin-bottom:24px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-legal{flex-wrap:wrap;gap:12px}
+  .footer-copy{max-width:100%;font-size:10px}
+}
+@media(max-width:480px){
+  .page-hero{padding:76px 16px 40px}
+  .page-h1{font-size:clamp(30px,10vw,44px)}
+  .page-sub{font-size:14px}
+  .page-content{padding:32px 16px}
+  .page-cta{display:block;text-align:center;padding:14px 24px;font-size:14px}
+}
 </style>
 </head>
 <body>
