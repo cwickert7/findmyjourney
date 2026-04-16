@@ -764,6 +764,29 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
 .leave-modal-stay:hover{background:#3d3533}
 .leave-modal-go{background:transparent;color:var(--mid);border:1.5px solid var(--sand2);border-radius:50px;padding:11px 20px;font-size:14px;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
 .leave-modal-go:hover{border-color:var(--tc);color:var(--tc)}
+
+/* CV Jobs UI */
+.cv-jobs-wrap{display:flex;flex-direction:column;gap:14px}
+.cv-job-entry{background:var(--warm);border:1.5px solid var(--sand);border-radius:14px;padding:18px;position:relative}
+.cv-job-entry-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:12px}
+.cv-job-remove{position:absolute;top:12px;right:12px;background:none;border:none;font-size:18px;color:var(--sand2);cursor:pointer;padding:0;line-height:1}
+.cv-job-remove:hover{color:var(--tc)}
+.cv-job-field{margin-bottom:10px}
+.cv-job-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lt);margin-bottom:4px}
+.cv-job-input{width:100%;background:#fff;border:1.5px solid var(--sand);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ch);outline:none;transition:border-color .2s}
+.cv-job-input:focus{border-color:var(--tc)}
+.cv-job-select{width:100%;background:#fff;border:1.5px solid var(--sand);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ch);outline:none;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A8E84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
+.cv-job-select:focus{border-color:var(--tc)}
+.cv-job-achievements{display:flex;flex-direction:column;gap:6px}
+.cv-job-achievement{display:flex;gap:8px;align-items:flex-start}
+.cv-job-achievement-num{font-size:11px;font-weight:700;color:var(--tc);margin-top:11px;flex-shrink:0;width:14px}
+.cv-job-achievement textarea{flex:1;background:#fff;border:1.5px solid var(--sand);border-radius:10px;padding:9px 12px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ch);outline:none;resize:vertical;min-height:44px;transition:border-color .2s;line-height:1.5}
+.cv-job-achievement textarea:focus{border-color:var(--tc)}
+.cv-job-achievement-hint{font-size:11px;color:var(--lt);margin-top:2px}
+.cv-add-job{width:100%;background:none;border:1.5px dashed var(--sand2);border-radius:12px;padding:12px;font-size:14px;font-weight:500;color:var(--mid);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.cv-add-job:hover{border-color:var(--tc);color:var(--tc)}
+.cv-no-exp{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:var(--mid)}
+.cv-no-exp input[type=checkbox]{width:16px;height:16px;accent-color:var(--tc);cursor:pointer}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
@@ -1027,15 +1050,19 @@ function buildQL(enjoys,challenge,noticed,age,subjects,place){
   if(branch.lbl==='Creative and performing'){branchList.push(BB_FOLLOWUP);}
   // Self-efficacy question — branch-specific framing
   var branchLabel={
-    'Tech and digital':'working in tech or digital','Business and commerce':'a career in business or commerce',
-    'Creative and performing':'a creative or performing career','Helping people':'working in a caring or helping role',
-    'Hands-on work':'a trades or hands-on career','Nature and outdoors':'working outdoors or with nature',
-    'Sport and activity':'a career in sport or fitness',"Let's explore":'the kind of work we just explored'
-  }[branch.lbl]||'this area of work';
+    'Tech and digital':'building a career in tech or digital',
+    'Business and commerce':'building a career in business or commerce',
+    'Creative and performing':'pursuing a creative or performing career',
+    'Helping people':'working in a caring or helping role',
+    'Hands-on work':'working in a trades or hands-on career',
+    'Nature and outdoors':'working outdoors or in nature',
+    'Sport and activity':'building a career in sport or fitness',
+    "Let's explore":'doing this kind of work'
+  }[branch.lbl]||'doing this kind of work';
   var selfEfficacyQ={id:'self_efficacy',ph:'p2',type:'opts',cols:1,lbl:'How it feels',
-    q:'When you picture yourself actually working in '+branchLabel+' &mdash; how does it feel?',
+    q:'When you picture yourself '+branchLabel+' &mdash; how does it feel?',
     hint:'Go with your gut &mdash; there&rsquo;s no wrong answer here.',
-    os:[{v:'se_confident',e:'&#x1F4AA;',l:'I could definitely see myself doing this',d:'Feels natural and achievable'},{v:'se_possible',e:'&#x1F331;',l:'I think I could get there with the right support',d:'It&rsquo;s possible &mdash; I&rsquo;d need some guidance'},{v:'se_unsure',e:'&#x1F914;',l:'I&rsquo;m not sure I&rsquo;d be good enough',d:'I like the idea but doubt myself a bit'},{v:'se_barrier',e:'&#x1F6A7;',l:'I worry people like me don&rsquo;t usually do this',d:'I feel like there might be barriers for me specifically'},{v:'se_dream',e:'&#x2728;',l:'It feels exciting but a bit out of reach',d:'A dream I haven&rsquo;t quite believed in yet'}]};
+    os:[{v:'se_confident',e:'&#x1F4AA;',l:'I could definitely see myself doing this',d:'Feels natural and achievable'},{v:'se_possible',e:'&#x1F331;',l:'I think I could get there with the right support',d:'It&rsquo;s possible &mdash; I&rsquo;d need some guidance'},{v:'se_unsure',e:'&#x1F914;',l:'I&rsquo;m not sure I&rsquo;d be good enough',d:'I like the idea but doubt myself a bit'},{v:'se_barrier',e:'&#x1F6A7;',l:'I worry people like me don&rsquo;t usually do this',d:'I feel like there might be barriers for me specifically'},{v:'se_dream',e:'&#x2728;',l:'It feels exciting but a bit out of reach',d:'A dream I haven&rsquo;t quite believed in yet'},{v:'se_notforme',e:'&#x1F44E;',l:'Honestly, this doesn&rsquo;t appeal to me',d:'Not because I doubt myself &mdash; it just isn&rsquo;t what I want'}]};
   branchList.push(selfEfficacyQ);
   var p1WithIps=P1.slice(0,4).concat(IPSATIVE_PAIRS).concat(P1.slice(4));
   var list=p1WithIps.concat(P2A).concat([visionQ]).concat(P2B).concat(branchList).concat(P3).concat([DRAIN_Q]);
@@ -1340,6 +1367,7 @@ function buildSys(isPT){
     // Self-efficacy framing
     (A.self_efficacy==='se_barrier'?'REPRESENTATION BARRIER: Explorer feels people like them don\'t usually enter this field. Actively name and normalise this in the results. Provide role models or entry points that address the barrier.\n':'')+
     (A.self_efficacy==='se_unsure'||A.self_efficacy==='se_dream'?'LOW SELF-EFFICACY: Frame results with genuine encouragement. Show step-by-step pathway. Emphasise that interest without experience is a valid and common starting point.\n':'')+
+    (A.self_efficacy==='se_notforme'?'BRANCH PREFERENCE MISMATCH: Explorer indicated this branch doesn\'t appeal to them personally. This is a preference signal, not a confidence issue. Draw more heavily on their other profile signals (ipsative scores, values, flow, proud moment) to find adjacent or different directions. Do not anchor results to the branch.\n':'')+
     // Prior negative experience
     (A.prior_negative_what==='pn_manager'?'AVOID: roles known for harsh management cultures, competitive or high-criticism environments, public performance review.\n':'')+
     (A.prior_negative_what==='pn_environment'?'AVOID: loud worksites, chaotic unpredictable environments, open-plan high-noise workplaces.\n':'')+
@@ -2075,7 +2103,7 @@ var CV_STEPS_JUNIOR=[
   {id:'cv_location',lbl:'Where you’re based',q:'What suburb and state are you in?',type:'text',pl:'e.g. Frankston, VIC'},
   {id:'cv_study',lbl:'Your education',q:'Where are you studying or where did you study? What year are you in or when did you finish?',type:'textarea',pl:'e.g. Frankston High School, currently Year 11'},
   {id:'cv_life_skills',lbl:'Skills from life',q:'Have you ever helped someone regularly, looked after siblings or family, played sport, volunteered, done odd jobs, managed social media, or organised anything? Tell us in your own words — nothing is too small.',type:'textarea',pl:'e.g. I help my mum with her cleaning business on Saturdays, and I coach the under-10s soccer team on weekends'},
-  {id:'cv_work',lbl:'Any work or volunteer experience',q:'Have you had any paid work, volunteer work, or work experience placements? If none, just say so — that’s completely fine.',type:'textarea',pl:'e.g. No paid work yet. I did two weeks work experience at a vet clinic in Year 10.'},
+   {id:'cv_work',lbl:'Any work or volunteer experience',q:'Have you had any paid work, volunteer work, or work experience placements?',type:'jobs',optional:true},
   {id:'cv_proud',lbl:'Something you’re proud of',q:'Tell us one thing you’ve done that you feel good about — at school, at home, in sport, anywhere.',type:'textarea',pl:'e.g. I organised a fundraiser at school and we raised $800 for the bushfire appeal'},
   {id:'cv_role',lbl:'The role you’re applying for',q:'What kind of job are you applying for? If you know the specific role or business, tell us.',type:'text',pl:'e.g. Retail assistant at Woolworths, or general café work'}
 ];
@@ -2087,10 +2115,10 @@ var CV_STEPS_SENIOR=[
   {id:'cv_role',lbl:'Target role',q:'What role or type of role are you applying for?',type:'text',pl:'e.g. Marketing Coordinator, or Graduate Engineer roles generally'},
   {id:'cv_summary_inputs',lbl:'About you',q:'In a few sentences — who are you professionally? What are your key strengths and what kind of work do you do best?',type:'textarea',pl:'e.g. I’m a recent commerce graduate with a focus on marketing and brand. I’m strongest at creative problem solving and building relationships.'},
   {id:'cv_education',lbl:'Education',q:'List your qualifications — degree, institution, year completed. Include any relevant certifications or awards.',type:'textarea',pl:'e.g. Bachelor of Commerce (Marketing), Monash University, 2024. Dean’s List 2023.'},
-  {id:'cv_experience',lbl:'Work experience',q:'List your work experience — job title, employer, dates, and 2–3 things you did or achieved in each role. Include part-time, casual and internships.',type:'textarea',pl:'e.g. Marketing Intern, Acme Agency, Jan–June 2024. Managed social media accounts, wrote weekly blog posts, assisted with client campaign briefs.'},
+  {id:'cv_experience',lbl:'Work experience',q:'Tell us about your work experience. Add each role separately.',type:'jobs',optional:true},
   {id:'cv_skills',lbl:'Skills',q:'What are your key skills? Include both hard skills (software, tools, languages) and soft skills.',type:'textarea',pl:'e.g. Adobe Creative Suite, Google Analytics, copywriting, stakeholder communication, bilingual English\/Mandarin'},
   {id:'cv_achievements',lbl:'Achievements',q:'List 2–3 achievements you’re proud of — professional, academic or personal. Be specific where you can.',type:'textarea',pl:'e.g. Grew Instagram following by 40% in 3 months during internship. Captain of university debating team 2023.'},
-  {id:'cv_referees',lbl:'Referees',q:'Do you have referees to include? If yes, list their name, title and contact. If not, we’ll add “Available on request”.',type:'textarea',pl:'e.g. Dr Sarah Lee, Monash University, sarah.lee@monash.edu — or just leave blank for “Available on request”'}
+  {id:'cv_referees',lbl:'Referees',q:'Do you have any referees you\'d like to include?',type:'referees',optional:true}
 ];
 
 function isJuniorCV(type){
@@ -2262,7 +2290,7 @@ function buildCVPrefill(){
 
 function sCVBuilder(fromAssessment){
   var prefill=fromAssessment?buildCVPrefill():null;
-  CV={type:null,answers:{},jd:'',fromAssessment:!!fromAssessment,prefill:prefill||{}};
+  CV={type:null,answers:{},jd:'',jobs:[],noExperience:false,referees:[],refOnRequest:false,fromAssessment:!!fromAssessment,prefill:prefill||{}};
   // Pre-fill name if we have it
   if(prefill&&prefill.cv_name) CV.answers.cv_name=prefill.cv_name;
   PH='cv_fork';
@@ -2299,6 +2327,297 @@ function startCVSteps(){
   sCVStep();
 }
 
+
+// ── CV JOBS UI ──
+// CV.jobs = array of {title, employer, dates, status, achievements:[str,str,str]}
+
+function cvJobsInit(){
+  if(!CV.jobs) CV.jobs=[];
+  if(CV.jobs.length===0) CV.jobs=[cvNewJob()];
+}
+
+function cvNewJob(){
+  return {title:'',employer:'',dates:'',status:'',achievements:['','']};
+}
+
+function cvJobsHTML(){
+  cvJobsInit();
+  var h='<div class="cv-jobs-wrap" id="cvJobsWrap">';
+  CV.jobs.forEach(function(job,idx){
+    h+=cvJobEntryHTML(job,idx);
+  });
+  h+='</div>';
+  // Add another job button
+  h+='<button class="cv-add-job" onclick="cvAddJob()" style="margin-top:10px">&#xFF0B; Add another role</button>';
+  // No experience checkbox
+  h+='<label class="cv-no-exp" style="margin-top:12px"><input type="checkbox" id="cvNoExp" onchange="cvToggleNoExp(this)"'+(CV.noExperience?' checked':'')+'>I don&rsquo;t have any work or volunteer experience yet — that&rsquo;s OK</label>';
+  return h;
+}
+
+function cvJobEntryHTML(job,idx){
+  var n=idx+1;
+  var statusOpts=[
+    {v:'',l:'Select employment type\u2026'},
+    {v:'full_time',l:'Full-time'},
+    {v:'part_time',l:'Part-time'},
+    {v:'casual',l:'Casual'},
+    {v:'work_experience',l:'Work experience'},
+    {v:'volunteer',l:'Volunteer'},
+    {v:'internship',l:'Internship'},
+    {v:'apprenticeship',l:'Apprenticeship / traineeship'},
+    {v:'self_employed',l:'Self-employed'}
+  ];
+  var selOpts=statusOpts.map(function(s){
+    return '<option value="'+s.v+'"'+(job.status===s.v?' selected':'')+'>'+s.l+'</option>';
+  }).join('');
+
+  var ach0=esc(job.achievements[0]||'');
+  var ach1=esc(job.achievements[1]||'');
+  var ach2=esc(job.achievements[2]||'');
+
+  var removeBtn=idx>0?'<button class="cv-job-remove" onclick="cvRemoveJob('+idx+')" title="Remove">\u2715</button>':'';
+
+  return '<div class="cv-job-entry" id="cvJob'+idx+'">'
+    +removeBtn
+    +'<div class="cv-job-entry-num">Role '+n+'</div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Job title</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Sales Assistant" value="'+esc(job.title)+'"'
+    +' data-idx="'+idx+'" data-field="title" oninput="cvJobFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Employer</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Woolworths, Frankston" value="'+esc(job.employer)+'"'
+    +' data-idx="'+idx+'" data-field="employer" oninput="cvJobFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Dates</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Jan 2023 \u2013 present" value="'+esc(job.dates)+'"'
+    +' data-idx="'+idx+'" data-field="dates" oninput="cvJobFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Employment type</div>'
+    +'<select class="cv-job-select" data-idx="'+idx+'" data-field="status" onchange="cvJobFieldInp(this)">'
+    +selOpts+'</select></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">What you did or achieved '
+    +'<span style="font-weight:400;text-transform:none;letter-spacing:0">(1\u20133 bullet points, or leave blank)</span></div>'
+    +'<div class="cv-job-achievements">'
+    +'<div class="cv-job-achievement"><span class="cv-job-achievement-num">\u2022</span>'
+    +'<textarea placeholder="e.g. Served customers and processed transactions"'
+    +' data-idx="'+idx+'" data-ach="0" oninput="cvJobAchInp(this)">'+ach0+'</textarea></div>'
+    +'<div class="cv-job-achievement"><span class="cv-job-achievement-num">\u2022</span>'
+    +'<textarea placeholder="e.g. Helped with stocktake and sales"'
+    +' data-idx="'+idx+'" data-ach="1" oninput="cvJobAchInp(this)">'+ach1+'</textarea></div>'
+    +'<div class="cv-job-achievement"><span class="cv-job-achievement-num">\u2022</span>'
+    +'<textarea placeholder="Optional third achievement"'
+    +' data-idx="'+idx+'" data-ach="2" oninput="cvJobAchInp(this)">'+ach2+'</textarea></div>'
+    +'</div>'
+    +(idx===0?'<div class="cv-job-achievement-hint">Tip: focus on what you did, not just your job title. Even one bullet is fine.</div>':'')
+    +'</div>'
+    +'</div>';
+}
+
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function cvJobField(idx,field,val){
+  if(!CV.jobs[idx]) return;
+  CV.jobs[idx][field]=val;
+  cvJobsValidate();
+}
+function cvJobFieldInp(el){
+  var idx=parseInt(el.dataset.idx);
+  var field=el.dataset.field;
+  cvJobField(idx,field,el.value);
+}
+function cvJobAchievement(idx,achIdx,val){
+  if(!CV.jobs[idx]) return;
+  CV.jobs[idx].achievements[achIdx]=val;
+  cvJobsValidate();
+}
+function cvJobAchInp(el){
+  var idx=parseInt(el.dataset.idx);
+  var ach=parseInt(el.dataset.ach);
+  cvJobAchievement(idx,ach,el.value);
+}
+
+function cvAddJob(){
+  cvJobsInit();
+  CV.jobs.push(cvNewJob());
+  var wrap=document.getElementById('cvJobsWrap');
+  if(wrap){
+    var newEntry=cvJobEntryHTML(CV.jobs[CV.jobs.length-1],CV.jobs.length-1);
+    var tmp=document.createElement('div');
+    tmp.innerHTML=newEntry;
+    wrap.appendChild(tmp.firstChild);
+  }
+  cvJobsValidate();
+}
+
+function cvRemoveJob(idx){
+  cvJobsInit();
+  if(CV.jobs.length<=1) return;
+  CV.jobs.splice(idx,1);
+  // Re-render the whole jobs block
+  var wrap=document.getElementById('cvJobsWrap');
+  if(wrap){
+    var newHTML='';
+    CV.jobs.forEach(function(job,i){newHTML+=cvJobEntryHTML(job,i);});
+    wrap.innerHTML=newHTML;
+  }
+  cvJobsValidate();
+}
+
+function cvToggleNoExp(el){
+  CV.noExperience=el.checked;
+  // Grey out/disable the job entries when no experience checked
+  var wrap=document.getElementById('cvJobsWrap');
+  if(wrap) wrap.style.opacity=el.checked?'0.3':'1';
+  var addBtn=document.querySelector('.cv-add-job');
+  if(addBtn) addBtn.disabled=el.checked;
+  cvJobsValidate();
+  en(true); // always allow Continue — experience is optional
+}
+
+function cvJobsValidate(){
+  // Valid if: noExperience checked, OR at least one job has title filled in
+  if(CV.noExperience){en(true);return;}
+  var hasAny=CV.jobs&&CV.jobs.some(function(j){return j.title&&j.title.trim();});
+  en(hasAny||true); // always allow — experience is optional
+}
+
+function cvJobsToText(){
+  if(CV.noExperience||!CV.jobs||CV.jobs.length===0) return 'No work or volunteer experience yet.';
+  return CV.jobs.filter(function(j){return j.title&&j.title.trim();}).map(function(j){
+    var statusLabels={full_time:'Full-time',part_time:'Part-time',casual:'Casual',
+      work_experience:'Work experience',volunteer:'Volunteer',internship:'Internship',
+      apprenticeship:'Apprenticeship/traineeship',self_employed:'Self-employed'};
+    var line=j.title.trim();
+    if(j.employer&&j.employer.trim()) line+=' — '+j.employer.trim();
+    if(j.status&&statusLabels[j.status]) line+=' ('+statusLabels[j.status]+')';
+    if(j.dates&&j.dates.trim()) line+=' | '+j.dates.trim();
+    var achs=j.achievements.filter(function(a){return a&&a.trim();});
+    if(achs.length) line+='\n'+achs.map(function(a){return '• '+a.trim();}).join('\n');
+    return line;
+  }).join('\n\n')||'No work or volunteer experience yet.';
+}
+
+
+
+// ── CV REFEREES UI ──
+// CV.referees = array of {name, title, org, contact}
+// CV.refOnRequest = true if "available on request" selected
+
+function cvRefInit(){
+  if(!CV.referees) CV.referees=[];
+  if(!CV.refOnRequest) CV.refOnRequest=false;
+  if(CV.referees.length===0) CV.referees=[cvNewRef()];
+}
+
+function cvNewRef(){
+  return {name:'',title:'',org:'',contact:''};
+}
+
+function cvRefHTML(){
+  cvRefInit();
+  var h='';
+
+  // On request / skip option at top
+  h+='<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">';
+  h+='<label class="cv-no-exp"><input type="radio" name="cvRefChoice" value="include"'
+    +(CV.refOnRequest===false?' checked':'')+' onchange="cvRefChoice(false)">'
+    +'I have referees to include</label>';
+  h+='<label class="cv-no-exp"><input type="radio" name="cvRefChoice" value="onrequest"'
+    +(CV.refOnRequest===true?' checked':'')+' onchange="cvRefChoice(true)">'
+    +'Add &ldquo;Available on request&rdquo; &mdash; I\u2019ll provide details when asked</label>';
+  h+='</div>';
+
+  // Referee cards (hidden when on-request selected)
+  h+='<div id="cvRefsWrap" style="'+(CV.refOnRequest?'display:none':'')+';">';
+  h+='<div id="cvRefsCards">';
+  CV.referees.forEach(function(ref,idx){
+    h+=cvRefEntryHTML(ref,idx);
+  });
+  h+='</div>';
+  if(CV.referees.length<3){
+    h+='<button class="cv-add-job" onclick="cvAddRef()" style="margin-top:10px">&#xFF0B; Add another referee</button>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function cvRefEntryHTML(ref,idx){
+  var n=idx+1;
+  var removeBtn=idx>0?'<button class="cv-job-remove" onclick="cvRemoveRef('+idx+')" title="Remove">\u2715</button>':'';
+  return '<div class="cv-job-entry" id="cvRef'+idx+'">'
+    +removeBtn
+    +'<div class="cv-job-entry-num">Referee '+n+'</div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Full name</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Sarah Lee" value="'+esc(ref.name)+'"'
+    +' data-ridx="'+idx+'" data-rfield="name" oninput="cvRefFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Job title</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Store Manager" value="'+esc(ref.title)+'"'
+    +' data-ridx="'+idx+'" data-rfield="title" oninput="cvRefFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Organisation</div>'
+    +'<input class="cv-job-input" placeholder="e.g. Woolworths" value="'+esc(ref.org)+'"'
+    +' data-ridx="'+idx+'" data-rfield="org" oninput="cvRefFieldInp(this)"></div>'
+    +'<div class="cv-job-field"><div class="cv-job-label">Phone or email</div>'
+    +'<input class="cv-job-input" placeholder="e.g. sarah@woolworths.com.au" value="'+esc(ref.contact)+'"'
+    +' data-ridx="'+idx+'" data-rfield="contact" oninput="cvRefFieldInp(this)"></div>'
+    +'</div>';
+}
+
+function cvRefFieldInp(el){
+  var idx=parseInt(el.dataset.ridx);
+  var field=el.dataset.rfield;
+  if(!CV.referees[idx]) return;
+  CV.referees[idx][field]=el.value;
+}
+
+function cvRefChoice(onRequest){
+  CV.refOnRequest=onRequest;
+  var wrap=document.getElementById('cvRefsWrap');
+  if(wrap) wrap.style.display=onRequest?'none':'';
+  en(true); // always allow continue
+}
+
+function cvAddRef(){
+  cvRefInit();
+  if(CV.referees.length>=3) return;
+  CV.referees.push(cvNewRef());
+  var cards=document.getElementById('cvRefsCards');
+  if(cards){
+    var tmp=document.createElement('div');
+    tmp.innerHTML=cvRefEntryHTML(CV.referees[CV.referees.length-1],CV.referees.length-1);
+    cards.appendChild(tmp.firstChild);
+  }
+  // Hide add button if at max
+  if(CV.referees.length>=3){
+    var btn=document.querySelector('.cv-add-job');
+    if(btn) btn.style.display='none';
+  }
+}
+
+function cvRemoveRef(idx){
+  cvRefInit();
+  if(CV.referees.length<=1) return;
+  CV.referees.splice(idx,1);
+  var cards=document.getElementById('cvRefsCards');
+  if(cards){
+    var newHTML='';
+    CV.referees.forEach(function(ref,i){newHTML+=cvRefEntryHTML(ref,i);});
+    cards.innerHTML=newHTML;
+  }
+}
+
+function cvRefsToText(){
+  if(CV.refOnRequest) return 'References available upon request.';
+  if(!CV.referees||CV.referees.length===0) return 'References available upon request.';
+  var filled=CV.referees.filter(function(r){return r.name&&r.name.trim();});
+  if(filled.length===0) return 'References available upon request.';
+  return filled.map(function(r){
+    var line=r.name.trim();
+    if(r.title&&r.title.trim()) line+=', '+r.title.trim();
+    if(r.org&&r.org.trim()) line+=' \u2014 '+r.org.trim();
+    if(r.contact&&r.contact.trim()) line+=' | '+r.contact.trim();
+    return line;
+  }).join('\n');
+}
+
+
 function sCVStep(){
   var steps=getCVSteps();
   var totalSteps=steps.length+1; // +1 for JD step
@@ -2317,7 +2636,23 @@ function sCVStep(){
     h+='<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(196,113,74,.08);border:1px solid rgba(196,113,74,.2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--tc);margin-bottom:10px">&#x2728; Pre-filled from your assessment &mdash; edit anything you like</div>';
   }
   h+='<div class="cv-step-wrap">';
-  if(step.type==='textarea'){
+  if(step.type==='jobs'){
+    h+=cvJobsHTML();
+    h+='</div>';
+    h+=brow(true);
+    sc().innerHTML=h;
+    en(true);
+    scrollUp();
+    return;
+  } else if(step.type==='referees'){
+    h+=cvRefHTML();
+    h+='</div>';
+    h+=brow(true);
+    sc().innerHTML=h;
+    en(true);
+    scrollUp();
+    return;
+  } else if(step.type==='textarea'){
     h+='<textarea class="cv-ta" id="CVTA" placeholder="'+step.pl+'" oninput="cvTA(this)">'+saved+'</textarea>';
   } else {
     h+='<input type="text" class="ti" id="CVTI" placeholder="'+step.pl+'" value="'+saved+'" oninput="cvTI(this)" onkeydown="cvTK(event)">';
@@ -2338,8 +2673,14 @@ function cvTK(e){if(e.key==='Enter'){var b=g('BN');if(b&&!b.disabled)cvNext();}}
 function cvNext(){
   var steps=getCVSteps();
   var step=steps[CV_STEP_IDX];
-  var inp=document.getElementById('CVTA')||document.getElementById('CVTI');
-  if(inp)CV.answers[step.id]=inp.value;
+  if(step.type==='jobs'){
+    CV.answers[step.id]=cvJobsToText();
+  } else if(step.type==='referees'){
+    CV.answers[step.id]=cvRefsToText();
+  } else {
+    var inp=document.getElementById('CVTA')||document.getElementById('CVTI');
+    if(inp)CV.answers[step.id]=inp.value;
+  }
   if(CV_STEP_IDX<steps.length-1){
     CV_STEP_IDX++;
     sCVStep();
@@ -2406,6 +2747,13 @@ function genCV(){
     var step=[].concat(CV_STEPS_JUNIOR,CV_STEPS_SENIOR).find(function(s){return s.id===k;});
     userParts.push((step?step.lbl:k)+': '+CV.answers[k]);
   });
+  // Pass structured jobs data separately for richer context
+  if(CV.jobs&&CV.jobs.length>0&&!CV.noExperience){
+    var structuredJobs=CV.jobs.filter(function(j){return j.title&&j.title.trim();}).map(function(j){
+      return {title:j.title,employer:j.employer,dates:j.dates,status:j.status,achievements:j.achievements.filter(function(a){return a&&a.trim();})};
+    });
+    if(structuredJobs.length>0) userParts.push('Structured experience (use for rich bullet points): '+JSON.stringify(structuredJobs));
+  }
   if(CV.jd)userParts.push('Job description to tailor toward:\n'+CV.jd);
   if(CV.fromAssessment&&A&&A.name){
     // Tier 3: Rich assessment context for Claude
