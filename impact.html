@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Case for Find My Journey — Why Early Career Direction Changes Everything</title>
+<title>The Case for Career Compass — Why Early Career Direction Changes Everything</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -23,7 +23,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ch);ov
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
 .nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-ring{display:flex;align-items:center;justify-content:center}
+.nav-ring{width:30px;height:30px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tc);animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .nav-name{font-family:'Fraunces',serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
 .nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:background .2s}
@@ -140,20 +140,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .btn-outline:hover{border-color:rgba(255,255,255,.4);color:#fff}
 
 /* FOOTER */
-footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,255,255,.06)}
-.footer-inner{max-width:1120px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.footer-brand-name{font-family:'Fraunces',serif;font-size:15px;color:#fff;letter-spacing:.04em}
-.footer-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
-.footer-col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:16px}
-.footer-col a{display:block;font-size:14px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:9px;transition:color .2s}
-.footer-col a:hover{color:rgba(255,255,255,.7)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-copy{font-size:11px;font-weight:300;color:rgba(255,255,255,.18);line-height:1.6;max-width:680px}
-.footer-legal{display:flex;gap:18px;flex-shrink:0}
-.footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
-.footer-legal a:hover{color:rgba(255,255,255,.55)}
+footer{background:#1E1613;padding:40px 48px 28px}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-brand-name{font-family:'Fraunces',serif;font-size:14px;color:#fff}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:rgba(255,255,255,.6)}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.15);width:100%;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);margin-top:16px}
 
 @media(max-width:768px){
   .nav-inner{padding:0 20px}
@@ -171,11 +165,8 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   .cta-section{padding:64px 20px}
   .cta-buttons{flex-direction:column;align-items:center}
   footer{padding:32px 20px 24px}
-  .footer-top{grid-template-columns:1fr;gap:28px}
-  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .footer-inner{flex-direction:column;align-items:flex-start}
 }
-
-.fmj{color:#C4714A;font-weight:500}
 </style>
 </head>
 <body>
@@ -183,11 +174,8 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="/marketing.html">
-      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
-  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span>
-  <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
-</div>
+      <div class="nav-ring">◆</div>
+      <span class="nav-name">Career Compass</span>
     </a>
     <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your discovery →</a>
   </div>
@@ -196,9 +184,9 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">The case for <span class="fmj">Find My Journey</span></div>
+    <div class="hero-eyebrow">The case for Career Compass</div>
     <h1 class="hero-h1">Why getting career<br>direction right — <em>early</em> —<br>changes everything.</h1>
-    <p class="hero-sub">For young Australians, the right career match isn't just a personal win. It's a public health outcome, a workforce solution, and a fiscal dividend. <span class="fmj">Find My Journey</span> exists at that intersection.</p>
+    <p class="hero-sub">For young Australians, the right career match isn't just a personal win. It's a public health outcome, a workforce solution, and a fiscal dividend. Career Compass exists at that intersection.</p>
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-stat-num">288<span>k</span></div>
@@ -250,13 +238,13 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <!-- FLYWHEEL DIAGRAM -->
 <section class="flywheel-section">
   <div class="flywheel-inner">
-    <div class="sec-eyebrow" style="color:var(--tcl)">The Find My Journey effect</div>
+    <div class="sec-eyebrow" style="color:var(--tcl)">The Career Compass effect</div>
     <h2 class="sec-h2" style="color:#fff;font-variant-ligatures:none">One insight.<br><em style="color:var(--tcl)">Five dividends.</em></h2>
     <div class="flywheel-wrap">
       <div class="flywheel-text">
         <h3>Matching people to work that fits who they are creates a chain reaction.</h3>
         <p>When a young person finds a career that aligns with their genuine values, personality and strengths — not just their qualifications — the outcomes compound. Better retention. Better wellbeing. Less welfare. More tax. More purpose.</p>
-        <p><span class="fmj">Find My Journey</span> is the intervention at the start of that chain. The earlier the match, the longer the dividend.</p>
+        <p>Career Compass is the intervention at the start of that chain. The earlier the match, the longer the dividend.</p>
         <div class="flywheel-points">
           <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the Explorer:</strong> direction, dignity and a starting point that actually fits.</div></div>
           <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the institution:</strong> better outcomes, lower dropout, evidence of impact.</div></div>
@@ -275,8 +263,9 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 
           <!-- Centre -->
           <circle cx="240" cy="240" r="64" fill="rgba(196,113,74,.12)" stroke="rgba(196,113,74,.25)" stroke-width="2"/>
-          <text x="240" y="228" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(196,113,74,.7)" font-weight="700" letter-spacing="1.5">FIND MY</text>
-          <text x="240" y="248" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#D98B65" font-weight="300">Journey</text>
+          <text x="240" y="232" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill="#D98B65" font-weight="300">Career</text>
+          <text x="240" y="250" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill="#D98B65" font-weight="300">Compass</text>
+          <text x="240" y="265" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(196,113,74,.5)" font-weight="600" letter-spacing="1">MATCH</text>
 
           <!-- Curved arrows between nodes (clockwise) -->
           <path d="M 320 130 A 130 130 0 0 1 385 240" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="5 4"/>
@@ -339,14 +328,14 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <div class="section-inner">
     <div class="sec-eyebrow">Who benefits</div>
     <h2 class="sec-h2">The value of<br><em>right career fit.</em></h2>
-    <p class="sec-lead"><span class="fmj">Find My Journey</span> creates measurable value for five distinct groups. The investment is made once. The dividends compound over a working lifetime.</p>
+    <p class="sec-lead">Career Compass creates measurable value for five distinct groups. The investment is made once. The dividends compound over a working lifetime.</p>
     <div class="value-grid">
 
       <div class="value-card explorer">
         <div class="vc-icon">🧭</div>
         <div class="vc-tag">For the Explorer</div>
         <div class="vc-title">Direction, dignity and a genuine starting point</div>
-        <div class="vc-body">Most career tools ask what someone is qualified for. Find My Journey asks who they are. For young Australians — especially those with learning differences, anxiety, limited work history, or no career role models at home — being seen and understood changes everything. A career that fits your personality isn't just more satisfying. It's more sustainable, more likely to lead to advancement, and less likely to result in early departure.</div>
+        <div class="vc-body">Most career tools ask what someone is qualified for. Career Compass asks who they are. For young Australians — especially those with learning differences, anxiety, limited work history, or no career role models at home — being seen and understood changes everything. A career that fits your personality isn't just more satisfying. It's more sustainable, more likely to lead to advancement, and less likely to result in early departure.</div>
         <div class="vc-stats">
           <div><span class="vc-stat-num">2.3<em>×</em></span><div class="vc-stat-label">higher unemployment rate for 15–24 year olds vs general population</div></div>
           <div><span class="vc-stat-num">288<em>k</em></span><div class="vc-stat-label">young Australians currently NEET (not in employment, education or training)</div></div>
@@ -368,7 +357,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
         <div class="vc-icon">🏢</div>
         <div class="vc-tag">For employers</div>
         <div class="vc-title">Motivated people who chose this field — not drifted into it.</div>
-        <div class="vc-body">Employers consistently report that the biggest predictor of early turnover isn't skills — it's fit. When someone joins a role that genuinely aligns with their values and work style, they stay longer, learn faster and perform better. Find My Journey narrows the gap between who applies and who thrives. For sectors facing workforce shortages — health, care, trades, logistics — candidates who chose the field with genuine self-awareness are worth their weight in gold. Inclusive hiring also strengthens customer alignment and brand trust.</div>
+        <div class="vc-body">Employers consistently report that the biggest predictor of early turnover isn't skills — it's fit. When someone joins a role that genuinely aligns with their values and work style, they stay longer, learn faster and perform better. Career Compass narrows the gap between who applies and who thrives. For sectors facing workforce shortages — health, care, trades, logistics — candidates who chose the field with genuine self-awareness are worth their weight in gold. Inclusive hiring also strengthens customer alignment and brand trust.</div>
         <div class="vc-stats">
           <div><span class="vc-stat-num">1 in 3</span><div class="vc-stat-label">Australian occupations experienced shortages in 2022–2024, per AIHW</div></div>
           <div><span class="vc-stat-num">25<em>%</em></span><div class="vc-stat-label">of full-time workers with disability leave within a year — vs 10% without disability</div></div>
@@ -379,7 +368,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
         <div class="vc-icon">🎓</div>
         <div class="vc-tag">For institutions</div>
         <div class="vc-title">Better enrolments. Lower dropout. Demonstrable outcomes.</div>
-        <div class="vc-body">For schools, TAFEs, RTOs and DES providers, Find My Journey solves a structural problem: students and clients who enter programs without genuine self-understanding are far more likely to disengage. Better initial course-person fit means higher completion rates, lower support costs, and stronger outcome data. The dashboard gives pathways advisors real-time visibility into their cohort — who needs to be seen, which students triggered the Sensitive Explorer Protocol, and what career clusters are emerging across the year group.</div>
+        <div class="vc-body">For schools, TAFEs, RTOs and DES providers, Career Compass solves a structural problem: students and clients who enter programs without genuine self-understanding are far more likely to disengage. Better initial course-person fit means higher completion rates, lower support costs, and stronger outcome data. The dashboard gives pathways advisors real-time visibility into their cohort — who needs to be seen, which students triggered the Sensitive Explorer Protocol, and what career clusters are emerging across the year group.</div>
         <div class="vc-stats">
           <div><span class="vc-stat-num">$5.4<em>B</em></span><div class="vc-stat-label">committed by Australian Government over 5 years to disability employment programs</div></div>
           <div><span class="vc-stat-num">15–25</span><div class="vc-stat-label">the critical window. Early career direction here prevents lifetime disengagement.</div></div>
@@ -436,56 +425,31 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <div class="cta-inner">
     <div class="cta-ring">◆</div>
     <h2 class="cta-h2">Ready to be<br>part of the <em>solution?</em></h2>
-    <p class="cta-sub">Whether you're a school, TAFE, DES provider or policy maker — <span class="fmj">Find My Journey</span> is designed to be deployed at scale, with real data, real outcomes and a genuine evidence base.</p>
+    <p class="cta-sub">Whether you're a school, TAFE, DES provider or policy maker — Career Compass is designed to be deployed at scale, with real data, real outcomes and a genuine evidence base.</p>
     <div class="cta-buttons">
       <a href="/contact.html" class="btn-primary">Discuss a pilot →</a>
-      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-outline">Try Find My Journey</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-outline">Try Career Compass</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand">
-          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
-          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
-  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px">find my</span>
-  <span style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
-</div>
-        </div>
-        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Product</div>
-        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
-        <a href="/cv-builder.html" target="_blank">CV Builder</a>
-        <a href="#how">How it works</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Organisations</div>
-        <a href="/schools.html">Schools</a>
-        <a href="/tafe.html">TAFE &amp; RTOs</a>
-        <a href="/des.html">DES providers</a>
-        <a href="/contact.html">Contact us</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Legal</div>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Use</a>
-        <a href="/accessibility.html">Accessibility</a>
-        <a href="/impact.html">Our impact</a>
-      </div>
+    <div class="footer-brand">
+      <div class="nav-ring" style="width:22px;height:22px;font-size:10px;border-color:rgba(196,113,74,.4);color:rgba(196,113,74,.5)">◆</div>
+      <span class="footer-brand-name">Career Compass</span>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">&#xA9; 2025 Find My Journey &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
-      <div class="footer-legal">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-      </div>
+    <div class="footer-links">
+      <a href="/marketing.html">About</a>
+      <a href="/schools.html">Schools</a>
+      <a href="/tafe.html">TAFE &amp; RTOs</a>
+      <a href="/des.html">DES providers</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
     </div>
+    <div class="footer-copy">© 2025 Career Compass &nbsp;·&nbsp; For guidance only — not a substitute for professional career counselling &nbsp;·&nbsp; Statistics sourced from ABS, AIHW, NDIS and Australian Government Budget papers 2025–26</div>
   </div>
 </footer>
+
 </body>
 </html>
