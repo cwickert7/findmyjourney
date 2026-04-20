@@ -107,16 +107,32 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <body>
 <nav>
   <div class="nav-inner">
-    <a class="nav-brand" href="/marketing.html">
-      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2" fill="none" opacity=".2"/><path d="M30 30 L30 50" stroke="#C4714A" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#FAF7F2"/></svg>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
-  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:1px">find my</span>
+    <a class="nav-brand" href="/marketing.html" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
   <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
 </div>
     </a>
-    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+    <div class="nav-links">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/real-explorers.html">Explorers</a>
+      <a href="/cv-builder.html">CV Builder</a>
+      <a href="/impact.html">Our Impact</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+    </div>
+    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
+  <a href="/real-explorers.html" onclick="closeNav()">Explorers</a>
+  <a href="/cv-builder.html" onclick="closeNav()">CV Builder</a>
+  <a href="/impact.html" onclick="closeNav()">Our Impact</a>
+  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
+</div>
 <div class="page-hero">
   <div class="page-eyebrow">Legal</div>
   <h1 class="page-h1">Terms<br><em>of Use.</em></h1>
@@ -195,8 +211,10 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
       <div class="footer-col">
         <div class="footer-col-label">Product</div>
         <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
-        <a href="/cv-builder.html" target="_blank">CV Builder</a>
-        <a href="#how">How it works</a>
+        <a href="/cv-builder.html">CV Builder</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/real-explorers.html">Real Explorers</a>
+        <a href="/why-find-my-journey.html">Why Find My Journey</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Organisations</div>
@@ -210,7 +228,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/accessibility.html">Accessibility</a>
-        <a href="/impact.html">Our impact</a>
+        <a href="/impact.html">Our Impact</a>
       </div>
     </div>
     <div class="footer-bottom">

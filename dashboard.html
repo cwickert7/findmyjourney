@@ -237,7 +237,7 @@ tr.clickable:hover td{background:rgba(255,255,255,.02);cursor:pointer}
     </div>
     <button class="login-btn" onclick="doLogin()">Access dashboard →</button>
     <div class="login-error" id="loginError">Incorrect code or access key. Please try again.</div>
-    <p class="login-note">Contact Find My Journey to set up your institution access.<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="533b363f3f3c13303221363621303c3e233220207d303c3e7d3226">[email&#160;protected]</a></p>
+    <p class="login-note">Contact Find My Journey to set up your institution access.<br><a href="mailto:hello@findmyjourney.com.au" class="__cf_email__" data-cfemail="533b363f3f3c13303221363621303c3e233220207d303c3e7d3226">[email&#160;protected]</a></p>
   </div>
 </div>
 
@@ -667,4 +667,13 @@ function guessCluster(title) {
 
 // ── URL PARAMS ── pre-fill login from URL
 (function() {
-  var p = new URLSearchParams(window.locat
+  var p = new URLSearchParams(window.location.search);
+  var code = p.get('code') || p.get('institution');
+  if (code) {
+    var inp = document.getElementById('instCode');
+    if (inp) { inp.value = code.toUpperCase(); checkLogin(); }
+  }
+})();
+</script>
+</body>
+</html>
