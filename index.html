@@ -3865,21 +3865,35 @@ async function retrieveResults(){
 }
 function showRetrievedResults(result){
   A.name=result.name||'Explorer';
-  // Reconstruct RS from saved matches array back into expected format
   var matches=result.matches||[];
-  var nowJobs=matches.filter(function(m){return m.matchLevel||m.title;}).slice(0,2);
-  var careerJobs=matches.filter(function(m){return m.matchLevel||m.title;}).slice(2,4);
+  // Split by jobType if available, otherwise first 2 = now, rest = career
+  var nowJobs=matches.filter(function(m){return m.jobType==='now';});
+  var careerJobs=matches.filter(function(m){return m.jobType==='career';});
+  if(nowJobs.length===0&&careerJobs.length===0){
+    nowJobs=matches.slice(0,2);
+    careerJobs=matches.slice(2);
+  }
   RS={
     nowJobs:nowJobs,
     careerJobs:careerJobs,
-    encouragement:result.encouragement||'Welcome back, '+A.name+'. Your results are waiting for you.',
+    encouragement:result.encouragement||('Welcome back, '+A.name+'. Your results are here.'),
     summary:result.summary||'Here are your career matches.',
     tips:result.tips||[]
   };
   window._retrievedResult=result;
   window._isRetrieved=true;
-  // Show welcome back screen briefly then results
+  window._wantsNow=nowJobs.length>0;
+  window._wantsCareer=careerJobs.length>0;
   sWelcomeBack(result);
+}
+
+function sRetrievedResults(){
+  // Set PS flags from the retrieved RS data so sRes() renders correctly
+  PS={
+    now:!!(RS&&RS.nowJobs&&RS.nowJobs.length>0),
+    career:!!(RS&&RS.careerJobs&&RS.careerJobs.length>0)
+  };
+  sRes();
 }
 
 function sWelcomeBack(result){
@@ -3894,7 +3908,7 @@ function sWelcomeBack(result){
   h+='<p class="qh">Your results from '+savedDate+' are ready.</p>';
   h+='</div>';
   h+='<div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">';
-  h+='<button class="bnx" style="width:100%" onclick="showResults()">View my results &#x2192;</button>';
+  h+='<button class="bnx" style="width:100%" onclick="sRetrievedResults()">View my results &#x2192;</button>';
   h+='<button class="bbk" onclick="sSf()">Start a fresh discovery</button>';
   h+='</div>';
   sc().innerHTML=h;
