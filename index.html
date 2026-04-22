@@ -2066,15 +2066,24 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
   h+='<div class="voice-opt" id="voiceOptmale" onclick="startVoice(\'male\')"><span class="voice-opt-icon">&#x1F468;</span><span class="voice-opt-name">Jack</span></div>';
   h+='</div></div><div class="voice-controls" id="voiceControls"><button class="voice-stop" onclick="stopVoice()">&#x23F9; Stop reading</button></div></div>';
   h+='<div class="fb-row" id="fbrow">Was this helpful? <button class="thumb" onclick="sendFeedback(1)">&#x1F44D; Yes</button> <button class="thumb" onclick="sendFeedback(0)">&#x1F44E; Not quite</button></div>';
-  h+='<div class="save-results-panel" id="saveResultsPanel" style="display:none">'+
-    '<div class="save-results-title">&#x1F517; Keep your results</div>'+
-    '<div class="save-results-sub">Save a personal link so you can return anytime within 12 months to continue exploring your matches, build your CV, or share with a pathways advisor.</div>'+
+  h+='<div class="save-results-panel" id="saveResultsPanel">'+
+    '<div class="save-results-title">&#x1F4EC; These results belong to you</div>'+
+    '<div class="save-results-sub">Enter your email and we\'ll send you a personal link to return to these results anytime. No account needed.</div>'+
+    '<div id="saveEmailWrap">'+
+    '<div class="save-link-row">'+
+    '<input class="save-link-input" id="saveEmailInput" type="email" placeholder="Your email address">'+
+    '<button class="save-link-copy" id="saveEmailBtn" onclick="saveViaEmail()">Send my results &#x2192;</button>'+
+    '</div>'+
+    '<div id="saveEmailConfirm" style="display:none" class="save-consent" style="color:var(--tc)">&#x2705; On its way — check your inbox.</div>'+
+    '</div>'+
+    '<div id="saveLinkWrap" style="margin-top:12px">'+
+    '<div class="save-code-row" style="margin-bottom:6px;font-size:12px;color:var(--lt)">Or copy your personal link:</div>'+
     '<div class="save-link-row">'+
     '<input class="save-link-input" id="saveResultsLink" readonly placeholder="Generating your link…">'+
-    '<button class="save-link-copy" onclick="copyResultsLink()">Copy link</button>'+
+    '<button class="save-link-copy" onclick="copyResultsLink()">Copy</button>'+
     '</div>'+
-    '<div class="save-code-row">Your personal code: <span class="save-code-val" id="saveResultsCode">—</span></div>'+
-    '<div class="save-consent">&#x1F512; Your results are stored securely for 12 months then permanently deleted. We only share them with your school or program if you entered their code. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
+    '</div>'+
+    '<div class="save-consent">&#x1F512; Stored securely for 12 months then deleted. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
     '</div>';
 h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
   h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Find My Journey results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
@@ -2100,7 +2109,7 @@ function pulseExpandBtns(){
   },1500);
 }
 
-function submitEmail(){
+async function submitEmail(){
   var input=g('emailCapInput');var btn=g('emailCapBtn');
   if(!input)return;
   var email=input.value.trim();
@@ -2113,8 +2122,11 @@ function submitEmail(){
   var nowJobs=(RS&&RS.nowJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   var careerJobs=(RS&&RS.careerJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   var tips=(RS&&RS.tips)||[];
+  // Also persist result so the email link works
+  var saved=await persistResult();
+  var returnLink=window.location.origin+(saved?'?results='+saved.uuid:'');
   fetch('/api/send-results',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:email,name:name,nowJobs:nowJobs,careerJobs:careerJobs,tips:tips,encouragement:(RS&&RS.encouragement)||''})
+    body:JSON.stringify({email:email,name:name,nowJobs:nowJobs,careerJobs:careerJobs,tips:tips,encouragement:(RS&&RS.encouragement)||'',returnLink:returnLink})
   })
   .then(function(r){return r.json();})
   .then(function(){
@@ -3830,23 +3842,52 @@ async function retrieveResults(){
   btn.disabled=false;btn.textContent='Go →';
 }
 function showRetrievedResults(result){
-  // Restore state from saved result
-  A.name=result.name;
-  RS=result.matches;
-  // Show results with Dr Chen reorientation banner
+  A.name=result.name||'Explorer';
+  // Reconstruct RS from saved matches array back into expected format
+  var matches=result.matches||[];
+  var nowJobs=matches.filter(function(m){return m.matchLevel||m.title;}).slice(0,2);
+  var careerJobs=matches.filter(function(m){return m.matchLevel||m.title;}).slice(2,4);
+  RS={
+    nowJobs:nowJobs,
+    careerJobs:careerJobs,
+    encouragement:result.encouragement||'Welcome back, '+A.name+'. Your results are waiting for you.',
+    summary:result.summary||'Here are your career matches.',
+    tips:result.tips||[]
+  };
   window._retrievedResult=result;
   window._isRetrieved=true;
-  showResults();
+  // Show welcome back screen briefly then results
+  sWelcomeBack(result);
+}
+
+function sWelcomeBack(result){
+  PH='welcome_back';
+  sp(100,'Your results','');
+  var name=result.name||'Explorer';
+  var savedDate=result.savedAt?new Date(result.savedAt).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}):'recently';
+  var h='<div class="ptag">&#x1F9ED; Find My Journey</div>';
+  h+='<div style="text-align:center;padding:12px 0 8px">';
+  h+='<div style="font-size:36px;margin-bottom:12px">&#x1F44B;</div>';
+  h+='<p class="qt" style="font-size:22px">Welcome back, '+escHTML(name)+'.</p>';
+  h+='<p class="qh">Your results from '+savedDate+' are ready.</p>';
+  h+='</div>';
+  h+='<div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">';
+  h+='<button class="bnx" style="width:100%" onclick="showResults()">View my results &#x2192;</button>';
+  h+='<button class="bbk" onclick="sSf()">Start a fresh discovery</button>';
+  h+='</div>';
+  sc().innerHTML=h;
+  scrollUp();
 }
 
 // ── SAVE RESULTS ──
 var _savedUUID=null;var _savedCode=null;
-async function saveResults(){
-  if(_savedUUID){showSavePanel(_savedUUID,_savedCode);return;}
-  var R=RS;if(!R)return;
+// ── Save result to Upstash and return UUID ──
+async function persistResult(){
+  if(_savedUUID) return {uuid:_savedUUID,shortCode:_savedCode};
+  var R=RS;if(!R)return null;
   var matches=[];
-  if(R.nowJobs)R.nowJobs.forEach(function(j){matches.push({title:j.title,salary:j.salary,whyYou:j.whyYou,path:j.pathTitle});});
-  if(R.careerJobs)R.careerJobs.forEach(function(j){matches.push({title:j.title,salary:j.salary,whyYou:j.whyYou,path:j.pathTitle});});
+  if(R.nowJobs)R.nowJobs.forEach(function(j){matches.push({title:j.title,desc:j.desc||'',salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''});});
+  if(R.careerJobs)R.careerJobs.forEach(function(j){matches.push({title:j.title,desc:j.desc||'',salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''});});
   try{
     var r=await fetch('/api/save-result',{
       method:'POST',
@@ -3863,24 +3904,70 @@ async function saveResults(){
     if(r.ok&&data.uuid){
       _savedUUID=data.uuid;
       _savedCode=data.shortCode;
-      showSavePanel(data.uuid,data.shortCode);
-    } else {
-      alert('Could not save your results. Please try emailing them instead.');
+      return data;
     }
-  }catch(e){
-    alert('Could not save your results. Please try emailing them instead.');
+  }catch(e){}
+  return null;
+}
+
+// ── Primary save path: email ──
+async function saveViaEmail(){
+  var input=g('saveEmailInput');
+  var btn=g('saveEmailBtn');
+  if(!input)return;
+  var email=input.value.trim();
+  if(!email||!email.includes('@')||!email.includes('.')){
+    input.style.borderColor='var(--tc)';input.focus();return;
   }
+  if(btn){btn.disabled=true;btn.textContent='Saving…';}
+  // 1. Persist the result
+  var saved=await persistResult();
+  // 2. Send results email with return link embedded
+  var name=A.name||'Explorer';
+  var returnLink=window.location.origin+'?results='+(saved?saved.uuid:'');
+  var nowJobs=(RS&&RS.nowJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
+  var careerJobs=(RS&&RS.careerJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
+  try{
+    await fetch('/api/send-results',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email:email,name:name,
+        nowJobs:nowJobs,careerJobs:careerJobs,
+        tips:(RS&&RS.tips)||[],
+        encouragement:(RS&&RS.encouragement)||'',
+        returnLink:returnLink
+      })
+    });
+  }catch(e){}
+  // 3. Show confirmation and reveal the personal link
+  var confirm=g('saveEmailConfirm');
+  if(confirm){confirm.style.display='block';}
+  if(input)input.style.display='none';
+  if(btn)btn.style.display='none';
+  // 4. Show personal link
+  if(saved){
+    showSaveLink(saved.uuid);
+  }
+}
+
+// ── Secondary save path: show link only ──
+async function saveResults(){
+  var saved=await persistResult();
+  if(saved) showSaveLink(saved.uuid);
+}
+
+function showSaveLink(uuid){
+  var baseURL=window.location.origin;
+  var link=baseURL+'?results='+uuid;
+  var linkInput=g('saveResultsLink');
+  if(linkInput)linkInput.value=link;
 }
 function showSavePanel(uuid,code){
   var panel=document.getElementById('saveResultsPanel');
   if(!panel)return;
-  var baseURL=window.location.origin;
-  var link=baseURL+'?results='+uuid;
-  var linkInput=document.getElementById('saveResultsLink');
-  var codeEl=document.getElementById('saveResultsCode');
-  if(linkInput)linkInput.value=link;
-  if(codeEl)codeEl.textContent=code;
-  panel.style.display='block';
+  // Panel is always visible — just populate the link field if UUID provided
+  if(uuid) showSaveLink(uuid);
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function copyResultsLink(){
