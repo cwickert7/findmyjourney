@@ -137,6 +137,11 @@ h1 em{font-style:italic;color:var(--tc)}
 .occ-panel.open{display:block}
 .occ-loading{text-align:center;padding:18px 0;font-size:13px;color:var(--lt);font-style:italic}
 .occ-section{margin-bottom:14px}
+  .occ-day-list{display:flex;flex-direction:column;gap:0;margin-top:4px;border:1px solid var(--sand);border-radius:10px;overflow:hidden}
+  .occ-day-item{display:flex;align-items:flex-start;gap:12px;padding:9px 13px;border-bottom:1px solid var(--sand);background:#fff;font-size:13px;color:var(--mid);line-height:1.5}
+  .occ-day-item:last-child{border-bottom:none}
+  .occ-day-time{font-size:11px;font-weight:700;color:var(--tc);white-space:nowrap;min-width:48px;padding-top:1px}
+  .occ-day-dot{width:6px;height:6px;border-radius:50%;background:var(--tc);flex-shrink:0;margin-top:5px}
 .occ-section:last-child{margin-bottom:0}
 .occ-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lt);margin-bottom:5px}
 .occ-body{font-size:14px;color:var(--mid);line-height:1.65}
@@ -1539,13 +1544,14 @@ function exploreRole(jobTitle,cardId,explorerName){
   var sysMsg=[
     'You are a warm, knowledgeable Australian career advisor.',
     'Generate a personalised deep-dive on a specific occupation for a young Australian Explorer aged 15-25.',
+    'For dayInLife: provide 5-7 realistic time-stamped entries showing a typical workday. Mix routine tasks with the interesting ones — be honest, not aspirational. Use real Australian context.',
     'Tone: warm, honest, encouraging. Use Australian context throughout (AUD salaries, Australian organisations, Australian job market).',
     'Return ONLY valid JSON, zero markdown:',
-    '{"typicalDay":"2-3 sentences describing what a typical day actually looks and feels like - specific, sensory, real","salaryEntry":"Starting salary range in AUD e.g. $45,000 - $55,000","salaryExperienced":"Experienced salary range in AUD","salaryNote":"1 sentence on what affects pay in this field","outlook":"growing|stable|declining","outlookNote":"1 sentence on current Australian labour market for this role","whyItFits":"1-2 sentences personalised to this Explorer - reference their name and something specific","relatedRoles":["role1","role2","role3"],"entrySteps":["Step 1","Step 2","Step 3"],"realityCheck":"1 honest sentence about a genuine challenge or downside","australianOrgs":"1-2 sentences naming real Australian organisations, associations or websites"}'
+    '{"dayInLife":[{"time":"8:30am","task":"brief task description"},{"time":"10:00am","task":"..."},{"time":"12:00pm","task":"..."},{"time":"2:00pm","task":"..."},{"time":"4:00pm","task":"..."}],"salaryEntry":"Starting salary range in AUD e.g. $45,000 - $55,000","salaryExperienced":"Experienced salary range in AUD","salaryNote":"1 sentence on what affects pay in this field","outlook":"growing|stable|declining","outlookNote":"1 sentence on current Australian labour market for this role","whyItFits":"1-2 sentences personalised to this Explorer - reference their name and something specific","relatedRoles":["role1","role2","role3"],"entrySteps":["Step 1","Step 2","Step 3"],"realityCheck":"1 honest sentence about a genuine challenge or downside","australianOrgs":"1-2 sentences naming real Australian organisations, associations or websites"}'
   ].join('\n');
   var userMsg='Role: '+jobTitle+'. Explorer name: '+(explorerName||'Explorer')+'. Profile: challenge='+(A.challenge||'moderate')+' noticed='+(A.noticed||'')+' values='+JSON.stringify(A.values||[])+' branch='+(A.branch||'')+'.';
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:sysMsg,messages:[{role:'user',content:userMsg}]})
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -1554,7 +1560,22 @@ function exploreRole(jobTitle,cardId,explorerName){
     var outlookClass=info.outlook==='growing'?'occ-grow':info.outlook==='declining'?'occ-decline':'occ-stable';
     var outlookIcon=info.outlook==='growing'?'&#x2197;':info.outlook==='declining'?'&#x2198;':'&#x2192;';
     var html='';
-    html+='<div class="occ-section"><div class="occ-label">A typical day</div><div class="occ-body">'+info.typicalDay+'</div></div>';
+    // Day in the life — structured list
+    if(info.dayInLife&&info.dayInLife.length){
+      html+='<div class="occ-section"><div class="occ-label">A day in the life</div>';
+      html+='<div class="occ-day-list">';
+      info.dayInLife.forEach(function(entry){
+        html+='<div class="occ-day-item">';
+        html+='<span class="occ-day-time">'+(entry.time||'')+'</span>';
+        html+='<span class="occ-day-dot"></span>';
+        html+='<span>'+(entry.task||entry.description||'')+'</span>';
+        html+='</div>';
+      });
+      html+='</div></div>';
+    } else if(info.typicalDay){
+      // Fallback for cached responses that still return old format
+      html+='<div class="occ-section"><div class="occ-label">A typical day</div><div class="occ-body">'+info.typicalDay+'</div></div>';
+    }
     html+='<div class="occ-section"><div class="occ-label">Salary in Australia</div><div class="occ-salary">'+info.salaryEntry+'</div><div class="occ-salary-note">Experienced: '+info.salaryExperienced+' &mdash; '+info.salaryNote+'</div></div>';
     html+='<div class="occ-section"><div class="occ-label">Job market outlook</div><div class="occ-outlook '+outlookClass+'">'+outlookIcon+' '+(info.outlook||'').charAt(0).toUpperCase()+(info.outlook||'').slice(1)+'</div><div class="occ-body" style="margin-top:4px">'+info.outlookNote+'</div></div>';
     if(info.whyItFits)html+='<div class="occ-section"><div class="occ-label">Why this could suit you</div><div class="occ-body" style="font-style:italic;color:var(--gr)">'+info.whyItFits+'</div></div>';
@@ -3887,8 +3908,16 @@ async function persistResult(){
   if(_savedUUID) return {uuid:_savedUUID,shortCode:_savedCode};
   var R=RS;if(!R)return null;
   var matches=[];
-  if(R.nowJobs)R.nowJobs.forEach(function(j){matches.push({title:j.title,desc:j.desc||'',salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''});});
-  if(R.careerJobs)R.careerJobs.forEach(function(j){matches.push({title:j.title,desc:j.desc||'',salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''});});
+  function fullJob(j,typ){return {
+    title:j.title||'',desc:j.desc||'',
+    salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',
+    outlook:j.outlook||'',matchLevel:j.matchLevel||'',matchPips:j.matchPips||4,
+    whyYou:j.whyYou||'',envFit:j.envFit||'',thisWeek:j.thisWeek||'',
+    tags:j.tags||[],pathway:j.pathway||[],
+    jobType:typ
+  };}
+  if(R.nowJobs)R.nowJobs.forEach(function(j){matches.push(fullJob(j,'now'));});
+  if(R.careerJobs)R.careerJobs.forEach(function(j){matches.push(fullJob(j,'career'));});
   try{
     var r=await fetch('/api/save-result',{
       method:'POST',
@@ -3896,6 +3925,9 @@ async function persistResult(){
       body:JSON.stringify({
         name:A.name||'Explorer',
         matches:matches,
+        encouragement:(R.encouragement)||'',
+        summary:(R.summary)||'',
+        tips:(R.tips)||[],
         sepTriggered:window._sepTriggered||false,
         institutionCode:getInstCode()||null,
         branch:A.branch||null
@@ -4014,10 +4046,11 @@ async function checkURLResult(){
     sSf();
   }
 }
-// Defensive fallback — if #S is still empty after 600ms, try again
+// Defensive fallback — only fire if page hasn't already loaded something
+// Check for welcome_back or other active state before falling back
 setTimeout(function(){
   var s=document.getElementById('S');
-  if(s&&s.innerHTML.trim()===''){sSf();}
+  if(s&&s.innerHTML.trim()===''&&PH==='safe'){sSf();}
 },600);
 </script>
 
