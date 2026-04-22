@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find My Journey — Pathways Advisor Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;
+  --sand:#E8DFD0;--sand2:#D4C8B4;
+  --tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;
+  --gr:#3D6B4F;--grl:#5A8F6E;
+  --ch:#2C2422;--mid:#6B6058;--lt:#9A8E84;
+  --sep:#D4820A;
+  --alert:#B84040;
+}
+html{height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ch);color:var(--cream);min-height:100vh;display:grid;grid-template-columns:220px 1fr;grid-template-rows:auto 1fr}
+
+/* ── LOGIN SCREEN ── */
+.login-screen{position:fixed;inset:0;background:var(--ch);z-index:200;display:flex;align-items:center;justify-content:center}
+.login-card{background:var(--warm);border:1.5px solid var(--sand);border-radius:20px;padding:40px 44px;width:100%;max-width:420px;color:var(--ch)}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.login-ring{width:34px;height:34px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--tc);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.login-brand{font-family:'Fraunces',serif;font-size:16px;color:var(--ch)}
+.login-h1{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:var(--ch);margin-bottom:6px}
+.login-sub{font-size:14px;color:var(--mid);margin-bottom:28px;line-height:1.6}
+.login-field{margin-bottom:16px}
+.login-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+.login-field input{width:100%;border:1.5px solid var(--sand);border-radius:10px;padding:12px 14px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--ch);background:#fff;outline:none;transition:border-color .2s;letter-spacing:.04em;text-transform:uppercase}
+.login-field input:focus{border-color:var(--tc)}
+.login-field input.pin{letter-spacing:.2em;font-size:18px;text-align:center}
+.login-field input.pin::placeholder{letter-spacing:0;font-size:14px;text-align:left}
+.login-btn{width:100%;background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;margin-top:4px}
+.login-btn:hover{background:var(--tcd)}
+.login-error{font-size:13px;color:var(--alert);margin-top:10px;text-align:center;display:none}
+.login-note{font-size:12px;color:var(--lt);margin-top:16px;text-align:center;line-height:1.6}
+
+/* ── SIDEBAR ── */
+.sidebar{grid-row:1/3;background:#1A1614;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.05)}
+.logo-ring{width:28px;height:28px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tc);animation:spin 14s linear infinite}
+.logo-name{font-family:'Fraunces',serif;font-size:13px;color:var(--cream);letter-spacing:.04em;margin-top:8px}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.25);margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
+.sidebar-org{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05)}
+.org-badge{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px 12px}
+.org-icon{font-size:16px;margin-bottom:4px}
+.org-name{font-size:12px;font-weight:600;color:var(--cream);line-height:1.3}
+.org-code{font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.sidebar-nav{flex:1;padding:14px 10px}
+.nav-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:0 10px;margin:14px 0 5px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.4);font-size:13px;font-weight:500;margin-bottom:1px;transition:all .15s;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.7)}
+.nav-item.active{background:rgba(196,113,74,.12);color:var(--tcl);border:1px solid rgba(196,113,74,.15)}
+.nav-badge{margin-left:auto;background:var(--tc);color:#fff;font-size:9px;font-weight:700;border-radius:20px;padding:2px 6px;min-width:18px;text-align:center}
+.nav-badge.amber{background:rgba(212,130,10,.2);color:#D4820A}
+.sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.05)}
+.advisor-name{font-size:12px;font-weight:600;color:var(--cream)}
+.advisor-role{font-size:10px;color:rgba(255,255,255,.3);margin-top:1px}
+.logout-btn{font-size:11px;color:rgba(255,255,255,.25);cursor:pointer;margin-top:8px;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+.logout-btn:hover{color:rgba(255,255,255,.5)}
+
+/* ── TOPBAR ── */
+.topbar{background:#1A1614;border-bottom:1px solid rgba(255,255,255,.05);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.topbar-title{font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--cream)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.export-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.export-btn:hover{border-color:var(--tc);color:var(--tcl)}
+.refresh-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.refresh-btn:hover{border-color:var(--grl);color:var(--grl)}
+
+/* ── MAIN ── */
+.main{padding:24px 28px;overflow-y:auto;display:flex;flex-direction:column;gap:20px;background:#131110}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat-card{background:#1A1614;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card.tc::before{background:linear-gradient(90deg,var(--tc),var(--tcl))}
+.stat-card.gr::before{background:linear-gradient(90deg,var(--gr),var(--grl))}
+.stat-card.sep::before{background:linear-gradient(90deg,var(--sep),#E8A040)}
+.stat-card.alert::before{background:linear-gradient(90deg,var(--alert),#D06060)}
+.stat-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:8px}
+.stat-num{font-family:'Fraunces',serif;font-size:34px;font-weight:300;color:var(--cream);line-height:1}
+.stat-sub{font-size:11px;color:rgba(255,255,255,.25);margin-top:5px}
+.stat-trend{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;margin-top:7px;padding:2px 7px;border-radius:20px}
+.stat-trend.up{background:rgba(61,107,79,.2);color:var(--grl)}
+.stat-trend.amber{background:rgba(212,130,10,.15);color:#D4820A}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 320px;gap:18px}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-title{font-family:'Fraunces',serif;font-size:15px;font-weight:400;color:var(--cream)}
+.sec-action{font-size:12px;color:var(--tc);cursor:pointer;font-weight:600}
+
+/* ── TABLE ── */
+.table-wrap{background:#1A1614;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.table-toolbar{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.search-box{flex:1;min-width:160px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:7px 11px;font-size:12px;color:var(--cream);font-family:'DM Sans',sans-serif;outline:none}
+.search-box::placeholder{color:rgba(255,255,255,.2)}
+.filter-pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:5px 11px;font-size:11px;color:rgba(255,255,255,.35);cursor:pointer;font-weight:500;transition:all .15s;white-space:nowrap}
+.filter-pill:hover,.filter-pill.active{border-color:var(--tc);color:var(--tcl);background:rgba(196,113,74,.08)}
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:9px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.2)}
+td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;color:rgba(255,255,255,.5);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.clickable:hover td{background:rgba(255,255,255,.02);cursor:pointer}
+.student-name{font-weight:600;color:var(--cream);font-size:13px}
+.student-date{font-size:11px;color:rgba(255,255,255,.25);margin-top:1px}
+.career-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:2px 8px;font-size:11px;color:rgba(255,255,255,.45);font-weight:500;margin:1px}
+.sep-badge{display:inline-flex;align-items:center;background:rgba(212,130,10,.12);border:1px solid rgba(212,130,10,.2);color:#D4820A;border-radius:20px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;flex-shrink:0}
+.status-dot.seen{background:var(--grl)}
+.status-dot.unseen{background:rgba(255,255,255,.2)}
+.status-dot.scheduled{background:#D4820A}
+.action-btn{background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:4px 9px;font-size:11px;font-weight:600;color:rgba(255,255,255,.3);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.action-btn:hover{border-color:var(--tc);color:var(--tcl)}
+.empty-state{padding:40px 20px;text-align:center;color:rgba(255,255,255,.2);font-size:14px}
+.loading-state{padding:40px 20px;text-align:center;color:rgba(255,255,255,.3);font-size:13px}
+
+/* ── RIGHT COLUMN ── */
+.right-col{display:flex;flex-direction:column;gap:16px}
+.card{background:#1A1614;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px}
+
+/* ── COMPLETION RING ── */
+.ring-wrap{position:relative;width:88px;height:88px;margin:0 auto 12px}
+.ring-svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:8}
+.ring-fill{fill:none;stroke:var(--tc);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--cream)}
+.ring-sub{font-size:9px;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.06em}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:7px}
+.breakdown-lbl{color:rgba(255,255,255,.35);display:flex;align-items:center;gap:6px}
+.breakdown-val{font-weight:600;color:var(--cream)}
+
+/* ── CLUSTER BARS ── */
+.cluster-row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.cluster-row:last-child{margin-bottom:0}
+.cluster-lbl{font-size:11px;color:rgba(255,255,255,.35);width:110px;flex-shrink:0}
+.cluster-bar-wrap{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.cluster-bar{height:100%;border-radius:3px}
+.cluster-count{font-size:10px;color:rgba(255,255,255,.25);width:20px;text-align:right;flex-shrink:0}
+
+/* ── ALERTS ── */
+.alert-item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.alert-item:last-child{border-bottom:none;padding-bottom:0}
+.alert-item:first-child{padding-top:0}
+.alert-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.alert-icon.sep{background:rgba(212,130,10,.1)}
+.alert-icon.flag{background:rgba(184,64,64,.1)}
+.alert-icon.new{background:rgba(61,107,79,.1)}
+.alert-text{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5}
+.alert-name{font-weight:600;color:var(--cream)}
+.alert-time{font-size:10px;color:rgba(255,255,255,.2);margin-top:2px}
+
+/* ── DETAIL PANEL ── */
+.detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(3px)}
+.detail-overlay.open{opacity:1;pointer-events:all}
+.detail-panel{width:480px;background:#1E1917;border-left:1px solid rgba(255,255,255,.07);height:100%;overflow-y:auto;display:flex;flex-direction:column;transform:translateX(40px);transition:transform .25s}
+.detail-overlay.open .detail-panel{transform:translateX(0)}
+.detail-top{padding:24px 24px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.detail-close{float:right;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 11px;font-size:11px;font-weight:600;color:rgba(255,255,255,.35);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.detail-close:hover{border-color:var(--tc);color:var(--tcl)}
+.detail-name{font-family:'Fraunces',serif;font-size:24px;font-weight:300;color:var(--cream);margin-top:8px;clear:both}
+.detail-meta{font-size:12px;color:rgba(255,255,255,.3);margin-top:3px}
+.detail-body{padding:20px 24px;flex:1}
+.detail-sec-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px;margin-top:20px}
+.detail-sec-lbl:first-child{margin-top:0}
+.sep-notice{background:rgba(212,130,10,.06);border:1px solid rgba(212,130,10,.15);border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:14px}
+.sep-notice-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.sep-notice-text{font-size:12px;color:rgba(212,130,10,.9);line-height:1.65}
+.sep-notice-title{font-weight:700;display:block;margin-bottom:2px}
+.career-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:12px 14px;margin-bottom:7px}
+.career-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.career-card-title{font-size:13px;font-weight:600;color:var(--cream)}
+.career-card-match{font-size:10px;font-weight:700;color:var(--grl);background:rgba(61,107,79,.12);padding:2px 7px;border-radius:20px}
+.career-card-why{font-size:12px;color:rgba(255,255,255,.35);line-height:1.55}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.profile-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px}
+.profile-item-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:3px}
+.profile-item-val{font-size:12px;font-weight:600;color:var(--cream)}
+.notes-area{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;font-size:12px;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:80px;transition:border-color .15s;line-height:1.6}
+.notes-area:focus{border-color:var(--tc)}
+.notes-area::placeholder{color:rgba(255,255,255,.2)}
+.save-note-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:background .15s}
+.save-note-btn:hover{background:var(--tcd)}
+.mark-seen-btn{background:rgba(61,107,79,.15);border:1px solid rgba(61,107,79,.2);color:var(--grl);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;margin-left:8px;transition:all .15s}
+.mark-seen-btn:hover{background:rgba(61,107,79,.25)}
+.mark-seen-btn.done{background:rgba(61,107,79,.2);color:var(--grl)}
+.return-link{font-size:11px;color:var(--tc);text-decoration:none;display:block;margin-top:10px}
+.return-link:hover{text-decoration:underline}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.stat-card{animation:fadeUp .35s ease both}
+.stat-card:nth-child(1){animation-delay:.05s}
+.stat-card:nth-child(2){animation-delay:.1s}
+.stat-card:nth-child(3){animation-delay:.15s}
+.stat-card:nth-child(4){animation-delay:.2s}
+
+@media(max-width:900px){
+  body{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main{padding:16px}
+  .stat-row{grid-template-columns:1fr 1fr;gap:10px}
+  .two-col{grid-template-columns:1fr}
+  .right-col{display:none}
+  .detail-panel{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite"><circle cx="30" cy="30" r="26" stroke="#C4714A" stroke-width="2.5" fill="none" opacity=".3"/><path d="M30 30 L30 10" stroke="#C4714A" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1917"/></svg>
+      <span class="login-brand">Find My Journey</span>
+    </div>
+    <h1 class="login-h1">Pathways Advisor<br>Dashboard</h1>
+    <p class="login-sub">Enter your institution code and access key to view your Explorer results.</p>
+    <div class="login-field">
+      <label>Institution code</label>
+      <input type="text" id="loginCode" placeholder="e.g. FHS2025" maxlength="16" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <div class="login-field">
+      <label>Access key</label>
+      <input type="password" class="pin" id="loginKey" placeholder="Enter your access key" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Access dashboard →</button>
+    <div class="login-error" id="loginError">Incorrect code or access key. Please try again.</div>
+    <p class="login-note">Contact Find My Journey to set up your institution access.<br><a href="mailto:hello@findmyjourney.com.au" class="__cf_email__" data-cfemail="533b363f3f3c13303221363621303c3e233220207d303c3e7d3226">[email&#160;protected]</a></p>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <svg width="18" height="18" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.4)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="5" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="5" fill="#C4714A"/></svg>
+    <div class="logo-name">Find My Journey</div>
+    <div class="logo-sub">Advisor Portal</div>
+  </div>
+  <div class="sidebar-org">
+    <div class="org-badge">
+      <div class="org-icon">🏫</div>
+      <div class="org-name" id="sidebarOrgName">Loading…</div>
+      <div class="org-code" id="sidebarOrgCode">—</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-lbl">Overview</div>
+    <a class="nav-item active" href="#" onclick="return false">
+      <span>📊</span> Dashboard
+    </a>
+    <a class="nav-item" href="#" onclick="filterView('all');return false">
+      <span>👥</span> All Explorers
+      <span class="nav-badge" id="navTotal">—</span>
+    </a>
+    <div class="nav-lbl">Attention</div>
+    <a class="nav-item" href="#" onclick="filterView('unseen');return false">
+      <span>📋</span> Not yet seen
+      <span class="nav-badge amber" id="navUnseen">—</span>
+    </a>
+    <a class="nav-item" href="#" onclick="filterView('sep');return false">
+      <span>⚡</span> Sensitive Explorers
+      <span class="nav-badge amber" id="navSEP">—</span>
+    </a>
+    <div class="nav-lbl">Tools</div>
+    <a class="nav-item" href="#" onclick="exportCSV();return false">
+      <span>📤</span> Export CSV
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="advisor-name">Pathways Advisor</div>
+    <div class="advisor-role" id="sidebarAdvisorRole">—</div>
+    <button class="logout-btn" onclick="doLogout()">Sign out</button>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-title" id="topbarTitle">Dashboard</div>
+  <div class="topbar-right">
+    <button class="refresh-btn" onclick="loadDashboard()">↻ Refresh</button>
+    <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+  <div class="loading-state">Loading your dashboard…</div>
+</main>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-top">
+      <button class="detail-close" onclick="closeDetail()">✕ Close</button>
+      <div class="detail-name" id="detailName">—</div>
+      <div class="detail-meta" id="detailMeta">—</div>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── STATE ──
+var INST_CODE = '';
+var ADMIN_KEY = '';
+var ALL_RESULTS = [];
+var CURRENT_FILTER = 'all';
+var CURRENT_DETAIL_UUID = null;
+
+// ── LOGIN ──
+function doLogin() {
+  var code = document.getElementById('loginCode').value.trim().toUpperCase();
+  var key = document.getElementById('loginKey').value.trim();
+  var errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+  if (!code || !key) { errEl.textContent = 'Please enter both your institution code and access key.'; errEl.style.display = 'block'; return; }
+  INST_CODE = code;
+  ADMIN_KEY = key;
+  // Try to load — if it fails auth, show error
+  loadDashboard(true);
+}
+
+function doLogout() {
+  INST_CODE = ''; ADMIN_KEY = ''; ALL_RESULTS = [];
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginCode').value = '';
+  document.getElementById('loginKey').value = '';
+}
+
+// ── LOAD DATA ──
+async function loadDashboard(isLogin) {
+  document.getElementById('mainContent').innerHTML = '<div class="loading-state">Loading your dashboard…</div>';
+  try {
+    var r = await fetch('/api/institution-dashboard?code=' + encodeURIComponent(INST_CODE) + '&key=' + encodeURIComponent(ADMIN_KEY));
+    var data = await r.json();
+    if (r.status === 401) {
+      var errEl = document.getElementById('loginError');
+      errEl.textContent = 'Incorrect code or access key. Please try again.';
+      errEl.style.display = 'block';
+      INST_CODE = ''; ADMIN_KEY = '';
+      return;
+    }
+    if (!r.ok) throw new Error(data.error || 'Load failed');
+    ALL_RESULTS = data.results || [];
+    if (isLogin) document.getElementById('loginScreen').style.display = 'none';
+    updateSidebar();
+    renderDashboard();
+  } catch (e) {
+    document.getElementById('mainContent').innerHTML = '<div class="loading-state">Failed to load. Check your connection and try refreshing.</div>';
+  }
+}
+
+function updateSidebar() {
+  document.getElementById('sidebarOrgName').textContent = 'Institution ' + INST_CODE;
+  document.getElementById('sidebarOrgCode').textContent = 'Code: ' + INST_CODE;
+  document.getElementById('sidebarAdvisorRole').textContent = INST_CODE;
+  document.getElementById('navTotal').textContent = ALL_RESULTS.length;
+  var unseen = ALL_RESULTS.filter(function(r){ return !r.advisorMeta || !r.advisorMeta.seen; }).length;
+  var sep = ALL_RESULTS.filter(function(r){ return r.sepTriggered; }).length;
+  document.getElementById('navUnseen').textContent = unseen;
+  document.getElementById('navSEP').textContent = sep;
+}
+
+// ── RENDER DASHBOARD ──
+function renderDashboard() {
+  var results = getFilteredResults();
+  var total = ALL_RESULTS.length;
+  var unseen = ALL_RESULTS.filter(function(r){ return !r.advisorMeta || !r.advisorMeta.seen; }).length;
+  var sep = ALL_RESULTS.filter(function(r){ return r.sepTriggered; }).length;
+  var seenCount = total - unseen;
+
+  // Build cluster counts
+  var clusters = {};
+  ALL_RESULTS.forEach(function(r) {
+    if (r.matches) r.matches.slice(0,1).forEach(function(m) {
+      var cluster = guessCluster(m.title);
+      clusters[cluster] = (clusters[cluster] || 0) + 1;
+    });
+  });
+  var sortedClusters = Object.entries(clusters).sort(function(a,b){ return b[1]-a[1]; }).slice(0,6);
+  var maxCluster = sortedClusters.length ? sortedClusters[0][1] : 1;
+
+  var clusterColours = ['linear-gradient(90deg,var(--tc),var(--tcl))','linear-gradient(90deg,#4A6CB8,#7090D0)','linear-gradient(90deg,var(--gr),var(--grl))','linear-gradient(90deg,#D97B8A,#EAA0AA)','linear-gradient(90deg,#B07FD4,#CDA0E8)','linear-gradient(90deg,#6B9F52,#90CC72)'];
+
+  // Completion ring: % seen of total
+  var pct = total > 0 ? Math.round((seenCount / total) * 100) : 0;
+  var circumference = 2 * Math.PI * 36; // r=36
+  var offset = circumference - (pct / 100) * circumference;
+
+  // Alerts
+  var alerts = [];
+  ALL_RESULTS.filter(function(r){ return r.sepTriggered && (!r.advisorMeta || !r.advisorMeta.seen); }).slice(0,2).forEach(function(r){
+    var days = daysSince(r.savedAt);
+    alerts.push('<div class="alert-item"><div class="alert-icon sep">⚡</div><div><div class="alert-text"><span class="alert-name">'+r.name+'</span> completed '+(days===0?'today':days+' day'+(days===1?'':'s')+' ago')+' — Sensitive Explorer flagged.</div><div class="alert-time">No session recorded yet</div></div></div>');
+  });
+  var oldestUnseen = ALL_RESULTS.filter(function(r){ return !r.advisorMeta || !r.advisorMeta.seen; }).sort(function(a,b){ return new Date(a.savedAt)-new Date(b.savedAt); })[0];
+  if (oldestUnseen) {
+    var d = daysSince(oldestUnseen.savedAt);
+    if (d > 7) alerts.push('<div class="alert-item"><div class="alert-icon flag">🚩</div><div><div class="alert-text"><span class="alert-name">'+oldestUnseen.name+'</span> has been waiting <strong>'+d+' days</strong> without a session.</div><div class="alert-time">Longest wait in cohort</div></div></div>');
+  }
+  if (results.length > 0) alerts.push('<div class="alert-item"><div class="alert-icon new">✅</div><div><div class="alert-text"><span class="alert-name">'+results.length+' Explorer'+(results.length===1?'':'s')+'</span> '+(CURRENT_FILTER==='all'?'total in your cohort.':'matching this filter.')+'</div><div class="alert-time">'+new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})+'</div></div></div>');
+
+  var h = '';
+
+  // Stat cards
+  h += '<div class="stat-row">';
+  h += statCard('tc', 'Total Explorers', total, 'results saved', unseen + ' not yet seen', 'amber');
+  h += statCard('gr', 'Sessions recorded', seenCount, 'marked as seen', '', '');
+  h += statCard('sep', 'Sensitive Explorers', sep, 'flagged for tailored guidance', sep > 0 ? (ALL_RESULTS.filter(function(r){return r.sepTriggered&&(!r.advisorMeta||!r.advisorMeta.seen);}).length + ' not yet seen') : '', 'amber');
+  h += statCard('alert', 'Awaiting session', unseen, 'completed but not seen yet', oldestUnseen ? 'Oldest: ' + daysSince(oldestUnseen.savedAt) + ' days ago' : '', 'amber');
+  h += '</div>';
+
+  // Two col
+  h += '<div class="two-col">';
+
+  // Table
+  h += '<div>';
+  h += '<div class="sec-hdr"><div class="sec-title">'+filterLabel()+'</div><div class="sec-action" onclick="filterView(\'all\')">View all</div></div>';
+  h += '<div class="table-wrap">';
+  h += '<div class="table-toolbar">';
+  h += '<input class="search-box" placeholder="🔍 Search by name or career…" oninput="doSearch(this.value)">';
+  h += '<div class="filter-pill '+(CURRENT_FILTER==='all'?'active':'')+'" onclick="filterView(\'all\')">All</div>';
+  h += '<div class="filter-pill '+(CURRENT_FILTER==='unseen'?'active':'')+'" onclick="filterView(\'unseen\')">Not seen</div>';
+  h += '<div class="filter-pill '+(CURRENT_FILTER==='sep'?'active':'')+'" onclick="filterView(\'sep\')">SEP flagged</div>';
+  h += '</div>';
+
+  if (results.length === 0) {
+    h += '<div class="empty-state">No results yet'+(CURRENT_FILTER!=='all'?' for this filter':'')+'. Share your institution code <strong>'+INST_CODE+'</strong> with your Explorers to get started.</div>';
+  } else {
+    h += '<table><thead><tr><th>Explorer</th><th>Top career matches</th><th>Saved</th><th>Status</th><th></th></tr></thead><tbody>';
+    results.forEach(function(r) {
+      var seen = r.advisorMeta && r.advisorMeta.seen;
+      var days = daysSince(r.savedAt);
+      var dateStr = days === 0 ? 'Today' : days === 1 ? 'Yesterday' : days + ' days ago';
+      var careers = (r.matches || []).slice(0,2).map(function(m){ return '<span class="career-pill">'+m.title+'</span>'; }).join('');
+      if (r.sepTriggered) careers += '<span class="sep-badge">⚡ SEP</span>';
+      h += '<tr class="clickable" onclick="openDetail(\''+r.uuid+'\')">';
+      h += '<td><div class="student-name">'+r.name+'</div><div class="student-date">'+dateStr+'</div></td>';
+      h += '<td><div style="display:flex;flex-wrap:wrap;gap:3px">'+careers+'</div></td>';
+      h += '<td style="font-size:11px;color:rgba(255,255,255,.25)">'+new Date(r.savedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short'})+'</td>';
+      h += '<td><span class="status-dot '+(seen?'seen':'unseen')+'"></span><span style="font-size:11px;color:'+(seen?'var(--grl)':'rgba(255,255,255,.3)')+'">'+( seen?'Seen':'Not seen')+'</span></td>';
+      h += '<td><button class="action-btn" onclick="event.stopPropagation();openDetail(\''+r.uuid+'\')">View →</button></td>';
+      h += '</tr>';
+    });
+    h += '</tbody></table>';
+  }
+  h += '</div></div>'; // table-wrap + left col
+
+  // Right col
+  h += '<div class="right-col">';
+
+  // Completion ring
+  h += '<div class="card"><div class="sec-hdr" style="margin-bottom:14px"><div class="sec-title">Sessions</div></div>';
+  h += '<div class="ring-wrap"><svg class="ring-svg" width="88" height="88" viewBox="0 0 88 88"><circle class="ring-bg" cx="44" cy="44" r="36"/><circle class="ring-fill" cx="44" cy="44" r="36" stroke-dasharray="'+circumference.toFixed(0)+'" stroke-dashoffset="'+offset.toFixed(0)+'"/></svg>';
+  h += '<div class="ring-label"><div class="ring-pct">'+pct+'%</div><div class="ring-sub">seen</div></div></div>';
+  h += '<div class="breakdown-row"><span class="breakdown-lbl"><span class="status-dot seen"></span>Session recorded</span><span class="breakdown-val">'+seenCount+'</span></div>';
+  h += '<div class="breakdown-row"><span class="breakdown-lbl"><span class="status-dot unseen"></span>Not yet seen</span><span class="breakdown-val">'+unseen+'</span></div>';
+  h += '</div>';
+
+  // Cluster bars
+  if (sortedClusters.length > 0) {
+    h += '<div class="card"><div class="sec-hdr" style="margin-bottom:14px"><div class="sec-title">Career clusters</div></div>';
+    sortedClusters.forEach(function(c, i) {
+      var pctBar = Math.round((c[1] / maxCluster) * 100);
+      h += '<div class="cluster-row"><div class="cluster-lbl">'+c[0]+'</div><div class="cluster-bar-wrap"><div class="cluster-bar" style="width:'+pctBar+'%;background:'+clusterColours[i%clusterColours.length]+'"></div></div><div class="cluster-count">'+c[1]+'</div></div>';
+    });
+    h += '</div>';
+  }
+
+  // Alerts
+  if (alerts.length > 0) {
+    h += '<div class="card"><div class="sec-hdr" style="margin-bottom:12px"><div class="sec-title">Needs attention</div></div>';
+    h += alerts.join('');
+    h += '</div>';
+  }
+
+  h += '</div>'; // right-col
+  h += '</div>'; // two-col
+
+  document.getElementById('mainContent').innerHTML = h;
+}
+
+function statCard(cls, label, num, sub, trend, trendCls) {
+  return '<div class="stat-card '+cls+'"><div class="stat-lbl">'+label+'</div><div class="stat-num">'+num+'</div><div class="stat-sub">'+sub+'</div>'+(trend?'<div class="stat-trend '+trendCls+'">'+trend+'</div>':'')+'</div>';
+}
+
+// ── DETAIL PANEL ──
+function openDetail(uuid) {
+  var r = ALL_RESULTS.find(function(x){ return x.uuid === uuid; });
+  if (!r) return;
+  CURRENT_DETAIL_UUID = uuid;
+  document.getElementById('detailName').textContent = r.name;
+  var days = daysSince(r.savedAt);
+  document.getElementById('detailMeta').textContent = 'Saved ' + (days===0?'today':days+' day'+(days===1?'':'s')+' ago') + ' · Code: ' + (r.shortCode||'—');
+
+  var meta = r.advisorMeta || {};
+  var h = '';
+
+  if (r.sepTriggered) {
+    h += '<div class="sep-notice"><div class="sep-notice-icon">⚡</div><div class="sep-notice-text"><span class="sep-notice-title">Sensitive Explorer Protocol triggered</span>This Explorer benefits from calm, structured environments. Lead with strengths, offer 1–2 options rather than many, and allow silences. Avoid overwhelming with choices.</div></div>';
+  }
+
+  h += '<div class="detail-sec-lbl">Career matches</div>';
+  var matches = r.matches || [];
+  var matchLabels = ['Very strong match','Strong match','Good match','Match','Match'];
+  matches.slice(0,4).forEach(function(m, i) {
+    h += '<div class="career-card"><div class="career-card-top"><div class="career-card-title">'+m.title+'</div><div class="career-card-match">'+matchLabels[i]+'</div></div>';
+    if (m.whyYou) h += '<div class="career-card-why">'+m.whyYou+'</div>';
+    h += '</div>';
+  });
+
+  h += '<div class="detail-sec-lbl">Profile snapshot</div>';
+  h += '<div class="profile-grid">';
+  h += '<div class="profile-item"><div class="profile-item-lbl">SEP triggered</div><div class="profile-item-val">'+(r.sepTriggered?'⚡ Yes':'✓ No')+'</div></div>';
+  h += '<div class="profile-item"><div class="profile-item-lbl">Branch</div><div class="profile-item-val">'+(r.branch||'General')+'</div></div>';
+  h += '<div class="profile-item"><div class="profile-item-lbl">Saved</div><div class="profile-item-val">'+new Date(r.savedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})+'</div></div>';
+  h += '<div class="profile-item"><div class="profile-item-lbl">Session status</div><div class="profile-item-val">'+(meta.seen?'✓ Seen':'Not seen')+'</div></div>';
+  h += '</div>';
+
+  h += '<div class="detail-sec-lbl">Session notes</div>';
+  h += '<textarea class="notes-area" id="detailNotes" placeholder="Add your session notes — visible to advisors only…">'+( meta.notes||'')+'</textarea>';
+  h += '<button class="save-note-btn" onclick="saveNote()">Save notes</button>';
+  h += '<button class="mark-seen-btn '+(meta.seen?'done':'')+'" id="markSeenBtn" onclick="markSeen()">'+( meta.seen?'✓ Marked as seen':'Mark as seen')+'</button>';
+  h += '<a class="return-link" href="https://career-compass-rho-ten.vercel.app?results='+r.uuid+'" target="_blank">Open Explorer\'s results page ↗</a>';
+
+  document.getElementById('detailBody').innerHTML = h;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail(e) {
+  if (!e || e.target === document.getElementById('detailOverlay')) {
+    document.getElementById('detailOverlay').classList.remove('open');
+    CURRENT_DETAIL_UUID = null;
+  }
+}
+
+async function saveNote() {
+  var notes = document.getElementById('detailNotes').value;
+  var btn = document.querySelector('.save-note-btn');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  var r = ALL_RESULTS.find(function(x){ return x.uuid === CURRENT_DETAIL_UUID; });
+  if (!r) return;
+  try {
+    await fetch('/api/institution-dashboard', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({code:INST_CODE,key:ADMIN_KEY,action:'update_meta',uuid:CURRENT_DETAIL_UUID,notes:notes,seen:r.advisorMeta&&r.advisorMeta.seen})
+    });
+    if (!r.advisorMeta) r.advisorMeta = {};
+    r.advisorMeta.notes = notes;
+    btn.textContent = 'Saved ✓';
+    setTimeout(function(){ btn.textContent = 'Save notes'; btn.disabled = false; }, 1500);
+  } catch(e) {
+    btn.textContent = 'Save notes'; btn.disabled = false;
+  }
+}
+
+async function markSeen() {
+  var r = ALL_RESULTS.find(function(x){ return x.uuid === CURRENT_DETAIL_UUID; });
+  if (!r) return;
+  var newSeen = !(r.advisorMeta && r.advisorMeta.seen);
+  try {
+    var notes = document.getElementById('detailNotes') ? document.getElementById('detailNotes').value : '';
+    await fetch('/api/institution-dashboard', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({code:INST_CODE,key:ADMIN_KEY,action:'update_meta',uuid:CURRENT_DETAIL_UUID,notes:notes,seen:newSeen})
+    });
+    if (!r.advisorMeta) r.advisorMeta = {};
+    r.advisorMeta.seen = newSeen;
+    var btn = document.getElementById('markSeenBtn');
+    btn.textContent = newSeen ? '✓ Marked as seen' : 'Mark as seen';
+    btn.classList.toggle('done', newSeen);
+    updateSidebar();
+    renderDashboard();
+    // Reopen detail
+    openDetail(CURRENT_DETAIL_UUID);
+  } catch(e) {}
+}
+
+// ── FILTERS & SEARCH ──
+function filterView(filter) {
+  CURRENT_FILTER = filter;
+  renderDashboard();
+}
+
+function filterLabel() {
+  if (CURRENT_FILTER === 'sep') return 'Sensitive Explorers';
+  if (CURRENT_FILTER === 'unseen') return 'Not yet seen';
+  return 'All Explorers';
+}
+
+function getFilteredResults() {
+  if (CURRENT_FILTER === 'sep') return ALL_RESULTS.filter(function(r){ return r.sepTriggered; });
+  if (CURRENT_FILTER === 'unseen') return ALL_RESULTS.filter(function(r){ return !r.advisorMeta || !r.advisorMeta.seen; });
+  return ALL_RESULTS;
+}
+
+var _searchTerm = '';
+function doSearch(val) {
+  _searchTerm = val.toLowerCase();
+  var rows = document.querySelectorAll('tbody tr');
+  rows.forEach(function(row) {
+    var text = row.textContent.toLowerCase();
+    row.style.display = text.includes(_searchTerm) ? '' : 'none';
+  });
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  if (!ALL_RESULTS.length) { alert('No results to export yet.'); return; }
+  var rows = [['Name','Top Career','2nd Career','3rd Career','SEP Triggered','Saved Date','Seen','Notes']];
+  ALL_RESULTS.forEach(function(r) {
+    var m = r.matches || [];
+    rows.push([
+      r.name,
+      m[0]?m[0].title:'',
+      m[1]?m[1].title:'',
+      m[2]?m[2].title:'',
+      r.sepTriggered?'Yes':'No',
+      new Date(r.savedAt).toLocaleDateString('en-AU'),
+      (r.advisorMeta&&r.advisorMeta.seen)?'Yes':'No',
+      (r.advisorMeta&&r.advisorMeta.notes)||''
+    ]);
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+(c||'').toString().replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'FindMyJourney-'+INST_CODE+'-Results.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── HELPERS ──
+function daysSince(dateStr) {
+  var d = new Date(dateStr);
+  var now = new Date();
+  return Math.floor((now - d) / (1000 * 60 * 60 * 24));
+}
+
+function guessCluster(title) {
+  if (!title) return 'Other';
+  var t = title.toLowerCase();
+  if (/nurs|doctor|allied|physio|occup|medic|health|paramedic|aged|disab|child/.test(t)) return 'Health & care';
+  if (/electr|plumb|carpent|mechanic|trade|weld|build|construct/.test(t)) return 'Trades & technical';
+  if (/market|sales|business|commerc|entrepre|account|financ/.test(t)) return 'Business & commerce';
+  if (/teach|educat|early child|school|tutor|coach/.test(t)) return 'Education';
+  if (/design|art|creat|media|film|music|write|journal/.test(t)) return 'Creative & media';
+  if (/ground|garden|horticultur|animal|nature|environ|conserv/.test(t)) return 'Nature & outdoors';
+  if (/social|community|counsel|welfare|mental/.test(t)) return 'Community services';
+  if (/tech|software|developer|data|IT|cyber|engineer/.test(t)) return 'Technology';
+  return 'Other';
+}
+
+// ── URL PARAMS ── pre-fill login from URL
+(function() {
+  var p = new URLSearchParams(window.location.search);
+  var code = p.get('code') || p.get('institution');
+  if (code) {
+    var inp = document.getElementById('instCode');
+    if (inp) { inp.value = code.toUpperCase(); checkLogin(); }
+  }
+})();
+</script>
+</body>
+</html>

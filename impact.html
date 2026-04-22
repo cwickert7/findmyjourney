@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Case for Find My Journey — Why Early Career Direction Changes Everything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;
+  --sand:#E8DFD0;--sand2:#D4C8B4;
+  --tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;
+  --gr:#3D6B4F;--grl:#5A8F6E;
+  --ch:#2C2422;--mid:#6B6058;--lt:#9A8E84;
+  --blue:#4A6CB8;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-ring{display:flex;align-items:center;justify-content:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-name{font-family:'Fraunces',serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
+.nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--tcd)}
+
+/* HERO */
+.hero{background:var(--ch);padding:130px 48px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px)}
+.hero-inner{max-width:1120px;margin:0 auto;position:relative;z-index:2}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:28px;height:1.5px;background:var(--tc)}
+.hero-h1{font-family:'Fraunces',serif;font-size:clamp(48px,6vw,84px);font-weight:200;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:24px;max-width:820px;font-variant-ligatures:none}
+.hero-h1 em{font-style:italic;color:var(--tcl)}
+.hero-sub{font-size:19px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.75;max-width:640px;margin-bottom:40px}
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap}
+.hero-stat{border-left:2px solid rgba(196,113,74,.3);padding-left:20px}
+.hero-stat-num{font-family:'Fraunces',serif;font-size:40px;font-weight:300;color:#fff;line-height:1}
+.hero-stat-num span{font-size:22px;color:var(--tcl)}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,.35);margin-top:4px;line-height:1.4;max-width:140px}
+
+/* SECTIONS */
+.section{padding:88px 48px}
+.section-inner{max-width:1120px;margin:0 auto}
+.sec-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec-eyebrow::before{content:'';width:28px;height:1.5px;background:var(--tc)}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(36px,4vw,56px);font-weight:300;line-height:1.06;color:var(--ch);margin-bottom:16px;letter-spacing:-.01em;font-variant-ligatures:none}
+.sec-h2 em{font-style:italic;color:var(--tc)}
+.sec-lead{font-size:18px;font-weight:300;color:var(--mid);line-height:1.75;max-width:680px;margin-bottom:48px}
+
+/* FLYWHEEL DIAGRAM */
+.flywheel-section{background:var(--ch);padding:88px 48px}
+.flywheel-inner{max-width:1120px;margin:0 auto}
+.flywheel-wrap{display:grid;grid-template-columns:1fr 480px;gap:64px;align-items:center;margin-top:48px}
+.flywheel-text{color:#fff}
+.flywheel-text h3{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#fff;margin-bottom:14px;font-variant-ligatures:none}
+.flywheel-text p{font-size:15px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:24px}
+.flywheel-points{display:flex;flex-direction:column;gap:16px}
+.fp{display:flex;gap:14px;align-items:flex-start}
+.fp-dot{width:8px;height:8px;border-radius:50%;background:var(--tc);flex-shrink:0;margin-top:6px}
+.fp-text{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7}
+.fp-text strong{color:#fff;font-weight:600}
+
+/* SVG DIAGRAM */
+.diagram-wrap{position:relative}
+.diagram-svg{width:100%;height:auto}
+
+/* VALUE CARDS */
+.value-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+.value-card{border-radius:16px;padding:32px;border:1.5px solid var(--sand);background:#fff;position:relative;overflow:hidden}
+.value-card::after{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
+.value-card.explorer::after{background:linear-gradient(180deg,var(--tc),var(--tcl))}
+.value-card.society::after{background:linear-gradient(180deg,var(--gr),var(--grl))}
+.value-card.employer::after{background:linear-gradient(180deg,var(--blue),#7090D0)}
+.value-card.institution::after{background:linear-gradient(180deg,#D97B8A,#EAA0AA)}
+.value-card.economic{grid-column:1/-1;background:var(--ch);border-color:rgba(255,255,255,.08)}
+.value-card.economic::after{background:linear-gradient(180deg,#F5A623,#E8C060)}
+.vc-icon{font-size:32px;margin-bottom:14px}
+.vc-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);margin-bottom:8px}
+.value-card.economic .vc-tag{color:rgba(255,255,255,.35)}
+.vc-title{font-family:'Fraunces',serif;font-size:22px;font-weight:400;color:var(--ch);margin-bottom:10px;font-variant-ligatures:none}
+.value-card.economic .vc-title{color:#fff}
+.vc-body{font-size:14px;font-weight:300;color:var(--mid);line-height:1.75}
+.value-card.economic .vc-body{color:rgba(255,255,255,.5)}
+.vc-stats{display:flex;gap:24px;margin-top:18px;padding-top:18px;border-top:1px solid var(--sand)}
+.value-card.economic .vc-stats{border-color:rgba(255,255,255,.08)}
+.vc-stat-num{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:var(--ch);display:block;line-height:1}
+.value-card.economic .vc-stat-num{color:#fff}
+.vc-stat-label{font-size:11px;color:var(--lt);margin-top:3px;line-height:1.4}
+.value-card.economic .vc-stat-label{color:rgba(255,255,255,.3)}
+.vc-stat-num em{font-style:normal;color:var(--tc);font-size:18px}
+.value-card.economic .vc-stat-num em{color:#F5A623}
+
+/* PROBLEM STATEMENT */
+.problem-section{background:var(--warm2)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:48px}
+.problem-quote{font-family:'Fraunces',serif;font-size:clamp(22px,2.8vw,34px);font-weight:300;line-height:1.3;color:var(--ch);font-style:italic;padding:32px;background:#fff;border-radius:16px;border:1.5px solid var(--sand);position:relative}
+.problem-quote::before{content:'\201C';font-size:80px;color:var(--sand2);line-height:1;position:absolute;top:16px;left:24px;font-family:'Fraunces',serif}
+.problem-quote p{padding-left:24px;position:relative;z-index:1}
+.problem-points{display:flex;flex-direction:column;gap:20px}
+.pp{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:22px 24px}
+.pp-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:6px}
+.pp-text{font-size:14px;color:var(--mid);line-height:1.7}
+.pp-stat{font-family:'Fraunces',serif;font-size:32px;font-weight:300;color:var(--ch);margin-bottom:4px}
+.pp-stat em{font-style:normal;color:var(--tc);font-size:20px}
+
+/* COST BENEFIT */
+.cost-section{background:var(--cream)}
+.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.cb-card{border-radius:14px;padding:28px;border:1.5px solid var(--sand)}
+.cb-card.cost{background:rgba(184,64,64,.04);border-color:rgba(184,64,64,.15)}
+.cb-card.benefit{background:rgba(61,107,79,.04);border-color:rgba(61,107,79,.15)}
+.cb-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.cb-card.cost .cb-title{color:rgba(184,64,64,.7)}
+.cb-card.benefit .cb-title{color:var(--gr)}
+.cb-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.cb-item:last-child{margin-bottom:0}
+.cb-bullet{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.cb-card.cost .cb-bullet{background:rgba(184,64,64,.1);color:rgba(184,64,64,.8)}
+.cb-card.benefit .cb-bullet{background:rgba(61,107,79,.1);color:var(--gr)}
+.cb-item-text{font-size:14px;color:var(--mid);line-height:1.65}
+
+/* CTA SECTION */
+.cta-section{background:var(--ch);padding:96px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(196,113,74,.1) 0%,transparent 65%)}
+.cta-inner{max-width:720px;margin:0 auto;position:relative}
+.cta-ring{width:52px;height:52px;border:2px solid rgba(196,113,74,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 24px;animation:spin 14s linear infinite}
+.cta-h2{font-family:'Fraunces',serif;font-size:clamp(40px,5vw,68px);font-weight:200;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:18px;font-variant-ligatures:none}
+.cta-h2 em{font-style:italic;color:var(--tcl)}
+.cta-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.75;margin-bottom:36px}
+.cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:16px 34px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-primary:hover{background:var(--tcl)}
+.btn-outline{background:transparent;color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.15);border-radius:50px;padding:15px 28px;font-size:15px;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:rgba(255,255,255,.4);color:#fff}
+
+/* FOOTER */
+footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-brand-name{font-family:'Fraunces',serif;font-size:15px;color:#fff;letter-spacing:.04em}
+.footer-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
+.footer-col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.footer-col a:hover{color:rgba(255,255,255,.7)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;font-weight:300;color:rgba(255,255,255,.18);line-height:1.6;max-width:680px}
+.footer-legal{display:flex;gap:18px;flex-shrink:0}
+.footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.55)}
+
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  .nav-cta{display:none}
+  .hero{padding:100px 20px 56px}
+  .hero-stats{gap:24px}
+  .hero-stat-num{font-size:30px}
+  .section{padding:56px 20px}
+  .flywheel-section{padding:56px 20px}
+  .flywheel-wrap{grid-template-columns:1fr;gap:40px}
+  .value-grid{grid-template-columns:1fr;gap:16px}
+  .value-card.economic{grid-column:auto}
+  .problem-grid{grid-template-columns:1fr;gap:24px}
+  .cb-grid{grid-template-columns:1fr}
+  .cta-section{padding:64px 20px}
+  .cta-buttons{flex-direction:column;align-items:center}
+  footer{padding:32px 20px 24px}
+  .footer-top{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+
+.fmj{color:#C4714A;font-weight:500}
+
+@media(max-width:768px){
+  /* ── NAV ── */
+  .nav-inner{padding:0 16px;max-width:100%}
+
+  /* ── PAGE HERO ── */
+  .page-hero{padding:90px 20px 52px}
+  .page-h1{font-size:clamp(36px,10vw,52px)}
+  .page-sub{font-size:15px;max-width:100%}
+
+  /* ── CONTENT ── */
+  .page-content{padding:40px 20px}
+  .page-section{margin-bottom:32px}
+  h2.page-h2,h2{font-size:clamp(20px,5vw,26px)}
+  .info-card{padding:16px}
+  .info-card-title{font-size:14px}
+  .info-card-desc{font-size:13px}
+
+  /* ── FOOTER ── */
+  .footer-inner{max-width:100%;width:100%}
+  .footer-top{grid-template-columns:1fr;gap:24px;margin-bottom:24px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-legal{flex-wrap:wrap;gap:12px}
+  .footer-copy{max-width:100%;font-size:10px}
+
+  /* ── IMPACT PAGE SPECIFIC ── */
+  .hero-stats{flex-direction:column;gap:20px}
+  .flywheel-wrap{grid-template-columns:1fr;gap:40px}
+  .diagram-svg{max-width:340px;margin:0 auto;display:block}
+  .value-grid{grid-template-columns:1fr;gap:14px}
+  .problem-grid{grid-template-columns:1fr;gap:20px}
+  .cb-grid{grid-template-columns:1fr;gap:8px}
+  .cta-buttons{flex-direction:column;align-items:center;gap:10px}
+  .sec-eyebrow{font-size:10px}
+}
+@media(max-width:480px){
+  .page-hero{padding:76px 16px 40px}
+  .page-h1{font-size:clamp(30px,10vw,44px)}
+  .page-sub{font-size:14px}
+  .page-content{padding:32px 16px}
+  .page-cta{display:block;text-align:center;padding:14px 24px;font-size:14px}
+
+  .flywheel-wrap{padding:0 16px}
+  .diagram-svg{max-width:280px}
+  .hero-stat-num{font-size:clamp(28px,9vw,40px)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="/marketing.html" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
+  <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+</div>
+    </a>
+    <div class="nav-links">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/real-explorers.html">Explorers</a>
+      <a href="/cv-builder.html">CV Builder</a>
+      <a href="/impact.html">Our Impact</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+    </div>
+    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
+  <a href="/real-explorers.html" onclick="closeNav()">Explorers</a>
+  <a href="/cv-builder.html" onclick="closeNav()">CV Builder</a>
+  <a href="/impact.html" onclick="closeNav()">Our Impact</a>
+  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">The case for <span class="fmj">Find My Journey</span></div>
+    <h1 class="hero-h1">Why getting career<br>direction right — <em>early</em> —<br>changes everything.</h1>
+    <p class="hero-sub">For young Australians, the right career match isn't just a personal win. It's a public health outcome, a workforce solution, and a fiscal dividend. <span class="fmj">Find My Journey</span> exists at that intersection.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">288<span>k</span></div>
+        <div class="hero-stat-label">young Australians not in employment, education or training (NEET) — May 2024</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">$46<span>B</span></div>
+        <div class="hero-stat-label">projected NDIS expenditure in 2025–26, growing at 10% annually</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">24<span>pp</span></div>
+        <div class="hero-stat-label">gap in employment rates between people with and without disability in Australia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section problem-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">The problem</div>
+    <h2 class="sec-h2">A generation at a<br><em>crossroads.</em></h2>
+    <p class="sec-lead">Australia is investing billions in supporting young people and people with disability — but not consistently converting that investment into employment. The gap between support and participation is where lives, and economic opportunity, are lost.</p>
+    <div class="problem-grid">
+      <div class="problem-quote">
+        <p>"Employment for young Australians — particularly those with learning differences, disability or limited career guidance — is not a marginal social policy. It is a high-return economic lever."</p>
+      </div>
+      <div class="problem-points">
+        <div class="pp">
+          <div class="pp-stat">10.2<em>%</em></div>
+          <div class="pp-label">Youth unemployment rate</div>
+          <div class="pp-text">Australia's youth unemployment is running at 10.2% — more than double the general rate. Young people are more than 2× more likely to be unemployed than the broader population.</div>
+        </div>
+        <div class="pp">
+          <div class="pp-stat">60.5<em>%</em></div>
+          <div class="pp-label">Labour force participation — people with disability</div>
+          <div class="pp-text">Compared to 84.9% for people without disability. The gap persists despite significant government investment — because the system funds support, not pathways.</div>
+        </div>
+        <div class="pp">
+          <div class="pp-stat">23<em>%</em></div>
+          <div class="pp-label">NDIS working-age participants in paid employment</div>
+          <div class="pp-text">As at June 2024 — meaning 77% of working-age NDIS participants are not in paid work, despite the scheme's intent to support independence and participation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLYWHEEL DIAGRAM -->
+<section class="flywheel-section">
+  <div class="flywheel-inner">
+    <div class="sec-eyebrow" style="color:var(--tcl)">The Find My Journey effect</div>
+    <h2 class="sec-h2" style="color:#fff;font-variant-ligatures:none">One insight.<br><em style="color:var(--tcl)">Five dividends.</em></h2>
+    <div class="flywheel-wrap">
+      <div class="flywheel-text">
+        <h3>Matching people to work that fits who they are creates a chain reaction.</h3>
+        <p>When a young person finds a career that aligns with their genuine values, personality and strengths — not just their qualifications — the outcomes compound. Better retention. Better wellbeing. Less welfare. More tax. More purpose.</p>
+        <p><span class="fmj">Find My Journey</span> is the intervention at the start of that chain. The earlier the match, the longer the dividend.</p>
+        <div class="flywheel-points">
+          <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the Explorer:</strong> direction, dignity and a starting point that actually fits.</div></div>
+          <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the institution:</strong> better outcomes, lower dropout, evidence of impact.</div></div>
+          <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the employer:</strong> motivated candidates who chose this field, not drifted into it.</div></div>
+          <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For society:</strong> more people contributing, fewer people disengaging.</div></div>
+          <div class="fp"><div class="fp-dot"></div><div class="fp-text"><strong>For the taxpayer:</strong> reduced welfare dependency, increased tax base, lower long-term service demand.</div></div>
+        </div>
+      </div>
+
+      <!-- SVG FLYWHEEL -->
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" class="diagram-svg">
+
+          <!-- Outer decorative rings -->
+          <circle cx="240" cy="240" r="230" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <circle cx="240" cy="240" r="165" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+
+          <!-- Centre hub — Find My Journey -->
+          <circle cx="240" cy="240" r="64" fill="rgba(196,113,74,.12)" stroke="rgba(196,113,74,.25)" stroke-width="2"/>
+          <text x="240" y="228" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(196,113,74,.7)" font-weight="700" letter-spacing="1.5">FIND MY</text>
+          <text x="240" y="250" text-anchor="middle" font-family="Fraunces, serif" font-size="18" fill="#D98B65" font-weight="300">Journey</text>
+
+          <!-- Node 1: Explorer (top) — cx=240 cy=72 r=50 -->
+          <circle cx="240" cy="72" r="50" fill="rgba(196,113,74,.12)" stroke="rgba(196,113,74,.3)" stroke-width="1.5"/>
+          <text x="240" y="64" text-anchor="middle" font-size="17" fill="#D98B65">🧭</text>
+          <text x="240" y="80" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="700" letter-spacing=".5">EXPLORER</text>
+          <text x="240" y="94" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(255,255,255,.35)">Direction &amp; dignity</text>
+
+          <!-- Node 2: Employer (top-right) — cx=400 cy=188 r=50 -->
+          <circle cx="400" cy="188" r="50" fill="rgba(74,108,184,.1)" stroke="rgba(74,108,184,.3)" stroke-width="1.5"/>
+          <text x="400" y="180" text-anchor="middle" font-size="17" fill="#7090D0">🏢</text>
+          <text x="400" y="196" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="700" letter-spacing=".5">EMPLOYER</text>
+          <text x="400" y="210" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(255,255,255,.35)">Better retention</text>
+
+          <!-- Node 3: Taxpayer (bottom-right) — cx=339 cy=376 r=50 -->
+          <circle cx="339" cy="376" r="50" fill="rgba(245,166,35,.08)" stroke="rgba(245,166,35,.25)" stroke-width="1.5"/>
+          <text x="339" y="368" text-anchor="middle" font-size="17" fill="#F5A623">💰</text>
+          <text x="339" y="384" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="700" letter-spacing=".5">TAXPAYER</text>
+          <text x="339" y="398" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(255,255,255,.35)">Lower fiscal burden</text>
+
+          <!-- Node 4: Society (bottom-left) — cx=141 cy=376 r=50 -->
+          <circle cx="141" cy="376" r="50" fill="rgba(61,107,79,.1)" stroke="rgba(61,107,79,.3)" stroke-width="1.5"/>
+          <text x="141" y="368" text-anchor="middle" font-size="17" fill="#5A8F6E">🤝</text>
+          <text x="141" y="384" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="700" letter-spacing=".5">SOCIETY</text>
+          <text x="141" y="398" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(255,255,255,.35)">Inclusion &amp; cohesion</text>
+
+          <!-- Node 5: Institution (top-left) — cx=80 cy=188 r=50 -->
+          <circle cx="80" cy="188" r="50" fill="rgba(217,123,138,.1)" stroke="rgba(217,123,138,.25)" stroke-width="1.5"/>
+          <text x="80" y="180" text-anchor="middle" font-size="17" fill="#D97B8A">🎓</text>
+          <text x="80" y="196" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="700" letter-spacing=".5">INSTITUTION</text>
+          <text x="80" y="210" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="8" fill="rgba(255,255,255,.35)">Better completion</text>
+
+          <!-- Connector lines from centre to each node -->
+          <line x1="240" y1="176" x2="240" y2="122" stroke="rgba(196,113,74,.2)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="295" y1="208" x2="352" y2="204" stroke="rgba(74,108,184,.15)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="282" y1="292" x2="308" y2="330" stroke="rgba(245,166,35,.12)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="198" y1="292" x2="172" y2="330" stroke="rgba(61,107,79,.15)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="185" y1="208" x2="128" y2="204" stroke="rgba(217,123,138,.12)" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE CARDS -->
+<section class="section" style="background:var(--warm2)">
+  <div class="section-inner">
+    <div class="sec-eyebrow">Who benefits</div>
+    <h2 class="sec-h2">The value of<br><em>right career fit.</em></h2>
+    <p class="sec-lead"><span class="fmj">Find My Journey</span> creates measurable value for five distinct groups. The investment is made once. The dividends compound over a working lifetime.</p>
+    <div class="value-grid">
+
+      <div class="value-card explorer">
+        <div class="vc-icon">🧭</div>
+        <div class="vc-tag">For the Explorer</div>
+        <div class="vc-title">Direction, dignity and a genuine starting point</div>
+        <div class="vc-body">Most career tools ask what someone is qualified for. Find My Journey asks who they are. For young Australians — especially those with learning differences, anxiety, limited work history, or no career role models at home — being seen and understood changes everything. A career that fits your personality isn't just more satisfying. It's more sustainable, more likely to lead to advancement, and less likely to result in early departure.</div>
+        <div class="vc-stats">
+          <div><span class="vc-stat-num">2.3<em>×</em></span><div class="vc-stat-label">higher unemployment rate for 15–24 year olds vs general population</div></div>
+          <div><span class="vc-stat-num">288<em>k</em></span><div class="vc-stat-label">young Australians currently NEET (not in employment, education or training)</div></div>
+        </div>
+      </div>
+
+      <div class="value-card society">
+        <div class="vc-icon">🤝</div>
+        <div class="vc-tag">For society</div>
+        <div class="vc-title">More participation. Less disengagement. Stronger communities.</div>
+        <div class="vc-body">Long-term youth unemployment doesn't stay contained. It spreads — into mental health services, housing instability, criminal justice systems and intergenerational poverty. Early career direction is preventive infrastructure. Every young person who finds meaningful work reduces the downstream demand on social services. Employment provides structure, purpose, social connection and identity — things that support systems struggle to replicate at scale.</div>
+        <div class="vc-stats">
+          <div><span class="vc-stat-num">1 in 7</span><div class="vc-stat-label">Australians aged 0–64 live with disability — a proportion growing with each survey</div></div>
+          <div><span class="vc-stat-num">56<em>%</em></span><div class="vc-stat-label">employment rate for working-age Australians with disability, vs 83% without</div></div>
+        </div>
+      </div>
+
+      <div class="value-card employer">
+        <div class="vc-icon">🏢</div>
+        <div class="vc-tag">For employers</div>
+        <div class="vc-title">Motivated people who chose this field — not drifted into it.</div>
+        <div class="vc-body">Employers consistently report that the biggest predictor of early turnover isn't skills — it's fit. When someone joins a role that genuinely aligns with their values and work style, they stay longer, learn faster and perform better. Find My Journey narrows the gap between who applies and who thrives. For sectors facing workforce shortages — health, care, trades, logistics — candidates who chose the field with genuine self-awareness are worth their weight in gold. Inclusive hiring also strengthens customer alignment and brand trust.</div>
+        <div class="vc-stats">
+          <div><span class="vc-stat-num">1 in 3</span><div class="vc-stat-label">Australian occupations experienced shortages in 2022–2024, per AIHW</div></div>
+          <div><span class="vc-stat-num">25<em>%</em></span><div class="vc-stat-label">of full-time workers with disability leave within a year — vs 10% without disability</div></div>
+        </div>
+      </div>
+
+      <div class="value-card institution">
+        <div class="vc-icon">🎓</div>
+        <div class="vc-tag">For institutions</div>
+        <div class="vc-title">Better enrolments. Lower dropout. Demonstrable outcomes.</div>
+        <div class="vc-body">For schools, TAFEs, RTOs and DES providers, Find My Journey solves a structural problem: students and clients who enter programs without genuine self-understanding are far more likely to disengage. Better initial course-person fit means higher completion rates, lower support costs, and stronger outcome data. The dashboard gives pathways advisors real-time visibility into their cohort — who needs to be seen, which students triggered the Sensitive Explorer Protocol, and what career clusters are emerging across the year group.</div>
+        <div class="vc-stats">
+          <div><span class="vc-stat-num">$5.4<em>B</em></span><div class="vc-stat-label">committed by Australian Government over 5 years to disability employment programs</div></div>
+          <div><span class="vc-stat-num">15–25</span><div class="vc-stat-label">the critical window. Early career direction here prevents lifetime disengagement.</div></div>
+        </div>
+      </div>
+
+      <div class="value-card economic">
+        <div class="vc-icon">📈</div>
+        <div class="vc-tag">The economic case</div>
+        <div class="vc-title">Employment is the bridge between social investment and economic return.</div>
+        <div class="vc-body" style="margin-bottom:20px">Australia is spending at unprecedented scale to support people with disability and young people at risk. The NDIS alone is projected to cost $46.2 billion in 2025–26 — a scheme that, by the government's own actuary's estimate, could reach $125 billion per year by 2034 at previous growth rates. The fiscal case for early employment intervention is not ideological — it is arithmetic. Every young person who moves from welfare dependency to sustained employment delivers a dual dividend: reduced government expenditure and increased economic output. That dividend compounds over a working lifetime of 40+ years.</div>
+        <div class="vc-stats">
+          <div><span class="vc-stat-num">$46<em>B</em></span><div class="vc-stat-label">projected NDIS spend in 2025–26</div></div>
+          <div><span class="vc-stat-num">$125<em>B</em></span><div class="vc-stat-label">projected annual NDIS cost by 2034 at previous growth rates</div></div>
+          <div><span class="vc-stat-num">40<em>+yrs</em></span><div class="vc-stat-label">compounding fiscal dividend from one young person successfully entering the workforce</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COST / BENEFIT -->
+<section class="section cost-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">The fiscal equation</div>
+    <h2 class="sec-h2">The cost of<br><em>doing nothing.</em></h2>
+    <p class="sec-lead">Every young person who doesn't find meaningful work creates a compounding public cost. Every one who does creates a compounding public benefit. The math is not close.</p>
+    <div class="cb-grid">
+      <div class="cb-card cost">
+        <div class="cb-title">✕ &nbsp;Without early career direction</div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>Direct welfare costs</strong> — income support, Youth Allowance, Disability Support Pension, JobSeeker payments continuing indefinitely</div></div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>Healthcare &amp; social services</strong> — mental health conditions associated with long-term unemployment increase demand on already-strained services</div></div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>Lost income tax</strong> — a lifetime of welfare rather than wages represents decades of foregone tax revenue</div></div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>Economic scarring</strong> — youth unemployment leaves permanent wage scars; early disengagement lowers lifetime earnings even after re-entry</div></div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>Intergenerational cost</strong> — disadvantage compounds across generations, increasing structural demand for public services</div></div>
+        <div class="cb-item"><div class="cb-bullet">$</div><div class="cb-item-text"><strong>NDIS growth</strong> — without employment pathways, support costs become lifetime expenditures rather than transition investments</div></div>
+      </div>
+      <div class="cb-card benefit">
+        <div class="cb-title">✓ &nbsp;With early career direction</div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>Reduced welfare dependency</strong> — sustained employment replaces income support with earnings, reducing transfer payments</div></div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>Increased tax revenue</strong> — every employed young person contributes income tax, GST and superannuation to the economy</div></div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>Lower health system demand</strong> — employed people have better mental and physical health outcomes, reducing healthcare costs</div></div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>Workforce participation</strong> — addresses skills shortages across health, care, trades and logistics sectors facing structural supply gaps</div></div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>NDIS sustainability</strong> — employment converts support spend into participation outcomes, reducing long-term scheme growth</div></div>
+        <div class="cb-item"><div class="cb-bullet">✓</div><div class="cb-item-text"><strong>Positive fiscal multiplier</strong> — employed people spend, invest and pay taxes — multiplying the return beyond their direct contribution</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-ring">◆</div>
+    <h2 class="cta-h2">Ready to be<br>part of the <em>solution?</em></h2>
+    <p class="cta-sub">Whether you're a school, TAFE, DES provider or policy maker — <span class="fmj">Find My Journey</span> is designed to be deployed at scale, with real data, real outcomes and a genuine evidence base.</p>
+    <div class="cta-buttons">
+      <a href="/contact.html" class="btn-primary">Discuss a pilot →</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="btn-outline">Try Find My Journey</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px">find my</span>
+  <span style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+</div>
+        </div>
+        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Product</div>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
+        <a href="/cv-builder.html">CV Builder</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/real-explorers.html">Real Explorers</a>
+        <a href="/why-find-my-journey.html">Why Find My Journey</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Organisations</div>
+        <a href="/schools.html">Schools</a>
+        <a href="/tafe.html">TAFE &amp; RTOs</a>
+        <a href="/des.html">DES providers</a>
+        <a href="/contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Legal</div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/accessibility.html">Accessibility</a>
+        <a href="/impact.html">Our Impact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&#xA9; 2025 Find My Journey &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Find My Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;--sand:#E8DFD0;--sand2:#D4C8B4;--tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;--gr:#3D6B4F;--ch:#2C2422;--mid:#6B6058;--lt:#9A8E84}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden}
+@keyframes spin{to{transform:rotate(360deg)}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-ring{display:flex;align-items:center;justify-content:center}
+.nav-name{font-family:"Fraunces",serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
+.nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--tcd)}
+.page-hero{background:var(--ch);padding:120px 48px 64px;text-align:center}
+.page-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:16px}
+.page-h1{font-family:"Fraunces",serif;font-size:clamp(40px,5vw,68px);font-weight:300;color:#fff;line-height:1.05;margin-bottom:16px;font-variant-ligatures:none}
+.page-h1 em{font-style:italic;color:var(--tcl)}
+.page-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;max-width:600px;margin:0 auto}
+.page-body{max-width:840px;margin:0 auto;padding:64px 48px 96px}
+.page-updated{font-size:12px;color:var(--lt);margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid var(--sand)}
+.page-section{margin-bottom:48px}
+.page-section h2{font-family:"Fraunces",serif;font-size:26px;font-weight:400;color:var(--ch);margin-bottom:14px;margin-top:40px;font-variant-ligatures:none}
+.page-section h3{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:8px;margin-top:24px}
+.page-section p{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:14px}
+.page-section ul{padding-left:20px;margin-bottom:14px}
+.page-section li{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:6px}
+.page-section a{color:var(--tc);text-decoration:underline}
+.highlight-box{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:24px 28px;margin:24px 0}
+.highlight-box p{margin-bottom:0}
+.contact-field{margin-bottom:20px}
+.contact-field label{display:block;font-size:13px;font-weight:600;color:var(--ch);margin-bottom:6px;letter-spacing:.03em}
+.contact-field input,.contact-field textarea,.contact-field select{width:100%;border:1.5px solid var(--sand);border-radius:10px;padding:12px 16px;font-size:15px;font-family:"DM Sans",sans-serif;color:var(--ch);background:var(--warm);outline:none;transition:border-color .2s}
+.contact-field input:focus,.contact-field textarea:focus,.contact-field select:focus{border-color:var(--tc)}
+.contact-field textarea{min-height:140px;resize:vertical}
+.contact-submit{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:15px 36px;font-size:16px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s}
+.contact-submit:hover{background:var(--tcd)}
+.info-card{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:24px;margin-bottom:16px}
+.info-card-icon{font-size:28px;margin-bottom:10px}
+.info-card-title{font-size:16px;font-weight:600;color:var(--ch);margin-bottom:6px}
+.info-card-desc{font-size:14px;color:var(--mid);line-height:1.65}
+footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-brand-name{font-family:"Fraunces",serif;font-size:15px;color:#fff;letter-spacing:.04em}
+.footer-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
+.footer-col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.footer-col a:hover{color:rgba(255,255,255,.7)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;font-weight:300;color:rgba(255,255,255,.18);line-height:1.6;max-width:680px}
+.footer-legal{display:flex;gap:18px;flex-shrink:0}
+.footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.55)}
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  .nav-cta{display:none}
+  .page-hero{padding:100px 20px 48px}
+  .page-body{padding:48px 20px 64px}
+  footer{padding:40px 20px 24px}
+  .footer-top{grid-template-columns:1fr;gap:28px;margin-bottom:28px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+.fmj{color:#C4714A;font-weight:500}
+
+@media(max-width:768px){
+  /* ── NAV ── */
+  .nav-inner{padding:0 16px;max-width:100%}
+
+  /* ── PAGE HERO ── */
+  .page-hero{padding:90px 20px 52px}
+  .page-h1{font-size:clamp(36px,10vw,52px)}
+  .page-sub{font-size:15px;max-width:100%}
+
+  /* ── CONTENT ── */
+  .page-content{padding:40px 20px}
+  .page-section{margin-bottom:32px}
+  h2.page-h2,h2{font-size:clamp(20px,5vw,26px)}
+  .info-card{padding:16px}
+  .info-card-title{font-size:14px}
+  .info-card-desc{font-size:13px}
+
+  /* ── FOOTER ── */
+  .footer-inner{max-width:100%;width:100%}
+  .footer-top{grid-template-columns:1fr;gap:24px;margin-bottom:24px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-legal{flex-wrap:wrap;gap:12px}
+  .footer-copy{max-width:100%;font-size:10px}
+}
+@media(max-width:480px){
+  .page-hero{padding:76px 16px 40px}
+  .page-h1{font-size:clamp(30px,10vw,44px)}
+  .page-sub{font-size:14px}
+  .page-content{padding:32px 16px}
+  .page-cta{display:block;text-align:center;padding:14px 24px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="/marketing.html" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
+  <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+</div>
+    </a>
+    <div class="nav-links">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/real-explorers.html">Explorers</a>
+      <a href="/cv-builder.html">CV Builder</a>
+      <a href="/impact.html">Our Impact</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+    </div>
+    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
+  <a href="/real-explorers.html" onclick="closeNav()">Explorers</a>
+  <a href="/cv-builder.html" onclick="closeNav()">CV Builder</a>
+  <a href="/impact.html" onclick="closeNav()">Our Impact</a>
+  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
+</div>
+<div class="page-hero">
+  <div class="page-eyebrow">Legal</div>
+  <h1 class="page-h1">Privacy<br><em>Policy.</em></h1>
+  <p class="page-sub">How we handle your information — clearly and honestly.</p>
+</div>
+<div class="page-body">
+<div class="page-updated">Last updated: April 2025 (revised to include saved results policy)</div>
+<div class="highlight-box"><p><strong>Short version:</strong> <span class="fmj">Find My Journey</span> does not store your assessment answers beyond your current session. We do not sell your data. We do not share your personal information with third parties except as described below.</p></div>
+<div class="page-section">
+<h2>1. Who we are</h2>
+<p><span class="fmj">Find My Journey</span> is an AI-powered career discovery tool for young Australians aged 15&ndash;25. We are operated by <span class="fmj">Find My Journey</span> (ABN placeholder). Our contact email is <a href="mailto:hello@findmyjourney.com.au">hello@findmyjourney.com.au</a>.</p>
+</div>
+<div class="page-section">
+<h2>2. What information we collect</h2>
+<h3>Assessment answers</h3>
+<p>When you use the <span class="fmj">Find My Journey</span> assessment, you answer questions about your interests, values, personality and work preferences. These answers are used solely to generate your personalised career results. They are processed in real time and are not stored on our servers after your session ends.</p>
+<h3>Email address (optional)</h3>
+<p>If you choose to receive your results by email, we collect your email address. We use this only to send you your results. We store a record that an email was sent (email address, date, job titles) in a secure database to help us understand usage. We do not use this to send marketing emails.</p>
+<h3>Usage data</h3>
+<p>We collect anonymous usage data including pages visited, features used, and general session information. This data cannot be linked to an individual and is used solely to improve <span class="fmj">Find My Journey</span>.</p>
+<h3>Feedback</h3>
+<p>If you use the thumbs up/down feedback buttons, we record an anonymised positive or negative signal alongside the career branch selected. No personal information is collected with this feedback.</p>
+<h3>Saved results (optional)</h3>
+<p>If you choose to save your results, we store the following information securely for 12 months:</p>
+<ul>
+<li>Your first name</li>
+<li>Your career matches (job titles and summaries)</li>
+<li>Whether the Sensitive Explorer Protocol was activated</li>
+<li>Your institution or program code, if you provided one</li>
+<li>The date your results were generated</li>
+</ul>
+<p>We do <strong>not</strong> store your raw assessment answers as part of saved results. After 12 months, saved results are permanently and automatically deleted.</p>
+<p>If you are under 15, we recommend letting a parent or guardian know that your results are being saved.</p>
+</div>
+<div class="page-section">
+<h2>3. How we use your information</h2>
+<ul>
+<li>To generate your personalised career results and CV</li>
+<li>To send you your results if you request email delivery</li>
+<li>To store your results for 12 months if you choose to save them, so you can return and explore further</li>
+<li>To share your results with your institution or program pathways advisor, if you provided an institution code</li>
+<li>To improve the quality and accuracy of <span class="fmj">Find My Journey</span> over time</li>
+<li>To understand how the tool is being used at an aggregate level</li>
+</ul>
+<p>We do not use your information for advertising, profiling or any commercial purpose beyond operating <span class="fmj">Find My Journey</span>.</p>
+</div>
+<div class="page-section">
+<h2>3a. Saved results — consent and storage</h2>
+<p>Saving your results is entirely optional. When you choose to save, we will clearly notify you that your results are being stored, what is stored, and for how long. You will receive a personal link to retrieve your results at any time within the 12-month storage period.</p>
+<p>If you entered an institution or program code during your assessment, your saved results will be accessible to the authorised pathways advisors at that institution. Only results from Explorers who actively provided an institution code are visible to that institution &mdash; institutions cannot access results from Explorers who did not opt in to their program.</p>
+<p>You may request early deletion of your saved results at any time by contacting us at <a href="mailto:hello@findmyjourney.com.au">hello@findmyjourney.com.au</a> with your personal link or result code.</p>
+</div>
+<div class="page-section">
+<h2>4. Who we share your information with</h2>
+<h3>Anthropic</h3>
+<p>Your assessment answers are sent to Anthropic&rsquo;s Claude API to generate your results. Anthropic processes this data as a service provider under their <a href="https://www.anthropic.com/privacy" target="_blank">privacy policy</a>. Your answers are not used to train Anthropic&rsquo;s AI models.</p>
+<h3>Resend</h3>
+<p>If you request email delivery of your results, your email address and results summary are sent to Resend (a transactional email provider) to deliver the email. Resend does not retain this data beyond delivery.</p>
+<h3>Upstash</h3>
+<p>A record of email sends (email address, date, job titles) is stored in an Upstash Redis database hosted in Sydney, Australia. If you choose to save your results, those results are also stored in Upstash Redis and automatically deleted after 12 months.</p>
+<p>We do not sell, rent or share your personal information with any other third parties.</p>
+</div>
+<div class="page-section">
+<h2>5. Under 15s</h2>
+<p><span class="fmj">Find My Journey</span> is designed for young Australians aged 15&ndash;25. We encourage anyone under 15 to let a parent or guardian know they are using this tool. We do not knowingly collect personal information from children under 13.</p>
+</div>
+<div class="page-section">
+<h2>6. Your rights</h2>
+<p>Under Australian privacy law (Privacy Act 1988) you have the right to access, correct or request deletion of any personal information we hold about you. To exercise these rights, contact us at <a href="mailto:hello@findmyjourney.com.au">hello@findmyjourney.com.au</a>.</p>
+</div>
+<div class="page-section">
+<h2>7. Security</h2>
+<p>We use industry-standard security practices including HTTPS encryption for all data in transit. Assessment answers are never written to persistent storage. Email addresses are stored in a secured, access-controlled database.</p>
+</div>
+<div class="page-section">
+<h2>8. Changes to this policy</h2>
+<p>We may update this Privacy Policy from time to time. Material changes will be noted with an updated date at the top of this page.</p>
+</div>
+<div class="page-section">
+<h2>9. Contact us</h2>
+<p>Questions about privacy? Email us at <a href="mailto:hello@findmyjourney.com.au">hello@findmyjourney.com.au</a>.</p>
+</div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
+  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px">find my</span>
+  <span style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+</div>
+        </div>
+        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Product</div>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
+        <a href="/cv-builder.html">CV Builder</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/real-explorers.html">Real Explorers</a>
+        <a href="/why-find-my-journey.html">Why Find My Journey</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Organisations</div>
+        <a href="/schools.html">Schools</a>
+        <a href="/tafe.html">TAFE &amp; RTOs</a>
+        <a href="/des.html">DES providers</a>
+        <a href="/contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Legal</div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/accessibility.html">Accessibility</a>
+        <a href="/impact.html">Our Impact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&#xA9; 2025 Find My Journey &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
