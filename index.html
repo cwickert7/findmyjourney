@@ -3953,7 +3953,9 @@ async function persistResult(){
       _savedCode=data.shortCode;
       return data;
     }
-  }catch(e){}
+  }catch(e){
+    console.error('[FMJ] persistResult error:',e.message);
+  }
   return null;
 }
 
@@ -3969,9 +3971,17 @@ async function saveViaEmail(){
   if(btn){btn.disabled=true;btn.textContent='Saving…';}
   // 1. Persist the result
   var saved=await persistResult();
-  // 2. Send results email with return link embedded
+  // 2. Check save succeeded
+  if(!saved||!saved.uuid){
+    console.error('[FMJ] persistResult returned null — save failed');
+    if(btn){btn.disabled=false;btn.textContent='Send my results \u2192';}
+    var wrap=g('saveEmailWrap');
+    if(wrap){var errP=document.createElement('p');errP.style.cssText='font-size:12px;color:var(--tc);margin-top:8px';errP.textContent='Something went wrong saving your results. Please try again.';wrap.appendChild(errP);}
+    return;
+  }
+  // 3. Send results email with return link embedded
   var name=A.name||'Explorer';
-  var returnLink=window.location.origin+'?results='+(saved?saved.uuid:'');
+  var returnLink=window.location.origin+'?results='+saved.uuid;
   var nowJobs=(RS&&RS.nowJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   var careerJobs=(RS&&RS.careerJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   try{
@@ -4044,16 +4054,20 @@ async function checkURLResult(){
     try{
       var r=await fetch('/api/get-result?id='+encodeURIComponent(uuid));
       var data=await r.json();
+      console.log('[FMJ] get-result status:',r.status,'ok:',r.ok,'data:',JSON.stringify(data).slice(0,200));
       if(r.ok&&data.result){
         showRetrievedResults(data.result);
       } else {
-        // Result not found or expired — show friendly message then landing
-        sc().innerHTML='<div class="tw"><p class="tp" style="color:var(--tc)">&#x26A0;&#xFE0F; We couldn&rsquo;t find those results &mdash; they may have expired.</p><p class="tp" style="font-size:13px;margin-top:8px">Results are stored for 12 months. You can start a new discovery below.</p></div>';
-        setTimeout(function(){sSf();},2500);
+        // Show the actual error in the UI so we can debug
+        var errMsg=data.error||'Unknown error';
+        sc().innerHTML='<div class="tw"><p class="tp" style="color:var(--tc)">&#x26A0;&#xFE0F; We couldn&rsquo;t find those results.</p>'
+          +'<p class="tp" style="font-size:12px;color:var(--lt);margin-top:8px">Error: '+errMsg+'</p>'
+          +'<p class="tp" style="font-size:12px;color:var(--lt)">UUID: '+uuid.slice(0,8)+'...</p>'
+          +'<button class="bnx" style="margin-top:16px" onclick="sSf()">Start a new discovery &#x2192;</button></div>';
       }
     }catch(e){
-      sc().innerHTML='<div class="tw"><p class="tp" style="color:var(--tc)">&#x26A0;&#xFE0F; Something went wrong retrieving your results.</p></div>';
-      setTimeout(function(){sSf();},2000);
+      sc().innerHTML='<div class="tw"><p class="tp" style="color:var(--tc)">&#x26A0;&#xFE0F; Connection error: '+e.message+'</p>'
+        +'<button class="bnx" style="margin-top:16px" onclick="sSf()">Start a new discovery &#x2192;</button></div>';
     }
   } else if(goCV==='true'||goCV==='1'){
     // Jump straight to CV Builder — wait for sSf() to fully render first
