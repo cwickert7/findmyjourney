@@ -178,6 +178,12 @@
     /* ── WATERMARK ── */
     .fmj{color:#C4714A;font-weight:500}
 
+    .occ-day-list{display:flex;flex-direction:column;gap:0;margin-top:4px;border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
+    .occ-day-item{display:flex;align-items:flex-start;gap:12px;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;color:rgba(255,255,255,.65);line-height:1.5}
+    .occ-day-item:last-child{border-bottom:none}
+    .occ-day-time{font-size:11px;font-weight:700;color:var(--tcl);white-space:nowrap;min-width:48px;padding-top:1px}
+    .occ-day-dot{width:5px;height:5px;border-radius:50%;background:var(--tcl);flex-shrink:0;margin-top:5px;opacity:.6}
+
     .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:80px;font-weight:700;color:rgba(196,113,74,.04);white-space:nowrap;pointer-events:none;letter-spacing:.2em;text-transform:uppercase;font-family:"DM Sans",sans-serif}
 
     /* ── MOBILE ── */
@@ -395,14 +401,14 @@
     <div class="occ-grid">
       <div class="occ-card">
         <div class="occ-card-label">A day in the life</div>
-        <ul class="day-list">
-          <li>8:30am — Review three client files, prepare for home visit</li>
-          <li>9:30am — Home visit: assess kitchen safety for elderly client post-stroke</li>
-          <li>11:00am — School visit: support Year 4 student with sensory processing</li>
-          <li>1:00pm — Team meeting, case reviews with physio and social worker</li>
-          <li>2:30pm — Outpatient clinic: hand therapy, adaptive equipment assessment</li>
-          <li>4:00pm — Report writing, NDIS documentation, family phone calls</li>
-        </ul>
+        <div class="occ-day-list" style="margin-top:8px">
+          <div class="occ-day-item"><span class="occ-day-time">8:30am</span><span class="occ-day-dot"></span><span>Review three client files, prepare for home visit and school consult</span></div>
+          <div class="occ-day-item"><span class="occ-day-time">9:30am</span><span class="occ-day-dot"></span><span>Home visit: assess kitchen safety for elderly client post-stroke, recommend equipment modifications</span></div>
+          <div class="occ-day-item"><span class="occ-day-time">11:00am</span><span class="occ-day-dot"></span><span>School visit: support Year 4 student with sensory processing, consult with classroom teacher</span></div>
+          <div class="occ-day-item"><span class="occ-day-time">1:00pm</span><span class="occ-day-dot"></span><span>Team meeting: case reviews with physio and social worker, discharge planning</span></div>
+          <div class="occ-day-item"><span class="occ-day-time">2:30pm</span><span class="occ-day-dot"></span><span>Outpatient clinic: hand therapy session, adaptive equipment assessment for new client</span></div>
+          <div class="occ-day-item"><span class="occ-day-time">4:00pm</span><span class="occ-day-dot"></span><span>Report writing, NDIS documentation, return family phone calls before end of day</span></div>
+        </div>
       </div>
       <div class="occ-card">
         <div class="occ-card-label">What OTs actually do</div>
