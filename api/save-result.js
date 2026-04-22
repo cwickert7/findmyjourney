@@ -38,7 +38,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { name, matches, sepTriggered, institutionCode, branch } = req.body;
+    const { name, matches, encouragement, summary, tips, sepTriggered, institutionCode, branch } = req.body;
 
     if (!name || !matches || !Array.isArray(matches)) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -52,12 +52,15 @@ export default async function handler(req, res) {
       uuid,
       shortCode,
       name,
-      matches,          // array of {title, salary, whyYou, outlook, path}
+      matches,          // full job objects with all fields for retrieval
+      encouragement: encouragement || '',
+      summary: summary || '',
+      tips: tips || [],
       sepTriggered: !!sepTriggered,
       institutionCode: institutionCode || null,
       branch: branch || null,
       savedAt,
-      version: 1
+      version: 2
     };
 
     // Store main result by UUID
