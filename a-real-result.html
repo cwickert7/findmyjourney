@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A Real Result — Find My Journey</title>
+  <meta name="description" content="See the depth of a real Find My Journey result. Career matches, occupation deep-dives, personalised pathway steps and a pre-filled CV profile — all from a single conversation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cream:#FAF7F2;--warm:#FEF3EC;--warm2:#F5EDE0;--ch:#2C2422;--tc:#C4714A;--tcd:#A85C38;--tcl:#D98B65;
+      --sand:#E8DFD0;--sand2:#DFD5C4;--mid:#6B6058;--lt:#9A8E84;--green:#3D6B4F;--blue:#4A6CB8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;background:rgba(250,247,242,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--sand);z-index:100;height:66px;display:flex;align-items:center}
+    .nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;width:100%;height:66px}
+    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-links{display:flex;align-items:center;gap:32px}
+    .nav-links a{font-size:14px;color:var(--mid);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--tc)}
+    .nav-links a.active{color:var(--tc);opacity:.5;pointer-events:none}
+    .nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;text-decoration:none;transition:background .2s}
+    .nav-cta:hover{background:var(--tcd)}
+    .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px}
+    .nav-hamburger span{display:block;width:22px;height:2px;background:var(--ch);border-radius:2px;transition:all .25s}
+    .nav-mobile{display:none;position:fixed;top:66px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--sand);padding:20px 24px 24px;z-index:99;flex-direction:column}
+    .nav-mobile.open{display:flex}
+    .nav-mobile a{display:block;font-size:16px;color:var(--mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--sand);transition:color .2s}
+    .nav-mobile a.nav-cta-mob{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px 24px;text-align:center;font-weight:600;margin-top:8px;border-bottom:none}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── PAGE HERO ── */
+    .page-hero{background:var(--ch);padding:130px 48px 80px;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px)}
+    .page-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+    .page-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tcl);margin-bottom:20px}
+    .page-h1{font-family:"Fraunces",serif;font-size:clamp(42px,6vw,72px);font-weight:200;line-height:1.02;color:#fff;margin-bottom:20px;letter-spacing:-.02em}
+    .page-h1 em{color:var(--tcl);font-style:italic}
+    .page-sub{font-size:17px;color:rgba(255,255,255,.55);line-height:1.7;max-width:580px;margin-bottom:32px}
+    .page-cta{display:inline-block;background:var(--tc);color:#fff;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:600;text-decoration:none;transition:background .2s}
+    .page-cta:hover{background:var(--tcd)}
+
+    /* ── SAMPLE BADGE ── */
+    .sample-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,113,74,.15);border:1px solid rgba(196,113,74,.3);border-radius:20px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tcl);margin-bottom:24px}
+
+    /* ── EXPLORER PROFILE CARD ── */
+    .profile-section{background:var(--cream);padding:72px 48px}
+    .profile-inner{max-width:960px;margin:0 auto}
+    .sec-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:12px}
+    .sec-h2{font-family:"Fraunces",serif;font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.08;color:var(--ch);margin-bottom:10px}
+    .sec-h2 em{color:var(--tc);font-style:italic}
+    .sec-lead{font-size:16px;color:var(--mid);line-height:1.7;margin-bottom:40px;max-width:620px}
+
+    .profile-card{background:#fff;border:1.5px solid var(--sand);border-radius:20px;padding:36px;display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start}
+    .profile-avatar{width:200px;height:200px;border-radius:16px;background:linear-gradient(135deg,#EFF7F2,#C8DEC8);display:flex;align-items:center;justify-content:center;font-size:72px;flex-shrink:0}
+    .profile-name{font-family:"Fraunces",serif;font-size:32px;font-weight:300;color:var(--ch);margin-bottom:4px}
+    .profile-detail{font-size:14px;color:var(--lt);margin-bottom:24px}
+    .profile-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+    .profile-tag{background:var(--warm);border:1px solid var(--sand);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--mid)}
+    .profile-tag.highlight{background:rgba(196,113,74,.1);border-color:rgba(196,113,74,.3);color:var(--tc)}
+    .profile-summary{font-size:15px;color:var(--mid);line-height:1.75;border-left:3px solid var(--tc);padding-left:18px;font-style:italic}
+    .profile-values{margin-top:24px}
+    .profile-values-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lt);margin-bottom:10px}
+    .values-row{display:flex;gap:8px;flex-wrap:wrap}
+    .value-chip{background:var(--cream);border:1.5px solid var(--sand);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--ch);display:flex;align-items:center;gap:6px}
+    .value-chip.top{background:rgba(196,113,74,.08);border-color:rgba(196,113,74,.3);color:var(--tc)}
+    .value-chip-rank{font-size:10px;font-weight:700;opacity:.6}
+
+    /* ── RESULTS SECTION ── */
+    .results-section{background:var(--warm2);padding:72px 48px}
+    .results-inner{max-width:960px;margin:0 auto}
+
+    .match-card{background:#fff;border:1.5px solid var(--sand);border-radius:20px;padding:32px;margin-bottom:20px;position:relative}
+    .match-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:20px 0 0 20px}
+    .match-card.now::before{background:var(--green)}
+    .match-card.career::before{background:var(--tc)}
+    .match-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
+    .match-title{font-family:"Fraunces",serif;font-size:24px;font-weight:400;color:var(--ch)}
+    .match-badge{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
+    .match-badge.now{background:#EFF7F2;color:var(--green)}
+    .match-badge.career{background:var(--warm);color:var(--tc)}
+    .match-pips{display:flex;gap:4px;margin-bottom:12px}
+    .pip{width:8px;height:8px;border-radius:50%}
+    .pip.on.now{background:var(--green)}
+    .pip.on.career{background:var(--tc)}
+    .pip.off{background:var(--sand)}
+    .match-desc{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:16px}
+    .match-why{background:var(--warm);border-left:3px solid var(--tc);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:var(--mid);line-height:1.65;font-style:italic;margin-bottom:16px}
+    .match-why strong{color:var(--ch);font-style:normal}
+    .salary-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--sand);border:1px solid var(--sand);border-radius:10px;overflow:hidden;margin-bottom:16px}
+    .salary-cell{background:#fff;padding:12px 16px}
+    .salary-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);margin-bottom:4px}
+    .salary-val{font-size:15px;font-weight:600;color:var(--ch)}
+    .salary-outlook{font-size:14px;font-weight:600;color:var(--green)}
+    .pathway-steps{display:flex;flex-direction:column;gap:8px}
+    .pathway-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lt);margin-bottom:8px}
+    .pathway-step{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--mid);line-height:1.5}
+    .step-num{width:22px;height:22px;border-radius:50%;background:var(--ch);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .step-num.green{background:var(--green)}
+
+    /* ── OCCUPATION EXPLORER ── */
+    .occ-section{background:var(--ch);padding:72px 48px}
+    .occ-inner{max-width:960px;margin:0 auto}
+    .occ-header{margin-bottom:32px}
+    .occ-title-row{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+    .occ-icon{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+    .occ-name{font-family:"Fraunces",serif;font-size:28px;font-weight:300;color:#fff}
+    .occ-tagline{font-size:15px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:28px}
+    .occ-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .occ-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px}
+    .occ-card-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:10px}
+    .occ-card-content{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7}
+    .occ-card-content strong{color:#fff;font-weight:500}
+    .occ-card.full{grid-column:1/-1}
+    .occ-pathway-steps{display:flex;flex-direction:column;gap:10px}
+    .occ-step{display:flex;gap:14px;align-items:flex-start}
+    .occ-step-num{width:24px;height:24px;border-radius:50%;background:var(--tc);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .occ-step-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6}
+    .occ-step-text strong{color:#fff}
+    .day-list{list-style:none}
+    .day-list li{font-size:13px;color:rgba(255,255,255,.55);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+    .day-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--tcl);flex-shrink:0}
+    .salary-band{display:inline-block;background:rgba(196,113,74,.15);border:1px solid rgba(196,113,74,.3);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--tcl);margin-top:6px}
+
+    /* ── CV PREVIEW ── */
+    .cv-section{background:var(--cream);padding:72px 48px}
+    .cv-inner{max-width:960px;margin:0 auto}
+    .cv-preview{background:#fff;border:1.5px solid var(--sand);border-radius:20px;padding:36px;position:relative}
+    .cv-prefilled-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(196,113,74,.08);border:1px solid rgba(196,113,74,.2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--tc);margin-bottom:20px}
+    .cv-name{font-family:"Fraunces",serif;font-size:36px;font-weight:300;color:var(--ch);margin-bottom:4px}
+    .cv-role{font-size:14px;color:var(--mid);margin-bottom:20px}
+    .cv-divider{height:1px;background:var(--sand);margin-bottom:20px}
+    .cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    .cv-section-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lt);margin-bottom:10px}
+    .cv-body{font-size:13px;color:var(--mid);line-height:1.75}
+    .cv-skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+    .cv-skill{background:var(--warm);border:1px solid var(--sand);border-radius:6px;padding:4px 12px;font-size:12px;color:var(--mid)}
+    .cv-skill.highlight{background:rgba(196,113,74,.08);border-color:rgba(196,113,74,.25);color:var(--tc);font-weight:500}
+    .cv-item{margin-bottom:16px}
+    .cv-item-title{font-size:14px;font-weight:600;color:var(--ch);margin-bottom:2px}
+    .cv-item-detail{font-size:12px;color:var(--lt);margin-bottom:6px}
+    .cv-item-dot{font-size:13px;color:var(--mid);padding-left:12px;position:relative;margin-bottom:3px;line-height:1.5}
+    .cv-item-dot::before{content:'·';position:absolute;left:0;color:var(--tc)}
+
+    /* ── CTA STRIP ── */
+    .cta-strip{background:var(--ch);padding:88px 48px;text-align:center;position:relative;overflow:hidden}
+    .cta-strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px)}
+    .cta-strip-inner{max-width:680px;margin:0 auto;position:relative;z-index:1}
+    .cta-strip-h{font-family:"Fraunces",serif;font-size:clamp(36px,5vw,60px);font-weight:200;color:#fff;line-height:1.04;margin-bottom:16px;letter-spacing:-.02em}
+    .cta-strip-h em{color:var(--tcl);font-style:italic}
+    .cta-strip-sub{font-size:16px;color:rgba(255,255,255,.5);margin-bottom:32px;line-height:1.6}
+    .cta-strip-btn{display:inline-block;background:var(--tc);color:#fff;border-radius:50px;padding:17px 40px;font-size:16px;font-weight:600;text-decoration:none;transition:background .2s}
+    .cta-strip-btn:hover{background:var(--tcd)}
+    .cta-note{font-size:12px;color:rgba(255,255,255,.25);margin-top:14px}
+
+    /* ── FOOTER ── */
+    footer{background:var(--ch);padding:52px 48px 28px}
+    .footer-inner{max-width:1120px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:36px}
+    .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .footer-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;max-width:260px}
+    .footer-col-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px}
+    .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:9px;transition:color .2s}
+    .footer-col a:hover{color:#fff}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,.25);line-height:1.6;max-width:680px}
+    .footer-legal{display:flex;gap:18px;flex-shrink:0}
+    .footer-legal a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+    .footer-legal a:hover{color:rgba(255,255,255,.7)}
+
+    /* ── WATERMARK ── */
+    .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:80px;font-weight:700;color:rgba(196,113,74,.04);white-space:nowrap;pointer-events:none;letter-spacing:.2em;text-transform:uppercase;font-family:"DM Sans",sans-serif}
+
+    /* ── MOBILE ── */
+    @media(max-width:768px){
+      .nav-inner{padding:0 20px}
+      .nav-links{display:none}
+      .nav-hamburger{display:flex}
+      .page-hero{padding:100px 20px 56px}
+      .profile-section,.results-section,.occ-section,.cv-section,.cta-strip{padding:52px 20px}
+      .profile-card{grid-template-columns:1fr}
+      .profile-avatar{width:80px;height:80px;font-size:36px}
+      .occ-grid{grid-template-columns:1fr}
+      .occ-card.full{grid-column:1}
+      .cv-grid{grid-template-columns:1fr}
+      .salary-row{grid-template-columns:1fr}
+      .salary-cell{border-bottom:1px solid var(--sand)}
+      .footer-top{grid-template-columns:1fr;gap:28px}
+      .footer-bottom{flex-direction:column;gap:10px}
+      .match-header{flex-direction:column;gap:10px}
+    }
+    @media(max-width:480px){
+      .page-h1{font-size:clamp(34px,10vw,48px)}
+      .profile-card{padding:20px}
+      .match-card{padding:20px}
+      .occ-card{padding:16px}
+      .cv-preview{padding:20px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="/marketing.html" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
+        <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
+        <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/real-explorers.html">Real Explorers</a>
+      <a href="/why-find-my-journey.html">Why Find My Journey</a>
+      <a href="/a-real-result.html" class="active">A Real Result</a>
+      <a href="/cv-builder.html">CV Builder</a>
+      <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+    </div>
+    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
+  <a href="/real-explorers.html" onclick="closeNav()">Real Explorers</a>
+  <a href="/why-find-my-journey.html" onclick="closeNav()">Why Find My Journey</a>
+  <a href="/a-real-result.html" onclick="closeNav()" class="active">A Real Result</a>
+  <a href="/cv-builder.html" onclick="closeNav()">CV Builder</a>
+  <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="sample-badge">&#x1F9ED; Sample Explorer result</div>
+    <h1 class="page-h1">This is what<br><em>your result looks like.</em></h1>
+    <p class="page-sub">A 20-minute conversation about who you are generates a personalised career report — specific, honest, and genuinely useful. Here's a real one, for a real Explorer.</p>
+    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="page-cta">Get your own result &#x2192;</a>
+  </div>
+</section>
+
+<!-- ── EXPLORER PROFILE ── -->
+<section class="profile-section">
+  <div class="profile-inner">
+    <div class="sec-eyebrow">The Explorer</div>
+    <h2 class="sec-h2">Meet Liam.<br><em>Year 12, Melbourne.</em></h2>
+    <p class="sec-lead">Liam came in not knowing what he wanted — only that he was good with people, liked being active outdoors, and didn't see himself behind a desk. Find My Journey built a picture from what he told us.</p>
+
+    <div class="profile-card">
+      <div>
+        <div class="profile-avatar">🌿</div>
+      </div>
+      <div>
+        <div class="profile-name">Liam, 17</div>
+        <div class="profile-detail">Year 12 · Melbourne · Completing VCE</div>
+        <div class="profile-tags">
+          <span class="profile-tag highlight">Caring &amp; calm</span>
+          <span class="profile-tag highlight">People skills</span>
+          <span class="profile-tag">Outdoors</span>
+          <span class="profile-tag">Hands-on</span>
+          <span class="profile-tag">Helping others</span>
+          <span class="profile-tag">Nature</span>
+        </div>
+        <div class="profile-summary">"What a close friend would say: he's the one people go to when things get hard. Patient, dependable, always there — and better at practical things than he gives himself credit for."</div>
+        <div class="profile-values">
+          <div class="profile-values-label">What matters most to Liam — ranked</div>
+          <div class="values-row">
+            <div class="value-chip top">&#x1F30D; Meaningful work <span class="value-chip-rank">#1</span></div>
+            <div class="value-chip top">&#x1F91D; Great people <span class="value-chip-rank">#2</span></div>
+            <div class="value-chip">&#x1F3E0; Job security <span class="value-chip-rank">#3</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAREER MATCHES ── -->
+<section class="results-section">
+  <div class="results-inner">
+    <div class="sec-eyebrow">Career matches</div>
+    <h2 class="sec-h2">Four matches.<br><em>Built around who he is.</em></h2>
+    <p class="sec-lead">Two roles he can pursue right now, and two longer-term career paths. Each one matched to his specific profile — not a generic list.</p>
+
+    <!-- NOW JOB 1 -->
+    <div class="match-card now">
+      <div class="match-header">
+        <div>
+          <div class="match-pips">
+            <div class="pip on now"></div><div class="pip on now"></div><div class="pip on now"></div><div class="pip on now"></div><div class="pip on now"></div>
+          </div>
+          <div class="match-title">Youth Support Worker</div>
+        </div>
+        <span class="match-badge now">&#x1F4B5; Start now</span>
+      </div>
+      <p class="match-desc">Youth support workers provide practical and emotional support to young people experiencing difficulty — in schools, community centres, and residential care settings. Entry-level roles typically involve assisting more senior workers and building relationships with clients over time.</p>
+      <div class="match-why"><strong>Why Liam:</strong> "You described yourself as someone people come to when things get hard. That's not a personality quirk — it's a professional asset in this field. Your calm under pressure and genuine care for others are exactly what clients and teams in youth support need from day one."</div>
+      <div class="salary-row">
+        <div class="salary-cell"><div class="salary-label">Starting salary</div><div class="salary-val">$52,000 – $60,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Experienced</div><div class="salary-val">$68,000 – $82,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Outlook</div><div class="salary-outlook">↗ Growing strongly</div></div>
+      </div>
+      <div class="pathway-label">How to get there</div>
+      <div class="pathway-steps">
+        <div class="pathway-step"><div class="step-num green">1</div><div>Complete your Cert III in Individual Support or Community Services — most RTOs have intakes within 6 weeks</div></div>
+        <div class="pathway-step"><div class="step-num green">2</div><div>Apply for a support worker role at organisations like Anglicare, Uniting, or local council youth services</div></div>
+        <div class="pathway-step"><div class="step-num green">3</div><div>After 12–18 months, explore your Cert IV or Diploma to move into case coordination</div></div>
+        <div class="pathway-step"><div class="step-num green">4</div><div>3–5 years: senior support worker or team leader, $70k–$85k</div></div>
+      </div>
+    </div>
+
+    <!-- NOW JOB 2 -->
+    <div class="match-card now">
+      <div class="match-header">
+        <div>
+          <div class="match-pips">
+            <div class="pip on now"></div><div class="pip on now"></div><div class="pip on now"></div><div class="pip on now"></div><div class="pip off"></div>
+          </div>
+          <div class="match-title">Conservation and Land Management Worker</div>
+        </div>
+        <span class="match-badge now">&#x1F4B5; Start now</span>
+      </div>
+      <p class="match-desc">Conservation workers maintain and restore natural environments — parks, reserves, coastal areas and waterways. Roles include hands-on physical work, wildlife monitoring, community education and working alongside Indigenous land management groups.</p>
+      <div class="match-why"><strong>Why Liam:</strong> "You chose outdoors and nature environments consistently — but also helping others and building things. Conservation work delivers all three: you're physically active, contributing to something meaningful, and often working in small close-knit teams. The sector is growing in Victoria with significant government investment in land restoration programs."</div>
+      <div class="salary-row">
+        <div class="salary-cell"><div class="salary-label">Starting salary</div><div class="salary-val">$50,000 – $58,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Experienced</div><div class="salary-val">$65,000 – $78,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Outlook</div><div class="salary-outlook">↗ Growing</div></div>
+      </div>
+      <div class="pathway-label">How to get there</div>
+      <div class="pathway-steps">
+        <div class="pathway-step"><div class="step-num green">1</div><div>Certificate II in Conservation and Land Management — Parks Victoria often co-deliver these with RTOs</div></div>
+        <div class="pathway-step"><div class="step-num green">2</div><div>Volunteer or apply for seasonal roles with Parks Victoria, Trust for Nature, or Landcare groups this summer</div></div>
+        <div class="pathway-step"><div class="step-num green">3</div><div>Cert III or IV unlocks ranger and senior field officer pathways</div></div>
+        <div class="pathway-step"><div class="step-num green">4</div><div>3–5 years: land management officer or environmental educator, $72k–$85k</div></div>
+      </div>
+    </div>
+
+    <!-- CAREER JOB 1 -->
+    <div class="match-card career">
+      <div class="match-header">
+        <div>
+          <div class="match-pips">
+            <div class="pip on career"></div><div class="pip on career"></div><div class="pip on career"></div><div class="pip on career"></div><div class="pip on career"></div>
+          </div>
+          <div class="match-title">Occupational Therapist</div>
+        </div>
+        <span class="match-badge career">&#x1F680; Career path</span>
+      </div>
+      <p class="match-desc">Occupational therapists help people of all ages overcome barriers to daily living — after illness, injury, disability or mental health challenges. They work in hospitals, schools, community health, disability services and private practice.</p>
+      <div class="match-why"><strong>Why Liam:</strong> "Your combination of genuine care for people, calm temperament, practical problem-solving orientation and strong preference for meaningful work is a near-perfect match for OT. This is a field that specifically values people who are steady under pressure and good at building trust. The degree takes four years but the career is exceptionally stable, varied, and growing."</div>
+      <div class="salary-row">
+        <div class="salary-cell"><div class="salary-label">Starting salary</div><div class="salary-val">$65,000 – $75,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Experienced</div><div class="salary-val">$85,000 – $110,000</div></div>
+        <div class="salary-cell"><div class="salary-label">Outlook</div><div class="salary-outlook">↗ Growing strongly</div></div>
+      </div>
+      <div class="pathway-label">How to get there</div>
+      <div class="pathway-steps">
+        <div class="pathway-step"><div class="step-num">1</div><div>ATAR-based entry to Bachelor of Occupational Therapy at Monash, La Trobe, Deakin or ACU — or graduate entry after an allied health bachelor</div></div>
+        <div class="pathway-step"><div class="step-num">2</div><div>Year 2–3 clinical placements in hospitals, community health and schools</div></div>
+        <div class="pathway-step"><div class="step-num">3</div><div>Graduate OT role — hospital, NDIS provider or school-based</div></div>
+        <div class="pathway-step"><div class="step-num">4</div><div>5–8 years: specialist OT or private practice, $95k–$130k+</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OCCUPATION EXPLORER ── -->
+<section class="occ-section">
+  <div class="occ-inner">
+    <div class="sec-eyebrow" style="color:var(--tcl)">Occupation Explorer</div>
+    <h2 class="sec-h2" style="color:#fff;font-family:'Fraunces',serif;font-size:clamp(28px,4vw,44px);font-weight:300;margin-bottom:8px">Liam tapped <em style="color:var(--tcl)">Occupational Therapist</em><br>to learn more.</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,.45);margin-bottom:36px;line-height:1.6">Every job card in Find My Journey has a deep-dive mode. Here's what Liam received when he explored OT further.</p>
+
+    <div class="occ-title-row">
+      <div class="occ-icon">&#x1FA7A;</div>
+      <div>
+        <div class="occ-name">Occupational Therapist</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:2px">Allied Health · AHPRA registered · 4-year degree</div>
+      </div>
+    </div>
+    <p class="occ-tagline">Occupational therapists work at the intersection of health, function and everyday life. Their job is to understand what matters to a person and help them do it — after illness, injury, disability or mental health challenges. No two days, and no two clients, are the same.</p>
+
+    <div class="occ-grid">
+      <div class="occ-card">
+        <div class="occ-card-label">A day in the life</div>
+        <ul class="day-list">
+          <li>8:30am — Review three client files, prepare for home visit</li>
+          <li>9:30am — Home visit: assess kitchen safety for elderly client post-stroke</li>
+          <li>11:00am — School visit: support Year 4 student with sensory processing</li>
+          <li>1:00pm — Team meeting, case reviews with physio and social worker</li>
+          <li>2:30pm — Outpatient clinic: hand therapy, adaptive equipment assessment</li>
+          <li>4:00pm — Report writing, NDIS documentation, family phone calls</li>
+        </ul>
+      </div>
+      <div class="occ-card">
+        <div class="occ-card-label">What OTs actually do</div>
+        <div class="occ-card-content">
+          OTs don't just work with elderly or disabled people — though that's a big part. They also work with <strong>children with developmental delays</strong>, people recovering from <strong>mental health episodes</strong>, <strong>workers returning after injury</strong>, and anyone whose ability to participate in daily life has been disrupted.<br><br>
+          The job is part clinical, part problem-solving, part relationship-building. You need to understand the person's life — their home, their work, what they love — to design meaningful interventions.
+        </div>
+      </div>
+      <div class="occ-card">
+        <div class="occ-card-label">Salary &amp; conditions</div>
+        <div class="occ-card-content">
+          <div class="salary-band">$65,000 – $75,000 entry</div><br><br>
+          <strong>Public sector:</strong> EBA-protected, predictable hours, strong super, good leave<br><br>
+          <strong>Private practice:</strong> Higher earning potential, $90k–$130k for experienced practitioners<br><br>
+          <strong>NDIS:</strong> High demand, flexibility, some OTs bill $180–$220/hr as sole traders<br><br>
+          Workforce shortage means <strong>strong negotiating position</strong> for graduates in 2025–2028.
+        </div>
+      </div>
+      <div class="occ-card">
+        <div class="occ-card-label">Why this suits Liam specifically</div>
+        <div class="occ-card-content">
+          Liam's top value is <strong>meaningful work</strong> — OTs consistently rate among the highest of all health professions for job meaning and satisfaction.<br><br>
+          His calm, patient temperament is a direct clinical asset — clients in distress respond to OTs who are steady and unhurried.<br><br>
+          His preference for <strong>working one-on-one</strong> rather than in groups aligns perfectly with how most OT practice works.<br><br>
+          His discomfort with <strong>high-criticism environments</strong> is protected in OT — the culture is collaborative, not competitive.
+        </div>
+      </div>
+      <div class="occ-card full">
+        <div class="occ-card-label">How to get there — Liam's specific pathway</div>
+        <div class="occ-pathway-steps">
+          <div class="occ-step"><div class="occ-step-num">1</div><div class="occ-step-text"><strong>Year 12 (now):</strong> Focus on Biology and Psychology for ATAR entry. Monash OT requires approximately 75–80 ATAR. La Trobe and Deakin have alternative pathways for lower ATARs.</div></div>
+          <div class="occ-step"><div class="occ-step-num">2</div><div class="occ-step-text"><strong>This year:</strong> Volunteer or do work experience at an aged care facility, disability service or children's therapy clinic. Direct client contact strengthens any application and confirms the path feels right.</div></div>
+          <div class="occ-step"><div class="occ-step-num">3</div><div class="occ-step-text"><strong>Year 1–2 of degree:</strong> Strong grounding in anatomy, health science and theory. Clinical placements begin in Year 2 — this is where most students know they've made the right choice.</div></div>
+          <div class="occ-step"><div class="occ-step-num">4</div><div class="occ-step-text"><strong>Year 3–4:</strong> Specialist placements — Liam should pursue paediatric and community health placements given his profile. These lead directly to graduate offers.</div></div>
+          <div class="occ-step"><div class="occ-step-num">5</div><div class="occ-step-text"><strong>Graduate year:</strong> Most new OTs start in hospital or community health at $65k–$72k. After 2 years, private practice and NDIS become viable — average income rises sharply.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CV PREVIEW ── -->
+<section class="cv-section">
+  <div class="cv-inner">
+    <div class="sec-eyebrow">CV Builder output</div>
+    <h2 class="sec-h2">His CV profile,<br><em>pre-filled from the assessment.</em></h2>
+    <p class="sec-lead">Find My Journey translates what Liam told us into professional CV language — skills, profile summary, and strengths — so he starts with something real, not a blank page.</p>
+
+    <div class="cv-preview">
+      <div style="position:absolute;inset:0;overflow:hidden;border-radius:20px;pointer-events:none">
+        <div class="watermark">Sample</div>
+      </div>
+      <div class="cv-prefilled-badge">&#x2728; Pre-filled from your Find My Journey assessment</div>
+      <div class="cv-name">Liam W.</div>
+      <div class="cv-role">Year 12 Student &nbsp;·&nbsp; Melbourne, VIC &nbsp;·&nbsp; Open to youth support, conservation and community roles</div>
+      <div class="cv-divider"></div>
+      <div class="cv-grid">
+        <div>
+          <div class="cv-section-label">Profile</div>
+          <div class="cv-body">A calm, dependable person who is at my best when I'm genuinely helping someone. I'm drawn to hands-on environments where I can build real relationships over time — whether that's working with people in a support role or contributing to something meaningful outdoors. I work well in small teams where people look out for each other, and I bring patience and reliability to everything I take on.</div>
+
+          <div style="margin-top:24px">
+            <div class="cv-section-label">Key strengths</div>
+            <div class="cv-skills">
+              <span class="cv-skill highlight">Active listening</span>
+              <span class="cv-skill highlight">Empathy</span>
+              <span class="cv-skill highlight">Reliability</span>
+              <span class="cv-skill highlight">Patient under pressure</span>
+              <span class="cv-skill">Teamwork</span>
+              <span class="cv-skill">Communication</span>
+              <span class="cv-skill">Physical coordination</span>
+              <span class="cv-skill">Outdoors/nature</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="cv-section-label">Education</div>
+          <div class="cv-item">
+            <div class="cv-item-title">Victorian Certificate of Education (VCE)</div>
+            <div class="cv-item-detail">Expected completion: November 2025</div>
+            <div class="cv-item-dot">Health and Human Development, Physical Education, English, Biology</div>
+          </div>
+
+          <div style="margin-top:20px">
+            <div class="cv-section-label">Experience &amp; activities</div>
+            <div class="cv-item">
+              <div class="cv-item-title">School Sports Leader</div>
+              <div class="cv-item-detail">Frankston High School · 2024–2025</div>
+              <div class="cv-item-dot">Coordinated junior sport sessions and supported students with physical challenges</div>
+              <div class="cv-item-dot">Liaised between students and PE staff as trusted peer contact</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-item-title">Volunteer — Local Aged Care Visiting Program</div>
+              <div class="cv-item-detail">Frankston Community Health · 2024</div>
+              <div class="cv-item-dot">Weekly visits to residents, assisting with activities and conversation</div>
+              <div class="cv-item-dot">Supported staff during structured group activities</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-strip">
+  <div class="cta-strip-inner">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tcl);margin-bottom:16px">You're worth finding</p>
+    <h2 class="cta-strip-h">Your result is<br><em>waiting for you.</em></h2>
+    <p class="cta-strip-sub">Twenty minutes. No tests. No right answers. Just an honest look at who you are and where you could go.</p>
+    <a href="https://career-compass-rho-ten.vercel.app" target="_blank" class="cta-strip-btn">Begin your journey &#x2192;</a>
+    <p class="cta-note">Free &nbsp;·&nbsp; No account needed &nbsp;·&nbsp; Results emailed to you</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
+            <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px">find my</span>
+            <span style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
+          </div>
+        </div>
+        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Product</div>
+        <a href="https://career-compass-rho-ten.vercel.app" target="_blank">Take the assessment</a>
+        <a href="/cv-builder.html">CV Builder</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/real-explorers.html">Real Explorers</a>
+        <a href="/why-find-my-journey.html">Why Find My Journey</a>
+        <a href="/a-real-result.html">A Real Result</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Organisations</div>
+        <a href="/schools.html">Schools</a>
+        <a href="/tafe.html">TAFE &amp; RTOs</a>
+        <a href="/des.html">DES providers</a>
+        <a href="/contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Legal</div>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/accessibility.html">Accessibility</a>
+        <a href="/impact.html">Our Impact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&#xA9; 2026 Find My Journey &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  if(m){m.classList.toggle('open');}
+  if(h){h.classList.toggle('open');}
+}
+function closeNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  if(m)m.classList.remove('open');
+  if(h)h.classList.remove('open');
+}
+document.addEventListener('click',function(e){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target)){
+    closeNav();
+  }
+});
+</script>
+</body>
+</html>
