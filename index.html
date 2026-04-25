@@ -2112,18 +2112,18 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
     '</div>';
 h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
   h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Find My Journey results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
-  h+='<div class="email-cap" id="emailCapPanel">'+
-    '<div class="email-cap-icon">&#x1F4EC;</div>'+
-    '<div class="email-cap-title">Save your results</div>'+
-    '<div class="email-cap-sub">We\'ll send you a copy of your career matches as a PDF — so you can come back to them, share with a parent or teacher, or use them in a careers conversation.</div>'+
-    '<div class="email-cap-row">'+
-    '<input class="email-cap-input" type="email" id="emailCapInput" placeholder="Your email address">'+
-    '<button class="email-cap-btn" id="emailCapBtn" onclick="submitEmail()">Send my results \u2192</button>'+'</div>'+'<div style="margin-top:10px">'+'<button class="email-cap-btn" style="background:var(--ch);width:100%;text-align:center" onclick="saveResults()">&#x1F517; Keep my results</button>'+
-    '</div>'+
-    '<button class="email-cap-skip" onclick="skipEmail()">No thanks \u2014 I\'ll keep scrolling</button>'+
-    '</div>';
   sc().innerHTML=h;
   pulseExpandBtns();
+  // Auto-save result and populate personal link immediately on results render
+  if(!_savedUUID && typeof persistResult === 'function'){
+    persistResult().then(function(saved){
+      if(saved && saved.uuid){
+        showSaveLink(saved.uuid);
+      }
+    }).catch(function(){});
+  } else if(_savedUUID){
+    showSaveLink(_savedUUID);
+  }
 }
 
 function pulseExpandBtns(){
@@ -2199,7 +2199,8 @@ var CV_STEPS_JUNIOR=[
   {id:'cv_name',lbl:'Your name',q:'What’s your full name?',type:'text',pl:'e.g. Jordan Smith'},
   {id:'cv_contact',lbl:'Contact details',q:'What’s your phone number and email address?',type:'text',pl:'e.g. 0412 345 678 — jordan@email.com'},
   {id:'cv_location',lbl:'Where you’re based',q:'What suburb and state are you in?',type:'text',pl:'e.g. Frankston, VIC'},
-  {id:'cv_study',lbl:'Your education',q:'Where are you studying or where did you study? What year are you in or when did you finish?',type:'textarea',pl:'e.g. Frankston High School, currently Year 11'},
+  {id:'cv_study',lbl:'Where you study',q:'Where are you studying or where did you study?',type:'text',pl:'e.g. Frankston High School, or Monash University'},
+  {id:'cv_study_year',lbl:'Your year or year finished',q:'What year are you in, or when did you finish?',type:'text',pl:'e.g. Currently Year 11, or Finished Year 12 in 2024'},
   {id:'cv_life_skills',lbl:'Skills from life',q:'Have you ever helped someone regularly, looked after siblings or family, played sport, volunteered, done odd jobs, managed social media, or organised anything? Tell us in your own words — nothing is too small.',type:'textarea',pl:'e.g. I help my mum with her cleaning business on Saturdays, and I coach the under-10s soccer team on weekends'},
    {id:'cv_work',lbl:'Any work or volunteer experience',q:'Have you had any paid work, volunteer work, or work experience placements?',type:'jobs',optional:true},
   {id:'cv_certs',lbl:'Licences &amp; certifications',q:'Do you have any licences or certificates? Even informal ones count.',type:'textarea',pl:'e.g. RSA, driver\'s licence, first aid certificate, barista training',optional:true},
@@ -3424,18 +3425,18 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
     '</div>';
 h+='<button class="brs" onclick="rst()">&#x21BA; Start again</button>';
   h+='<div class="leg"><p class="lp">&#x26A0; <strong>For guidance only.</strong> Find My Journey results are AI-generated suggestions, not a substitute for professional career counselling.</p></div>';
-  h+='<div class="email-cap" id="emailCapPanel">'+
-    '<div class="email-cap-icon">&#x1F4EC;</div>'+
-    '<div class="email-cap-title">Save your results</div>'+
-    '<div class="email-cap-sub">We\'ll send you a copy of your career matches as a PDF — so you can come back to them, share with a parent or teacher, or use them in a careers conversation.</div>'+
-    '<div class="email-cap-row">'+
-    '<input class="email-cap-input" type="email" id="emailCapInput" placeholder="Your email address">'+
-    '<button class="email-cap-btn" id="emailCapBtn" onclick="submitEmail()">Send my results \u2192</button>'+'</div>'+'<div style="margin-top:10px">'+'<button class="email-cap-btn" style="background:var(--ch);width:100%;text-align:center" onclick="saveResults()">&#x1F517; Keep my results</button>'+
-    '</div>'+
-    '<button class="email-cap-skip" onclick="skipEmail()">No thanks \u2014 I\'ll keep scrolling</button>'+
-    '</div>';
   sc().innerHTML=h;
   pulseExpandBtns();
+  // Auto-save result and populate personal link immediately on results render
+  if(!_savedUUID && typeof persistResult === 'function'){
+    persistResult().then(function(saved){
+      if(saved && saved.uuid){
+        showSaveLink(saved.uuid);
+      }
+    }).catch(function(){});
+  } else if(_savedUUID){
+    showSaveLink(_savedUUID);
+  }
 }
 
 function pulseExpandBtns(){
@@ -3511,7 +3512,8 @@ var CV_STEPS_JUNIOR=[
   {id:'cv_name',lbl:'Your name',q:'What’s your full name?',type:'text',pl:'e.g. Jordan Smith'},
   {id:'cv_contact',lbl:'Contact details',q:'What’s your phone number and email address?',type:'text',pl:'e.g. 0412 345 678 — jordan@email.com'},
   {id:'cv_location',lbl:'Where you’re based',q:'What suburb and state are you in?',type:'text',pl:'e.g. Frankston, VIC'},
-  {id:'cv_study',lbl:'Your education',q:'Where are you studying or where did you study? What year are you in or when did you finish?',type:'textarea',pl:'e.g. Frankston High School, currently Year 11'},
+  {id:'cv_study',lbl:'Where you study',q:'Where are you studying or where did you study?',type:'text',pl:'e.g. Frankston High School, or Monash University'},
+  {id:'cv_study_year',lbl:'Your year or year finished',q:'What year are you in, or when did you finish?',type:'text',pl:'e.g. Currently Year 11, or Finished Year 12 in 2024'},
   {id:'cv_life_skills',lbl:'Skills from life',q:'Have you ever helped someone regularly, looked after siblings or family, played sport, volunteered, done odd jobs, managed social media, or organised anything? Tell us in your own words — nothing is too small.',type:'textarea',pl:'e.g. I help my mum with her cleaning business on Saturdays, and I coach the under-10s soccer team on weekends'},
    {id:'cv_work',lbl:'Any work or volunteer experience',q:'Have you had any paid work, volunteer work, or work experience placements?',type:'jobs',optional:true},
   {id:'cv_certs',lbl:'Licences &amp; certifications',q:'Do you have any licences or certificates? Even informal ones count.',type:'textarea',pl:'e.g. RSA, driver\'s licence, first aid certificate, barista training',optional:true},
@@ -4164,22 +4166,8 @@ function cvBack(){
 }
 
 function sCVJD(){
-  PH='cv_jd';
-  var steps=getCVSteps();
-  sp(90,'CV Builder',(steps.length+1)+' of '+(steps.length+1));
-  var h='<div class="ptag">&#x1F4C4; CV Builder</div>';
-  h+='<p class="qt">One last thing — do you have a specific job in mind?</p>';
-  h+='<p class="qh">Paste the job description below and we\'ll tailor your CV to it. Or skip this and we\'ll keep it general.</p>';
-  h+='<div class="cv-jd-wrap">';
-  h+='<div class="cv-jd-lbl">Job description (optional)</div>';
-  h+='<div class="cv-jd-sub">Copy and paste the full job ad here — the more detail the better.</div>';
-  h+='<textarea class="cv-ta" id="CVJD" placeholder="Paste job description here…" style="min-height:120px" oninput="CV.jd=this.value">'+CV.jd+'</textarea>';
-  h+='</div>';
-  h+='<div class="br"><button class="bbk" onclick="cvBack()">← Back</button>';
-  h+='<button class="bbk" onclick="genCV()" style="color:var(--lt)">Skip →</button>';
-  h+='<button class="bnx" onclick="genCV()">Build my CV →</button></div>';
-  sc().innerHTML=h;
-  scrollUp();
+  // JD is now captured at the start — go straight to generation
+  genCV();
 }
 
 function genCV(){
