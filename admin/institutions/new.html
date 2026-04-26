@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Add Institution — FMJ Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-height:100vh;display:flex}
+.sidebar{width:200px;background:#2C2422;flex-shrink:0;display:flex;flex-direction:column}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand-name{font-family:'Fraunces',serif;font-size:16px;font-weight:300;color:#fff}
+.sb-brand-role{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.sb-section{font-size:9px;color:rgba(255,255,255,.3);padding:16px 18px 5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-item{display:block;padding:8px 18px;font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .15s;border-right:2px solid transparent}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.active{color:#fff;background:rgba(196,113,74,.12);border-right-color:#C4714A}
+.sb-footer{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{font-size:11px;color:rgba(255,255,255,.4);line-height:1.5}
+.sb-signout{font-size:11px;color:rgba(196,113,74,.7);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-top:4px}
+.main{flex:1;overflow:auto}
+.topbar{background:#fff;border-bottom:1px solid #E8DFD0;padding:14px 32px;display:flex;align-items:center;gap:12px}
+.topbar a{font-size:12px;color:#9A8E84;text-decoration:none}
+.topbar a:hover{color:#C4714A}
+.topbar .sep{color:#E8DFD0}
+.topbar h1{font-size:15px;font-weight:500;color:#2C2422}
+.content{max-width:820px;margin:32px auto;padding:0 32px}
+.form-card{background:#fff;border:1px solid #E8DFD0;border-radius:16px;padding:28px;margin-bottom:20px}
+.form-card h2{font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:#2C2422;margin-bottom:4px}
+.form-card .card-desc{font-size:13px;color:#9A8E84;margin-bottom:24px;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-grid.full{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.span2{grid-column:1/-1}
+.field label{font-size:12px;font-weight:500;color:#6B6058}
+.field label .req{color:#C4714A;margin-left:2px}
+.field label .hint{font-size:11px;font-weight:400;color:#9A8E84;margin-left:4px}
+.field input,.field select,.field textarea{border:1px solid #E8DFD0;border-radius:8px;padding:9px 12px;font-size:13px;color:#2C2422;font-family:'DM Sans',sans-serif;background:#FAF7F2;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#C4714A;background:#fff}
+.field textarea{min-height:80px;resize:vertical}
+.field .note{font-size:11px;color:#9A8E84;line-height:1.4}
+.actions{display:flex;align-items:center;gap:12px;padding-bottom:40px}
+.btn-primary{background:#C4714A;color:#fff;border:none;border-radius:50px;padding:11px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+.btn-primary:hover{background:#A85C38}
+.btn-primary:disabled{background:rgba(196,113,74,.4);cursor:not-allowed}
+.btn-sec{background:#fff;color:#6B6058;border:1px solid #E8DFD0;border-radius:50px;padding:10px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+.error{background:#FCEBEB;border:1px solid #F09595;border-radius:8px;padding:10px 14px;font-size:13px;color:#A32D2D;margin-bottom:16px;display:none}
+.success{background:#EFF7F2;border:1px solid #9FE1CB;border-radius:8px;padding:10px 14px;font-size:13px;color:#085041;display:none}
+#schoolNumberRow{display:none}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">Find My Journey</div>
+    <div class="sb-brand-role">Admin Console</div>
+  </div>
+  <div class="sb-section">Institutions</div>
+  <a class="sb-item" href="/admin/institutions.html">All institutions</a>
+  <a class="sb-item active" href="/admin/institutions/new.html">Add institution</a>
+  <div class="sb-section">Operations</div>
+  <a class="sb-item" href="#">Usage &amp; billing</a>
+  <a class="sb-item" href="#">All students</a>
+  <div class="sb-section">System</div>
+  <a class="sb-item" href="#">FMJ staff</a>
+  <div class="sb-footer">
+    <div class="sb-user" id="sbUser">Loading…</div>
+    <button class="sb-signout" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <a href="/admin/institutions.html">All institutions</a>
+    <span class="sep">/</span>
+    <h1>Add institution</h1>
+  </div>
+
+  <div class="content">
+    <div class="error" id="errorMsg"></div>
+
+    <!-- Part 1: Institution -->
+    <div class="form-card">
+      <h2>Institution details</h2>
+      <p class="card-desc">Basic information about the organisation. All fields marked <span style="color:#C4714A">*</span> are required.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label>Institution type <span class="req">*</span></label>
+          <select id="institution_type" onchange="typeChanged()">
+            <option value="">Select type…</option>
+            <option value="school_govt">Government school</option>
+            <option value="school_catholic">Catholic school</option>
+            <option value="school_independent">Independent school</option>
+            <option value="tafe">TAFE</option>
+            <option value="university">University</option>
+            <option value="rto">RTO</option>
+            <option value="des">DES provider</option>
+            <option value="private_practice">Private practice</option>
+            <option value="corporate">Corporate</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="status">
+            <option value="trial">Trial</option>
+            <option value="active">Active</option>
+          </select>
+        </div>
+        <div class="field span2">
+          <label>Institution name <span class="req">*</span></label>
+          <input type="text" id="name" placeholder="e.g. Caulfield Grammar School">
+        </div>
+        <div class="field">
+          <label>ABN <span class="hint">(XX XXX XXX XXX)</span></label>
+          <input type="text" id="abn" placeholder="12 345 678 901" maxlength="14">
+        </div>
+        <div class="field" id="schoolNumberRow">
+          <label>School number <span class="hint">(AGEID or state number)</span></label>
+          <input type="text" id="school_number" placeholder="e.g. 2847">
+        </div>
+        <div class="field">
+          <label>Website <span class="hint">(optional)</span></label>
+          <input type="url" id="website" placeholder="https://www.school.vic.edu.au">
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid #F5F0E8">
+        <p style="font-size:12px;font-weight:500;color:#6B6058;margin-bottom:14px">Primary contact</p>
+        <div class="form-grid">
+          <div class="field">
+            <label>Contact name <span class="req">*</span></label>
+            <input type="text" id="primary_contact_name" placeholder="e.g. James Hartley">
+          </div>
+          <div class="field">
+            <label>Contact email <span class="req">*</span></label>
+            <input type="email" id="primary_contact_email" placeholder="j.hartley@school.edu.au" oninput="syncBillingEmail()">
+          </div>
+          <div class="field">
+            <label>Contact mobile</label>
+            <input type="tel" id="primary_contact_mobile" placeholder="0412 345 678">
+          </div>
+          <div class="field">
+            <label>Billing email <span class="hint">(if different)</span></label>
+            <input type="email" id="billing_email" placeholder="accounts@school.edu.au">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid #F5F0E8">
+        <div class="field">
+          <label>FMJ internal notes</label>
+          <textarea id="notes" placeholder="Agreement details, trial terms, any relevant context for FMJ staff…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 2: First campus -->
+    <div class="form-card">
+      <h2>First campus</h2>
+      <p class="card-desc">Every institution needs at least one campus. Additional campuses can be added later from the institution detail page.</p>
+      <div class="form-grid">
+        <div class="field span2">
+          <label>Campus name <span class="req">*</span></label>
+          <input type="text" id="campus_name" placeholder="e.g. Caulfield Campus — or same as institution name if single site">
+        </div>
+        <div class="field span2">
+          <label>Street address</label>
+          <input type="text" id="address_street" placeholder="123 Burke Road">
+        </div>
+        <div class="field">
+          <label>Suburb</label>
+          <input type="text" id="address_suburb" placeholder="Caulfield North">
+        </div>
+        <div class="field">
+          <label>State</label>
+          <select id="address_state">
+            <option value="">Select state…</option>
+            <option>VIC</option><option>NSW</option><option>QLD</option>
+            <option>SA</option><option>WA</option><option>TAS</option>
+            <option>NT</option><option>ACT</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Postcode</label>
+          <input type="text" id="address_postcode" placeholder="3161" maxlength="4">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="03 9524 6300">
+        </div>
+        <div class="field">
+          <label>Monthly cap <span class="hint">(default 1000)</span></label>
+          <input type="number" id="monthly_cap" value="1000" min="1" max="99999">
+          <span class="note">Set lower for trial institutions. e.g. 20 for a trial of 20 assessments.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="submitBtn" onclick="createInstitution()">Create institution</button>
+      <a class="btn-sec" href="/admin/institutions.html">Cancel</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function g(id){return document.getElementById(id);}
+function getSession(){try{return JSON.parse(localStorage.getItem('fmj_admin_session'));}catch(e){return null;}}
+function getUser(){try{return JSON.parse(localStorage.getItem('fmj_admin_user'));}catch(e){return null;}}
+function authHeader(){var s=getSession();return s&&s.access_token?{'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'}:{'Content-Type':'application/json'};}
+function signOut(){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';}
+
+var sess=getSession();
+if(!sess){window.location.href='/admin/login.html';}
+var user=getUser();
+if(user){g('sbUser').textContent=user.name+'\n'+user.role;}
+
+function typeChanged(){
+  var type=g('institution_type').value;
+  var isSchool=type.startsWith('school_');
+  g('schoolNumberRow').style.display=isSchool?'flex':'none';
+  // Auto-fill campus name with institution name if empty
+  if(g('name').value&&!g('campus_name').value){
+    g('campus_name').value=g('name').value;
+  }
+}
+
+function syncBillingEmail(){
+  if(!g('billing_email').value){
+    g('billing_email').placeholder=g('primary_contact_email').value||'accounts@school.edu.au';
+  }
+}
+
+async function createInstitution(){
+  var btn=g('submitBtn');
+  var err=g('errorMsg');
+  err.style.display='none';
+
+  // Validate required
+  var required={
+    institution_type:'Institution type',name:'Institution name',
+    primary_contact_name:'Contact name',primary_contact_email:'Contact email',
+    campus_name:'Campus name'
+  };
+  for(var id in required){
+    if(!g(id).value.trim()){
+      showErr('Please fill in: '+required[id]);
+      g(id).focus();
+      return;
+    }
+  }
+
+  btn.disabled=true;btn.textContent='Creating…';
+
+  try{
+    var r=await fetch('/api/admin/institutions',{
+      method:'POST',
+      headers:authHeader(),
+      body:JSON.stringify({
+        institution_type:g('institution_type').value,
+        name:g('name').value.trim(),
+        abn:g('abn').value.trim(),
+        website:g('website').value.trim(),
+        school_number:g('school_number').value.trim(),
+        primary_contact_name:g('primary_contact_name').value.trim(),
+        primary_contact_email:g('primary_contact_email').value.trim(),
+        primary_contact_mobile:g('primary_contact_mobile').value.trim(),
+        billing_email:g('billing_email').value.trim()||g('primary_contact_email').value.trim(),
+        notes:g('notes').value.trim(),
+        status:g('status').value,
+        campus_name:g('campus_name').value.trim(),
+        address_street:g('address_street').value.trim(),
+        address_suburb:g('address_suburb').value.trim(),
+        address_state:g('address_state').value,
+        address_postcode:g('address_postcode').value.trim(),
+        phone:g('phone').value.trim(),
+        monthly_cap:parseInt(g('monthly_cap').value)||1000
+      })
+    });
+    var data=await r.json();
+    if(!r.ok||!data.ok){showErr(data.error||'Failed to create institution.');btn.disabled=false;btn.textContent='Create institution';return;}
+    window.location.href='/admin/institution-detail.html?id='+data.campus_id;
+  }catch(e){
+    showErr('Connection error. Please try again.');
+    btn.disabled=false;btn.textContent='Create institution';
+  }
+}
+
+function showErr(msg){var e=g('errorMsg');e.textContent=msg;e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+</script>
+</body>
+</html>
