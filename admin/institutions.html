@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>All Institutions — FMJ Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-height:100vh;display:flex;flex-direction:column}
+.shell{display:flex;flex:1;min-height:100vh}
+/* Sidebar */
+.sidebar{width:200px;background:#2C2422;flex-shrink:0;display:flex;flex-direction:column;padding:0}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand-name{font-family:'Fraunces',serif;font-size:16px;font-weight:300;color:#fff}
+.sb-brand-role{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.sb-section{font-size:9px;color:rgba(255,255,255,.3);padding:16px 18px 5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-item{display:block;padding:8px 18px;font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .15s;border-right:2px solid transparent}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.active{color:#fff;background:rgba(196,113,74,.12);border-right-color:#C4714A}
+.sb-footer{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{font-size:11px;color:rgba(255,255,255,.4);line-height:1.5}
+.sb-signout{font-size:11px;color:rgba(196,113,74,.7);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-top:4px}
+.sb-signout:hover{color:#C4714A}
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid #E8DFD0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.topbar h1{font-size:16px;font-weight:500;color:#2C2422}
+.btn-primary{background:#C4714A;color:#fff;border:none;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:#A85C38}
+.btn-sec{background:#fff;color:#6B6058;border:1px solid #E8DFD0;border-radius:50px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-right:8px}
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 24px;background:#FAF7F2;border-bottom:1px solid #E8DFD0}
+.stat{background:#fff;border:1px solid #E8DFD0;border-radius:12px;padding:14px 16px}
+.stat-label{font-size:11px;color:#9A8E84;margin-bottom:4px}
+.stat-val{font-size:24px;font-weight:500;color:#2C2422}
+.stat-sub{font-size:11px;color:#9A8E84;margin-top:3px}
+/* Filters */
+.filters{padding:14px 24px;background:#fff;border-bottom:1px solid #E8DFD0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.filters input,.filters select{font-size:12px;padding:7px 11px;border:1px solid #E8DFD0;border-radius:8px;background:#FAF7F2;color:#2C2422;font-family:'DM Sans',sans-serif;outline:none}
+.filters input{min-width:220px}
+.filters input:focus,.filters select:focus{border-color:#C4714A}
+/* Table */
+.table-wrap{flex:1;overflow:auto;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:10px 24px;text-align:left;font-weight:500;color:#9A8E84;border-bottom:1px solid #E8DFD0;font-size:11px;white-space:nowrap;background:#FAF7F2}
+td{padding:11px 24px;border-bottom:1px solid #F5F0E8;color:#2C2422;vertical-align:middle}
+tr:hover td{background:#FAF7F2;cursor:pointer}
+.inst-name{font-weight:500;color:#2C2422}
+.inst-parent{font-size:11px;color:#9A8E84;margin-top:1px}
+.badge{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:600}
+.b-active{background:#EFF7F2;color:#3D6B4F}
+.b-trial{background:#FEF3EC;color:#A85C38}
+.b-suspended{background:#FCEBEB;color:#A32D2D}
+.b-lapsed{background:#F5F0E8;color:#9A8E84}
+.cap-wrap{display:flex;align-items:center;gap:6px}
+.cap-bar{width:60px;height:5px;background:#E8DFD0;border-radius:3px;overflow:hidden;flex-shrink:0}
+.cap-fill{height:100%;border-radius:3px;background:#C4714A}
+.cap-fill.warn{background:#E24B4A}
+.loading{text-align:center;padding:60px;color:#9A8E84;font-size:14px}
+.empty{text-align:center;padding:60px;color:#9A8E84}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-brand-name">Find My Journey</div>
+      <div class="sb-brand-role">Admin Console</div>
+    </div>
+    <div class="sb-section">Institutions</div>
+    <a class="sb-item active" href="/admin/institutions.html">All institutions</a>
+    <a class="sb-item" href="/admin/institutions/new.html">Add institution</a>
+    <div class="sb-section">Operations</div>
+    <a class="sb-item" href="#">Usage &amp; billing</a>
+    <a class="sb-item" href="#">All students</a>
+    <div class="sb-section">System</div>
+    <a class="sb-item" href="#">FMJ staff</a>
+    <div class="sb-footer">
+      <div class="sb-user" id="sbUser">Loading…</div>
+      <button class="sb-signout" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1>All institutions</h1>
+      <div>
+        <button class="btn-sec" onclick="exportCSV()">Export CSV</button>
+        <a class="btn-primary" href="/admin/institutions/new.html">+ Add institution</a>
+      </div>
+    </div>
+
+    <div class="stats-row" id="statsRow">
+      <div class="stat"><div class="stat-label">Total institutions</div><div class="stat-val" id="statTotal">—</div></div>
+      <div class="stat"><div class="stat-label">Active</div><div class="stat-val" id="statActive">—</div><div class="stat-sub" id="statTrial">— on trial</div></div>
+      <div class="stat"><div class="stat-label">Completions this month</div><div class="stat-val" id="statComp">—</div></div>
+      <div class="stat"><div class="stat-label">Est. revenue this month</div><div class="stat-val" id="statRev">—</div><div class="stat-sub">Excl. GST</div></div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search institution name or contact email…" oninput="filterTable()">
+      <select id="filterType" onchange="filterTable()">
+        <option value="">All types</option>
+        <option value="school_govt">Government school</option>
+        <option value="school_catholic">Catholic school</option>
+        <option value="school_independent">Independent school</option>
+        <option value="tafe">TAFE</option>
+        <option value="university">University</option>
+        <option value="rto">RTO</option>
+        <option value="des">DES provider</option>
+        <option value="private_practice">Private practice</option>
+        <option value="corporate">Corporate</option>
+        <option value="other">Other</option>
+      </select>
+      <select id="filterStatus" onchange="filterTable()">
+        <option value="">All statuses</option>
+        <option value="active">Active</option>
+        <option value="trial">Trial</option>
+        <option value="suspended">Suspended</option>
+        <option value="lapsed">Lapsed</option>
+      </select>
+      <select id="filterState" onchange="filterTable()">
+        <option value="">All states</option>
+        <option>VIC</option><option>NSW</option><option>QLD</option>
+        <option>SA</option><option>WA</option><option>TAS</option>
+        <option>NT</option><option>ACT</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loadingMsg">Loading institutions…</div>
+      <table id="instTable" style="display:none">
+        <thead>
+          <tr>
+            <th>Institution / Campus</th>
+            <th>Type</th>
+            <th>State</th>
+            <th>Status</th>
+            <th>Cap usage</th>
+            <th>Total completions</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody id="instBody"></tbody>
+      </table>
+      <div class="empty" id="emptyMsg" style="display:none">No institutions found matching your filters.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var ALL_DATA=[];
+
+var TYPE_LABELS={
+  school_govt:'Govt school',school_catholic:'Catholic school',
+  school_independent:'Independent school',tafe:'TAFE',university:'University',
+  rto:'RTO',des:'DES provider',private_practice:'Private practice',
+  corporate:'Corporate',other:'Other'
+};
+
+function getSession(){
+  try{return JSON.parse(localStorage.getItem('fmj_admin_session'));}catch(e){return null;}
+}
+function getUser(){
+  try{return JSON.parse(localStorage.getItem('fmj_admin_user'));}catch(e){return null;}
+}
+function authHeader(){
+  var s=getSession();
+  return s&&s.access_token?{'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'}:{'Content-Type':'application/json'};
+}
+
+async function signOut(){
+  localStorage.removeItem('fmj_admin_session');
+  localStorage.removeItem('fmj_admin_user');
+  window.location.href='/admin/login.html';
+}
+
+function badgeHTML(status){
+  var map={active:'b-active',trial:'b-trial',suspended:'b-suspended',lapsed:'b-lapsed'};
+  return '<span class="badge '+(map[status]||'b-lapsed')+'">'+status+'</span>';
+}
+
+function capHTML(completed,cap){
+  var pct=cap>0?Math.min(100,Math.round((completed/cap)*100)):0;
+  var warn=pct>=90?'warn':'';
+  return '<div class="cap-wrap"><div class="cap-bar"><div class="cap-fill '+warn+'" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:#9A8E84">'+completed+'/'+cap+'</span></div>';
+}
+
+async function loadData(){
+  var sess=getSession();
+  if(!sess){window.location.href='/admin/login.html';return;}
+
+  var user=getUser();
+  if(user){document.getElementById('sbUser').textContent=user.name+'\n'+user.role;}
+
+  try{
+    var r=await fetch('/api/admin/institutions',{headers:authHeader()});
+    if(r.status===401){window.location.href='/admin/login.html';return;}
+    var data=await r.json();
+    ALL_DATA=data.institutions||[];
+    renderStats(ALL_DATA);
+    renderTable(ALL_DATA);
+    document.getElementById('loadingMsg').style.display='none';
+    document.getElementById('instTable').style.display='table';
+  }catch(e){
+    document.getElementById('loadingMsg').textContent='Failed to load institutions. Please refresh.';
+  }
+}
+
+function renderStats(data){
+  var total=0,active=0,trial=0,comp=0,rev=0;
+  data.forEach(function(inst){
+    (inst.campuses||[]).forEach(function(c){
+      total++;
+      if(c.status==='active')active++;
+      if(c.status==='trial')trial++;
+      var cs=c.campus_stats&&c.campus_stats[0];
+      if(cs){
+        comp+=(cs.completions_this_month||0);
+        rev+=(cs.completions_this_month||0)*20;
+      }
+    });
+  });
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statActive').textContent=active;
+  document.getElementById('statTrial').textContent=trial+' on trial';
+  document.getElementById('statComp').textContent=comp.toLocaleString();
+  document.getElementById('statRev').textContent='$'+rev.toLocaleString();
+}
+
+function renderTable(data){
+  var rows=[];
+  data.forEach(function(inst){
+    (inst.campuses||[]).forEach(function(c){
+      var cs=c.campus_stats&&c.campus_stats[0]||{};
+      var isMulti=(inst.campuses||[]).length>1;
+      rows.push({
+        campus_id:c.id,
+        name:c.campus_name,
+        parent:isMulti?inst.name:'',
+        type:TYPE_LABELS[inst.institution_type]||inst.institution_type,
+        state:c.address_state||'—',
+        status:c.status,
+        cap:c.monthly_cap||1000,
+        completed_month:cs.completions_this_month||0,
+        total_completed:cs.total_completed||0,
+        contact:inst.primary_contact_name
+      });
+    });
+  });
+
+  var tbody=document.getElementById('instBody');
+  if(rows.length===0){
+    tbody.innerHTML='';
+    document.getElementById('emptyMsg').style.display='block';
+    return;
+  }
+  document.getElementById('emptyMsg').style.display='none';
+  tbody.innerHTML=rows.map(function(r){
+    return '<tr onclick="goDetail(\''+r.campus_id+'\')">'
+      +'<td><div class="inst-name">'+escHTML(r.name)+'</div>'+(r.parent?'<div class="inst-parent">'+escHTML(r.parent)+'</div>':'')+'</td>'
+      +'<td>'+escHTML(r.type)+'</td>'
+      +'<td>'+escHTML(r.state)+'</td>'
+      +'<td>'+badgeHTML(r.status)+'</td>'
+      +'<td>'+capHTML(r.completed_month,r.cap)+'</td>'
+      +'<td>'+r.total_completed+'</td>'
+      +'<td>'+escHTML(r.contact)+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function filterTable(){
+  var search=document.getElementById('search').value.toLowerCase();
+  var type=document.getElementById('filterType').value;
+  var status=document.getElementById('filterStatus').value;
+  var state=document.getElementById('filterState').value;
+  var filtered=ALL_DATA.filter(function(inst){
+    var matchSearch=!search||(inst.name||'').toLowerCase().includes(search)||
+      (inst.primary_contact_email||'').toLowerCase().includes(search);
+    var matchType=!type||inst.institution_type===type;
+    var matchStatus=!status||inst.campuses.some(function(c){return c.status===status;});
+    var matchState=!state||inst.campuses.some(function(c){return c.address_state===state;});
+    return matchSearch&&matchType&&matchStatus&&matchState;
+  });
+  renderStats(filtered);
+  renderTable(filtered);
+}
+
+function goDetail(campusId){
+  window.location.href='/admin/institution-detail.html?id='+campusId;
+}
+
+function escHTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function exportCSV(){
+  var rows=[['Institution','Type','State','Status','Monthly Cap','Completions This Month','Total Completions','Contact']];
+  ALL_DATA.forEach(function(inst){
+    (inst.campuses||[]).forEach(function(c){
+      var cs=c.campus_stats&&c.campus_stats[0]||{};
+      rows.push([c.campus_name,inst.institution_type,c.address_state||'',c.status,c.monthly_cap,cs.completions_this_month||0,cs.total_completed||0,inst.primary_contact_name]);
+    });
+  });
+  var csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='fmj-institutions-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+loadData();
+</script>
+</body>
+</html>
