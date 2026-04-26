@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Institution Detail — FMJ Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-height:100vh;display:flex}
+.sidebar{width:200px;background:#2C2422;flex-shrink:0;display:flex;flex-direction:column}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand-name{font-family:'Fraunces',serif;font-size:16px;font-weight:300;color:#fff}
+.sb-brand-role{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.sb-section{font-size:9px;color:rgba(255,255,255,.3);padding:16px 18px 5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-item{display:block;padding:8px 18px;font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .15s;border-right:2px solid transparent}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.active{color:#fff;background:rgba(196,113,74,.12);border-right-color:#C4714A}
+.sb-footer{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{font-size:11px;color:rgba(255,255,255,.4);line-height:1.5}
+.sb-signout{font-size:11px;color:rgba(196,113,74,.7);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-top:4px}
+.main{flex:1;overflow:auto}
+.topbar{background:#fff;border-bottom:1px solid #E8DFD0;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px}
+.breadcrumb a{color:#9A8E84;text-decoration:none}
+.breadcrumb a:hover{color:#C4714A}
+.breadcrumb .sep{color:#E8DFD0}
+.breadcrumb .current{color:#2C2422;font-weight:500}
+.topbar-actions{display:flex;gap:8px}
+.btn-primary{background:#C4714A;color:#fff;border:none;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:#A85C38}
+.btn-sec{background:#fff;color:#6B6058;border:1px solid #E8DFD0;border-radius:50px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+.btn-danger{background:#fff;color:#A32D2D;border:1px solid #F09595;border-radius:50px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.content{max-width:900px;margin:28px auto;padding:0 32px}
+.detail-card{background:#fff;border:1px solid #E8DFD0;border-radius:16px;padding:24px;margin-bottom:16px}
+.detail-card h2{font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#2C2422;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #F5F0E8;display:flex;align-items:center;justify-content:space-between}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.detail-field .lbl{font-size:10px;font-weight:600;color:#9A8E84;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.detail-field .val{font-size:13px;color:#2C2422;line-height:1.4}
+.badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600}
+.b-active{background:#EFF7F2;color:#3D6B4F}
+.b-trial{background:#FEF3EC;color:#A85C38}
+.b-suspended{background:#FCEBEB;color:#A32D2D}
+.b-lapsed{background:#F5F0E8;color:#9A8E84}
+.cap-section{margin-top:16px;padding-top:16px;border-top:1px solid #F5F0E8}
+.cap-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.cap-bar{flex:1;height:8px;background:#F5F0E8;border-radius:4px;overflow:hidden}
+.cap-fill{height:100%;border-radius:4px;background:#C4714A;transition:width .3s}
+.cap-fill.warn{background:#E24B4A}
+.cap-label{font-size:12px;color:#9A8E84;min-width:120px}
+.cap-count{font-size:12px;color:#2C2422;min-width:80px;text-align:right}
+.inline-edit{display:flex;align-items:center;gap:8px;margin-top:10px}
+.inline-edit input,.inline-edit select{border:1px solid #E8DFD0;border-radius:8px;padding:6px 10px;font-size:13px;color:#2C2422;font-family:'DM Sans',sans-serif;background:#FAF7F2;outline:none}
+.inline-edit input:focus,.inline-edit select:focus{border-color:#C4714A}
+.save-btn{background:#C4714A;color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.save-btn:hover{background:#A85C38}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:9px 0;text-align:left;font-weight:500;color:#9A8E84;border-bottom:1px solid #F5F0E8;font-size:11px}
+td{padding:10px 0;border-bottom:1px solid #F5F0E8;color:#2C2422;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.danger-card{background:#fff;border:1px solid #F09595;border-radius:16px;padding:20px;margin-bottom:16px}
+.danger-card h2{font-size:14px;font-weight:500;color:#A32D2D;margin-bottom:8px}
+.danger-card p{font-size:12px;color:#9A8E84;margin-bottom:14px;line-height:1.5}
+.toast{position:fixed;bottom:24px;right:24px;background:#2C2422;color:#fff;border-radius:10px;padding:10px 18px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:100}
+.toast.show{opacity:1}
+.loading{padding:60px;text-align:center;color:#9A8E84}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">Find My Journey</div>
+    <div class="sb-brand-role">Admin Console</div>
+  </div>
+  <div class="sb-section">Institutions</div>
+  <a class="sb-item active" href="/admin/institutions.html">All institutions</a>
+  <a class="sb-item" href="/admin/institutions/new.html">Add institution</a>
+  <div class="sb-section">Operations</div>
+  <a class="sb-item" href="#">Usage &amp; billing</a>
+  <a class="sb-item" href="#">All students</a>
+  <div class="sb-section">System</div>
+  <a class="sb-item" href="#">FMJ staff</a>
+  <div class="sb-footer">
+    <div class="sb-user" id="sbUser">Loading…</div>
+    <button class="sb-signout" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="breadcrumb">
+      <a href="/admin/institutions.html">All institutions</a>
+      <span class="sep">/</span>
+      <span class="current" id="breadcrumbName">Loading…</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-sec" onclick="viewStudents()">View students</button>
+      <button class="btn-primary" onclick="addCampus()">+ Add campus</button>
+    </div>
+  </div>
+
+  <div class="content" id="mainContent">
+    <div class="loading">Loading institution details…</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var CAMPUS_ID=new URLSearchParams(window.location.search).get('id');
+var INST_DATA=null;
+var CAMPUS_DATA=null;
+
+function g(id){return document.getElementById(id);}
+function getSession(){try{return JSON.parse(localStorage.getItem('fmj_admin_session'));}catch(e){return null;}}
+function getUser(){try{return JSON.parse(localStorage.getItem('fmj_admin_user'));}catch(e){return null;}}
+function authHeader(){var s=getSession();return s&&s.access_token?{'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'}:{'Content-Type':'application/json'};}
+function signOut(){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';}
+
+function badgeHTML(status){
+  var map={active:'b-active',trial:'b-trial',suspended:'b-suspended',lapsed:'b-lapsed'};
+  return '<span class="badge '+(map[status]||'b-lapsed')+'">'+status+'</span>';
+}
+function escHTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function showToast(msg){
+  var t=g('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2500);
+}
+
+function typeLabel(type){
+  var m={school_govt:'Government school',school_catholic:'Catholic school',school_independent:'Independent school',
+    tafe:'TAFE',university:'University',rto:'RTO',des:'DES provider',
+    private_practice:'Private practice',corporate:'Corporate',other:'Other'};
+  return m[type]||type;
+}
+
+async function loadDetail(){
+  var sess=getSession();
+  if(!sess){window.location.href='/admin/login.html';return;}
+  var user=getUser();
+  if(user){g('sbUser').textContent=user.name+'\n'+user.role;}
+  if(!CAMPUS_ID){g('mainContent').innerHTML='<div class="loading">No institution ID provided.</div>';return;}
+
+  try{
+    var r=await fetch('/api/admin/institution?id='+CAMPUS_ID,{headers:authHeader()});
+    if(r.status===401){window.location.href='/admin/login.html';return;}
+    var data=await r.json();
+    INST_DATA=data.institution;
+    CAMPUS_DATA=data.campus;
+    g('breadcrumbName').textContent=data.campus.campus_name;
+    renderDetail(data);
+  }catch(e){
+    g('mainContent').innerHTML='<div class="loading">Failed to load institution. Please refresh.</div>';
+  }
+}
+
+function renderDetail(data){
+  var inst=data.institution;
+  var campus=data.campus;
+  var campuses=data.all_campuses||[];
+  var cs=campus.campus_stats&&campus.campus_stats[0]||{};
+  var compMonth=cs.completions_this_month||0;
+  var cap=campus.monthly_cap||1000;
+  var pct=Math.min(100,Math.round((compMonth/cap)*100));
+  var warnClass=pct>=90?'warn':'';
+
+  var html='';
+
+  // Main detail card
+  html+='<div class="detail-card">';
+  html+='<h2><span>'+escHTML(campus.campus_name)+'</span>'+badgeHTML(campus.status)+'</h2>';
+  html+='<div class="detail-grid">';
+  html+=df('Institution',inst.name);
+  html+=df('Institution type',typeLabel(inst.institution_type));
+  html+=df('ABN',inst.abn||'Not set');
+  html+=df('School number',inst.school_number||'N/A');
+  html+=df('Website',inst.website?'<a href="'+escHTML(inst.website)+'" target="_blank" style="color:#C4714A">'+escHTML(inst.website)+'</a>':'Not set');
+  html+=df('Billing email',inst.billing_email||inst.primary_contact_email);
+  html+=df('Primary contact',inst.primary_contact_name);
+  html+=df('Contact email','<a href="mailto:'+escHTML(inst.primary_contact_email)+'" style="color:#C4714A">'+escHTML(inst.primary_contact_email)+'</a>');
+  html+=df('Contact mobile',inst.primary_contact_mobile||'Not set');
+  html+=df('Campus address',[campus.address_street,campus.address_suburb,campus.address_state,campus.address_postcode].filter(Boolean).join(', ')||'Not set');
+  html+=df('Campus phone',campus.phone||'Not set');
+  html+=df('Created',new Date(inst.created_at).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})+(inst.created_by?' by '+inst.created_by:''));
+  if(inst.notes){html+=df('Notes',escHTML(inst.notes),'span3');}
+  html+='</div>';
+
+  // Cap management
+  html+='<div class="cap-section">';
+  html+='<div style="font-size:12px;font-weight:500;color:#6B6058;margin-bottom:10px">Monthly cap usage</div>';
+  html+='<div class="cap-row">';
+  html+='<span class="cap-label">Completions this month</span>';
+  html+='<div class="cap-bar"><div class="cap-fill '+warnClass+'" style="width:'+pct+'%"></div></div>';
+  html+='<span class="cap-count">'+compMonth+' / '+cap+'</span>';
+  html+='</div>';
+  html+='<div class="inline-edit">';
+  html+='<span style="font-size:12px;color:#9A8E84">Monthly cap:</span>';
+  html+='<input type="number" id="capInput" value="'+cap+'" min="1" max="99999" style="width:90px">';
+  html+='<button class="save-btn" onclick="updateCap()">Save cap</button>';
+  html+='</div></div></div>';
+
+  // Status management
+  html+='<div class="detail-card">';
+  html+='<h2>Status &amp; billing</h2>';
+  html+='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+  html+='<div class="inline-edit">';
+  html+='<span style="font-size:12px;color:#9A8E84">Status:</span>';
+  html+='<select id="statusSelect">';
+  ['trial','active','suspended','lapsed'].forEach(function(s){
+    html+='<option value="'+s+'"'+(campus.status===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>';
+  });
+  html+='</select>';
+  html+='<button class="save-btn" onclick="updateStatus()">Update status</button>';
+  html+='</div>';
+  html+='<div style="font-size:12px;color:#9A8E84">Stripe ID: '+(inst.stripe_customer_id||'Not set')+'</div>';
+  html+='</div>';
+  // Stats row
+  html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px">';
+  html+=statBox('Total completed',cs.total_completed||0);
+  html+=statBox('Started',cs.total_started||0);
+  html+=statBox('Sent — not started',cs.total_sent||0);
+  html+=statBox('SEP flagged',cs.total_sep||0,'#A32D2D');
+  html+='</div></div>';
+
+  // Other campuses (if multi-campus)
+  if(campuses.length>1){
+    html+='<div class="detail-card">';
+    html+='<h2>All campuses <span style="font-size:13px;font-weight:400;color:#9A8E84">('+campuses.length+')</span></h2>';
+    html+='<table><thead><tr><th>Campus</th><th>State</th><th>Status</th><th>Cap</th><th>This month</th></tr></thead><tbody>';
+    campuses.forEach(function(c){
+      var ccs=c.campus_stats&&c.campus_stats[0]||{};
+      html+='<tr style="cursor:pointer" onclick="window.location.href=\'/admin/institution-detail.html?id='+c.id+'\'">'
+        +'<td><strong>'+escHTML(c.campus_name)+'</strong>'+(c.id===CAMPUS_ID?' <span style="font-size:10px;color:#C4714A">(current)</span>':'')+'</td>'
+        +'<td>'+escHTML(c.address_state||'—')+'</td>'
+        +'<td>'+badgeHTML(c.status)+'</td>'
+        +'<td>'+c.monthly_cap+'</td>'
+        +'<td>'+(ccs.completions_this_month||0)+'</td>'
+        +'</tr>';
+    });
+    html+='</tbody></table></div>';
+  }
+
+  // Danger zone
+  html+='<div class="danger-card">';
+  html+='<h2>Danger zone</h2>';
+  html+='<p>Suspending will prevent new links being sent. Existing results remain accessible. This affects all users at this campus.</p>';
+  html+='<button class="btn-danger" onclick="suspendCampus()">Suspend this campus</button>';
+  html+='</div>';
+
+  g('mainContent').innerHTML=html;
+}
+
+function df(label,val,spanClass){
+  return '<div class="detail-field'+(spanClass?' '+spanClass:'')+'"><div class="lbl">'+label+'</div><div class="val">'+(val||'—')+'</div></div>';
+}
+function statBox(label,val,color){
+  return '<div style="background:#FAF7F2;border:1px solid #E8DFD0;border-radius:10px;padding:12px 14px">'
+    +'<div style="font-size:10px;color:#9A8E84;margin-bottom:4px">'+label+'</div>'
+    +'<div style="font-size:20px;font-weight:500;color:'+(color||'#2C2422')+'">'+val+'</div>'
+    +'</div>';
+}
+
+async function updateCap(){
+  var newCap=parseInt(document.getElementById('capInput').value);
+  if(!newCap||newCap<1){alert('Please enter a valid cap value.');return;}
+  var r=await fetch('/api/admin/institution?id='+CAMPUS_ID,{
+    method:'PATCH',headers:authHeader(),
+    body:JSON.stringify({field:'monthly_cap',value:newCap})
+  });
+  if(r.ok){showToast('Monthly cap updated to '+newCap);}
+  else{showToast('Failed to update cap.');}
+}
+
+async function updateStatus(){
+  var newStatus=document.getElementById('statusSelect').value;
+  var r=await fetch('/api/admin/institution?id='+CAMPUS_ID,{
+    method:'PATCH',headers:authHeader(),
+    body:JSON.stringify({field:'status',value:newStatus})
+  });
+  if(r.ok){showToast('Status updated to '+newStatus);loadDetail();}
+  else{showToast('Failed to update status.');}
+}
+
+async function suspendCampus(){
+  if(!confirm('Are you sure you want to suspend this campus? No new links can be sent while suspended.'))return;
+  document.getElementById('statusSelect').value='suspended';
+  await updateStatus();
+}
+
+function viewStudents(){
+  alert('Student portal coming in Phase 2.');
+}
+
+function addCampus(){
+  var instId=INST_DATA?INST_DATA.id:'';
+  window.location.href='/admin/institutions/new.html?add_campus='+instId;
+}
+
+loadDetail();
+</script>
+</body>
+</html>
