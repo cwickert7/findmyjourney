@@ -1,8 +1,8 @@
 {
-  "name": "career-compass",
+  "name": "find-my-journey",
   "version": "1.0.0",
+  "private": true,
   "dependencies": {
-    "@sparticuz/chromium": "^119.0.0",
-    "puppeteer-core": "^21.0.0"
+    "@supabase/supabase-js": "^2.39.0"
   }
 }
