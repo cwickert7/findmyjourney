@@ -59,6 +59,22 @@
     {
       "source": "/a-real-result",
       "destination": "/a-real-result.html"
+    },
+    {
+      "source": "/admin/login",
+      "destination": "/admin/login.html"
+    },
+    {
+      "source": "/admin/institutions",
+      "destination": "/admin/institutions.html"
+    },
+    {
+      "source": "/admin/institutions/new",
+      "destination": "/admin/institutions/new.html"
+    },
+    {
+      "source": "/admin/institution-detail",
+      "destination": "/admin/institution-detail.html"
     }
   ]
 }
