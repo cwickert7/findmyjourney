@@ -75,6 +75,14 @@
     {
       "source": "/admin/institution-detail",
       "destination": "/admin/institution-detail.html"
+    },
+    {
+      "source": "/portal/login",
+      "destination": "/portal/login.html"
+    },
+    {
+      "source": "/portal/dashboard",
+      "destination": "/portal/dashboard.html"
     }
   ]
 }
