@@ -66,6 +66,40 @@ tr:last-child td{border-bottom:none}
 .toast{position:fixed;bottom:24px;right:24px;background:#2C2422;color:#fff;border-radius:10px;padding:10px 18px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:100}
 .toast.show{opacity:1}
 .loading{padding:60px;text-align:center;color:#9A8E84}
+  .edit-form{display:none}
+  .edit-form.active{display:block}
+  .view-mode{display:block}
+  .view-mode.hidden{display:none}
+  .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .edit-field{display:flex;flex-direction:column;gap:4px}
+  .edit-field.span2{grid-column:1/-1}
+  .edit-field label{font-size:11px;font-weight:500;color:#6B6058}
+  .edit-field input,.edit-field select,.edit-field textarea{border:1px solid #E8DFD0;border-radius:8px;padding:8px 11px;font-size:13px;color:#2C2422;font-family:"DM Sans",sans-serif;background:#FAF7F2;outline:none}
+  .edit-field input:focus,.edit-field select:focus{border-color:#C4714A;background:#fff}
+  .edit-field textarea{min-height:70px;resize:vertical}
+  .edit-actions{display:flex;gap:10px;padding-top:14px;border-top:1px solid #F5F0E8;margin-top:4px}
+  .users-card{background:#fff;border:1px solid #E8DFD0;border-radius:16px;padding:24px;margin-bottom:16px}
+  .users-card h2{font-family:"Fraunces",serif;font-size:18px;font-weight:300;color:#2C2422;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #F5F0E8;display:flex;align-items:center;justify-content:space-between}
+  .user-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F0E8}
+  .user-row:last-child{border-bottom:none}
+  .user-info .user-name{font-size:13px;font-weight:500;color:#2C2422}
+  .user-info .user-email{font-size:11px;color:#9A8E84;margin-top:1px}
+  .user-info .user-role{font-size:11px;color:#C4714A;margin-top:2px}
+  .user-actions{display:flex;gap:6px}
+  .btn-xs{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #E8DFD0;background:#fff;color:#6B6058;cursor:pointer;font-family:"DM Sans",sans-serif}
+  .btn-xs:hover{border-color:#C4714A;color:#C4714A}
+  .btn-xs.danger{border-color:#F09595;color:#A32D2D}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:480px;margin:20px}
+  .modal h3{font-family:"Fraunces",serif;font-size:20px;font-weight:300;margin-bottom:6px}
+  .modal .modal-desc{font-size:13px;color:#9A8E84;margin-bottom:20px;line-height:1.5}
+  .modal .field{margin-bottom:14px}
+  .modal .field label{display:block;font-size:12px;font-weight:500;color:#6B6058;margin-bottom:5px}
+  .modal .field input,.modal .field select{width:100%;border:1px solid #E8DFD0;border-radius:8px;padding:9px 12px;font-size:13px;color:#2C2422;font-family:"DM Sans",sans-serif;background:#FAF7F2;outline:none}
+  .modal .field input:focus,.modal .field select:focus{border-color:#C4714A;background:#fff}
+  .modal-actions{display:flex;gap:10px;margin-top:20px}
+  .modal-actions .btn-primary{flex:1}
 </style>
 </head>
 <body>
@@ -96,7 +130,9 @@ tr:last-child td{border-bottom:none}
       <span class="current" id="breadcrumbName">Loading…</span>
     </div>
     <div class="topbar-actions">
-      <button class="btn-sec" onclick="viewStudents()">View students</button>
+      <button class="btn-sec" id="editBtn" onclick="toggleEdit()">Edit institution</button>
+      <button class="btn-sec" onclick="viewStudents()">Students</button>
+      <button class="btn-sec" onclick="manageUsers()">Users</button>
       <button class="btn-primary" onclick="addCampus()">+ Add campus</button>
     </div>
   </div>
@@ -157,6 +193,126 @@ async function loadDetail(){
   }
 }
 
+function toggleEdit(){
+  var editForm=document.getElementById('editForm');
+  var viewMode=document.getElementById('viewMode');
+  var btn=document.getElementById('editBtn');
+  var isEditing=editForm.classList.contains('active');
+  if(isEditing){
+    editForm.classList.remove('active');
+    viewMode.classList.remove('hidden');
+    btn.textContent='Edit institution';
+  } else {
+    editForm.classList.add('active');
+    viewMode.classList.add('hidden');
+    btn.textContent='Cancel edit';
+  }
+}
+
+async function saveInstitution(){
+  var SUPABASE_URL='https://trrfplliugrowsdyhjdy.supabase.co';
+  var inst=INST_DATA;
+  if(!inst) return;
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+
+  var body={
+    name:g('edit_name').value.trim(),
+    institution_type:g('edit_type').value,
+    abn:g('edit_abn').value.trim(),
+    website:g('edit_website').value.trim(),
+    school_number:g('edit_school_number').value.trim(),
+    primary_contact_name:g('edit_contact_name').value.trim(),
+    primary_contact_email:g('edit_contact_email').value.trim(),
+    primary_contact_mobile:g('edit_contact_mobile').value.trim(),
+    billing_email:g('edit_billing_email').value.trim(),
+    notes:g('edit_notes').value.trim()
+  };
+
+  var r=await fetch('/api/admin/institution-edit?id='+inst.id,{
+    method:'PATCH',
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  var data=await r.json();
+  if(r.ok&&data.ok){showToast('Institution updated');loadDetail();}
+  else{showToast('Failed to save: '+(data.error||'Unknown error'));}
+}
+
+async function loadUsers(){
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+  var r=await fetch('/api/admin/institution-users?campus_id='+CAMPUS_ID,{
+    headers:{'Authorization':'Bearer '+token}
+  });
+  var data=await r.json();
+  return data.users||[];
+}
+
+function manageUsers(){
+  document.getElementById('usersSection').scrollIntoView({behavior:'smooth'});
+}
+
+function openAddUser(){
+  document.getElementById('addUserModal').classList.add('open');
+}
+
+function closeAddUser(){
+  document.getElementById('addUserModal').classList.remove('open');
+  g('modal_name').value='';g('modal_email').value='';
+  g('modal_role').value='practitioner';g('modal_role_label').value='';
+}
+
+async function submitAddUser(){
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+  var btn=g('addUserBtn');
+  btn.disabled=true;btn.textContent='Adding…';
+  var r=await fetch('/api/admin/institution-users',{
+    method:'POST',
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({
+      campus_id:CAMPUS_ID,
+      institution_id:INST_DATA?INST_DATA.id:'',
+      name:g('modal_name').value.trim(),
+      email:g('modal_email').value.trim(),
+      role:g('modal_role').value,
+      role_label:g('modal_role_label').value.trim()
+    })
+  });
+  var data=await r.json();
+  btn.disabled=false;btn.textContent='Add user & send invite';
+  if(r.ok&&data.ok){closeAddUser();showToast('User added — invite email sent');loadDetail();}
+  else{showToast('Failed: '+(data.error||'Unknown error'));}
+}
+
+async function resetUserPassword(email){
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+  var r=await fetch('/api/admin/institution-users',{
+    method:'PATCH',
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({action:'reset_password',email:email})
+  });
+  var data=await r.json();
+  if(r.ok&&data.ok){showToast('Password reset email sent to '+email);}
+  else{showToast('Failed: '+(data.error||'Unknown'));}
+}
+
+async function deactivateUser(userId){
+  if(!confirm('Deactivate this user? They will lose portal access immediately.'))return;
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+  var r=await fetch('/api/admin/institution-users',{
+    method:'PATCH',
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({action:'deactivate',user_id:userId})
+  });
+  var data=await r.json();
+  if(r.ok&&data.ok){showToast('User deactivated');loadDetail();}
+  else{showToast('Failed: '+(data.error||'Unknown'));}
+}
+
 function renderDetail(data){
   var inst=data.institution;
   var campus=data.campus;
@@ -169,7 +325,31 @@ function renderDetail(data){
 
   var html='';
 
-  // Main detail card
+  // ── EDIT FORM (hidden by default) ──
+  html+='<div class="detail-card edit-form" id="editForm">';
+  html+='<h2 style="margin-bottom:20px">Edit institution</h2>';
+  html+='<div class="edit-grid">';
+  html+='<div class="edit-field span2"><label>Institution name</label><input id="edit_name" value="'+escHTML(inst.name||'')+'"></div>';
+  html+='<div class="edit-field"><label>Institution type</label><select id="edit_type">';
+  var typeOpts={school_govt:'Government school',school_catholic:'Catholic school',school_independent:'Independent school',tafe:'TAFE',university:'University',rto:'RTO',des:'DES provider',private_practice:'Private practice',corporate:'Corporate',other:'Other'};
+  Object.keys(typeOpts).forEach(function(k){html+='<option value="'+k+'"'+(inst.institution_type===k?' selected':'')+'>'+typeOpts[k]+'</option>';});
+  html+='</select></div>';
+  html+='<div class="edit-field"><label>ABN</label><input id="edit_abn" value="'+escHTML(inst.abn||'')+'"></div>';
+  html+='<div class="edit-field"><label>School number</label><input id="edit_school_number" value="'+escHTML(inst.school_number||'')+'"></div>';
+  html+='<div class="edit-field span2"><label>Website</label><input id="edit_website" type="url" value="'+escHTML(inst.website||'')+'"></div>';
+  html+='<div class="edit-field"><label>Primary contact name</label><input id="edit_contact_name" value="'+escHTML(inst.primary_contact_name||'')+'"></div>';
+  html+='<div class="edit-field"><label>Primary contact email</label><input id="edit_contact_email" type="email" value="'+escHTML(inst.primary_contact_email||'')+'"></div>';
+  html+='<div class="edit-field"><label>Contact mobile</label><input id="edit_contact_mobile" value="'+escHTML(inst.primary_contact_mobile||'')+'"></div>';
+  html+='<div class="edit-field"><label>Billing email</label><input id="edit_billing_email" type="email" value="'+escHTML(inst.billing_email||'')+'"></div>';
+  html+='<div class="edit-field span2"><label>Internal notes</label><textarea id="edit_notes">'+escHTML(inst.notes||'')+'</textarea></div>';
+  html+='</div>';
+  html+='<div class="edit-actions">';
+  html+='<button class="btn-primary" onclick="saveInstitution()">Save changes</button>';
+  html+='<button class="btn-sec" onclick="toggleEdit()">Cancel</button>';
+  html+='</div></div>';
+
+  // ── VIEW MODE ──
+  html+='<div class="view-mode" id="viewMode">';
   html+='<div class="detail-card">';
   html+='<h2><span>'+escHTML(campus.campus_name)+'</span>'+badgeHTML(campus.status)+'</h2>';
   html+='<div class="detail-grid">';
@@ -243,14 +423,40 @@ function renderDetail(data){
     html+='</tbody></table></div>';
   }
 
-  // Danger zone
+  // ── USERS SECTION ──
+  html+='<div class="users-card" id="usersSection">';
+  html+='<h2><span>Institution users</span><button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="openAddUser()">+ Add user</button></h2>';
+  html+='<div id="usersListWrap"><div style="font-size:13px;color:#9A8E84">Loading users…</div></div>';
+  html+='</div>';
+
+  // ── Danger zone ──
   html+='<div class="danger-card">';
   html+='<h2>Danger zone</h2>';
   html+='<p>Suspending will prevent new links being sent. Existing results remain accessible. This affects all users at this campus.</p>';
   html+='<button class="btn-danger" onclick="suspendCampus()">Suspend this campus</button>';
   html+='</div>';
+  html+='</div>'; // close view-mode
 
   g('mainContent').innerHTML=html;
+
+  // Load users async
+  loadUsers().then(function(users){
+    var wrap=document.getElementById('usersListWrap');
+    if(!wrap)return;
+    if(!users.length){wrap.innerHTML='<div style="font-size:13px;color:#9A8E84;padding:8px 0">No users added yet.</div>';return;}
+    var html2='';
+    users.forEach(function(u){
+      html2+='<div class="user-row">';
+      html2+='<div class="user-info"><div class="user-name">'+escHTML(u.name)+'</div>';
+      html2+='<div class="user-email">'+escHTML(u.email)+'</div>';
+      html2+='<div class="user-role">'+(u.role_label||u.role)+(u.is_active?'':' · <span style="color:#A32D2D">Inactive</span>')+'</div></div>';
+      html2+='<div class="user-actions">';
+      html2+='<button class="btn-xs" onclick="resetUserPassword(''+escHTML(u.email)+'')">Reset password</button>';
+      if(u.is_active){html2+='<button class="btn-xs danger" onclick="deactivateUser(''+u.id+'')">Deactivate</button>';}
+      html2+='</div></div>';
+    });
+    wrap.innerHTML=html2;
+  });
 }
 
 function df(label,val,spanClass){
@@ -301,5 +507,30 @@ function addCampus(){
 
 loadDetail();
 </script>
+<!-- Add User Modal -->
+<div class="modal-overlay" id="addUserModal">
+  <div class="modal">
+    <h3>Add institution user</h3>
+    <p class="modal-desc">An invitation email will be sent to the user. They'll set their own password and can then log into the institution portal.</p>
+    <div class="field"><label>Full name</label><input id="modal_name" type="text" placeholder="e.g. James Hartley"></div>
+    <div class="field"><label>Email address</label><input id="modal_email" type="email" placeholder="j.hartley@school.edu.au"></div>
+    <div class="field"><label>Role</label>
+      <select id="modal_role">
+        <option value="account_owner">Account Owner</option>
+        <option value="administrator">Administrator</option>
+        <option value="coordinator">Coordinator</option>
+        <option value="practitioner" selected>Practitioner</option>
+        <option value="observer">Observer</option>
+      </select>
+    </div>
+    <div class="field"><label>Role label <span style="font-weight:400;color:#9A8E84">(what they see — e.g. "Teacher", "Psychologist")</span></label>
+      <input id="modal_role_label" type="text" placeholder="e.g. Year 10 Coordinator">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="addUserBtn" onclick="submitAddUser()">Add user &amp; send invite</button>
+      <button class="btn-sec" onclick="closeAddUser()">Cancel</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
