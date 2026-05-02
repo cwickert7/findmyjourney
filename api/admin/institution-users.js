@@ -1,7 +1,6 @@
 // FILE: api/admin/institution-users.js
-// GET, POST invite, and PATCH reset/deactivate institution portal users
+// GET, POST invite, and PATCH reset or deactivate institution portal users
 
-// api/admin/institution-users.js — GET, POST (invite), PATCH (reset/deactivate)
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -33,7 +32,6 @@ export default async function handler(req, res) {
     'Prefer': 'return=representation'
   };
 
-  // ── GET users for a campus ──
   if (req.method === 'GET') {
     const { campus_id } = req.query;
     if (!campus_id) return res.status(400).json({ error: 'campus_id required' });
@@ -46,7 +44,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ users: Array.isArray(users) ? users : [] });
   }
 
-  // ── POST invite new user ──
   if (req.method === 'POST') {
     const { campus_id, institution_id, name, email, role, role_label } = req.body;
     if (!campus_id || !institution_id || !name || !email || !role) {
@@ -144,7 +141,6 @@ export default async function handler(req, res) {
     return res.status(201).json({ ok: true });
   }
 
-  // ── PATCH reset password or deactivate ──
   if (req.method === 'PATCH') {
     const { action, email, user_id } = req.body;
 

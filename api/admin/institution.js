@@ -36,7 +36,6 @@ export default async function handler(req, res) {
   const { id } = req.query;
   if (!id) return res.status(400).json({ error: 'Campus ID required' });
 
-  // ── GET campus + institution + all campuses ──
   if (req.method === 'GET') {
     const campRes = await fetch(
       `${SUPABASE_URL}/rest/v1/campuses?id=eq.${id}&select=id,institution_id,campus_name,address_street,address_suburb,address_state,address_postcode,phone,monthly_cap,status,created_at`,
@@ -70,7 +69,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ campus, institution, all_campuses: allCampuses || [] });
   }
 
-  // ── PATCH update status or cap ──
   if (req.method === 'PATCH') {
     const { field, value } = req.body;
     if (!['status', 'monthly_cap'].includes(field)) {

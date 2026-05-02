@@ -1,5 +1,5 @@
 // FILE: api/admin/institutions.js
-// GET all institutions with campus stats, POST create new institution and first campus
+// GET all institutions with stats, POST create new institution and first campus
 
 // api/admin/institutions.js — fetch only, no npm packages
 async function verifyFMJStaff(token) {
@@ -48,7 +48,6 @@ export default async function handler(req, res) {
     'Prefer': 'return=representation'
   };
 
-  // ── GET all institutions ──
   if (req.method === 'GET') {
     const { search, type, status, state } = req.query;
 
@@ -100,7 +99,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ institutions: result });
   }
 
-  // ── POST create institution + first campus ──
   if (req.method === 'POST') {
     const {
       name, institution_type, abn, website, school_number,
