@@ -1,7 +1,6 @@
 // FILE: api/portal/auth.js
 // Handles institution user login and returns session, role and campus details
 
-// api/portal/auth.js — institution user login
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
