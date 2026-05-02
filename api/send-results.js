@@ -1,3 +1,6 @@
+// FILE: api/send-results.js
+// Sends Explorer results email with career matches and return link via Resend
+
 // api/send-results.js
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -22,7 +25,7 @@ export default async function handler(req, res) {
   } catch(e) { console.error('Upstash:', e.message); }
 
   // ── Return link for "View my results" button ──
-  const viewResultsUrl = returnLink || 'https://career-compass-rho-ten.vercel.app';
+  const viewResultsUrl = returnLink || 'https://findmyjourney.com.au';
 
   // ── Helper: build a job card in HTML ──
   function jobCard(job, type) {
