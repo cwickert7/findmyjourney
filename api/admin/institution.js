@@ -1,3 +1,6 @@
+// FILE: api/admin/institution.js
+// GET single institution detail, PATCH update status or monthly cap
+
 // api/admin/institution.js — fetch only, no npm packages
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;

@@ -1,3 +1,6 @@
+// FILE: api/admin/institutions.js
+// GET all institutions with campus stats, POST create new institution and first campus
+
 // api/admin/institutions.js — fetch only, no npm packages
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;

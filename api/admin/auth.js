@@ -1,3 +1,6 @@
+// FILE: api/admin/auth.js
+// Handles FMJ admin staff login and session verification via Supabase auth
+
 // api/admin/auth.js — uses fetch directly, no npm packages needed
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });

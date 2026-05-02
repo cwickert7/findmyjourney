@@ -1,3 +1,6 @@
+// FILE: api/admin/institution-users.js
+// GET, POST invite, and PATCH reset/deactivate institution portal users
+
 // api/admin/institution-users.js — GET, POST (invite), PATCH (reset/deactivate)
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -93,7 +96,7 @@ export default async function handler(req, res) {
     const instData = await institutionRes.json();
     const instName = instData && instData[0] ? instData[0].name : 'your institution';
 
-    const portalUrl = `${process.env.SITE_URL || 'https://career-compass-rho-ten.vercel.app'}/portal/login.html`;
+    const portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/login.html`;
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',

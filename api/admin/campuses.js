@@ -1,3 +1,6 @@
+// FILE: api/admin/campuses.js
+// POST create an additional campus for an existing institution
+
 // api/admin/campuses.js — fetch only, no npm packages
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;

@@ -1,3 +1,6 @@
+// FILE: api/admin/institution-edit.js
+// PATCH update institution fields such as name, contact details, website, ABN
+
 // api/admin/institution-edit.js — PATCH institution fields
 async function verifyFMJStaff(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
