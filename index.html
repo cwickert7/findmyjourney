@@ -3,6 +3,15 @@
 <!-- Home page — marketing site shown when visiting findmyjourney.com.au -->
 <html lang="en">
 <head>
+<script>
+(function(){
+  if(window.location.pathname==='/password.html')return;
+  var c=document.cookie;
+  if(!c.includes('fmj_site_access=granted')){
+    window.location.replace('/password.html?r='+encodeURIComponent(window.location.pathname));
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find My Journey — AI-Powered Career Discovery for Young Australians</title>
@@ -34,7 +43,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--ch);border-radius:2px;transition:all .25s}
 .nav-mobile{display:none;position:fixed;top:66px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--sand);padding:20px 24px 24px;z-index:99;flex-direction:column}
-.nav-mobile.open{display:flex}
+.nav-mobile.open{display:flex!important}
 .nav-mobile a{display:block;font-size:16px;color:var(--mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--sand);transition:color .2s}
 .nav-mobile a.nav-cta-mob{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px 24px;text-align:center;font-weight:600;margin-top:8px;border-bottom:none}
 .hero{min-height:0;display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center;max-width:1120px;margin:0 auto;padding:110px 48px 48px;position:relative}
@@ -92,7 +101,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .pcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px;transition:all .25s}
 .pcard:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);transform:translateY(-3px)}
 .pcard-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.pcard-av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;background:rgba(255,255,255,.06)}
+.pcard-av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;background:rgba(255,255,255,.06);min-width:48px;overflow:visible}
 .pcard-name{font-size:15px;font-weight:600;color:#fff;display:block}
 .pcard-detail{font-size:12px;color:rgba(255,255,255,.3);display:block;margin-top:2px}
 .pcard-quote{font-family:"Fraunces",serif;font-size:15px;font-style:italic;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.07)}
@@ -165,6 +174,13 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   /* ── HERO ── */
   .hero{padding:80px 20px 48px;min-height:auto;grid-template-columns:1fr;gap:32px;max-width:100%}
   .hero-photos{display:none}
+
+  /* ── MOBILE PHOTO STRIP ── */
+  .mobile-photo-strip{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:20px 0 8px;margin:0 -20px;padding-left:20px;padding-right:20px;scrollbar-width:none}
+  .mobile-photo-strip::-webkit-scrollbar{display:none}
+  .mobile-photo-strip .mphoto{flex-shrink:0;width:140px;height:190px;border-radius:14px;overflow:hidden;position:relative}
+  .mobile-photo-strip .mphoto img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+  .mobile-photo-strip .mphoto-name{position:absolute;bottom:0;left:0;right:0;padding:20px 10px 10px;background:linear-gradient(transparent,rgba(44,36,34,.7));font-size:11px;font-weight:500;color:#fff}
   .hero::before{display:none}
   .hero-left{flex-direction:column;align-items:flex-start;gap:16px}
   .hero-brand{margin-bottom:0}
@@ -216,15 +232,15 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 
   /* ── CV BUILDER SECTION ── */
   .cv-section{padding:52px 20px}
-  .cv-inner{grid-template-columns:1fr;gap:32px;max-width:100%;width:100%}
+  .cv-inner{grid-template-columns:1fr;gap:32px;max-width:100%;width:100%;overflow:hidden}
   .cv-h2{font-size:clamp(32px,8vw,46px)}
   .cv-sub{font-size:15px}
   /* CV card — collapse to natural height, constrain width */
-  .cv-card-stack{height:auto;min-height:0}
+  .cv-card-stack{height:auto!important;min-height:0!important;overflow:visible!important;position:relative!important}
   .cv-card-back{display:none}
-  .cv-card-front{position:relative;top:auto;left:auto;right:auto;max-width:420px;margin:0 auto;width:100%}
+  .cv-card-front{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;max-width:100%!important;margin:0!important;box-sizing:border-box!important}
   .cv-cta{display:block;text-align:center}
-  .cv-right{display:flex;justify-content:center}
+  .cv-right{display:flex;justify-content:center;width:100%;overflow:hidden;box-sizing:border-box}
 
   /* ── INSTITUTIONS ── */
   .inst-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
@@ -257,6 +273,8 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 
   /* ── SECTIONS ── */
   .section{padding:40px 16px}
+  .mobile-photo-strip{margin:0 -16px;padding-left:16px;padding-right:16px}
+  .mobile-photo-strip .mphoto{width:120px;height:165px}
   .personas-section,.why-section,.cv-section{padding:40px 16px}
   .cta-section{padding:48px 16px}
   footer{padding:32px 16px 20px}
@@ -281,7 +299,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   .compare-table{min-width:380px}
 
   /* ── CV CARD ── */
-  .cv-card-front{padding:16px;max-width:100%!important;width:100%!important;box-sizing:border-box}
+  .cv-card-front{padding:16px!important;max-width:100%!important;width:100%!important;box-sizing:border-box!important;position:relative!important}
   .cv-card-name{font-size:18px}
   .cv-card-body{font-size:11px}
   .cv-card-prefilled{font-size:9px}
@@ -351,7 +369,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
       <a href="#explorers">Explorers</a>
       <a href="#cv-builder">CV Builder</a>
       <a href="#institutions">For institutions</a>
-      <a href="https://findmyjourney.com.au/assessment" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
+      <a href="/assessment" class="nav-cta">Begin your journey &#x2192;</a>
     </div>
     <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -363,7 +381,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   <a href="#explorers" onclick="closeNav()">Explorers</a>
   <a href="#cv-builder" onclick="closeNav()">CV Builder</a>
   <a href="#institutions" onclick="closeNav()">For institutions</a>
-  <a href="https://findmyjourney.com.au/assessment" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
+  <a href="/assessment" class="nav-cta-mob">Begin your journey &#x2192;</a>
 </div>
 <section class="hero">
   <div class="hero-left">
@@ -378,8 +396,26 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(255,255,255,.45);margin-bottom:10px;font-variant-ligatures:none">“You’re worth finding.”</div><h1 class="hero-h1">Find work that<br>fits <em>who you are.</em></h1>
     <div class="hero-bottom">
       <p class="hero-sub">Most career tools ask what you&#x2019;re qualified for. Find My Journey asks who you are &#x2014; and builds a genuinely personalised direction from there. No timed tests. No pressure. No wrong answers.</p>
-      <div class="hero-actions">
-        <a href="https://findmyjourney.com.au/assessment" target="_blank" class="btn-primary">Begin your journey &#x2192;</a>
+      <div class="mobile-photo-strip">
+    <div class="mphoto">
+      <img src="https://images.unsplash.com/photo-1584697964328-b1e7f63dca95?w=280&h=380&fit=crop&crop=top" alt="Aisha, 16">
+      <div class="mphoto-name">Aisha, 16</div>
+    </div>
+    <div class="mphoto">
+      <img src="https://images.unsplash.com/photo-1680104072294-e9e15e26c5cc?w=280&h=380&fit=crop&crop=top" alt="Jake, 17">
+      <div class="mphoto-name">Jake, 17</div>
+    </div>
+    <div class="mphoto">
+      <img src="https://images.unsplash.com/photo-1752293946898-cbb41a899d65?w=280&h=380&fit=crop&crop=top" alt="Tom, 19">
+      <div class="mphoto-name">Tom, 19</div>
+    </div>
+    <div class="mphoto">
+      <img src="https://images.unsplash.com/photo-1571863393474-b94c72f117fe?w=280&h=380&fit=crop&crop=top" alt="Ella, 15">
+      <div class="mphoto-name">Ella, 15</div>
+    </div>
+  </div>
+  <div class="hero-actions">
+        <a href="/assessment" class="btn-primary">Begin your journey &#x2192;</a>
         <a href="#how" class="btn-secondary">How it works</a>
       </div>
       <div class="hero-trust">
@@ -672,7 +708,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     <svg width="40" height="40" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;margin:0 auto 24px;display:block"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.3)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
     <h2 class="cta-h2">Ready to find your<br><em>real</em> direction?</h2>
     <p class="cta-sub">About 20 minutes. No account needed. No right or wrong answers. Just an honest conversation about who you are and where you might go.</p>
-    <a href="https://findmyjourney.com.au/assessment" target="_blank" class="btn-cta-large">Begin your journey &#x2192;</a>
+    <a href="/assessment" class="btn-cta-large">Begin your journey &#x2192;</a>
     <p class="cta-note">Private &#xB7; Australian &#xB7; Psychology-backed</p>
   </div>
 </section>
@@ -691,7 +727,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Product</div>
-        <a href="https://findmyjourney.com.au/assessment" target="_blank">Take the assessment</a>
+        <a href="/assessment">Take the assessment</a>
         <a href="/cv-builder.html">CV Builder</a>
         <a href="/how-it-works.html">How it works</a>
         <a href="/real-explorers.html">Real Explorers</a>

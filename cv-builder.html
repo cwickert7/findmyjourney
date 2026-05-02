@@ -3,6 +3,15 @@
 <!-- Explorer-facing CV Builder feature page -->
 <html lang="en">
 <head>
+<script>
+(function(){
+  if(window.location.pathname==='/password.html')return;
+  var c=document.cookie;
+  if(!c.includes('fmj_site_access=granted')){
+    window.location.replace('/password.html?r='+encodeURIComponent(window.location.pathname));
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CV Builder — Find My Journey</title>
@@ -37,7 +46,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--ch);border-radius:2px;transition:all .25s}
 .nav-mobile{display:none;position:fixed;top:66px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--sand);padding:20px 24px 24px;z-index:99;flex-direction:column}
-.nav-mobile.open{display:flex}
+.nav-mobile.open{display:flex!important}
 .nav-mobile a{display:block;font-size:16px;color:var(--mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--sand);transition:color .2s}
 .nav-mobile a.nav-cta-mob{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px 24px;text-align:center;font-weight:600;margin-top:8px;border-bottom:none}
 
@@ -240,7 +249,7 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
     </button>
   </div>
 </nav>
-<div class="nav-mobile" id="navMobile">
+<div class="nav-mobile" id="navMobile" style="display:none">
   <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
   <a href="/real-explorers.html" onclick="closeNav()">Real Explorers</a>
   <a href="/why-find-my-journey.html" onclick="closeNav()">Why Find My Journey</a>
@@ -445,5 +454,28 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
   </div>
 </footer>
 
+<script>
+function toggleNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  var open=m.classList.toggle('open');
+  var spans=h.querySelectorAll('span');
+  if(open){
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans[0].style.transform='';
+    spans[1].style.opacity='';
+    spans[2].style.transform='';
+  }
+}
+function closeNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  m.classList.remove('open');
+  h.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
+}
+</script>
 </body>
 </html>
