@@ -1,7 +1,6 @@
 // FILE: api/portal/students.js
-// GET students, POST add student and send assessment invite link, handles duplicate detection and cap checks
+// GET students, POST add student and send assessment invite link
 
-// api/portal/students.js — GET students, POST add student, send invite link
 async function verifyPortalUser(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -33,7 +32,6 @@ export default async function handler(req, res) {
     'Prefer': 'return=representation'
   };
 
-  // ── GET students ──
   if (req.method === 'GET') {
     const { campus_id, status, year_level } = req.query;
     const targetCampus = campus_id || portalUser.campus_id;
@@ -52,7 +50,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ students: Array.isArray(students) ? students : [] });
   }
 
-  // ── POST add student and send link ──
   if (req.method === 'POST') {
     const { first_name, last_name, email, year_level, send_link, fmj_issued } = req.body;
 
