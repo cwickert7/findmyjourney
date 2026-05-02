@@ -1,3 +1,6 @@
+// FILE: api/portal/students.js
+// GET students, POST add student and send assessment invite link, handles duplicate detection and cap checks
+
 // api/portal/students.js — GET students, POST add student, send invite link
 async function verifyPortalUser(token) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -140,7 +143,7 @@ export default async function handler(req, res) {
 
     // Send assessment link email
     if (send_link !== false) {
-      const SITE_URL = process.env.SITE_URL || 'https://career-compass-rho-ten.vercel.app';
+      const SITE_URL = process.env.SITE_URL || 'https://findmyjourney.com.au';
       const assessmentLink = `${SITE_URL}?student=${linkUuid}&first=${encodeURIComponent(first_name)}&last=${encodeURIComponent(last_name)}`;
 
       // Get institution name
