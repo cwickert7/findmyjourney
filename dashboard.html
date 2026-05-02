@@ -533,7 +533,7 @@ function openDetail(uuid) {
   h += '<textarea class="notes-area" id="detailNotes" placeholder="Add your session notes — visible to advisors only…">'+( meta.notes||'')+'</textarea>';
   h += '<button class="save-note-btn" onclick="saveNote()">Save notes</button>';
   h += '<button class="mark-seen-btn '+(meta.seen?'done':'')+'" id="markSeenBtn" onclick="markSeen()">'+( meta.seen?'✓ Marked as seen':'Mark as seen')+'</button>';
-  h += '<a class="return-link" href="https://career-compass-rho-ten.vercel.app?results='+r.uuid+'" target="_blank">Open Explorer\'s results page ↗</a>';
+  h += '<a class="return-link" href="https://findmyjourney.com.au?results='+r.uuid+'" target="_blank">Open Explorer\'s results page ↗</a>';
 
   document.getElementById('detailBody').innerHTML = h;
   document.getElementById('detailOverlay').classList.add('open');
