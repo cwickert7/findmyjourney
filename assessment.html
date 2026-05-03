@@ -928,6 +928,17 @@ function confirmLeave(){
   </div>
 </footer>
 <script>
+// ── READ URL PARAMS (in-room and institution-linked sessions) ──
+var URL_PARAMS = new URLSearchParams(window.location.search);
+var PARAM_FIRST = URL_PARAMS.get('first') || '';
+var PARAM_LAST = URL_PARAMS.get('last') || '';
+var PARAM_EMAIL = URL_PARAMS.get('email') || '';
+var PARAM_CAMPUS_ID = URL_PARAMS.get('campus_id') || '';
+var PARAM_INSTITUTION_ID = URL_PARAMS.get('institution_id') || '';
+var PARAM_STUDENT_ID = URL_PARAMS.get('student_id') || '';
+var PARAM_SESSION_TYPE = URL_PARAMS.get('session_type') || 'individual';
+var PARAM_CV = URL_PARAMS.get('cv') === 'true';
+
 // ── PHASES ──
 var PHS=[
   {id:'p1',lbl:'Who you are',em:'&#x1F9ED;',cel:'You&rsquo;ve told us who you are, {name}. That took honesty &mdash; especially the parts you were unsure about.',nxt:'Now let&rsquo;s find out what actually drives you.'},
@@ -5352,6 +5363,59 @@ function sWelcomeBack(result){
 // ── SAVE RESULTS ──
 var _savedUUID=null;var _savedCode=null;
 // ── Save result to Upstash and return UUID ──
+
+// ── BUILD RAW ANSWERS for Supabase storage ──
+// Stores question text alongside answer for future-proofing
+var QUESTION_MAP = {
+  'ip1':'Ipsative pair 1 — Which sounds more like you?',
+  'ip2':'Ipsative pair 2 — Which sounds more like you?',
+  'ip3':'Ipsative pair 3 — Which sounds more like you?',
+  'ip4':'Ipsative pair 4 — Which sounds more like you?',
+  'ip5':'Ipsative pair 5 — Which sounds more like you?',
+  'ip6':'Ipsative pair 6 — Which sounds more like you?',
+  'ip7':'Ipsative pair 7 — Which sounds more like you?',
+  'ip8':'Ipsative pair 8 — Which sounds more like you?',
+  'ip9':'Ipsative pair 9 — Which sounds more like you?',
+  'ip10':'Ipsative pair 10 — Which sounds more like you?',
+  'age':'How old are you?',
+  'gender':'How do you identify?',
+  'schoolYear':'What year are you in at school?',
+  'study':'What are you doing at the moment?',
+  'goal':'What do you want help with today?',
+  'place':'Where would you enjoy spending most of your day?',
+  'subjects':'Which subjects did you enjoy or feel confident in at school?',
+  'enjoys':'Outside school — what do you actually enjoy or find yourself doing?',
+  'noticed':'What would a close friend say you are naturally good at?',
+  'strengths':'When it comes to what you are actually good at — what stands out?',
+  'challenge':'What kind of challenge energises you most?',
+  'feedback':'What kind of feedback do you respond best to?',
+  'noise':'What environment do you prefer working in?',
+  'need':'What do you need from a workplace to feel satisfied?',
+  'quit':'Imagine you started a job and left after two weeks — what would most likely be the reason?',
+  'values':'What matters most to you in work?',
+  'name':'What is your name?',
+  'email':'What is your email address?',
+  'state':'What state are you in?',
+  'city':'What city or suburb are you in?'
+};
+
+function buildRawAnswers(){
+  var answers=[];
+  var savedAt=new Date().toISOString();
+  Object.keys(A).forEach(function(key){
+    if(key==='branch')return; // derived field, not a raw answer
+    var val=A[key];
+    if(val===undefined||val===null||val==='')return;
+    answers.push({
+      question_id:key,
+      question_text:QUESTION_MAP[key]||key,
+      answer_value:val,
+      captured_at:savedAt
+    });
+  });
+  return answers;
+}
+
 async function persistResult(){
   if(_savedUUID) return {uuid:_savedUUID,shortCode:_savedCode};
   var R=RS;if(!R)return null;
@@ -5378,7 +5442,19 @@ async function persistResult(){
         tips:(R.tips)||[],
         sepTriggered:window._sepTriggered||false,
         institutionCode:getInstCode()||null,
-        branch:A.branch||null
+        branch:A.branch||null,
+        // Supabase fields
+        assessment_version:'v2',
+        raw_answers:buildRawAnswers(),
+        firstName:A.name||PARAM_FIRST||null,
+        lastName:PARAM_LAST||null,
+        email:A.email||PARAM_EMAIL||null,
+        state:A.state||null,
+        city:A.city||null,
+        campus_id:PARAM_CAMPUS_ID||null,
+        institution_id:PARAM_INSTITUTION_ID||null,
+        student_id:PARAM_STUDENT_ID||null,
+        session_type:PARAM_SESSION_TYPE||'individual'
       })
     });
     var data=await r.json();
