@@ -4,6 +4,24 @@
 <!-- Sample result page showing a full career assessment output -->
 <html lang="en">
 <head>
+<script>
+(function(){
+  var VERSION='2';
+  var COOKIE_NAME='fmj_access_v'+VERSION;
+  if(window.location.pathname==='/password.html')return;
+  if(document.cookie.indexOf(COOKIE_NAME+'=granted')===-1){
+    window.location.replace('/password.html?r='+encodeURIComponent(window.location.pathname+window.location.search));
+  }
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYPMPJGP10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QYPMPJGP10');
+</script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
