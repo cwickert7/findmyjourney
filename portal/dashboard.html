@@ -61,6 +61,7 @@ tr:not(.sel):hover td{background:#FAF7F2;cursor:pointer}
 .b-started{background:#E6F1FB;color:#185FA5}
 .b-sent{background:#FEF3EC;color:#A85C38}
 .b-not_sent{background:#F5F0E8;color:#9A8E84}
+.b-in_room{background:#FEF3EC;color:#C4714A;border:1px solid rgba(196,113,74,.3)}
 .sep-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E24B4A;margin-left:4px;vertical-align:middle}
 .drawer{border-left:1px solid #E8DFD0;background:#FAF7F2;overflow:auto;padding:0}
 .drawer-empty{display:flex;align-items:center;justify-content:center;height:100%;color:#9A8E84;font-size:13px;text-align:center;padding:24px}
@@ -79,6 +80,7 @@ tr:not(.sel):hover td{background:#FAF7F2;cursor:pointer}
 .d-actions{display:flex;flex-direction:column;gap:6px;margin-top:12px}
 .d-actions button{width:100%;text-align:center;padding:8px}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center}
+.warn-note{background:#FEF3EC;border:1px solid rgba(196,113,74,.3);border-radius:8px;padding:10px 14px;font-size:12px;color:#A85C38;margin-bottom:12px;display:none;line-height:1.5}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:500px;margin:20px}
 .modal h3{font-family:'Fraunces',serif;font-size:20px;font-weight:300;margin-bottom:6px}
@@ -226,8 +228,8 @@ function escHTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 function showToast(msg){var t=g('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 
 function badgeHTML(status){
-  var cls={completed:'b-completed',started:'b-started',sent:'b-sent',not_sent:'b-not_sent'};
-  var lbl={completed:'Completed',started:'Started',sent:'Sent',not_sent:'Not sent'};
+  var cls={completed:'b-completed',started:'b-started',sent:'b-sent',not_sent:'b-not_sent',in_room:'b-in_room'};
+  var lbl={completed:'Completed',started:'Started',sent:'Sent',not_sent:'Not sent',in_room:'In-Room'};
   return '<span class="badge '+(cls[status]||'b-not_sent')+'">'+(lbl[status]||status)+'</span>';
 }
 
@@ -374,7 +376,7 @@ function selectStudent(id){
 function viewResults(id){
   var s=ALL_STUDENTS.find(function(x){return x.id===id;});
   if(s&&s.result_uuid){
-    window.open('/?results='+s.result_uuid,'_blank');
+    window.open('/assessment?results='+s.result_uuid,'_blank');
   } else {
     showToast('No results saved yet for this student.');
   }
@@ -484,6 +486,86 @@ function exportCSV(){
 }
 
 loadData();
+</script>
+<!-- In-Room Session Modal -->
+<div class="modal-overlay" id="inRoomModal">
+  <div class="modal">
+    <h3>Start in-room session</h3>
+    <p class="modal-desc">The explorer will complete the assessment on this device or a shared screen. Enter their details below — they can update their name at the start of the assessment.</p>
+    <div class="warn-note" id="inRoomEmailWarn">No email address entered — results will only appear in this dashboard and won't be emailed to the explorer. Continue anyway?</div>
+    <div class="field"><label>First name <span style="color:#C4714A">*</span></label><input id="ir_first" type="text" placeholder="e.g. Liam"></div>
+    <div class="field"><label>Last name <span style="color:#C4714A">*</span></label><input id="ir_last" type="text" placeholder="e.g. Wickert"></div>
+    <div class="field"><label>Email address <span style="font-weight:400;color:#9A8E84">(optional)</span></label><input id="ir_email" type="email" placeholder="liam.w@gmail.com"></div>
+    <div class="field"><label>Year level <span style="font-weight:400;color:#9A8E84">(optional)</span></label>
+      <select id="ir_year">
+        <option value="">Select…</option>
+        <option>Year 9</option><option>Year 10</option><option>Year 11</option><option>Year 12</option><option>Alumni</option><option>Other</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="inRoomBtn" onclick="startInRoom()">Open assessment →</button>
+      <button class="btn-sec" onclick="closeInRoom()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openInRoom(){document.getElementById('inRoomModal').classList.add('open');document.getElementById('ir_first').focus();}
+function closeInRoom(){
+  document.getElementById('inRoomModal').classList.remove('open');
+  document.getElementById('ir_first').value='';
+  document.getElementById('ir_last').value='';
+  document.getElementById('ir_email').value='';
+  document.getElementById('ir_year').value='';
+  document.getElementById('inRoomEmailWarn').style.display='none';
+  document.getElementById('inRoomBtn').textContent='Open assessment →';
+  document.getElementById('inRoomBtn').onclick=startInRoom;
+}
+
+async function startInRoom(force){
+  var first=document.getElementById('ir_first').value.trim();
+  var last=document.getElementById('ir_last').value.trim();
+  var email=document.getElementById('ir_email').value.trim();
+  var year=document.getElementById('ir_year').value;
+
+  if(!first||!last){showToast('Please enter first and last name.');return;}
+
+  // Warn if no email but allow proceed
+  if(!email&&!force){
+    document.getElementById('inRoomEmailWarn').style.display='block';
+    document.getElementById('inRoomBtn').textContent='Yes, proceed without email';
+    document.getElementById('inRoomBtn').onclick=function(){startInRoom(true);};
+    return;
+  }
+
+  // Create student record in Supabase
+  var sess=getSession();
+  var token=sess&&sess.access_token?sess.access_token:'';
+  var r=await fetch('/api/portal/students',{
+    method:'POST',
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({
+      first_name:first,last_name:last,email:email||null,
+      year_level:year||null,session_type:'in_room',send_link:false
+    })
+  });
+  var data=await r.json();
+
+  // Build assessment URL
+  var SITE=window.location.origin;
+  var params='?first='+encodeURIComponent(first)+'&last='+encodeURIComponent(last);
+  if(email)params+='&email='+encodeURIComponent(email);
+  if(PORTAL_USER&&PORTAL_USER.campus_id)params+='&campus_id='+PORTAL_USER.campus_id;
+  if(PORTAL_USER&&PORTAL_USER.institution_id)params+='&institution_id='+PORTAL_USER.institution_id;
+  if(data&&data.student_id)params+='&student_id='+data.student_id;
+  params+='&session_type=in_room';
+
+  // Open assessment in new tab
+  window.open(SITE+'/assessment'+params,'_blank');
+  closeInRoom();
+  showToast('Assessment opened in new tab');
+  loadData();
+}
 </script>
 </body>
 </html>
