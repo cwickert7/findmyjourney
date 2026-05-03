@@ -3,16 +3,6 @@
 <!-- Institution-facing page targeting TAFE and RTO providers -->
 <html lang="en">
 <head>
-<script>
-(function(){
-  var VERSION='1';
-  var COOKIE_NAME='fmj_access_v'+VERSION;
-  if(window.location.pathname==='/password.html')return;
-  if(document.cookie.indexOf(COOKIE_NAME+'=granted')===-1){
-    window.location.replace('/password.html?r='+encodeURIComponent(window.location.pathname+window.location.search));
-  }
-})();
-</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
