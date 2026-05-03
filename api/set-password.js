@@ -1,7 +1,7 @@
 // FILE: api/set-password.js
 // Validates password submission and sets auth cookie server-side
 
-const PASSWORD = 'test1';
+const PASSWORD = 'fmj2026preview';
 const COOKIE_VERSION = '1';
 const COOKIE_NAME = `fmj_access_v${COOKIE_VERSION}`;
 
