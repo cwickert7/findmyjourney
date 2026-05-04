@@ -139,7 +139,7 @@ body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-heigh
           </div>
           <div class="field">
             <label>Contact email <span class="req">*</span></label>
-            <input type="email" id="primary_contact_email" placeholder="j.hartley@school.edu.au" oninput="syncBillingEmail()">
+            <input type="email" id="primary_contact_email" placeholder="j.hartley@school.edu.au" oninput="syncBillingEmail();updateConsentLabel()">
           </div>
           <div class="field">
             <label>Contact mobile</label>
@@ -202,6 +202,17 @@ body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-heigh
       </div>
     </div>
 
+    <div class="form-card" style="border-color:rgba(196,113,74,.3)">
+      <h2>Consent confirmation</h2>
+      <p class="card-desc">This confirmation is required before the institution can be activated.</p>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:16px;background:#FAF7F2;border-radius:10px;border:1px solid #E8DFD0">
+        <input type="checkbox" id="consent_checkbox" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:#C4714A">
+        <label for="consent_checkbox" style="font-size:13px;color:#6B6058;line-height:1.6;cursor:pointer">
+          I confirm that <strong id="consent_inst_name">this institution</strong> has appropriate consent mechanisms in place — including parental or guardian consent where required — for students and clients under 18 completing assessments through Find My Journey, in accordance with applicable Australian privacy laws and the institution's own policies.
+        </label>
+      </div>
+    </div>
+
     <div class="actions">
       <button class="btn-primary" id="submitBtn" onclick="createInstitution()">Create institution</button>
       <a class="btn-sec" href="/admin/institutions.html">Cancel</a>
@@ -220,6 +231,12 @@ var sess=getSession();
 if(!sess){window.location.href='/admin/login.html';}
 var user=getUser();
 if(user){g('sbUser').textContent=user.name+'\n'+user.role;}
+
+function updateConsentLabel(){
+  var name = document.getElementById('name').value.trim();
+  var label = document.getElementById('consent_inst_name');
+  if(label) label.textContent = name || 'this institution';
+}
 
 function typeChanged(){
   var type=g('institution_type').value;
@@ -243,6 +260,13 @@ async function createInstitution(){
   err.style.display='none';
 
   // Validate required
+    // Validate consent checkbox
+  if(!document.getElementById('consent_checkbox').checked){
+    showErr('Please confirm the consent declaration before creating the institution.');
+    document.getElementById('consent_checkbox').focus();
+    return;
+  }
+
   var required={
     institution_type:'Institution type',name:'Institution name',
     primary_contact_name:'Contact name',primary_contact_email:'Contact email',
