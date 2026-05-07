@@ -1448,7 +1448,7 @@ function buildSys(isPT){
       (isSensitive?'SENSITIVE: ONLY calm, supportive, low-pressure roles. Never loud worksites, competitive environments.\n':'')+
       'Return ONLY valid JSON:\n'+
       '{"encouragement":"2 warm sentences.","summary":"1 sentence with their name.","nowJobs":[2 job objects],"tips":["tip1","tip2"]}\n'+
-      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"for casual/PT use hourly e.g. $22 - $26/hr, for salaried use annual e.g. $45,000 - $52,000","salaryExperienced":"for casual/PT use hourly e.g. $26 - $32/hr, for salaried use annual e.g. $55,000 - $65,000","outlook":"growing|stable|declining"}\n'+
+      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"Accurate Australian pay for this specific role. Casual/PT: hourly e.g. $22 - $26/hr. Salaried: annual e.g. $45,000 - $52,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced pay for this specific role. Must align with salaryEntry. Casual/PT: hourly e.g. $26 - $32/hr. Salaried: annual e.g. $55,000 - $65,000.","outlook":"growing|stable|declining"}\n'+
       'Include nowJobs only (2 jobs). No careerJobs.';
   }
   return 'You are a warm, empathetic career advisor for young Australians 15-25. Call them Explorers. Philosophy: Honest Hope - realistic AND genuinely encouraging.\n\n'+
@@ -1482,7 +1482,7 @@ function buildSys(isPT){
     
     'Return ONLY valid JSON, zero markdown:\n'+
     '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[2 job objects],"tips":["tip1","tip2","tip3"]}\n'+
-    'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"e.g. $45,000 - $55,000","salaryExperienced":"e.g. $70,000 - $85,000","outlook":"growing|stable|declining"}\n'+
+    'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"Accurate Australian starting salary range in AUD. Research realistic figures for this specific role in Australia e.g. $45,000 - $55,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced salary range in AUD for this specific role e.g. $70,000 - $90,000. Must align with salaryEntry range.","outlook":"growing|stable|declining"}\n'+
     'Include nowJobs only if wantsNow=true. Include careerJobs only if wantsCareer=true.';
 }
 
@@ -1565,7 +1565,7 @@ function genR(){
 }
 
 // ── OCCUPATION EXPLORER ──
-function exploreRole(jobTitle,cardId,explorerName){
+function exploreRole(jobTitle,cardId,explorerName,salaryEntry,salaryExperienced){
   var btn=g('occBtn'+cardId);var panel=g('occPanel'+cardId);
   if(!panel)return;
   if(panel.classList.contains('open')){
@@ -1584,7 +1584,7 @@ function exploreRole(jobTitle,cardId,explorerName){
     'Return ONLY valid JSON, zero markdown:',
     '{"dayInLife":[{"time":"8:30am","task":"brief task description"},{"time":"10:00am","task":"..."},{"time":"12:00pm","task":"..."},{"time":"2:00pm","task":"..."},{"time":"4:00pm","task":"..."}],"salaryEntry":"Starting salary range in AUD e.g. $45,000 - $55,000","salaryExperienced":"Experienced salary range in AUD","salaryNote":"1 sentence on what affects pay in this field","outlook":"growing|stable|declining","outlookNote":"1 sentence on current Australian labour market for this role","whyItFits":"1-2 sentences personalised to this Explorer - reference their name and something specific","relatedRoles":["role1","role2","role3"],"entrySteps":["Step 1","Step 2","Step 3"],"realityCheck":"1 honest sentence about a genuine challenge or downside","australianOrgs":"1-2 sentences naming real Australian organisations, associations or websites"}'
   ].join('\n');
-  var userMsg='Role: '+jobTitle+'. Explorer name: '+(explorerName||'Explorer')+'. Profile: challenge='+(A.challenge||'moderate')+' noticed='+(A.noticed||'')+' values='+JSON.stringify(A.values||[])+' branch='+(A.branch||'')+'.';
+  var userMsg='Role: '+jobTitle+'. Explorer name: '+(explorerName||'Explorer')+'. Profile: challenge='+(A.challenge||'moderate')+' noticed='+(A.noticed||'')+' values='+JSON.stringify(A.values||[])+' branch='+(A.branch||'')+'. IMPORTANT: Salary already shown to Explorer on job card: entry='+salaryEntry+' experienced='+salaryExperienced+'. Use these EXACT salary figures in salaryEntry and salaryExperienced fields. Do not generate different numbers.';
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
   })
@@ -1611,7 +1611,7 @@ function exploreRole(jobTitle,cardId,explorerName){
       // Fallback for cached responses that still return old format
       html+='<div class="occ-section"><div class="occ-label">A typical day</div><div class="occ-body">'+info.typicalDay+'</div></div>';
     }
-    html+='<div class="occ-section"><div class="occ-label">Salary in Australia</div><div class="occ-salary">'+info.salaryEntry+'</div><div class="occ-salary-note">Experienced: '+info.salaryExperienced+' &mdash; '+info.salaryNote+'</div></div>';
+    html+='<div class="occ-section"><div class="occ-label">About the pay</div><div class="occ-salary-note">'+info.salaryNote+'</div></div>';
     html+='<div class="occ-section"><div class="occ-label">Job market outlook</div><div class="occ-outlook '+outlookClass+'">'+outlookIcon+' '+(info.outlook||'').charAt(0).toUpperCase()+(info.outlook||'').slice(1)+'</div><div class="occ-body" style="margin-top:4px">'+info.outlookNote+'</div></div>';
     if(info.whyItFits)html+='<div class="occ-section"><div class="occ-label">Why this could suit you</div><div class="occ-body" style="font-style:italic;color:var(--gr)">'+info.whyItFits+'</div></div>';
     if(info.entrySteps&&info.entrySteps.length){
@@ -2761,7 +2761,7 @@ function buildSys(isPT){
       (isSensitive?'SENSITIVE: ONLY calm, supportive, low-pressure roles. Never loud worksites, competitive environments.\n':'')+
       'Return ONLY valid JSON:\n'+
       '{"encouragement":"2 warm sentences.","summary":"1 sentence with their name.","nowJobs":[2 job objects],"tips":["tip1","tip2"]}\n'+
-      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"for casual/PT use hourly e.g. $22 - $26/hr, for salaried use annual e.g. $45,000 - $52,000","salaryExperienced":"for casual/PT use hourly e.g. $26 - $32/hr, for salaried use annual e.g. $55,000 - $65,000","outlook":"growing|stable|declining"}\n'+
+      'Job: {"title":"","desc":"2 sentences","whyYou":"You\'d be great here because","pathway":["Apply this week","First week","After a month"],"tags":["",""],"matchLevel":"strong match|good match|worth trying","matchPips":3-5,"thisWeek":"specific Australian action naming seek.com.au or similar","envFit":"why this suits their readiness right now","salaryEntry":"Accurate Australian pay for this specific role. Casual/PT: hourly e.g. $22 - $26/hr. Salaried: annual e.g. $45,000 - $52,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced pay for this specific role. Must align with salaryEntry. Casual/PT: hourly e.g. $26 - $32/hr. Salaried: annual e.g. $55,000 - $65,000.","outlook":"growing|stable|declining"}\n'+
       'Include nowJobs only (2 jobs). No careerJobs.';
   }
   return 'You are a warm, empathetic career advisor for young Australians 15-25. Call them Explorers. Philosophy: Honest Hope - realistic AND genuinely encouraging.\n\n'+
@@ -2795,7 +2795,7 @@ function buildSys(isPT){
     
     'Return ONLY valid JSON, zero markdown:\n'+
     '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[2 job objects],"tips":["tip1","tip2","tip3"]}\n'+
-    'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"e.g. $45,000 - $55,000","salaryExperienced":"e.g. $70,000 - $85,000","outlook":"growing|stable|declining"}\n'+
+    'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"Accurate Australian starting salary range in AUD. Research realistic figures for this specific role in Australia e.g. $45,000 - $55,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced salary range in AUD for this specific role e.g. $70,000 - $90,000. Must align with salaryEntry range.","outlook":"growing|stable|declining"}\n'+
     'Include nowJobs only if wantsNow=true. Include careerJobs only if wantsCareer=true.';
 }
 
@@ -2878,7 +2878,7 @@ function genR(){
 }
 
 // ── OCCUPATION EXPLORER ──
-function exploreRole(jobTitle,cardId,explorerName){
+function exploreRole(jobTitle,cardId,explorerName,salaryEntry,salaryExperienced){
   var btn=g('occBtn'+cardId);var panel=g('occPanel'+cardId);
   if(!panel)return;
   if(panel.classList.contains('open')){
@@ -2924,7 +2924,7 @@ function exploreRole(jobTitle,cardId,explorerName){
       // Fallback for cached responses that still return old format
       html+='<div class="occ-section"><div class="occ-label">A typical day</div><div class="occ-body">'+info.typicalDay+'</div></div>';
     }
-    html+='<div class="occ-section"><div class="occ-label">Salary in Australia</div><div class="occ-salary">'+info.salaryEntry+'</div><div class="occ-salary-note">Experienced: '+info.salaryExperienced+' &mdash; '+info.salaryNote+'</div></div>';
+    html+='<div class="occ-section"><div class="occ-label">About the pay</div><div class="occ-salary-note">'+info.salaryNote+'</div></div>';
     html+='<div class="occ-section"><div class="occ-label">Job market outlook</div><div class="occ-outlook '+outlookClass+'">'+outlookIcon+' '+(info.outlook||'').charAt(0).toUpperCase()+(info.outlook||'').slice(1)+'</div><div class="occ-body" style="margin-top:4px">'+info.outlookNote+'</div></div>';
     if(info.whyItFits)html+='<div class="occ-section"><div class="occ-label">Why this could suit you</div><div class="occ-body" style="font-style:italic;color:var(--gr)">'+info.whyItFits+'</div></div>';
     if(info.entrySteps&&info.entrySteps.length){
