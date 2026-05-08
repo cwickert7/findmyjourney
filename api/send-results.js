@@ -177,7 +177,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${resendKey}`
       },
       body: JSON.stringify({
-        from: 'Find My Journey <onboarding@resend.dev>',
+        from: 'Find My Journey <onboarding@findmyjourney.com.au>',
         to: [email],
         subject: `Your Find My Journey results are here, ${explorerName} 🧭`,
         html
