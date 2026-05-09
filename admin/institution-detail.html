@@ -301,7 +301,7 @@ async function resetUserPassword(email){
   else{showToast('Failed: '+(data.error||'Unknown'));}
 }
 
-      if(u.is_active){html2+='<button class="btn-xs danger" onclick="deactivateUser(\'' + u.id + '\')">Deactivate</button>';}
+async function deactivateUser(userId){
   if(!confirm('Deactivate this user? They will lose portal access immediately.'))return;
   var sess=getSession();
   var token=sess&&sess.access_token?sess.access_token:'';
