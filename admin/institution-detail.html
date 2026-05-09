@@ -490,16 +490,17 @@ loadDetail();
     <div class="field"><label>Full name</label><input id="modal_name" type="text" placeholder="e.g. James Hartley"></div>
     <div class="field"><label>Email address</label><input id="modal_email" type="email" placeholder="j.hartley@school.edu.au"></div>
     <div class="field"><label>Role</label>
-      <select id="modal_role">
+      <select id="modal_role" onchange="updateRoleLabelPlaceholder()">
         <option value="account_owner">Account Owner</option>
         <option value="administrator">Administrator</option>
         <option value="coordinator">Coordinator</option>
         <option value="practitioner" selected>Practitioner</option>
         <option value="observer">Observer</option>
+        <option value="other">Other</option>
       </select>
     </div>
-    <div class="field"><label>Role label <span style="font-weight:400;color:#9A8E84">(what they see — e.g. "Teacher", "Psychologist")</span></label>
-      <input id="modal_role_label" type="text" placeholder="e.g. Year 10 Coordinator">
+    <div class="field"><label>Role label <span style="font-weight:400;color:#9A8E84">(what they see — e.g. "Careers Adviser")</span></label>
+      <input id="modal_role_label" type="text" placeholder="e.g. Teacher, Trainer, Employment Consultant, Psychologist">
     </div>
     <div class="modal-actions">
       <button class="btn-primary" id="addUserBtn" onclick="submitAddUser()">Add user &amp; send invite</button>
@@ -507,5 +508,20 @@ loadDetail();
     </div>
   </div>
 </div>
+<script>
+var ROLE_LABEL_PLACEHOLDERS={
+  account_owner:'e.g. Principal, CEO/Director, Practice Owner, HR Director',
+  administrator:'e.g. Deputy Principal, Campus Manager, Practice Manager, HR Manager',
+  coordinator:'e.g. Careers Adviser, Student Services Coordinator, Senior Practitioner, Talent Coordinator',
+  practitioner:'e.g. Teacher, Trainer, Employment Consultant, Psychologist, Recruiter',
+  observer:'e.g. Parent, School Councillor, Industry Partner, Compliance Officer, Executive Sponsor',
+  other:'e.g. School Psychologist, Wellbeing Officer, Guest Presenter'
+};
+function updateRoleLabelPlaceholder(){
+  var role=document.getElementById('modal_role').value;
+  var input=document.getElementById('modal_role_label');
+  input.placeholder=ROLE_LABEL_PLACEHOLDERS[role]||'e.g. Careers Adviser';
+}
+</script>
 </body>
 </html>
