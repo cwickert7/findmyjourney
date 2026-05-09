@@ -404,7 +404,7 @@ function renderDetail(data){
   html+='<select id="statusSelect" style="border:1px solid #E8C4B8;border-radius:8px;padding:9px 14px;font-size:13px;color:#2C2422;background:#fff;cursor:pointer">';
   ['trial','active','suspended','lapsed'].forEach(function(s){html+='<option value="'+s+'"'+(campus.status===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>';});
   html+='</select>';
-  html+='<button class="btn-danger" onclick="updateStatus()">Update status</button>';
+  html+='<button class="save-btn" onclick="updateStatus()">Update status</button>';
   html+='</div>';
   html+='</div>';
   html+='</div>'; // close view-mode
