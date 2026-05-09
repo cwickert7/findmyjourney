@@ -388,6 +388,12 @@ function renderDetail(data){
   html+='<div class="detail-card">';
   html+='<h2>Billing</h2>';
   html+='<div style="font-size:12px;color:#9A8E84;margin-bottom:16px">Stripe ID: '+(inst.stripe_customer_id||'Not set')+'</div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">';
+  html+=statBox('Total completed',cs.total_completed||0);
+  html+=statBox('Started',cs.total_started||0);
+  html+=statBox('Sent \u2014 not started',cs.total_sent||0);
+  html+=statBox('SEP flagged',cs.total_sep||0,'#A32D2D');
+  html+='</div>';
   html+='</div>';
 
   // ── Danger Zone ──
