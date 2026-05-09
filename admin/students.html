@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- FILE: admin/institutions.html -->
+<!-- FMJ admin console — all institutions list -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>All Institutions — FMJ Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#2C2422;min-height:100vh;display:flex;flex-direction:column}
+.shell{display:flex;flex:1;min-height:100vh}
+/* Sidebar */
+.sidebar{width:200px;background:#2C2422;flex-shrink:0;display:flex;flex-direction:column;padding:0}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand-name{font-family:'Fraunces',serif;font-size:16px;font-weight:300;color:#fff}
+.sb-brand-role{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.sb-section{font-size:9px;color:rgba(255,255,255,.3);padding:16px 18px 5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-item{display:block;padding:8px 18px;font-size:12px;color:rgba(255,255,255,.55);text-decoration:none;transition:all .15s;border-right:2px solid transparent}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-item.active{color:#fff;background:rgba(196,113,74,.12);border-right-color:#C4714A}
+.sb-footer{margin-top:auto;padding:16px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{font-size:11px;color:rgba(255,255,255,.4);line-height:1.5}
+.sb-signout{font-size:11px;color:rgba(196,113,74,.7);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-top:4px}
+.sb-signout:hover{color:#C4714A}
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid #E8DFD0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.topbar h1{font-size:16px;font-weight:500;color:#2C2422}
+.btn-primary{background:#C4714A;color:#fff;border:none;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:#A85C38}
+.btn-sec{background:#fff;color:#6B6058;border:1px solid #E8DFD0;border-radius:50px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-right:8px}
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 24px;background:#FAF7F2;border-bottom:1px solid #E8DFD0}
+.stat{background:#fff;border:1px solid #E8DFD0;border-radius:12px;padding:14px 16px}
+.stat-label{font-size:11px;color:#9A8E84;margin-bottom:4px}
+.stat-val{font-size:24px;font-weight:500;color:#2C2422}
+.stat-sub{font-size:11px;color:#9A8E84;margin-top:3px}
+/* Filters */
+.filters{padding:14px 24px;background:#fff;border-bottom:1px solid #E8DFD0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.filters input,.filters select{font-size:12px;padding:7px 11px;border:1px solid #E8DFD0;border-radius:8px;background:#FAF7F2;color:#2C2422;font-family:'DM Sans',sans-serif;outline:none}
+.filters input{min-width:220px}
+.filters input:focus,.filters select:focus{border-color:#C4714A}
+/* Table */
+.table-wrap{flex:1;overflow:auto;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:10px 24px;text-align:left;font-weight:500;color:#9A8E84;border-bottom:1px solid #E8DFD0;font-size:11px;white-space:nowrap;background:#FAF7F2}
+td{padding:11px 24px;border-bottom:1px solid #F5F0E8;color:#2C2422;vertical-align:middle}
+tr:hover td{background:#FAF7F2;cursor:pointer}
+.inst-name{font-weight:500;color:#2C2422}
+.inst-parent{font-size:11px;color:#9A8E84;margin-top:1px}
+.badge{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:600}
+.b-active{background:#EFF7F2;color:#3D6B4F}
+.b-trial{background:#FEF3EC;color:#A85C38}
+.b-suspended{background:#FCEBEB;color:#A32D2D}
+.b-lapsed{background:#F5F0E8;color:#9A8E84}
+.cap-wrap{display:flex;align-items:center;gap:6px}
+.cap-bar{width:60px;height:5px;background:#E8DFD0;border-radius:3px;overflow:hidden;flex-shrink:0}
+.cap-fill{height:100%;border-radius:3px;background:#C4714A}
+.cap-fill.warn{background:#E24B4A}
+.loading{text-align:center;padding:60px;color:#9A8E84;font-size:14px}
+.empty{text-align:center;padding:60px;color:#9A8E84}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-brand-name">Find My Journey</div>
+      <div class="sb-brand-role">Admin Console</div>
+    </div>
+    <div class="sb-section">Institutions</div>
+    <a class="sb-item" href="/admin/institutions.html">All institutions</a>
+    <a class="sb-item" href="/admin/institutions/new.html">Add institution</a>
+    <div class="sb-section">Operations</div>
+    <a class="sb-item" href="/admin/billing.html">Usage &amp; billing</a>
+    <a class="sb-item  active" href="/admin/students.html">All students</a>
+    <div class="sb-section">System</div>
+    <a class="sb-item" href="/admin/staff.html">FMJ staff</a>
+    <div class="sb-footer">
+      <div class="sb-user" id="sbUser">Loading…</div>
+      <button class="sb-signout" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <h1>All students</h1>
+      <div>
+        <button class="btn-sec" onclick="exportCSV()">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-label">Total students</div><div class="stat-val" id="statTotal">—</div></div>
+      <div class="stat"><div class="stat-label">Completed</div><div class="stat-val" id="statComp">—</div></div>
+      <div class="stat"><div class="stat-label">Started</div><div class="stat-val" id="statStart">—</div></div>
+      <div class="stat"><div class="stat-label">Not started</div><div class="stat-val" id="statNot">—</div></div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search name or email…" oninput="filterTable()">
+      <select id="filterStatus" onchange="filterTable()">
+        <option value="">All statuses</option>
+        <option value="completed">Completed</option>
+        <option value="in_room">In-Room</option>
+        <option value="started">Started</option>
+        <option value="sent">Sent</option>
+        <option value="not_sent">Not sent</option>
+      </select>
+      <select id="filterBranch" onchange="filterTable()">
+        <option value="">All branches</option>
+        <option value="safe">Safe &amp; Steady</option>
+        <option value="purpose">Purpose-Led</option>
+        <option value="creative">Creative</option>
+        <option value="active">Active &amp; Outdoor</option>
+        <option value="enterprise">Enterprise</option>
+        <option value="analytical">Analytical</option>
+      </select>
+      <select id="filterSEP" onchange="filterTable()">
+        <option value="">All explorers</option>
+        <option value="true">SEP activated</option>
+        <option value="false">Standard</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loadingMsg">Loading students…</div>
+      <table id="studTable" style="display:none">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Institution / Campus</th>
+            <th>Status</th>
+            <th>Branch</th>
+            <th>SEP</th>
+            <th>Completed</th>
+            <th>Results</th>
+          </tr>
+        </thead>
+        <tbody id="studBody"></tbody>
+      </table>
+      <div class="empty" id="emptyMsg" style="display:none">No students found.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var ALL_STUDENTS=[];
+var ALL_INSTITUTIONS={};
+
+function getSession(){try{return JSON.parse(localStorage.getItem('fmj_admin_session'));}catch(e){return null;}}
+function getUser(){try{return JSON.parse(localStorage.getItem('fmj_admin_user'));}catch(e){return null;}}
+function authHeader(){var s=getSession();return s&&s.access_token?{'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'}:{'Content-Type':'application/json'};}
+async function signOut(){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';}
+function checkAuth(){
+  var sess=getSession();
+  if(!sess||!sess.access_token){window.location.href='/admin/login.html';return false;}
+  try{var p=JSON.parse(atob(sess.access_token.split('.')[1]));if(p.exp&&p.exp<Math.floor(Date.now()/1000)){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';return false;}}catch(e){}
+  var user=getUser();if(user){document.getElementById('sbUser').textContent=user.name+'\n'+user.role;}
+  return true;
+}
+function escHTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function showToast(msg){var t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:24px;right:24px;background:#2C2422;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:999;opacity:0;transition:opacity .2s';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},3000);}
+
+
+var STATUS_LABELS={completed:'Completed',in_room:'In-Room',started:'Started',sent:'Sent',not_sent:'Not sent'};
+var STATUS_CLASS={completed:'b-completed',in_room:'b-in_room',started:'b-started',sent:'b-sent',not_sent:'b-not_sent'};
+var BRANCH_LABELS={safe:'Safe &amp; Steady',purpose:'Purpose-Led',creative:'Creative',active:'Active &amp; Outdoor',enterprise:'Enterprise',analytical:'Analytical'};
+
+async function loadData(){
+  if(!checkAuth())return;
+  try{
+    // Load institutions for name lookup
+    var ir=await fetch('/api/admin/institutions',{headers:authHeader()});
+    if(ir.status===401){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';return;}
+    var idata=await ir.json();
+    (idata.institutions||[]).forEach(function(inst){
+      (inst.campuses||[]).forEach(function(c){
+        ALL_INSTITUTIONS[c.id]={campus:c.campus_name,institution:inst.name};
+      });
+    });
+
+    // Load all students
+    var r=await fetch('/api/admin/students',{headers:authHeader()});
+    if(r.status===401){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';return;}
+    var data=await r.json();
+    ALL_STUDENTS=data.students||[];
+    renderStats(ALL_STUDENTS);
+    renderTable(ALL_STUDENTS);
+    document.getElementById('loadingMsg').style.display='none';
+    document.getElementById('studTable').style.display='table';
+  }catch(e){
+    document.getElementById('loadingMsg').textContent='Failed to load. Please refresh.';
+    console.error(e);
+  }
+}
+
+function renderStats(data){
+  var total=data.length,comp=0,start=0,not=0;
+  data.forEach(function(s){
+    if(s.status==='completed'||s.status==='in_room')comp++;
+    else if(s.status==='started')start++;
+    else not++;
+  });
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statComp').textContent=comp;
+  document.getElementById('statStart').textContent=start;
+  document.getElementById('statNot').textContent=not;
+}
+
+function renderTable(data){
+  var search=document.getElementById('search').value.toLowerCase();
+  var status=document.getElementById('filterStatus').value;
+  var branch=document.getElementById('filterBranch').value;
+  var sep=document.getElementById('filterSEP').value;
+
+  var filtered=data.filter(function(s){
+    var matchSearch=!search||(s.first_name||'').toLowerCase().includes(search)||(s.last_name||'').toLowerCase().includes(search)||(s.email||'').toLowerCase().includes(search);
+    var matchStatus=!status||s.status===status;
+    var matchBranch=!branch||s.branch===branch;
+    var matchSEP=!sep||(sep==='true'?s.sep_flag===true:s.sep_flag!==true);
+    return matchSearch&&matchStatus&&matchBranch&&matchSEP;
+  });
+
+  var tbody=document.getElementById('studBody');
+  if(filtered.length===0){tbody.innerHTML='';document.getElementById('emptyMsg').style.display='block';return;}
+  document.getElementById('emptyMsg').style.display='none';
+
+  tbody.innerHTML=filtered.map(function(s){
+    var inst=ALL_INSTITUTIONS[s.campus_id]||{};
+    var name=(s.first_name||'')+(s.last_name?' '+s.last_name:'');
+    var statusClass=STATUS_CLASS[s.status]||'b-not_sent';
+    var statusLabel=STATUS_LABELS[s.status]||s.status;
+    var branchLabel=BRANCH_LABELS[s.branch]||s.branch||'—';
+    var completed=s.completed_at?new Date(s.completed_at).toLocaleDateString('en-AU'):'—';
+    var resultsLink=s.result_uuid?'<a href="/assessment?results='+s.result_uuid+'" target="_blank" style="color:#C4714A;text-decoration:none;font-size:12px">View →</a>':'—';
+    return '<tr>'      +'<td><strong>'+escHTML(name||'Unknown')+'</strong></td>'      +'<td style="font-size:12px">'+escHTML(s.email||'—')+'</td>'      +'<td style="font-size:12px">'+escHTML(inst.campus||'—')+(inst.institution?'<br><span style="color:#9A8E84">'+escHTML(inst.institution)+'</span>':'')+'</td>'      +'<td><span class="badge '+statusClass+'">'+statusLabel+'</span></td>'      +'<td style="font-size:12px">'+branchLabel+'</td>'      +'<td style="text-align:center">'+(s.sep_flag?'<span title="Sensitive Explorer Protocol" style="color:#C4714A">&#9679;</span>':'')+'</td>'      +'<td style="font-size:12px">'+completed+'</td>'      +'<td>'+resultsLink+'</td>'      +'</tr>';
+  }).join('');
+}
+
+function filterTable(){renderTable(ALL_STUDENTS);renderStats(ALL_STUDENTS.filter(function(s){
+  var search=document.getElementById('search').value.toLowerCase();
+  var status=document.getElementById('filterStatus').value;
+  return(!search||(s.first_name||'').toLowerCase().includes(search)||(s.last_name||'').toLowerCase().includes(search))&&(!status||s.status===status);
+}));}
+
+function exportCSV(){
+  var rows=[['First Name','Last Name','Email','Institution','Campus','Status','Branch','SEP','Completed']];
+  ALL_STUDENTS.forEach(function(s){
+    var inst=ALL_INSTITUTIONS[s.campus_id]||{};
+    rows.push([s.first_name||'',s.last_name||'',s.email||'',inst.institution||'',inst.campus||'',s.status,s.branch||'',s.sep_flag?'Yes':'No',s.completed_at?new Date(s.completed_at).toLocaleDateString('en-AU'):'']);
+  });
+  var csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='fmj-students-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+loadData();
+</script>
+</body>
+</html>

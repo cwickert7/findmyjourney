@@ -114,10 +114,10 @@ tr:last-child td{border-bottom:none}
   <a class="sb-item active" href="/admin/institutions.html">All institutions</a>
   <a class="sb-item" href="/admin/institutions/new.html">Add institution</a>
   <div class="sb-section">Operations</div>
-  <a class="sb-item" href="#">Usage &amp; billing</a>
-  <a class="sb-item" href="#">All students</a>
+  <a class="sb-item" href="/admin/billing.html">Usage &amp; billing</a>
+  <a class="sb-item" href="/admin/students.html">All students</a>
   <div class="sb-section">System</div>
-  <a class="sb-item" href="#">FMJ staff</a>
+  <a class="sb-item" href="/admin/staff.html">FMJ staff</a>
   <div class="sb-footer">
     <div class="sb-user" id="sbUser">Loading…</div>
     <button class="sb-signout" onclick="signOut()">Sign out</button>
@@ -435,7 +435,16 @@ function renderDetail(data){
   html+='<div class="danger-card">';
   html+='<h2>Danger zone</h2>';
   html+='<p>Suspending will prevent new links being sent. Existing results remain accessible. This affects all users at this campus.</p>';
-  html+='<button class="btn-danger" onclick="suspendCampus()">Suspend this campus</button>';
+  html+='<div style="margin-top:12px;display:flex;align-items:center;gap:12px">';
+  html+='<label style="font-size:13px;font-weight:600;color:#2C2422">Campus status:</label>';
+  html+='<select id="statusSelect" onchange="updateStatus()" style="border:1px solid #E8DFD0;border-radius:8px;padding:8px 12px;font-size:13px;color:#2C2422;background:#FAF7F2;cursor:pointer">';
+  html+='<option value="trial"'+(campus.status==='trial'?' selected':'')+'>Trial</option>';
+  html+='<option value="active"'+(campus.status==='active'?' selected':'')+'>Active</option>';
+  html+='<option value="suspended"'+(campus.status==='suspended'?' selected':'')+'>Suspended</option>';
+  html+='<option value="lapsed"'+(campus.status==='lapsed'?' selected':'')+'>Lapsed</option>';
+  html+='</select>';
+  html+='<span style="font-size:12px;color:#9A8E84">Changes take effect immediately</span>';
+  html+='</div>';
   html+='</div>';
   html+='</div>'; // close view-mode
 
@@ -492,11 +501,7 @@ async function updateStatus(){
   else{showToast('Failed to update status.');}
 }
 
-async function suspendCampus(){
-  if(!confirm('Are you sure you want to suspend this campus? No new links can be sent while suspended.'))return;
-  document.getElementById('statusSelect').value='suspended';
-  await updateStatus();
-}
+// Status changes handled by dropdown
 
 function viewStudents(){
   alert('Student portal coming in Phase 2.');
