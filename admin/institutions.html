@@ -194,14 +194,33 @@ function capHTML(completed,cap){
 
 async function loadData(){
   var sess=getSession();
-  if(!sess){window.location.href='/admin/login.html';return;}
+  if(!sess||!sess.access_token){
+    window.location.href='/admin/login.html';
+    return;
+  }
+  // Check token expiry
+  try {
+    var payload = JSON.parse(atob(sess.access_token.split('.')[1]));
+    if (payload.exp && payload.exp < Math.floor(Date.now()/1000)) {
+      localStorage.removeItem('fmj_admin_session');
+      localStorage.removeItem('fmj_admin_user');
+      window.location.href='/admin/login.html';
+      return;
+    }
+  } catch(e) {}
 
   var user=getUser();
   if(user){document.getElementById('sbUser').textContent=user.name+'\n'+user.role;}
 
   try{
     var r=await fetch('/api/admin/institutions',{headers:authHeader()});
-    if(r.status===401){window.location.href='/admin/login.html';return;}
+    if(r.status===401){
+      // Clear bad session and redirect
+      localStorage.removeItem('fmj_admin_session');
+      localStorage.removeItem('fmj_admin_user');
+      window.location.href='/admin/login.html';
+      return;
+    }
     var data=await r.json();
     ALL_DATA=data.institutions||[];
     renderStats(ALL_DATA);
