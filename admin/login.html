@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- FILE: admin/login.html -->
-<!-- FMJ admin console login page -->
+<!-- FMJ admin console login page — staff access only -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -62,6 +62,16 @@ h1{font-family:'Fraunces',serif;font-size:26px;font-weight:300;color:#fff;margin
 
 <script>
 function g(id){return document.getElementById(id);}
+
+// If already logged in, skip to dashboard
+(function(){
+  try {
+    var sess = JSON.parse(localStorage.getItem('fmj_admin_session'));
+    if (sess && sess.access_token) {
+      window.location.replace('/admin/institutions.html');
+    }
+  } catch(e) {}
+})();
 
 async function signIn(){
   var email=g('email').value.trim();
