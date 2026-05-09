@@ -396,6 +396,12 @@ function renderDetail(data){
   html+='</div>';
   html+='</div>';
 
+  // ── Institution Users ──
+  html+='<div class="users-card" id="usersSection">';
+  html+='<h2><span>Institution users</span><button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="openAddUser()">+ Add user</button></h2>';
+  html+='<div id="usersListWrap"><div style="font-size:13px;color:#9A8E84;padding:8px 0">Loading users…</div></div>';
+  html+='</div>';
+
   // ── Danger Zone ──
   html+='<div class="danger-card">';
   html+='<h2>Danger zone</h2>';
