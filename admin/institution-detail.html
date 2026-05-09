@@ -388,9 +388,11 @@ function renderDetail(data){
   html+='<div class="detail-card">';
   html+='<h2>Billing</h2>';
   html+='<div style="font-size:12px;color:#9A8E84;margin-bottom:16px">Stripe ID: '+(inst.stripe_customer_id||'Not set')+'</div>';
-  // ── Campus status ──
+  html+='</div>';
+
+  // ── Danger Zone ──
   html+='<div class="danger-card">';
-  html+='<h2>Campus status</h2>';
+  html+='<h2>Danger zone</h2>';
   html+='<p>Changing campus status takes effect immediately. Suspended campuses cannot send new assessment links.</p>';
   html+='<div style="display:flex;align-items:center;gap:12px;margin-top:4px">';
   html+='<select id="statusSelect" style="border:1px solid #E8C4B8;border-radius:8px;padding:9px 14px;font-size:13px;color:#2C2422;background:#fff;cursor:pointer">';
