@@ -301,7 +301,7 @@ async function resetUserPassword(email){
   else{showToast('Failed: '+(data.error||'Unknown'));}
 }
 
-async function deactivateUser(userId){
+      if(u.is_active){html2+='<button class="btn-xs danger" onclick="deactivateUser(\'' + u.id + '\')">Deactivate</button>';}
   if(!confirm('Deactivate this user? They will lose portal access immediately.'))return;
   var sess=getSession();
   var token=sess&&sess.access_token?sess.access_token:'';
@@ -453,8 +453,8 @@ function renderDetail(data){
       html2+='<div class="user-email">'+escHTML(u.email)+'</div>';
       html2+='<div class="user-role">'+(u.role_label||u.role)+(u.is_active?'':' · <span style="color:#A32D2D">Inactive</span>')+'</div></div>';
       html2+='<div class="user-actions">';
-      html2+='<button class="btn-xs" onclick="resetUserPassword(''+escHTML(u.email)+'')">Reset password</button>';
-      if(u.is_active){html2+='<button class="btn-xs danger" onclick="deactivateUser(''+u.id+'')">Deactivate</button>';}
+      html2+='<button class="btn-xs" onclick="resetUserPassword(\'' + escHTML(u.email) + '\')">Reset password</button>';
+      if(u.is_active){html2+='<button class="btn-xs danger" onclick="deactivateUser(\'' + u.id + '\')">Deactivate</button>';}
       html2+='</div></div>';
     });
     wrap.innerHTML=html2;
