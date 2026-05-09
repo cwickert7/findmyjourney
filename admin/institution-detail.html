@@ -435,16 +435,7 @@ function renderDetail(data){
   html+='<div class="danger-card">';
   html+='<h2>Danger zone</h2>';
   html+='<p>Suspending will prevent new links being sent. Existing results remain accessible. This affects all users at this campus.</p>';
-  html+='<div style="margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
-  html+='<label style="font-size:13px;font-weight:600;color:#2C2422">Campus status:</label>';
-  html+='<select id="statusSelect" style="border:1px solid #E8DFD0;border-radius:8px;padding:8px 12px;font-size:13px;color:#2C2422;background:#FAF7F2;cursor:pointer">';
-  html+='<option value="trial"'+(campus.status==='trial'?' selected':'')+'>Trial</option>';
-  html+='<option value="active"'+(campus.status==='active'?' selected':'')+'>Active</option>';
-  html+='<option value="suspended"'+(campus.status==='suspended'?' selected':'')+'>Suspended</option>';
-  html+='<option value="lapsed"'+(campus.status==='lapsed'?' selected':'')+'>Lapsed</option>';
-  html+='</select>';
-  html+='<button class="btn-sec" onclick="updateStatus()" style="padding:8px 16px">Update status</button>';
-  html+='</div>';
+  
   html+='</div>';
   html+='</div>'; // close view-mode
 
