@@ -125,6 +125,7 @@ tr:hover td{background:#FAF7F2;cursor:pointer}
         <option value="false">Standard</option>
       </select>
     </div>
+    <div id="instFilterBanner" style="display:none;padding:8px 24px;background:#FEF3EC;border-bottom:1px solid rgba(196,113,74,.2);font-size:12px;color:#A85C38">Filtered to: <strong id="instFilterName"></strong> &nbsp;&middot;&nbsp; <a href="/admin/students.html" style="color:#C4714A">Show all students</a></div>
 
     <div class="table-wrap">
       <div class="loading" id="loadingMsg">Loading students…</div>
@@ -180,7 +181,7 @@ async function loadData(){
     var idata=await ir.json();
     (idata.institutions||[]).forEach(function(inst){
       (inst.campuses||[]).forEach(function(c){
-        ALL_INSTITUTIONS[c.id]={campus:c.campus_name,institution:inst.name};
+        ALL_INSTITUTIONS[c.id]={campus:c.campus_name,institution:inst.name,institution_id:inst.id};
       });
     });
 
@@ -189,6 +190,33 @@ async function loadData(){
     if(r.status===401){localStorage.removeItem('fmj_admin_session');localStorage.removeItem('fmj_admin_user');window.location.href='/admin/login.html';return;}
     var data=await r.json();
     ALL_STUDENTS=data.students||[];
+
+    // If arriving from institution detail, filter to that institution
+    var urlInstId=new URLSearchParams(window.location.search).get('institution_id');
+    if(urlInstId){
+      // Find all campus_ids belonging to this institution
+      var instCampusIds=Object.keys(ALL_INSTITUTIONS).filter(function(campusId){
+        return ALL_INSTITUTIONS[campusId].institution_id===urlInstId;
+      });
+      // Fallback: match by institution name if institution_id not stored
+      // Build campus list from institutions API data (stored in ALL_INSTITUTIONS as campus_id -> {campus, institution, institution_id})
+      var filtered=ALL_STUDENTS.filter(function(s){
+        var inst=ALL_INSTITUTIONS[s.campus_id]||{};
+        return inst.institution_id===urlInstId;
+      });
+      ALL_STUDENTS=filtered;
+      // Show banner
+      var banner=document.getElementById('instFilterBanner');
+      if(banner&&filtered.length>0){
+        var instName=(ALL_INSTITUTIONS[filtered[0].campus_id]||{}).institution||'Institution';
+        document.getElementById('instFilterName').textContent=instName;
+        banner.style.display='block';
+      } else if(banner){
+        banner.style.display='block';
+        document.getElementById('instFilterName').textContent='Selected institution';
+      }
+    }
+
     renderStats(ALL_STUDENTS);
     renderTable(ALL_STUDENTS);
     document.getElementById('loadingMsg').style.display='none';

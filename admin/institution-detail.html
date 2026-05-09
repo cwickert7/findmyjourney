@@ -465,7 +465,8 @@ async function updateStatus(){
 // Status changes handled by dropdown
 
 function viewStudents(){
-  alert('Student portal coming in Phase 2.');
+  var instId=INST_DATA?INST_DATA.id:'';
+  window.location.href='/admin/students.html?institution_id='+instId;
 }
 
 function addCampus(){
