@@ -202,7 +202,8 @@ tr:not(.sel):hover td{background:#FAF7F2;cursor:pointer}
 <div class="modal-overlay" id="uploadModal">
   <div class="modal">
     <h3>Upload student list</h3>
-    <p class="modal-desc">Upload an Excel file (.xlsx) with columns: First Name, Last Name, Email, Year Level. Maximum 100 students per upload.</p>
+    <p class="modal-desc">Upload a completed student list. Maximum 100 students per upload.</p>
+    <p style="margin-bottom:16px"><a href="/fmj-student-upload-template.xlsx" download style="font-size:13px;color:#C4714A;text-decoration:none;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download template (.xlsx)</a></p>
     <div class="field"><label>Excel file (.xlsx)</label><input type="file" id="uploadFile" accept=".xlsx,.xls,.csv"></div>
     <div class="modal-actions">
       <button class="btn-primary" onclick="processUpload()">Upload &amp; send links</button>
