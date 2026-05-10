@@ -199,52 +199,12 @@ footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,2
 <div class="highlight-box"><p>&#x1F4E7; To discuss a pilot, contact us at <a href="mailto:hello@findmyjourney.com.au">hello@findmyjourney.com.au</a> or <a href="/contact.html">complete our contact form</a>.</p></div>
 </div>
 </div>
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand">
-          <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
-          <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1">
-  <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px">find my</span>
-  <span style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:#fff;letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
-</div>
-        </div>
-        <div class="footer-desc">AI-powered career discovery for young Australians aged <span style="white-space:nowrap">15&#x2013;25</span>. Built on real psychology. Genuinely Australian.</div>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Product</div>
-        <a href="https://findmyjourney.com.au" target="_blank">Take the assessment</a>
-        <a href="/cv-builder.html">CV Builder</a>
-        <a href="/how-it-works.html">How it works</a>
-        <a href="/real-explorers.html">Real Explorers</a>
-        <a href="/why-find-my-journey.html">Why Find My Journey</a>
-        <a href="/a-real-result.html">A Real Result</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Organisations</div>
-        <a href="/schools.html">Schools</a>
-        <a href="/tafe.html">TAFE &amp; RTOs</a>
-        <a href="/des.html">DES providers</a>
-        <a href="/contact.html">Contact us</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Legal</div>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Use</a>
-        <a href="/accessibility.html">Accessibility</a>
-        <a href="/impact.html">Our Impact</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">&#xA9; 2026 Find My Journey &nbsp;&#xB7;&nbsp; For guidance only &#x2014; not a substitute for professional career counselling &nbsp;&#xB7;&nbsp; Under 15? Please let a parent or guardian know you&#x2019;re using this tool.</div>
-      <div class="footer-legal">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="fmj-footer"></div>
+<script>
+fetch('/footer.html').then(function(r){return r.text();}).then(function(html){
+  document.getElementById('fmj-footer').outerHTML=html;
+});
+</script>
 <script>
 function toggleNav(){
   var m=document.getElementById('navMobile');
