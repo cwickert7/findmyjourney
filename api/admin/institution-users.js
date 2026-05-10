@@ -50,35 +50,57 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Step 1: Invite user via Supabase Auth invite endpoint
-    const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        data: { name, role, institution_user: true }
-      })
-    });
+    // Step 1: Create auth user with a temporary password, then send password reset
+    let authUserId = null;
+    let inviteActionLink = null;
 
-    const inviteData = await inviteRes.json();
-
-    // If user already exists in auth, that's ok — get their ID
-    let authUserId = inviteData.id;
-    if (!inviteRes.ok && !authUserId) {
-      // Try to find existing auth user by listing and filtering
-      const existingRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
-        headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` }
+    try {
+      // Create the user in Supabase Auth
+      const createRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          email_confirm: true,
+          user_metadata: { name, role, institution_user: true }
+        })
       });
-      const existingData = await existingRes.json();
-      const match = existingData.users && existingData.users.find(u => u.email === email);
-      if (match) {
-        authUserId = match.id;
-      } else {
-        return res.status(500).json({ error: inviteData.message || 'Failed to create user account' });
+
+      const createText = await createRes.text();
+      let createData = {};
+      try { createData = JSON.parse(createText); } catch(e) {}
+
+      if (createRes.ok && createData.id) {
+        authUserId = createData.id;
+      } else if (createData.msg && createData.msg.includes('already been registered')) {
+        // User already exists — look them up
+        const listRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?page=1&per_page=1000`, {
+          headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` }
+        });
+        const listText = await listRes.text();
+        let listData = {};
+        try { listData = JSON.parse(listText); } catch(e) {}
+        const match = listData.users && listData.users.find(u => u.email === email);
+        if (match) authUserId = match.id;
+      }
+    } catch(createErr) {
+      console.error('Create user error:', createErr.message);
+    }
+
+    // Step 1b: Send password reset email so user can set their own password
+    if (authUserId) {
+      try {
+        await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+          method: 'POST',
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+      } catch(recoverErr) {
+        console.error('Recovery email error:', recoverErr.message);
       }
     }
 
@@ -91,7 +113,7 @@ export default async function handler(req, res) {
     const instName = instData && instData[0] ? instData[0].name : 'your institution';
 
     // Use Supabase invite action link if available, otherwise portal login
-    const portalUrl = inviteData.action_link || 
+    const portalUrl = inviteActionLink || 
       `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/login.html`;
 
     await fetch('https://api.resend.com/emails', {
