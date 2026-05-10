@@ -50,8 +50,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Step 1: Invite user via Supabase Auth Admin API
-    const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+    // Step 1: Invite user via Supabase Auth invite endpoint
+    const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -60,11 +60,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         email,
-        email_confirm: true,
-        user_metadata: { name, role, institution_user: true },
-        // Send invite email
-        invite: true,
-        data: { name, role }
+        data: { name, role, institution_user: true }
       })
     });
 
@@ -73,13 +69,14 @@ export default async function handler(req, res) {
     // If user already exists in auth, that's ok — get their ID
     let authUserId = inviteData.id;
     if (!inviteRes.ok && !authUserId) {
-      // Try to find existing auth user
-      const existingRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?email=${encodeURIComponent(email)}`, {
+      // Try to find existing auth user by listing and filtering
+      const existingRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
         headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` }
       });
       const existingData = await existingRes.json();
-      if (existingData.users && existingData.users.length > 0) {
-        authUserId = existingData.users[0].id;
+      const match = existingData.users && existingData.users.find(u => u.email === email);
+      if (match) {
+        authUserId = match.id;
       } else {
         return res.status(500).json({ error: inviteData.message || 'Failed to create user account' });
       }
@@ -93,7 +90,9 @@ export default async function handler(req, res) {
     const instData = await institutionRes.json();
     const instName = instData && instData[0] ? instData[0].name : 'your institution';
 
-    const portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/login.html`;
+    // Use Supabase invite action link if available, otherwise portal login
+    const portalUrl = inviteData.action_link || 
+      `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/login.html`;
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
