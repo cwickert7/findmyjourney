@@ -112,9 +112,34 @@ export default async function handler(req, res) {
     const instData = await institutionRes.json();
     const instName = instData && instData[0] ? instData[0].name : 'your institution';
 
-    // Use Supabase invite action link if available, otherwise portal login
-    const portalUrl = inviteActionLink || 
-      `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/login.html`;
+    // Generate a password reset token for the new user
+    let portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html`;
+    if (authUserId) {
+      try {
+        const resetRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${authUserId}/recovery`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_SERVICE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+        });
+        const resetText = await resetRes.text();
+        let resetData = {};
+        try { resetData = JSON.parse(resetText); } catch(e) {}
+        if (resetData.action_link) {
+          // Extract token from action_link and build our own URL
+          const actionUrl = new URL(resetData.action_link);
+          const token = actionUrl.searchParams.get('token') || actionUrl.hash.match(/access_token=([^&]+)/)?.[1];
+          if (token) {
+            portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html?token=${token}&type=recovery`;
+          }
+        }
+      } catch(resetErr) {
+        console.error('Reset link error:', resetErr.message);
+      }
+    }
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
