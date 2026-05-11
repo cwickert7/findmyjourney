@@ -4,8 +4,9 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { token, password } = req.body;
-  if (!token || !password) return res.status(400).json({ error: 'Missing required fields' });
+  const { token, access_token, password } = req.body;
+  const rawToken = token || access_token;
+  if (!rawToken || !password) return res.status(400).json({ error: 'Missing required fields' });
   if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -17,7 +18,7 @@ export default async function handler(req, res) {
     const exchangeRes = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-      body: JSON.stringify({ token, type: 'recovery' })
+      body: JSON.stringify({ token: rawToken, type: 'recovery' })
     });
     const exchangeText = await exchangeRes.text();
     let exchangeData = {};
