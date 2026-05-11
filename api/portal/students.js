@@ -158,7 +158,7 @@ export default async function handler(req, res) {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
         },
         body: JSON.stringify({
-          from: 'Find My Journey <onboarding@resend.dev>',
+          from: 'Find My Journey <onboarding@findmyjourney.com.au>',
           to: [email],
           subject: `${instName} has invited you to Find My Journey`,
           html: `<!DOCTYPE html><html><body style="font-family:sans-serif;background:#F5F0E8;padding:32px">
