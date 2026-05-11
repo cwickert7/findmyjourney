@@ -4,8 +4,8 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { access_token, password } = req.body;
-  if (!access_token || !password) return res.status(400).json({ error: 'Missing required fields' });
+  const { token, password } = req.body;
+  if (!token || !password) return res.status(400).json({ error: 'Missing required fields' });
   if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -13,7 +13,22 @@ export default async function handler(req, res) {
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
   try {
-    // Update the user's password using their recovery token
+    // Step 1: Exchange the raw recovery token for an access token
+    const exchangeRes = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ token, type: 'recovery' })
+    });
+    const exchangeText = await exchangeRes.text();
+    let exchangeData = {};
+    try { exchangeData = JSON.parse(exchangeText); } catch(e) {}
+
+    if (!exchangeRes.ok || !exchangeData.access_token) {
+      return res.status(400).json({ error: 'Invalid or expired reset link. Please request a new one.' });
+    }
+    const access_token = exchangeData.access_token;
+
+    // Step 2: Update the user's password using the exchanged access token
     const updateRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       method: 'PUT',
       headers: {
