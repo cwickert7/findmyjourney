@@ -141,7 +141,7 @@ export default async function handler(req, res) {
     // Send assessment link email
     if (send_link !== false) {
       const SITE_URL = process.env.SITE_URL || 'https://findmyjourney.com.au';
-      const assessmentLink = `${SITE_URL}?student=${linkUuid}&first=${encodeURIComponent(first_name)}&last=${encodeURIComponent(last_name)}`;
+      const assessmentLink = `${SITE_URL}/assessment?student=${linkUuid}&first=${encodeURIComponent(first_name)}&last=${encodeURIComponent(last_name)}`;
 
       // Get institution name
       const instRes = await fetch(
