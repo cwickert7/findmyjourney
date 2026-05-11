@@ -13,11 +13,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#FAF7F2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
 .card{background:#fff;border:1px solid #E8DFD0;border-radius:20px;padding:44px;width:100%;max-width:420px;box-shadow:0 4px 32px rgba(44,36,34,.06)}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:72px;justify-content:center}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:32px;justify-content:center}
 .brand-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1}
 .brand-top{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:2px}
 .brand-name{font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:#2C2422;letter-spacing:-.01em}
-.portal-badge{background:#FEF3EC;border:1px solid rgba(196,113,74,.25);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;color:#C4714A;letter-spacing:.06em;text-align:center;margin-bottom:72px}
+.portal-badge{background:#FEF3EC;border:1px solid rgba(196,113,74,.25);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;color:#C4714A;letter-spacing:.06em;text-align:center;margin-bottom:28px}
 h1{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#2C2422;margin-bottom:6px;text-align:center}
 .sub{font-size:13px;color:#9A8E84;text-align:center;margin-bottom:28px;line-height:1.5}
 .field{margin-bottom:16px}
@@ -35,13 +35,13 @@ h1{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#2C2422;mar
 </head>
 <body>
 <div class="card">
-  <a href="/" style="text-decoration:none;display:flex;justify-content:center"><div class="brand" style="margin-bottom:0">
+  <div class="brand">
     <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
     <div class="brand-text">
       <span class="brand-top">find my</span>
       <span class="brand-name">Journey</span>
     </div>
-  </div></a>
+  </div>
   <div class="portal-badge">Institution Portal</div>
   <h1>Welcome back</h1>
   <p class="sub">Sign in to manage your students<br>and view their results.</p>
@@ -96,6 +96,17 @@ async function signIn(){
 
 function showErr(msg){var e=g('errorMsg');e.textContent=msg;e.style.display='block';}
 document.addEventListener('keydown',function(e){if(e.key==='Enter')signIn();});
+
+// If recovery/invite token in URL hash — redirect to reset-password page
+(function(){
+  var hash=window.location.hash.substring(1);
+  var params={};
+  hash.split('&').forEach(function(p){var kv=p.split('=');params[decodeURIComponent(kv[0])]=decodeURIComponent(kv[1]||'');});
+  if(params['type']==='recovery'||params['type']==='invite'){
+    window.location.href='/portal/reset-password.html'+window.location.hash;
+    return;
+  }
+})();
 
 // Redirect if already logged in
 var sess=localStorage.getItem('fmj_portal_session');
