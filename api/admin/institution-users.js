@@ -112,26 +112,35 @@ export default async function handler(req, res) {
     const instData = await institutionRes.json();
     const instName = instData && instData[0] ? instData[0].name : 'your institution';
 
-    // Generate a password reset token for the new user
+    // Generate a password reset link using Supabase admin generate link endpoint
     let portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html`;
     if (authUserId) {
       try {
-        const resetRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${authUserId}/recovery`, {
+        const linkRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/generate_link`, {
           method: 'POST',
           headers: {
             'apikey': SUPABASE_SERVICE_KEY,
             'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({})
+          body: JSON.stringify({
+            type: 'recovery',
+            email,
+            options: {
+              redirect_to: `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html`
+            }
+          })
         });
-        const resetText = await resetRes.text();
-        let resetData = {};
-        try { resetData = JSON.parse(resetText); } catch(e) {}
-        if (resetData.action_link) {
-          // Extract token from action_link and build our own URL
-          const actionUrl = new URL(resetData.action_link);
-          const token = actionUrl.searchParams.get('token') || actionUrl.hash.match(/access_token=([^&]+)/)?.[1];
+        const linkText = await linkRes.text();
+        console.log('Generate link response:', linkText);
+        let linkData = {};
+        try { linkData = JSON.parse(linkText); } catch(e) {}
+        if (linkData.properties && linkData.properties.hashed_token) {
+          portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html?token=${linkData.properties.hashed_token}&type=recovery`;
+        } else if (linkData.action_link) {
+          // Extract token from action_link
+          const actionUrl = new URL(linkData.action_link);
+          const token = actionUrl.searchParams.get('token');
           if (token) {
             portalUrl = `${process.env.SITE_URL || 'https://findmyjourney.com.au'}/portal/reset-password.html?token=${token}&type=recovery`;
           }
