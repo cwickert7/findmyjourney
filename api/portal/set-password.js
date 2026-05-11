@@ -15,10 +15,11 @@ export default async function handler(req, res) {
 
   try {
     // Step 1: Exchange the raw recovery token for an access token
+    // generate_link returns a hashed_token which uses token_hash parameter
     const exchangeRes = await fetch(`${SUPABASE_URL}/auth/v1/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-      body: JSON.stringify({ token: rawToken, type: 'recovery' })
+      body: JSON.stringify({ token_hash: rawToken, type: 'recovery' })
     });
     const exchangeText = await exchangeRes.text();
     let exchangeData = {};
