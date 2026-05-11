@@ -110,7 +110,20 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter')signIn();});
 
 // Redirect if already logged in
 var sess=localStorage.getItem('fmj_portal_session');
-if(sess){try{var s=JSON.parse(sess);if(s&&s.access_token){window.location.href='/portal/dashboard.html';}}catch(e){}}
+if(sess){
+  try{
+    var s=JSON.parse(sess);
+    if(s&&s.access_token){
+      // Verify session is still valid before redirecting
+      fetch('/api/portal/auth',{method:'GET',headers:{'Authorization':'Bearer '+s.access_token}})
+        .then(function(r){
+          if(r.ok){window.location.href='/portal/dashboard.html';}
+          else{localStorage.removeItem('fmj_portal_session');}
+        })
+        .catch(function(){localStorage.removeItem('fmj_portal_session');});
+    }
+  }catch(e){localStorage.removeItem('fmj_portal_session');}
+}
 </script>
 </body>
 </html>
