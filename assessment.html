@@ -957,13 +957,14 @@ var IPSATIVE_PAIRS=[
   {id:'ip7',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip7a',e:'&#x1F4BB;',l:'Designing or building digital products'},b:{v:'ip7b',e:'&#x1F3A8;',l:'Writing, music, film or visual art'}},
   {id:'ip8',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip8a',e:'&#x1F43E;',l:'Working with animals or in conservation'},b:{v:'ip8b',e:'&#x1F4B0;',l:'Sales, finance or business development'}},
   {id:'ip9',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip9a',e:'&#x1F3E5;',l:'Caring professions &mdash; health, disability, aged care, early childhood'},b:{v:'ip9b',e:'&#x1F52C;',l:'Research, science or environmental work'}},
-  {id:'ip10',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip10a',e:'&#x1F680;',l:'Starting or building something entrepreneurial'},b:{v:'ip10b',e:'&#x1F3EB;',l:'Teaching, mentoring or sharing knowledge'}}
+  {id:'ip10',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip10a',e:'&#x1F680;',l:'Starting or building something entrepreneurial'},b:{v:'ip10b',e:'&#x1F3EB;',l:'Teaching, mentoring or sharing knowledge'}},
+  {id:'ip11',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip11a',e:'&#x1F4B0;',l:'Creating something with commercial or financial impact'},b:{v:'ip11b',e:'&#x1F30D;',l:'Creating something with social or environmental impact'}}
 ];
 
 function scoreIpsative(A){
   var scores={tech:0,creative:0,caring:0,trades:0,nature:0,commerce:0,sport:0,learning:0};
-  var map={ip1a:'caring',ip1b:'tech',ip2a:'creative',ip2b:'trades',ip3a:'nature',ip3b:'commerce',ip4a:'caring',ip4b:'learning',ip5a:'creative',ip5b:'caring',ip6a:'sport',ip6b:'trades',ip7a:'tech',ip7b:'creative',ip8a:'nature',ip8b:'commerce',ip9a:'caring',ip9b:'nature',ip10a:'commerce',ip10b:'creative'};
-  ['ip1','ip2','ip3','ip4','ip5','ip6','ip7','ip8','ip9','ip10'].forEach(function(id){var val=A[id];if(val&&map[val])scores[map[val]]=(scores[map[val]]||0)+1;});
+  var map={ip1a:'caring',ip1b:'tech',ip2a:'creative',ip2b:'trades',ip3a:'nature',ip3b:'commerce',ip4a:'caring',ip4b:'learning',ip5a:'creative',ip5b:'caring',ip6a:'sport',ip6b:'trades',ip7a:'tech',ip7b:'creative',ip8a:'nature',ip8b:'commerce',ip9a:'caring',ip9b:'nature',ip10a:'commerce',ip10b:'creative',ip11a:'commerce',ip11b:'nature'};
+  ['ip1','ip2','ip3','ip4','ip5','ip6','ip7','ip8','ip9','ip10','ip11'].forEach(function(id){var val=A[id];if(val&&map[val])scores[map[val]]=(scores[map[val]]||0)+1;});
   return scores;
 }
 function topIpsativeInterests(A){
@@ -1002,6 +1003,10 @@ var P1=[
 
 // ── PHASE 2 COMMON A ──
 var P2A=[
+  {id:'pulls',ph:'p2',type:'multi',cols:2,max:2,lbl:'What pulls you in',q:'Outside of everything you&rsquo;ve already told us &mdash; which of these has ever genuinely interested or excited you, even a little?',hint:'Pick up to 2. Go with your gut &mdash; not what sounds impressive.',
+   os:[{v:'food_creative',e:'&#x1F373;',l:'Food and creating with your hands',d:'Cooking, baking, brewing, pastry &mdash; making something people experience'},{v:'justice_order',e:'&#x2696;&#xFE0F;',l:'Justice, law and keeping people safe',d:'Police, law, courts, corrections, forensics, emergency services'},{v:'service_adventure',e:'&#x1F6A8;',l:'Service, adventure and being in the field',d:'Military, emergency services, aviation, maritime, remote work'},{v:'people_places',e:'&#x2708;&#xFE0F;',l:'People, places and experiences',d:'Tourism, events, hospitality management, travel'},{v:'appearance_wellness',e:'&#x2702;&#xFE0F;',l:'Appearance, beauty and wellness',d:'Hair, beauty, skincare, nail tech, massage'},{v:'sustainability_future',e:'&#x1F30D;',l:'Sustainability and the future of the planet',d:'Climate, renewable energy, ESG, circular economy'},{v:'none_pull',e:'&#x1F937;',l:'None of these particularly',d:'I&rsquo;m already well covered by what I said earlier'}]},
+  {id:'study_appetite',ph:'p2',type:'opts',cols:1,lbl:'Your study appetite',q:'When you picture the path to your ideal career &mdash; how much study feels right for you?',hint:'Be honest &mdash; there&rsquo;s no wrong answer. This shapes the pathways we show you.',
+   os:[{v:'degree_yes',e:'&#x1F393;',l:'I&rsquo;d happily do a university degree if it leads somewhere I care about',d:'3&ndash;5 years study is fine'},{v:'degree_maybe',e:'&#x1F4D6;',l:'I&rsquo;d consider a degree but I&rsquo;m not set on it',d:'Open to uni but also other paths'},{v:'tafe_trade',e:'&#x1F527;',l:'I&rsquo;d prefer a TAFE certificate, diploma or apprenticeship',d:'Practical, faster, hands-on training'},{v:'work_now',e:'&#x1F680;',l:'I want to start working as soon as possible',d:'On-the-job learning suits me best'},{v:'unsure_study',e:'&#x1F937;',l:'Honestly not sure yet',d:'Still figuring this out &mdash; completely OK'}]},
   {id:'proud',ph:'p2',type:'opts',cols:1,lbl:'What drives you',q:'Think of a moment &mdash; at school, at home, anywhere &mdash; when you felt genuinely satisfied with yourself. What had you done?',
    os:[{v:'helped',e:'&#x1F917;',l:'I&rsquo;d helped someone and it made a real difference',d:'They were better off because of me'},{v:'made',e:'&#x1F528;',l:'I&rsquo;d made or fixed something I could see',d:'A real result from my own effort'},{v:'learned',e:'&#x1F9E0;',l:'I&rsquo;d figured something out or learned something new',d:'Growing, discovering, understanding better'},{v:'earned',e:'&#x1F4B5;',l:'I&rsquo;d earned recognition or reward',d:'Acknowledged for my effort'},{v:'together',e:'&#x1F91D;',l:'We&rsquo;d achieved something together',d:'Shared success with others'},{v:'quiet',e:'&#x1F60C;',l:'I&rsquo;d done what needed doing, quietly and well',d:'No fuss &mdash; just got it right'}]},
   {id:'flow',ph:'p2',type:'opts',cols:2,lbl:'In the zone',q:'What makes time fly for you?',
@@ -1463,6 +1468,9 @@ function buildSys(isPT){
     (isCreative?'CREATIVE: never suggest marketing coordinator as a creative role. Suggest: graphic designer, illustrator, photographer, musician, arts administrator, UX designer, film editor, community arts worker.\n':'')+
     (isAcademic?'ACADEMIC: include professional pathways with honest study timeframes.\n':'')+
     'ALWAYS: trades equal to professional paths. Aged care is a calling not a fallback. Arts/music/teaching/sport are real careers.\n'+
+    'PROFESSION BREADTH: range across ALL Australian professions without restriction. Do not default to obvious or common roles. Actively consider: medicine, surgery, dentistry, law, architecture, engineering, psychology, social work, forensics, aviation, maritime, military, police, emergency services, chef, baker, pastry chef, sommelier, hospitality management, tourism, event management, hair and beauty, funeral services, manufacturing, quality control, sustainability analyst, climate risk consultant, ESG analyst, renewable energy, drone pilot, prompt engineer, AI trainer, YouTuber, content creator, streamer, esports, cyber risk consultant, UX researcher, data scientist, biomedical scientist, pharmacist, optometrist, physiotherapist, occupational therapist, paramedic, radiographer, midwife, and any other legitimate Australian career path. Never artificially narrow recommendations to a short list of familiar roles.\n'+
+    'EMERGING ROLES: treat creator economy, climate and sustainability, cyber and digital risk, drone and autonomous systems, AI and machine learning, esports and gaming, and social enterprise as fully legitimate career pathways equal to traditional professions.\n'+
+    'STUDY PATHWAY: always include degree pathways where appropriate to the role. Never limit pathways to TAFE certificates only. Match pathway to role requirements: surgeon needs medical degree, chef may need TAFE or direct entry, software engineer may suit either. Study appetite signal: '+(A.study_appetite||'not provided')+'.\n'+
     'Outdoor leisure (enjoys=nature) does NOT mean outdoor vocational preference unless Explorer also selected outdoor work environment.\n'+
     'BRANCH WEIGHTING: branch answer is ONE signal. Max 1 result directly in named field. Second result must draw from adjacent fields via broader profile.\n\n'+
     // Self-efficacy framing
@@ -1481,7 +1489,7 @@ function buildSys(isPT){
     'GENDER context (for representation framing only, NOT for narrowing career options): '+(A.gender||'not provided')+'. If self_efficacy=se_barrier and gender is provided, use this to specifically name representation patterns and provide relevant role models.\n'+
     
     'Return ONLY valid JSON, zero markdown:\n'+
-    '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[2 job objects],"tips":["tip1","tip2","tip3"]}\n'+
+    '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[3 job objects],"tips":["tip1","tip2","tip3"]}\n'+
     'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"Accurate Australian starting salary range in AUD. Research realistic figures for this specific role in Australia e.g. $45,000 - $55,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced salary range in AUD for this specific role e.g. $70,000 - $90,000. Must align with salaryEntry range.","outlook":"growing|stable|declining"}\n'+
     'Include nowJobs only if wantsNow=true. Include careerJobs only if wantsCareer=true.';
 }
@@ -1544,7 +1552,10 @@ function buildUserMsg(wN,wC,isPT){
     'Problem-solving orientation: '+(A.problem_response||'not provided')+'\n'+
     'Prior negative experience: '+(A.prior_negative||'not asked')+(A.prior_negative_what?' / '+A.prior_negative_what:'')+'\n'+
     'Values ranked: top3='+JSON.stringify(A.values||[])+(A.values2?' top2='+JSON.stringify(A.values2):'')+' top1='+(A.values1||'not provided')+'\n'+
-    'Gender: '+(A.gender||'prefer_not');
+    'Gender: '+(A.gender||'prefer_not')+'\n'+
+    'What pulls them in (new sectors): '+JSON.stringify(A.pulls||[])+'\n'+
+    'Study appetite: '+(A.study_appetite||'not provided')+'\n'+
+    'Commercial vs mission orientation (ip11): '+(A.ip11||'not provided')+(A.ip11==='ip11a'?' (commercial/financial impact)':A.ip11==='ip11b'?' (social/environmental impact)':'');
 }
 
 function genR(){
@@ -2270,13 +2281,14 @@ var IPSATIVE_PAIRS=[
   {id:'ip7',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip7a',e:'&#x1F4BB;',l:'Designing or building digital products'},b:{v:'ip7b',e:'&#x1F3A8;',l:'Writing, music, film or visual art'}},
   {id:'ip8',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip8a',e:'&#x1F43E;',l:'Working with animals or in conservation'},b:{v:'ip8b',e:'&#x1F4B0;',l:'Sales, finance or business development'}},
   {id:'ip9',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip9a',e:'&#x1F3E5;',l:'Caring professions &mdash; health, disability, aged care, early childhood'},b:{v:'ip9b',e:'&#x1F52C;',l:'Research, science or environmental work'}},
-  {id:'ip10',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip10a',e:'&#x1F680;',l:'Starting or building something entrepreneurial'},b:{v:'ip10b',e:'&#x1F3EB;',l:'Teaching, mentoring or sharing knowledge'}}
+  {id:'ip10',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip10a',e:'&#x1F680;',l:'Starting or building something entrepreneurial'},b:{v:'ip10b',e:'&#x1F3EB;',l:'Teaching, mentoring or sharing knowledge'}},
+  {id:'ip11',ph:'p1',lbl:'Quick picks',q:'Which sounds more like you?',a:{v:'ip11a',e:'&#x1F4B0;',l:'Creating something with commercial or financial impact'},b:{v:'ip11b',e:'&#x1F30D;',l:'Creating something with social or environmental impact'}}
 ];
 
 function scoreIpsative(A){
   var scores={tech:0,creative:0,caring:0,trades:0,nature:0,commerce:0,sport:0,learning:0};
-  var map={ip1a:'caring',ip1b:'tech',ip2a:'creative',ip2b:'trades',ip3a:'nature',ip3b:'commerce',ip4a:'caring',ip4b:'learning',ip5a:'creative',ip5b:'caring',ip6a:'sport',ip6b:'trades',ip7a:'tech',ip7b:'creative',ip8a:'nature',ip8b:'commerce',ip9a:'caring',ip9b:'nature',ip10a:'commerce',ip10b:'creative'};
-  ['ip1','ip2','ip3','ip4','ip5','ip6','ip7','ip8','ip9','ip10'].forEach(function(id){var val=A[id];if(val&&map[val])scores[map[val]]=(scores[map[val]]||0)+1;});
+  var map={ip1a:'caring',ip1b:'tech',ip2a:'creative',ip2b:'trades',ip3a:'nature',ip3b:'commerce',ip4a:'caring',ip4b:'learning',ip5a:'creative',ip5b:'caring',ip6a:'sport',ip6b:'trades',ip7a:'tech',ip7b:'creative',ip8a:'nature',ip8b:'commerce',ip9a:'caring',ip9b:'nature',ip10a:'commerce',ip10b:'creative',ip11a:'commerce',ip11b:'nature'};
+  ['ip1','ip2','ip3','ip4','ip5','ip6','ip7','ip8','ip9','ip10','ip11'].forEach(function(id){var val=A[id];if(val&&map[val])scores[map[val]]=(scores[map[val]]||0)+1;});
   return scores;
 }
 function topIpsativeInterests(A){
@@ -2315,6 +2327,10 @@ var P1=[
 
 // ── PHASE 2 COMMON A ──
 var P2A=[
+  {id:'pulls',ph:'p2',type:'multi',cols:2,max:2,lbl:'What pulls you in',q:'Outside of everything you&rsquo;ve already told us &mdash; which of these has ever genuinely interested or excited you, even a little?',hint:'Pick up to 2. Go with your gut &mdash; not what sounds impressive.',
+   os:[{v:'food_creative',e:'&#x1F373;',l:'Food and creating with your hands',d:'Cooking, baking, brewing, pastry &mdash; making something people experience'},{v:'justice_order',e:'&#x2696;&#xFE0F;',l:'Justice, law and keeping people safe',d:'Police, law, courts, corrections, forensics, emergency services'},{v:'service_adventure',e:'&#x1F6A8;',l:'Service, adventure and being in the field',d:'Military, emergency services, aviation, maritime, remote work'},{v:'people_places',e:'&#x2708;&#xFE0F;',l:'People, places and experiences',d:'Tourism, events, hospitality management, travel'},{v:'appearance_wellness',e:'&#x2702;&#xFE0F;',l:'Appearance, beauty and wellness',d:'Hair, beauty, skincare, nail tech, massage'},{v:'sustainability_future',e:'&#x1F30D;',l:'Sustainability and the future of the planet',d:'Climate, renewable energy, ESG, circular economy'},{v:'none_pull',e:'&#x1F937;',l:'None of these particularly',d:'I&rsquo;m already well covered by what I said earlier'}]},
+  {id:'study_appetite',ph:'p2',type:'opts',cols:1,lbl:'Your study appetite',q:'When you picture the path to your ideal career &mdash; how much study feels right for you?',hint:'Be honest &mdash; there&rsquo;s no wrong answer. This shapes the pathways we show you.',
+   os:[{v:'degree_yes',e:'&#x1F393;',l:'I&rsquo;d happily do a university degree if it leads somewhere I care about',d:'3&ndash;5 years study is fine'},{v:'degree_maybe',e:'&#x1F4D6;',l:'I&rsquo;d consider a degree but I&rsquo;m not set on it',d:'Open to uni but also other paths'},{v:'tafe_trade',e:'&#x1F527;',l:'I&rsquo;d prefer a TAFE certificate, diploma or apprenticeship',d:'Practical, faster, hands-on training'},{v:'work_now',e:'&#x1F680;',l:'I want to start working as soon as possible',d:'On-the-job learning suits me best'},{v:'unsure_study',e:'&#x1F937;',l:'Honestly not sure yet',d:'Still figuring this out &mdash; completely OK'}]},
   {id:'proud',ph:'p2',type:'opts',cols:1,lbl:'What drives you',q:'Think of a moment &mdash; at school, at home, anywhere &mdash; when you felt genuinely satisfied with yourself. What had you done?',
    os:[{v:'helped',e:'&#x1F917;',l:'I&rsquo;d helped someone and it made a real difference',d:'They were better off because of me'},{v:'made',e:'&#x1F528;',l:'I&rsquo;d made or fixed something I could see',d:'A real result from my own effort'},{v:'learned',e:'&#x1F9E0;',l:'I&rsquo;d figured something out or learned something new',d:'Growing, discovering, understanding better'},{v:'earned',e:'&#x1F4B5;',l:'I&rsquo;d earned recognition or reward',d:'Acknowledged for my effort'},{v:'together',e:'&#x1F91D;',l:'We&rsquo;d achieved something together',d:'Shared success with others'},{v:'quiet',e:'&#x1F60C;',l:'I&rsquo;d done what needed doing, quietly and well',d:'No fuss &mdash; just got it right'}]},
   {id:'flow',ph:'p2',type:'opts',cols:2,lbl:'In the zone',q:'What makes time fly for you?',
@@ -2776,6 +2792,9 @@ function buildSys(isPT){
     (isCreative?'CREATIVE: never suggest marketing coordinator as a creative role. Suggest: graphic designer, illustrator, photographer, musician, arts administrator, UX designer, film editor, community arts worker.\n':'')+
     (isAcademic?'ACADEMIC: include professional pathways with honest study timeframes.\n':'')+
     'ALWAYS: trades equal to professional paths. Aged care is a calling not a fallback. Arts/music/teaching/sport are real careers.\n'+
+    'PROFESSION BREADTH: range across ALL Australian professions without restriction. Do not default to obvious or common roles. Actively consider: medicine, surgery, dentistry, law, architecture, engineering, psychology, social work, forensics, aviation, maritime, military, police, emergency services, chef, baker, pastry chef, sommelier, hospitality management, tourism, event management, hair and beauty, funeral services, manufacturing, quality control, sustainability analyst, climate risk consultant, ESG analyst, renewable energy, drone pilot, prompt engineer, AI trainer, YouTuber, content creator, streamer, esports, cyber risk consultant, UX researcher, data scientist, biomedical scientist, pharmacist, optometrist, physiotherapist, occupational therapist, paramedic, radiographer, midwife, and any other legitimate Australian career path. Never artificially narrow recommendations to a short list of familiar roles.\n'+
+    'EMERGING ROLES: treat creator economy, climate and sustainability, cyber and digital risk, drone and autonomous systems, AI and machine learning, esports and gaming, and social enterprise as fully legitimate career pathways equal to traditional professions.\n'+
+    'STUDY PATHWAY: always include degree pathways where appropriate to the role. Never limit pathways to TAFE certificates only. Match pathway to role requirements: surgeon needs medical degree, chef may need TAFE or direct entry, software engineer may suit either. Study appetite signal: '+(A.study_appetite||'not provided')+'.\n'+
     'Outdoor leisure (enjoys=nature) does NOT mean outdoor vocational preference unless Explorer also selected outdoor work environment.\n'+
     'BRANCH WEIGHTING: branch answer is ONE signal. Max 1 result directly in named field. Second result must draw from adjacent fields via broader profile.\n\n'+
     // Self-efficacy framing
@@ -2794,7 +2813,7 @@ function buildSys(isPT){
     'GENDER context (for representation framing only, NOT for narrowing career options): '+(A.gender||'not provided')+'. If self_efficacy=se_barrier and gender is provided, use this to specifically name representation patterns and provide relevant role models.\n'+
     
     'Return ONLY valid JSON, zero markdown:\n'+
-    '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[2 job objects],"tips":["tip1","tip2","tip3"]}\n'+
+    '{"encouragement":"2 warm sentences referencing something specific they told us.","summary":"1 sentence starting with their name.","nowJobs":[2 job objects],"careerJobs":[3 job objects],"tips":["tip1","tip2","tip3"]}\n'+
     'Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because - link to specific answer","pathway":["Do now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"one specific action naming a real Australian website or organisation","envFit":"why this environment suits their specific needs and aversions","salaryEntry":"Accurate Australian starting salary range in AUD. Research realistic figures for this specific role in Australia e.g. $45,000 - $55,000. Be accurate not aspirational.","salaryExperienced":"Accurate Australian experienced salary range in AUD for this specific role e.g. $70,000 - $90,000. Must align with salaryEntry range.","outlook":"growing|stable|declining"}\n'+
     'Include nowJobs only if wantsNow=true. Include careerJobs only if wantsCareer=true.';
 }
@@ -2857,7 +2876,10 @@ function buildUserMsg(wN,wC,isPT){
     'Problem-solving orientation: '+(A.problem_response||'not provided')+'\n'+
     'Prior negative experience: '+(A.prior_negative||'not asked')+(A.prior_negative_what?' / '+A.prior_negative_what:'')+'\n'+
     'Values ranked: top3='+JSON.stringify(A.values||[])+(A.values2?' top2='+JSON.stringify(A.values2):'')+' top1='+(A.values1||'not provided')+'\n'+
-    'Gender: '+(A.gender||'prefer_not');
+    'Gender: '+(A.gender||'prefer_not')+'\n'+
+    'What pulls them in (new sectors): '+JSON.stringify(A.pulls||[])+'\n'+
+    'Study appetite: '+(A.study_appetite||'not provided')+'\n'+
+    'Commercial vs mission orientation (ip11): '+(A.ip11||'not provided')+(A.ip11==='ip11a'?' (commercial/financial impact)':A.ip11==='ip11b'?' (social/environmental impact)':'');
 }
 
 function genR(){
