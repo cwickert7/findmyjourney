@@ -5723,7 +5723,7 @@ async function saveViaEmail(){
   }
   // 3. Send results email with return link embedded
   var name=A.name||'Explorer';
-  var returnLink=window.location.origin+'?results='+saved.uuid;
+  var returnLink=window.location.origin+'/assessment?results='+saved.uuid;
   var nowJobs=(RS&&RS.nowJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   var careerJobs=(RS&&RS.careerJobs||[]).map(function(j){return{title:j.title,desc:j.desc,salaryEntry:j.salaryEntry||'',salaryExperienced:j.salaryExperienced||'',outlook:j.outlook||'',matchLevel:j.matchLevel||'',whyYou:j.whyYou||''};});
   try{
