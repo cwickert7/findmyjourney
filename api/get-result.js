@@ -2,7 +2,7 @@
 // Retrieves saved Explorer results by UUID or short code
 // Rate limited: 5 attempts per IP per 15 minutes
 
-const RATE_LIMIT = 5;
+const RATE_LIMIT = 30;
 const RATE_WINDOW = 60 * 15; // 15 minutes in seconds
 
 async function upstashGet(key) {
