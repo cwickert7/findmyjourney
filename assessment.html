@@ -1395,6 +1395,12 @@ phases+='<div class="ppip-new">'+(iconSVGs[i]||('<div class="ppip-i-new">'+p.em+
     '<option value="bec">Bec (20)</option>'+
     '<option value="luca">Luca (24)</option>'+
     '<option value="zac">Zac (21)</option>'+
+    '<option value="mia">Mia (17) — Food</option>'+
+    '<option value="ryan">Ryan (19) — Law/Justice</option>'+
+    '<option value="maya">Maya (16) — Medicine</option>'+
+    '<option value="kai">Kai (22) — Sustainability</option>'+
+    '<option value="sophie">Sophie (18) — Beauty</option>'+
+    '<option value="dev">Dev (23) — Tech/AI</option>'+
     '</select>'+
     '</div>'+
     '</div>';
@@ -2719,6 +2725,12 @@ phases+='<div class="ppip-new">'+(iconSVGs[i]||('<div class="ppip-i-new">'+p.em+
     '<option value="bec">Bec (20)</option>'+
     '<option value="luca">Luca (24)</option>'+
     '<option value="zac">Zac (21)</option>'+
+    '<option value="mia">Mia (17) — Food</option>'+
+    '<option value="ryan">Ryan (19) — Law/Justice</option>'+
+    '<option value="maya">Maya (16) — Medicine</option>'+
+    '<option value="kai">Kai (22) — Sustainability</option>'+
+    '<option value="sophie">Sophie (18) — Beauty</option>'+
+    '<option value="dev">Dev (23) — Tech/AI</option>'+
     '</select>'+
     '</div>'+
     '</div>';
@@ -4978,7 +4990,8 @@ function parseCVText(text,answers){
       noticed:'caring',strengths:'people_s',
       challenge:'moderate',challenge_why:null,
       ip1:'ip1a',ip2:'ip2b',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',ip11:'ip11b',
+      pulls:['sustainability_future'],study_appetite:'tafe_trade',
       _ipsIntroShown:true,
       proud:'helped',flow:'hands_f',
       problem_response:'fix_it',
@@ -5001,7 +5014,8 @@ function parseCVText(text,answers){
       noticed:'reliable',strengths:'practical',
       challenge:'moderate',challenge_why:null,
       ip1:'ip1b',ip2:'ip2b',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
-      ip6:'ip6b',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+      ip6:'ip6b',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',ip11:'ip11a',
+      pulls:['none_pull'],study_appetite:'work_now',
       _ipsIntroShown:true,
       proud:'made',flow:'hands_f',
       problem_response:'fix_it',
@@ -5024,7 +5038,8 @@ function parseCVText(text,answers){
       noticed:'thorough',strengths:'analytical',
       challenge:'complex',challenge_why:null,
       ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5b',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9a',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9a',ip10:'ip10b',ip11:'ip11b',
+      pulls:['none_pull'],study_appetite:'degree_yes',
       _ipsIntroShown:true,
       proud:'learned',flow:'learning_f',
       problem_response:'understand_first',
@@ -5047,7 +5062,8 @@ function parseCVText(text,answers){
       noticed:'calm',strengths:'people_s',
       challenge:'simple',challenge_why:'overwhelmed',
       ip1:'ip1a',ip2:'ip2a',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',ip11:'ip11b',
+      pulls:['none_pull'],study_appetite:'unsure_study',
       _ipsIntroShown:true,
       proud:'quiet',flow:'helping_f',
       problem_response:'tell_someone',
@@ -5070,7 +5086,8 @@ function parseCVText(text,answers){
       noticed:'communicator',strengths:'people_s',
       challenge:'moderate',challenge_why:null,
       ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4a',ip5:'ip5a',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',ip11:'ip11a',
+      pulls:['none_pull'],study_appetite:'degree_maybe',
       _ipsIntroShown:true,
       proud:'together',flow:'helping_f',
       problem_response:'build_it',
@@ -5093,7 +5110,8 @@ function parseCVText(text,answers){
       noticed:'caring',strengths:'practical',
       challenge:'moderate',challenge_why:null,
       ip1:'ip1a',ip2:'ip2b',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
-      ip6:'ip6a',ip7:'ip7b',ip8:'ip8a',ip9:'ip9b',ip10:'ip10b',
+      ip6:'ip6a',ip7:'ip7b',ip8:'ip8a',ip9:'ip9b',ip10:'ip10b',ip11:'ip11b',
+      pulls:['sustainability_future'],study_appetite:'tafe_trade',
       _ipsIntroShown:true,
       proud:'made',flow:'outside_f',
       problem_response:'fix_it',
@@ -5116,7 +5134,8 @@ function parseCVText(text,answers){
       noticed:'creative',strengths:'creative_s',
       challenge:'moderate',challenge_why:null,
       ip1:'ip1b',ip2:'ip2a',ip3:'ip3b',ip4:'ip4a',ip5:'ip5a',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',ip11:'ip11b',
+      pulls:['none_pull'],study_appetite:'degree_maybe',
       _ipsIntroShown:true,
       proud:'made',flow:'perform_f',
       problem_response:'build_it',
@@ -5139,7 +5158,8 @@ function parseCVText(text,answers){
       noticed:'calm',strengths:'people_s',
       challenge:'simple',challenge_why:'prefer_simple',
       ip1:'ip1a',ip2:'ip2a',ip3:'ip3a',ip4:'ip4a',ip5:'ip5b',
-      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8a',ip9:'ip9a',ip10:'ip10b',ip11:'ip11b',
+      pulls:['none_pull'],study_appetite:'tafe_trade',
       _ipsIntroShown:true,
       proud:'helped',flow:'helping_f',
       problem_response:'tell_someone',
@@ -5162,7 +5182,8 @@ function parseCVText(text,answers){
       noticed:'driven',strengths:'organising',
       challenge:'complex',challenge_why:null,
       ip1:'ip1b',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
-      ip6:'ip6b',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',
+      ip6:'ip6b',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',ip11:'ip11a',
+      pulls:['none_pull'],study_appetite:'degree_yes',
       _ipsIntroShown:true,
       proud:'earned',flow:'planning',
       problem_response:'build_it',
@@ -5173,6 +5194,150 @@ function parseCVText(text,answers){
       culture:'high_c',need:'freedom',drain:'alone_d',
       fc1:'fc1b',fc2:'fc2a',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6b',
       quit:'repetitive_q',branch:'startup',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    mia:{
+      /* Mia — 17, food/hospitality — tests chef/baker/food pathway */
+      name:'Mia',age:'15_17',gender:'female',schoolYear:'yr11',
+      study:['highschool'],goal:['career'],
+      place:['indoor','dynamic'],subjects:['none'],
+      enjoys:['making','helping','performing'],
+      noticed:'creative',strengths:'practical',
+      challenge:'moderate',challenge_why:null,
+      ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4a',ip5:'ip5a',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',ip11:'ip11b',
+      pulls:['food_creative','people_places'],study_appetite:'tafe_trade',
+      _ipsIntroShown:true,
+      proud:'made',flow:'hands_f',
+      problem_response:'fix_it',
+      values:['create','variety','people_v'],values2:['create','variety'],values1:'create',
+      vision:'own',conscientious:'pushthrough',social:'small_group',
+      grouprole:'doer',learns:'doing',grit:'pushthrough',
+      feedback:'direct',supervision:'some',noise:'high',
+      culture:'busy_c',need:'creative_exp',drain:'desk_d',
+      fc1:'fc1a',fc2:'fc2a',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6b',
+      quit:'wrong_q',branch:'making_b',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    ryan:{
+      /* Ryan — 19, law/justice/police — tests law enforcement and legal pathway */
+      name:'Ryan',age:'18_20',gender:'male',
+      study:['none'],goal:['career'],
+      place:['dynamic','travel'],subjects:['humanities','pe'],
+      enjoys:['helping','learning','performing'],
+      noticed:'driven',strengths:'people_s',
+      challenge:'complex',challenge_why:null,
+      ip1:'ip1a',ip2:'ip2b',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',ip11:'ip11b',
+      pulls:['justice_order','service_adventure'],study_appetite:'degree_maybe',
+      _ipsIntroShown:true,
+      proud:'together',flow:'helping_f',
+      problem_response:'tell_someone',
+      values:['meaning','progress','active_v'],values2:['meaning','progress'],values1:'meaning',
+      vision:'expert',conscientious:'pushthrough',social:'anyone',
+      grouprole:'leads',learns:'doing',grit:'pushthrough',
+      feedback:'direct',supervision:'some',noise:'high',
+      culture:'structured_c',need:'clear_exp',drain:'desk_d',
+      fc1:'fc1b',fc2:'fc2a',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6b',
+      quit:'wrong_q',branch:'community_c',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    maya:{
+      /* Maya — 16, medicine/science — tests surgeon/doctor/allied health pathway */
+      name:'Maya',age:'15_17',gender:'female',schoolYear:'yr10',
+      study:['highschool'],goal:['career'],
+      place:['indoor','care_place'],subjects:['science','maths','health'],
+      enjoys:['learning','helping','planning'],
+      noticed:'thorough',strengths:'analytical',
+      challenge:'complex',challenge_why:null,
+      ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5b',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9a',ip10:'ip10b',ip11:'ip11b',
+      pulls:['none_pull'],study_appetite:'degree_yes',
+      _ipsIntroShown:true,
+      proud:'learned',flow:'learning_f',
+      problem_response:'understand_first',
+      values:['meaning','growth','recognition'],values2:['meaning','growth'],values1:'meaning',
+      vision:'expert',conscientious:'pushthrough',social:'small_group',
+      grouprole:'ideas_g',learns:'reading',grit:'pushthrough',
+      feedback:'direct',supervision:'some',noise:'mid',
+      culture:'high_c',need:'clear_exp',drain:'chaos_d',
+      fc1:'fc1b',fc2:'fc2b',fc3:'fc3a',fc4:'fc4b',fc5:'fc5b',fc6:'fc6b',
+      quit:'wrong_q',branch:'health_c',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    kai:{
+      /* Kai — 22, sustainability/climate — tests emerging green economy roles */
+      name:'Kai',age:'21_25',gender:'prefer_not',
+      study:['working'],goal:['career'],
+      place:['dynamic','outdoors'],subjects:['science','humanities'],
+      enjoys:['learning','planning','nature'],
+      noticed:'thorough',strengths:'analytical',
+      challenge:'complex',challenge_why:null,
+      ip1:'ip1b',ip2:'ip2a',ip3:'ip3a',ip4:'ip4b',ip5:'ip5b',
+      ip6:'ip6b',ip7:'ip7a',ip8:'ip8a',ip9:'ip9b',ip10:'ip10b',ip11:'ip11b',
+      pulls:['sustainability_future'],study_appetite:'degree_yes',
+      _ipsIntroShown:true,
+      proud:'learned',flow:'planning',
+      problem_response:'build_it',
+      values:['meaning','create','growth'],values2:['meaning','create'],values1:'meaning',
+      vision:'impact',conscientious:'pushthrough',social:'small_group',
+      grouprole:'ideas_g',learns:'reading',grit:'rethink',
+      feedback:'depends',supervision:'some',noise:'mid',
+      culture:'startup_c',need:'creative_exp',drain:'desk_d',
+      fc1:'fc1b',fc2:'fc2b',fc3:'fc3a',fc4:'fc4b',fc5:'fc5a',fc6:'fc6b',
+      quit:'wrong_q',branch:'env_sci',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    sophie:{
+      /* Sophie — 18, hair/beauty/wellness — tests appearance and wellness pathway */
+      name:'Sophie',age:'15_17',gender:'female',schoolYear:'yr12',
+      study:['highschool'],goal:['career'],
+      place:['indoor','dynamic'],subjects:['none'],
+      enjoys:['making','helping','performing'],
+      noticed:'creative',strengths:'people_s',
+      challenge:'moderate',challenge_why:null,
+      ip1:'ip1a',ip2:'ip2a',ip3:'ip3b',ip4:'ip4a',ip5:'ip5a',
+      ip6:'ip6b',ip7:'ip7b',ip8:'ip8b',ip9:'ip9b',ip10:'ip10b',ip11:'ip11a',
+      pulls:['appearance_wellness','people_places'],study_appetite:'tafe_trade',
+      _ipsIntroShown:true,
+      proud:'made',flow:'helping_f',
+      problem_response:'fix_it',
+      values:['create','people_v','flex'],values2:['create','people_v'],values1:'create',
+      vision:'own',conscientious:'eventually',social:'anyone',
+      grouprole:'doer',learns:'watching',grit:'pushthrough',
+      feedback:'depends',supervision:'some',noise:'high',
+      culture:'busy_c',need:'creative_exp',drain:'desk_d',
+      fc1:'fc1a',fc2:'fc2a',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6b',
+      quit:'wrong_q',branch:'making_b',
+      self_efficacy:'se_confident',
+      prior_negative:'neg_no',prior_negative_what:null
+    },
+    dev:{
+      /* Dev — 23, tech/modern roles — tests prompt engineer, AI, drone pilot */
+      name:'Dev',age:'21_25',gender:'male',
+      study:['working'],goal:['career'],
+      place:['home','indoor'],subjects:['technology','maths'],
+      enjoys:['tech','learning','planning'],
+      noticed:'analytical',strengths:'analytical',
+      challenge:'complex',challenge_why:null,
+      ip1:'ip1b',ip2:'ip2a',ip3:'ip3b',ip4:'ip4b',ip5:'ip5a',
+      ip6:'ip6b',ip7:'ip7a',ip8:'ip8b',ip9:'ip9b',ip10:'ip10a',ip11:'ip11a',
+      pulls:['sustainability_future'],study_appetite:'degree_maybe',
+      _ipsIntroShown:true,
+      proud:'learned',flow:'planning',
+      problem_response:'build_it',
+      values:['growth','create','flex'],values2:['growth','create'],values1:'growth',
+      vision:'expert',conscientious:'pushthrough',social:'mostly_alone',
+      grouprole:'ideas_g',learns:'reading',grit:'rethink',
+      feedback:'direct',supervision:'min',noise:'low',
+      culture:'startup_c',need:'freedom',drain:'people_d',
+      fc1:'fc1b',fc2:'fc2b',fc3:'fc3b',fc4:'fc4b',fc5:'fc5b',fc6:'fc6b',
+      quit:'repetitive_q',branch:'emerging_t',
       self_efficacy:'se_confident',
       prior_negative:'neg_no',prior_negative_what:null
     }
@@ -5196,6 +5361,12 @@ function runPersona(v){
   else if(v==='bec')runBec();
   else if(v==='luca')runLuca();
   else if(v==='zac')runZac();
+  else if(v==='mia')runMia();
+  else if(v==='ryan')runRyan();
+  else if(v==='maya')runMaya();
+  else if(v==='kai')runKai();
+  else if(v==='sophie')runSophie();
+  else if(v==='dev')runDev();
 }
 
 function runElla(){
@@ -5242,6 +5413,42 @@ function runLuca(){
 }
 function runZac(){
   A=Object.assign({},PERSONAS.zac);
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runMia(){
+  A=Object.assign({},PERSONAS.mia);
+  PS={now:true,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runRyan(){
+  A=Object.assign({},PERSONAS.ryan);
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runMaya(){
+  A=Object.assign({},PERSONAS.maya);
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runKai(){
+  A=Object.assign({},PERSONAS.kai);
+  PS={now:false,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runSophie(){
+  A=Object.assign({},PERSONAS.sophie);
+  PS={now:true,career:true};IS_PT=false;
+  QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
+  genR();
+}
+function runDev(){
+  A=Object.assign({},PERSONAS.dev);
   PS={now:false,career:true};IS_PT=false;
   QL=buildQL(A.enjoys,A.challenge,A.noticed,A.age,A.subjects,A.place||[]);
   genR();
@@ -5399,6 +5606,9 @@ var QUESTION_MAP = {
   'ip8':'Ipsative pair 8 — Which sounds more like you?',
   'ip9':'Ipsative pair 9 — Which sounds more like you?',
   'ip10':'Ipsative pair 10 — Which sounds more like you?',
+  'ip11':'Ipsative pair 11 — Commercial vs social/environmental impact',
+  'pulls':'What pulls you in — new sector interests',
+  'study_appetite':'Study appetite — how much study feels right',
   'age':'How old are you?',
   'gender':'How do you identify?',
   'schoolYear':'What year are you in at school?',
