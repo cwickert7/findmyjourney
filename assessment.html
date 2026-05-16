@@ -2154,7 +2154,7 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
     '<div class="save-code-row" style="margin-bottom:6px;font-size:12px;color:var(--lt)">Or copy your personal link:</div>'+
     '<div class="save-link-row">'+
     '<input class="save-link-input" id="saveResultsLink" readonly placeholder="Generating your link…">'+
-    '<button class="save-link-copy" onclick="copyResultsLink()">Copy</button>'+
+    '<button class="save-link-copy" id="copyLinkBtn" onclick="copyResultsLink()">Copy link</button>'+
     '</div>'+
     '</div>'+
     '<div class="save-consent">&#x1F512; Stored securely for 12 months then deleted. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
@@ -2198,7 +2198,7 @@ async function submitEmail(){
   var tips=(RS&&RS.tips)||[];
   // Also persist result so the email link works
   var saved=await persistResult();
-  var returnLink=window.location.origin+(saved?'?results='+saved.uuid:'');
+  var returnLink=window.location.origin+'/assessment'+(saved?'?results='+saved.uuid:'');
   fetch('/api/send-results',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({email:email,name:name,nowJobs:nowJobs,careerJobs:careerJobs,tips:tips,encouragement:(RS&&RS.encouragement)||'',returnLink:returnLink})
   })
@@ -3484,7 +3484,7 @@ h+='<div class="rh"><h2 class="rh2">Your matches'+(nm?', '+nm:'')+' &#x1F389;</h
     '<div class="save-code-row" style="margin-bottom:6px;font-size:12px;color:var(--lt)">Or copy your personal link:</div>'+
     '<div class="save-link-row">'+
     '<input class="save-link-input" id="saveResultsLink" readonly placeholder="Generating your link…">'+
-    '<button class="save-link-copy" onclick="copyResultsLink()">Copy</button>'+
+    '<button class="save-link-copy" id="copyLinkBtn" onclick="copyResultsLink()">Copy link</button>'+
     '</div>'+
     '</div>'+
     '<div class="save-consent">&#x1F512; Stored securely for 12 months then deleted. <a href="/privacy.html" target="_blank" style="color:var(--tc)">Privacy Policy</a></div>'+
@@ -3528,7 +3528,7 @@ async function submitEmail(){
   var tips=(RS&&RS.tips)||[];
   // Also persist result so the email link works
   var saved=await persistResult();
-  var returnLink=window.location.origin+(saved?'?results='+saved.uuid:'');
+  var returnLink=window.location.origin+'/assessment'+(saved?'?results='+saved.uuid:'');
   fetch('/api/send-results',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({email:email,name:name,nowJobs:nowJobs,careerJobs:careerJobs,tips:tips,encouragement:(RS&&RS.encouragement)||'',returnLink:returnLink})
   })
@@ -5758,7 +5758,7 @@ async function saveResults(){
 
 function showSaveLink(uuid){
   var baseURL=window.location.origin;
-  var link=baseURL+'?results='+uuid;
+  var link=baseURL+'/assessment?results='+uuid;
   var linkInput=g('saveResultsLink');
   if(linkInput)linkInput.value=link;
 }
@@ -5773,7 +5773,7 @@ function copyResultsLink(){
   var input=document.getElementById('saveResultsLink');
   if(!input)return;
   navigator.clipboard.writeText(input.value).then(function(){
-    var btn=document.querySelector('.save-link-copy');
+    var btn=document.getElementById('copyLinkBtn');
     if(btn){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy link';},2000);}
   }).catch(function(){
     input.select();document.execCommand('copy');
