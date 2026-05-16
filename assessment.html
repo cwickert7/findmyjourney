@@ -1559,6 +1559,13 @@ function buildUserMsg(wN,wC,isPT){
     'Prior negative experience: '+(A.prior_negative||'not asked')+(A.prior_negative_what?' / '+A.prior_negative_what:'')+'\n'+
     'Values ranked: top3='+JSON.stringify(A.values||[])+(A.values2?' top2='+JSON.stringify(A.values2):'')+' top1='+(A.values1||'not provided')+'\n'+
     'Gender: '+(A.gender||'prefer_not')+'\n'+
+    'SECTOR PULL (treat as strong signal — weight equally with branch): '+JSON.stringify(A.pulls||[])+'\n'+
+    (A.pulls&&A.pulls.indexOf('justice_order')>-1?'justice_order = strong interest in law, policing, courts, forensics, corrections, emergency services — actively consider lawyer, solicitor, barrister, police officer, detective, forensic scientist, judge, magistrate, legal aid, paralegal, corrections officer\n':'')+
+    (A.pulls&&A.pulls.indexOf('service_adventure')>-1?'service_adventure = drawn to military, emergency services, aviation, maritime, remote field work — consider ADF officer, firefighter, paramedic, pilot, coast guard, search and rescue\n':'')+
+    (A.pulls&&A.pulls.indexOf('food_creative')>-1?'food_creative = drawn to food and culinary creation — consider chef, baker, pastry chef, barista, sommelier, food scientist, restaurant manager, catering\n':'')+
+    (A.pulls&&A.pulls.indexOf('appearance_wellness')>-1?'appearance_wellness = drawn to beauty and wellness — consider hairdresser, beautician, makeup artist, nail technician, massage therapist, skin therapist\n':'')+
+    (A.pulls&&A.pulls.indexOf('people_places')>-1?'people_places = drawn to tourism, events, hospitality — consider event manager, travel agent, hotel manager, tour guide, concierge, tourism operator\n':'')+
+    (A.pulls&&A.pulls.indexOf('sustainability_future')>-1?'sustainability_future = drawn to climate and sustainability — consider sustainability analyst, ESG consultant, climate risk consultant, renewable energy engineer, environmental planner\n':'')+
     'What pulls them in (new sectors): '+JSON.stringify(A.pulls||[])+'\n'+
     'Study appetite: '+(A.study_appetite||'not provided')+'\n'+
     'Commercial vs mission orientation (ip11): '+(A.ip11||'not provided')+(A.ip11==='ip11a'?' (commercial/financial impact)':A.ip11==='ip11b'?' (social/environmental impact)':'');
@@ -2889,6 +2896,13 @@ function buildUserMsg(wN,wC,isPT){
     'Prior negative experience: '+(A.prior_negative||'not asked')+(A.prior_negative_what?' / '+A.prior_negative_what:'')+'\n'+
     'Values ranked: top3='+JSON.stringify(A.values||[])+(A.values2?' top2='+JSON.stringify(A.values2):'')+' top1='+(A.values1||'not provided')+'\n'+
     'Gender: '+(A.gender||'prefer_not')+'\n'+
+    'SECTOR PULL (treat as strong signal — weight equally with branch): '+JSON.stringify(A.pulls||[])+'\n'+
+    (A.pulls&&A.pulls.indexOf('justice_order')>-1?'justice_order = strong interest in law, policing, courts, forensics, corrections, emergency services — actively consider lawyer, solicitor, barrister, police officer, detective, forensic scientist, judge, magistrate, legal aid, paralegal, corrections officer\n':'')+
+    (A.pulls&&A.pulls.indexOf('service_adventure')>-1?'service_adventure = drawn to military, emergency services, aviation, maritime, remote field work — consider ADF officer, firefighter, paramedic, pilot, coast guard, search and rescue\n':'')+
+    (A.pulls&&A.pulls.indexOf('food_creative')>-1?'food_creative = drawn to food and culinary creation — consider chef, baker, pastry chef, barista, sommelier, food scientist, restaurant manager, catering\n':'')+
+    (A.pulls&&A.pulls.indexOf('appearance_wellness')>-1?'appearance_wellness = drawn to beauty and wellness — consider hairdresser, beautician, makeup artist, nail technician, massage therapist, skin therapist\n':'')+
+    (A.pulls&&A.pulls.indexOf('people_places')>-1?'people_places = drawn to tourism, events, hospitality — consider event manager, travel agent, hotel manager, tour guide, concierge, tourism operator\n':'')+
+    (A.pulls&&A.pulls.indexOf('sustainability_future')>-1?'sustainability_future = drawn to climate and sustainability — consider sustainability analyst, ESG consultant, climate risk consultant, renewable energy engineer, environmental planner\n':'')+
     'What pulls them in (new sectors): '+JSON.stringify(A.pulls||[])+'\n'+
     'Study appetite: '+(A.study_appetite||'not provided')+'\n'+
     'Commercial vs mission orientation (ip11): '+(A.ip11||'not provided')+(A.ip11==='ip11a'?' (commercial/financial impact)':A.ip11==='ip11b'?' (social/environmental impact)':'');
@@ -5241,7 +5255,7 @@ function parseCVText(text,answers){
       feedback:'direct',supervision:'some',noise:'high',
       culture:'structured_c',need:'clear_exp',drain:'desk_d',
       fc1:'fc1b',fc2:'fc2a',fc3:'fc3b',fc4:'fc4a',fc5:'fc5b',fc6:'fc6b',
-      quit:'wrong_q',branch:'community_c',
+      quit:'wrong_q',branch:'people_g',
       self_efficacy:'se_confident',
       prior_negative:'neg_no',prior_negative_what:null
     },
