@@ -5552,7 +5552,9 @@ function showRetrievedResults(result){
     careerJobs:careerJobs,
     encouragement:result.encouragement||('Welcome back, '+A.name+'. Your results are here.'),
     summary:result.summary||'Here are your career matches.',
-    tips:result.tips||[]
+    tips:result.tips||[],
+    wN:nowJobs.length>0,
+    wC:careerJobs.length>0
   };
   window._retrievedResult=result;
   window._isRetrieved=true;
