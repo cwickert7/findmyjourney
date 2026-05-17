@@ -364,10 +364,10 @@ function buildStepContent(id){
   else if(id==='education'){
     if(PATH==='school'){
       html+=fld('school_name','School name','e.g. Frankston High School','text');
-      html+='<div class="field-row">'+fld('school_year','Current year level','e.g. Year 11','text')+fld('school_grad','Expected graduation year','e.g. 2026','text')+'</div>';
+      html+='<div class="field-row"><div class="field"><label for="f_school_year">Current year level</label><select id="f_school_year" onchange="CV.school_year='Year '+this.value;updatePreview()"><option value="">Select year level</option><option value="7">Year 7</option><option value="8">Year 8</option><option value="9">Year 9</option><option value="10">Year 10</option><option value="11">Year 11</option><option value="12">Year 12</option></select></div>'+fld('school_grad','Expected graduation year','e.g. 2026','text')+'</div>';
       html+='<div class="field"><label>Subjects <span class="optional">(select all that apply)</span></label><div class="pill-group" id="subjectPills">';
       SUBJECTS.forEach(function(s){html+='<div class="pill" onclick="togglePill(this,\'subjects\',\''+s+'\')">'+s+'</div>';});
-      html+='</div></div>';
+      html+='</div><div style="margin-top:8px;display:flex;gap:8px"><input type="text" id="customSubjectInput" placeholder="Add another subject…" style="flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomSubject();}"><button onclick="addCustomSubject()" style="background:var(--tc);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:var(--font-body)">Add</button></div></div>';
       html+=fld('school_achievements','Awards or recognition <span class="optional">(optional)</span>','e.g. Academic Excellence Award 2024','text');
     }else if(PATH==='leaver'){
       html+=fld('school_name','School name','e.g. Frankston High School','text');
@@ -386,8 +386,8 @@ function buildStepContent(id){
   }
   else if(id==='life'){
     html+='<div class="section-hint" style="margin-bottom:16px">Life experience counts just as much as paid work.</div>';
-    html+=fld('sport','Sport or physical activity <span class="optional">(optional)</span>','e.g. Captain of school volleyball team 2023\u20132024','text');
-    html+=fld('volunteering','Volunteering <span class="optional">(optional)</span>','e.g. Volunteer at local food bank on Saturdays','text');
+    html+='<div class="field"><label>Sport & physical activity <span class="optional">(optional)</span></label><div id="sportBlocks"></div><button class="add-btn" onclick="addSport()" style="margin-top:4px">+ Add sport or activity</button></div>';
+    html+='<div class="field" style="margin-top:4px"><label>Volunteering <span class="optional">(optional)</span></label><div id="volunteerBlocks"></div><button class="add-btn" onclick="addVolunteer()" style="margin-top:4px">+ Add volunteering role</button></div>';
     html+=fld('responsibilities','Responsibilities at home <span class="optional">(optional)</span>','e.g. Help care for younger siblings, assist with family business on weekends','text');
     html+=fld('other_activities','Other activities or interests <span class="optional">(optional)</span>','e.g. Run a gaming YouTube channel, manage school social media, build computers','textarea');
     html+=fld('proud_moment','One thing you\'re proud of','e.g. Organised a school fundraiser that raised $800 for the bushfire appeal','textarea');
@@ -397,7 +397,7 @@ function buildStepContent(id){
     html+='<div class="field"><label>Soft skills <span class="optional">(select up to 6)</span></label><div class="pill-group" id="softSkillPills">';
     SOFT_SKILLS.forEach(function(s){html+='<div class="pill" onclick="togglePill(this,\'soft_skills\',\''+s+'\')">'+s+'</div>';});
     html+='</div></div>';
-    html+=fld('languages','Languages other than English <span class="optional">(optional)</span>','e.g. Bilingual English and Mandarin, conversational Spanish','text');
+    html+='<div class="field"><label>Languages other than English <span class="optional">(optional)</span></label><div id="languageBlocks"></div><button class="add-btn" onclick="addLanguage()" style="margin-top:4px">+ Add language</button></div>';
   }
   else if(id==='profile'){
     var hasAssessment=ASSESSMENT_DATA&&(ASSESSMENT_DATA.summary||CV.profile_draft);
@@ -457,7 +457,7 @@ function togglePill(el,key,val){
 }
 
 // ── Experience blocks ──
-function addExperience(){EXPERIENCE_BLOCKS.push({employer:'',role:'',start:'',end:'',duties:''});renderExperienceBlocks();}
+function addExperience(){EXPERIENCE_BLOCKS.push({employer:'',role:'',start:'',end:'',duties:''});CV.experience=EXPERIENCE_BLOCKS;renderExperienceBlocks();}
 function removeExperience(i){EXPERIENCE_BLOCKS.splice(i,1);CV.experience=EXPERIENCE_BLOCKS;renderExperienceBlocks();updatePreview();}
 function renderExperienceBlocks(){
   var wrap=document.getElementById('experienceBlocks');if(!wrap)return;
@@ -466,8 +466,8 @@ function renderExperienceBlocks(){
     html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Role '+(i+1)+'</span><button class="remove-btn" onclick="removeExperience('+i+')">Remove</button></div>';
     html+='<div class="field-row"><div class="field"><label>Employer</label><input type="text" placeholder="e.g. Woolworths" value="'+(b.employer||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].employer=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div>';
     html+='<div class="field"><label>Role title</label><input type="text" placeholder="e.g. Customer Service" value="'+(b.role||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].role=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div></div>';
-    html+='<div class="field-row"><div class="field"><label>Start</label><input type="text" placeholder="e.g. Jan 2024" value="'+(b.start||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].start=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div>';
-    html+='<div class="field"><label>End</label><input type="text" placeholder="e.g. Current" value="'+(b.end||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].end=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div></div>';
+    html+='<div class="field-row"><div class="field"><label>Start</label>'+monthYearPicker('exp_start_'+i,b.start,'EXPERIENCE_BLOCKS['+i+'].start','CV.experience=EXPERIENCE_BLOCKS;sortExperience();updatePreview()')+'</div>';
+    html+='<div class="field"><label>End <span class="optional">(or Current)</span></label>'+monthYearPicker('exp_end_'+i,b.end,'EXPERIENCE_BLOCKS['+i+'].end','CV.experience=EXPERIENCE_BLOCKS;sortExperience();updatePreview()',true)+'</div></div>';
     html+='<div class="field"><label>Key responsibilities</label><textarea placeholder="What did you do in this role? 2\u20133 sentences." oninput="EXPERIENCE_BLOCKS['+i+'].duties=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()">'+(b.duties||'')+'</textarea></div></div>';
   });
   wrap.innerHTML=html;
@@ -561,7 +561,7 @@ async function generateCV(){
       return;
     }
     CV_UUID=data.uuid;IS_GENERATING=false;showResultScreen(data);
-  }catch(e){IS_GENERATING=false;showLoading('Something went wrong. Please go back and try again.');}
+  }catch(e){IS_GENERATING=false;showStep(getSteps().length-1);var eb=document.getElementById('errBox');if(eb){eb.textContent='Something went wrong building your CV. Please check your details and try again.';eb.style.display='block';}}
 }
 
 // ── Result screen ──
@@ -631,6 +631,152 @@ function updatePreview(){
 }
 
 function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── Month/year picker ──
+var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function monthYearPicker(id,currentVal,stateExpr,onchange,allowCurrent){
+  var curMonth='';var curYear='';
+  if(currentVal&&currentVal!=='Current'){var parts=currentVal.split(' ');if(parts.length===2){curMonth=parts[0];curYear=parts[1];}}
+  var isCurrent=currentVal==='Current';
+  var html='<div style="display:flex;gap:6px;align-items:center">';
+  if(allowCurrent&&isCurrent){
+    html+='<select style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" disabled><option>Current</option></select>';
+    html+='<select style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" disabled><option>Current</option></select>';
+    html+='<label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer"><input type="checkbox" checked onchange="handleCurrentToggle(this,''+id+'',''+stateExpr+'',''+onchange+'')"> Current</label>';
+  } else {
+    html+='<select id="'+id+'_m" style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" onchange="updateMonthYear(''+id+'',''+stateExpr+'',''+onchange+'')">';
+    html+='<option value="">Month</option>';
+    MONTHS.forEach(function(m){html+='<option value="'+m+'"'+(m===curMonth?' selected':'')+'>'+m+'</option>';});
+    html+='</select>';
+    html+='<select id="'+id+'_y" style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" onchange="updateMonthYear(''+id+'',''+stateExpr+'',''+onchange+'')">';
+    html+='<option value="">Year</option>';
+    var yr=new Date().getFullYear();for(var y=yr;y>=yr-10;y--){html+='<option value="'+y+'"'+(String(y)===curYear?' selected':'')+'>'+y+'</option>';}
+    html+='</select>';
+    if(allowCurrent){html+='<label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer"><input type="checkbox" id="'+id+'_cur" onchange="handleCurrentToggle(this,''+id+'',''+stateExpr+'',''+onchange+'')"> Current</label>';}
+  }
+  html+='</div>';
+  return html;
+}
+function updateMonthYear(id,stateExpr,onchange){
+  var m=document.getElementById(id+'_m');var y=document.getElementById(id+'_y');
+  if(!m||!y)return;
+  var val=(m.value&&y.value)?(m.value+' '+y.value):'';
+  try{eval(stateExpr+'=''+val+''');}catch(e){}
+  if(onchange)try{eval(onchange);}catch(e){}
+}
+function handleCurrentToggle(cb,id,stateExpr,onchange){
+  if(cb.checked){
+    try{eval(stateExpr+'='Current'');}catch(e){}
+    if(onchange)try{eval(onchange);}catch(e){}
+    // Re-render to show disabled state
+    sortExperience();updatePreview();
+  } else {
+    try{eval(stateExpr+'=''');}catch(e){}
+    if(onchange)try{eval(onchange);}catch(e){}
+    sortExperience();updatePreview();
+  }
+}
+
+// ── Sort experience chronologically (most recent first) ──
+function sortExperience(){
+  EXPERIENCE_BLOCKS.sort(function(a,b){
+    var aEnd=a.end==='Current'?'9999-99':dateToSort(a.end);
+    var bEnd=b.end==='Current'?'9999-99':dateToSort(b.end);
+    return bEnd.localeCompare(aEnd);
+  });
+  CV.experience=EXPERIENCE_BLOCKS;
+  renderExperienceBlocks();
+}
+function dateToSort(d){
+  if(!d)return'0000-00';
+  var parts=d.split(' ');if(parts.length!==2)return'0000-00';
+  var mi=MONTHS.indexOf(parts[0]);
+  return parts[1]+'-'+(mi>=0?String(mi+1).padStart(2,'0'):'00');
+}
+
+// ── Sport blocks ──
+var SPORT_BLOCKS=[];
+function addSport(){SPORT_BLOCKS.push({name:'',role:'',start:'',end:''});renderSportBlocks();}
+function removeSport(i){SPORT_BLOCKS.splice(i,1);CV.sport_blocks=SPORT_BLOCKS;renderSportBlocks();}
+function renderSportBlocks(){
+  var wrap=document.getElementById('sportBlocks');if(!wrap)return;
+  var html='';
+  SPORT_BLOCKS.forEach(function(b,i){
+    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Activity '+(i+1)+'</span><button class="remove-btn" onclick="removeSport('+i+')">Remove</button></div>';
+    html+='<div class="field-row"><div class="field"><label>Sport or activity</label><input type="text" placeholder="e.g. Soccer" value="'+(b.name||'')+'" oninput="SPORT_BLOCKS['+i+'].name=this.value;CV.sport_blocks=SPORT_BLOCKS"></div>';
+    html+='<div class="field"><label>Your role</label><input type="text" placeholder="e.g. Captain, Player" value="'+(b.role||'')+'" oninput="SPORT_BLOCKS['+i+'].role=this.value;CV.sport_blocks=SPORT_BLOCKS"></div></div>';
+    html+='<div class="field-row"><div class="field"><label>From year</label><input type="text" placeholder="e.g. 2022" value="'+(b.start||'')+'" oninput="SPORT_BLOCKS['+i+'].start=this.value;CV.sport_blocks=SPORT_BLOCKS"></div>';
+    html+='<div class="field"><label>To year</label><input type="text" placeholder="e.g. 2024 or Current" value="'+(b.end||'')+'" oninput="SPORT_BLOCKS['+i+'].end=this.value;CV.sport_blocks=SPORT_BLOCKS"></div></div>';
+    html+='</div>';
+  });
+  wrap.innerHTML=html;
+}
+
+// ── Volunteer blocks ──
+var VOLUNTEER_BLOCKS=[];
+function addVolunteer(){VOLUNTEER_BLOCKS.push({org:'',role:'',period:''});renderVolunteerBlocks();}
+function removeVolunteer(i){VOLUNTEER_BLOCKS.splice(i,1);CV.volunteer_blocks=VOLUNTEER_BLOCKS;renderVolunteerBlocks();}
+function renderVolunteerBlocks(){
+  var wrap=document.getElementById('volunteerBlocks');if(!wrap)return;
+  var html='';
+  VOLUNTEER_BLOCKS.forEach(function(b,i){
+    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Role '+(i+1)+'</span><button class="remove-btn" onclick="removeVolunteer('+i+')">Remove</button></div>';
+    html+='<div class="field-row"><div class="field"><label>Organisation</label><input type="text" placeholder="e.g. Local food bank" value="'+(b.org||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].org=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div>';
+    html+='<div class="field"><label>Your role</label><input type="text" placeholder="e.g. Kitchen hand" value="'+(b.role||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].role=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div></div>';
+    html+='<div class="field"><label>Period <span class="optional">(optional)</span></label><input type="text" placeholder="e.g. 2023–2024 or ongoing" value="'+(b.period||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].period=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div>';
+    html+='</div>';
+  });
+  wrap.innerHTML=html;
+}
+
+// ── Language blocks ──
+var LANGUAGE_BLOCKS=[];
+function addLanguage(){LANGUAGE_BLOCKS.push({language:'',proficiency:''});renderLanguageBlocks();}
+function removeLanguage(i){LANGUAGE_BLOCKS.splice(i,1);CV.language_blocks=LANGUAGE_BLOCKS;renderLanguageBlocks();}
+function renderLanguageBlocks(){
+  var wrap=document.getElementById('languageBlocks');if(!wrap)return;
+  var html='';
+  LANGUAGE_BLOCKS.forEach(function(b,i){
+    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Language '+(i+1)+'</span><button class="remove-btn" onclick="removeLanguage('+i+')">Remove</button></div>';
+    html+='<div class="field-row"><div class="field"><label>Language</label><input type="text" placeholder="e.g. Mandarin" value="'+(b.language||'')+'" oninput="LANGUAGE_BLOCKS['+i+'].language=this.value;CV.language_blocks=LANGUAGE_BLOCKS"></div>';
+    html+='<div class="field"><label>Proficiency</label><select oninput="LANGUAGE_BLOCKS['+i+'].proficiency=this.value;CV.language_blocks=LANGUAGE_BLOCKS" style="width:100%;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 13px;font-size:13px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none"><option value="">Select…</option><option'+(b.proficiency==='Bilingual'?' selected':'')+' value="Bilingual">Bilingual</option><option'+(b.proficiency==='Fluent'?' selected':'')+' value="Fluent">Fluent</option><option'+(b.proficiency==='Conversational'?' selected':'')+' value="Conversational">Conversational</option><option'+(b.proficiency==='Basic'?' selected':'')+' value="Basic">Basic</option></select></div></div>';
+    html+='</div>';
+  });
+  wrap.innerHTML=html;
+}
+
+// ── Custom subject ──
+function addCustomSubject(){
+  var input=document.getElementById('customSubjectInput');
+  if(!input||!input.value.trim())return;
+  var val=input.value.trim();
+  if(!CV.subjects)CV.subjects=[];
+  if(CV.subjects.indexOf(val)>-1){showToast('Already added');return;}
+  CV.subjects.push(val);
+  // Add pill to group
+  var group=document.getElementById('subjectPills');
+  if(group){
+    var pill=document.createElement('div');
+    pill.className='pill selected';
+    pill.textContent=val;
+    pill.onclick=function(){togglePill(pill,'subjects',val);};
+    group.appendChild(pill);
+  }
+  input.value='';
+}
+
+// ── Restore life blocks on step restore ──
+var _origRestoreStepValues=restoreStepValues;
+function restoreStepValues(stepId){
+  _origRestoreStepValues(stepId);
+  if(stepId==='life'){
+    if(CV.sport_blocks){SPORT_BLOCKS=CV.sport_blocks;renderSportBlocks();}
+    if(CV.volunteer_blocks){VOLUNTEER_BLOCKS=CV.volunteer_blocks;renderVolunteerBlocks();}
+  }
+  if(stepId==='skills'){
+    if(CV.language_blocks){LANGUAGE_BLOCKS=CV.language_blocks;renderLanguageBlocks();}
+  }
+}
 
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 </script>
