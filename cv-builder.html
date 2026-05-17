@@ -111,10 +111,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--tc);border-radius:50%;animation:spin .8s linear infinite}
 .loading-msg{font-size:14px;color:var(--muted)}
 .error-box{background:var(--danger-bg);border:1.5px solid #F09595;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none}
-.date-picker-row{display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
-.date-picker-row select{width:100px;min-width:90px;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;flex-shrink:0}
+.date-picker-row{display:flex;gap:5px;align-items:center;flex-wrap:nowrap;width:100%}
+.date-picker-row select{flex:1;min-width:0;border:1.5px solid var(--border);border-radius:var(--radius);padding:8px 6px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;overflow:hidden;text-overflow:ellipsis}
 .date-picker-row select:focus{border-color:var(--tc)}
-.date-picker-row label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer;flex-shrink:0}
+.date-picker-row .cur-label{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer;flex-shrink:0}
 .custom-subject-row{display:flex;gap:8px;margin-top:8px}
 .custom-subject-row input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none}
 .custom-subject-row input:focus{border-color:var(--tc)}
@@ -318,6 +318,7 @@ function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurr
   }
 
   function updateVal() {
+    if (isCurrent) { updatePreview(); return; }
     var m = monthSel.value;
     var y = yearSel.value;
     var val = (m && y) ? (m + ' ' + y) : '';
@@ -327,19 +328,41 @@ function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurr
     updatePreview();
   }
 
-  monthSel.addEventListener('change', updateVal);
-  yearSel.addEventListener('change', updateVal);
+  // Save partial values immediately on each select change
+  monthSel.addEventListener('change', function() {
+    if (!isCurrent) {
+      var m = monthSel.value;
+      var y = yearSel.value;
+      var val = m ? (y ? m + ' ' + y : m + ' ?') : '';
+      if (m && y) val = m + ' ' + y; else val = '';
+      if (blockArr) { blockArr[blockIdx][dateKey] = val; }
+      else { CV[stateKey] = val; }
+    }
+    updateVal();
+  });
+  yearSel.addEventListener('change', function() {
+    if (!isCurrent) {
+      var m = monthSel.value;
+      var y = yearSel.value;
+      var val = (m && y) ? m + ' ' + y : '';
+      if (blockArr) { blockArr[blockIdx][dateKey] = val; }
+      else { CV[stateKey] = val; }
+    }
+    updateVal();
+  });
 
   row.appendChild(monthSel);
   row.appendChild(yearSel);
 
   if (allowCurrent) {
     var curLbl = document.createElement('label');
+    curLbl.className = 'cur-label';
     var curChk = document.createElement('input');
     curChk.type = 'checkbox';
     curChk.checked = isCurrent;
     curChk.addEventListener('change', function() {
-      if (this.checked) {
+      isCurrent = this.checked;
+      if (isCurrent) {
         monthSel.disabled = true;
         yearSel.disabled = true;
         if (blockArr) { blockArr[blockIdx][dateKey] = 'Current'; }
