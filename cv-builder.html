@@ -869,13 +869,18 @@ function removeExperience(i) {
   renderExperienceBlocks();
   updatePreview();
 }
-function sortExperience() {
+function sortExperienceSilent() {
+  // Sort without re-rendering — safe to call from date picker callbacks
   EXPERIENCE_BLOCKS.sort(function(a, b) {
     var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
     var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
     return be.localeCompare(ae);
   });
   CV.experience = EXPERIENCE_BLOCKS;
+}
+function sortExperience() {
+  sortExperienceSilent();
+  renderExperienceBlocks();
 }
 function dateToSort(d) {
   if (!d) return '0000-00';
@@ -910,10 +915,10 @@ function renderExperienceBlocks() {
     roleWrap.appendChild(roleInput);
     row1.appendChild(empWrap); row1.appendChild(roleWrap);
     block.appendChild(row1);
-    // Date row
+    // Date row — onChangeFn must NOT call renderExperienceBlocks() as that resets the pickers
     var row2 = document.createElement('div'); row2.className = 'field-row';
-    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'start', 'Start date', false, function(){ sortExperience(); renderExperienceBlocks(); updatePreview(); }));
-    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'end', 'End date', true, function(){ sortExperience(); renderExperienceBlocks(); updatePreview(); }));
+    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'start', 'Start date', false, function(){ sortExperienceSilent(); updatePreview(); }));
+    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'end', 'End date', true, function(){ sortExperienceSilent(); updatePreview(); }));
     block.appendChild(row2);
     // Duties
     var dutiesWrap = document.createElement('div'); dutiesWrap.className = 'field';
