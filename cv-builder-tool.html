@@ -166,6 +166,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 <div class="toast" id="toast"></div>
 
 <script>
+// ── Feature flags ──
+// Set GENERATION_GATED = true to require a credit/session to generate and download
+var GENERATION_GATED = false;
+
 // ── Constants ──
 var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var SOFT_SKILLS = ['Communication','Teamwork','Problem solving','Adaptability','Leadership','Time management','Attention to detail','Customer service','Initiative','Critical thinking','Empathy','Creativity','Reliability','Work ethic','Conflict resolution'];
@@ -1215,6 +1219,20 @@ function renderCertBlocks() {
 
 // ── Generate CV ──
 async function generateCV() {
+  // Gate check — flip GENERATION_GATED = true to enforce credit requirement
+  if (GENERATION_GATED) {
+    var fi = document.getElementById('formInner');
+    fi.innerHTML = '';
+    var tag = document.createElement('div'); tag.className = 'section-tag'; tag.textContent = 'Credit required';
+    fi.appendChild(tag);
+    var msg = document.createElement('div'); msg.style.cssText = 'font-size:14px;color:var(--mid);margin:16px 0 24px;line-height:1.6';
+    msg.textContent = 'Generating and downloading your CV requires a Find My Journey credit. Purchase a credit or log in to your institution account to continue.';
+    fi.appendChild(msg);
+    var backBtn = document.createElement('button'); backBtn.className = 'btn-sec'; backBtn.textContent = 'Back';
+    backBtn.addEventListener('click', function(){ showStep(getSteps().length - 1); });
+    fi.appendChild(backBtn);
+    return;
+  }
   var jdEl = document.getElementById('f_jd'); if (jdEl) CV.jd = jdEl.value;
   var certsEl = document.getElementById('f_certs'); if (certsEl) CV.certs = certsEl.value;
   CV.experience = EXPERIENCE_BLOCKS;
@@ -1280,7 +1298,7 @@ function showResultScreen(data) {
   fi.appendChild(makeAction('\u270F\uFE0F', 'Edit my CV', 'Go back and make changes', null, function(){ showStep(0); }));
 
   // Save link
-  var saveLink = window.location.origin + '/cv-builder-tool.html?cv=' + CV_UUID;
+  var saveLink = window.location.origin + '/cv-builder.html?cv=' + CV_UUID;
   var slWrap = document.createElement('div'); slWrap.className = 'save-link-wrap';
   var slLbl = document.createElement('div'); slLbl.className = 'save-link-label'; slLbl.textContent = 'Your personal CV link \u2014 bookmark this to come back and edit';
   var slRow = document.createElement('div'); slRow.className = 'save-link-row';
