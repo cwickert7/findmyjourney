@@ -1577,7 +1577,7 @@ function genR(){
   var wC=!IS_PT&&Array.isArray(A.goal)&&A.goal.indexOf('career')>=0;
   if(IS_PT){wN=true;wC=false;}
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1800,system:buildSys(IS_PT),messages:[{role:'user',content:buildUserMsg(wN,wC,IS_PT)}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1800,system:buildSys(IS_PT),messages:[{role:'user',content:buildUserMsg(wN,wC,IS_PT)}]})
   })
   .then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error((e.error&&e.error.message)||'HTTP '+r.status);});return r.json();})
   .then(function(d){
@@ -1610,7 +1610,7 @@ function exploreRole(jobTitle,cardId,explorerName,salaryEntry,salaryExperienced)
   ].join('\n');
   var userMsg='Role: '+jobTitle+'. Explorer name: '+(explorerName||'Explorer')+'. Profile: challenge='+(A.challenge||'moderate')+' noticed='+(A.noticed||'')+' values='+JSON.stringify(A.values||[])+' branch='+(A.branch||'')+'. IMPORTANT: Salary already shown to Explorer on job card: entry='+salaryEntry+' experienced='+salaryExperienced+'. Use these EXACT salary figures in salaryEntry and salaryExperienced fields. Do not generate different numbers.';
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -2080,7 +2080,7 @@ function loadMore(typ){
   var isNow=(typ==='now');var shown=JSON.stringify((isNow?RS.nowJobs:RS.careerJobs)||[]);
   var sysLines=['Career advisor for young Australians 15-25. Explorer has been shown matches. Suggest 2 NEW different roles not already shown.','Return ONLY valid JSON: {"extraJobs":[2 job objects]}','Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because","pathway":["Now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"specific Australian action","envFit":"why environment suits them"}','Already shown: '+shown,'Same profile sensitivity rules. Sensitive: '+(A.feedback==='sensitive'||A.noise==='low'?'YES':'NO')];
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,system:sysLines.join('\n'),messages:[{role:'user',content:'Explorer: challenge='+(A.challenge||'moderate')+' branch='+(A.branch||'')+' values='+JSON.stringify(A.values||[])+' culture='+(A.culture||'')+'. Wants '+(isNow?'part-time now':'career paths')+'. Give 2 new different suggestions.'}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,system:sysLines.join('\n'),messages:[{role:'user',content:'Explorer: challenge='+(A.challenge||'moderate')+' branch='+(A.branch||'')+' values='+JSON.stringify(A.values||[])+' culture='+(A.culture||'')+'. Wants '+(isNow?'part-time now':'career paths')+'. Give 2 new different suggestions.'}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -2093,7 +2093,7 @@ function loadMore(typ){
 }
 
 function sendFeedback(v){
-  try{fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,system:'Reply: ok',messages:[{role:'user',content:'fb:'+v+' branch:'+(A.branch||'')+' challenge:'+(A.challenge||'')+' pt:'+IS_PT}]})});}catch(e){}
+  try{fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:10,system:'Reply: ok',messages:[{role:'user',content:'fb:'+v+' branch:'+(A.branch||'')+' challenge:'+(A.challenge||'')+' pt:'+IS_PT}]})});}catch(e){}
   var fb=g('fbrow');if(fb)fb.innerHTML='<span style="font-size:12px;color:var(--gr)">&#x2713; Thanks &mdash; this helps us improve.</span>';
 }
 
@@ -2914,7 +2914,7 @@ function genR(){
   var wC=!IS_PT&&Array.isArray(A.goal)&&A.goal.indexOf('career')>=0;
   if(IS_PT){wN=true;wC=false;}
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1800,system:buildSys(IS_PT),messages:[{role:'user',content:buildUserMsg(wN,wC,IS_PT)}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1800,system:buildSys(IS_PT),messages:[{role:'user',content:buildUserMsg(wN,wC,IS_PT)}]})
   })
   .then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error((e.error&&e.error.message)||'HTTP '+r.status);});return r.json();})
   .then(function(d){
@@ -2947,7 +2947,7 @@ function exploreRole(jobTitle,cardId,explorerName,salaryEntry,salaryExperienced)
   ].join('\n');
   var userMsg='Role: '+jobTitle+'. Explorer name: '+(explorerName||'Explorer')+'. Profile: challenge='+(A.challenge||'moderate')+' noticed='+(A.noticed||'')+' values='+JSON.stringify(A.values||[])+' branch='+(A.branch||'')+'.';
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,system:sysMsg,messages:[{role:'user',content:userMsg}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -3417,7 +3417,7 @@ function loadMore(typ){
   var isNow=(typ==='now');var shown=JSON.stringify((isNow?RS.nowJobs:RS.careerJobs)||[]);
   var sysLines=['Career advisor for young Australians 15-25. Explorer has been shown matches. Suggest 2 NEW different roles not already shown.','Return ONLY valid JSON: {"extraJobs":[2 job objects]}','Job: {"title":"","desc":"2 sentences","whyYou":"You would be great here because","pathway":["Now","3 months","1 year","3-5 years"],"tags":["","",""],"matchLevel":"strong match|good match|worth exploring","matchPips":3-5,"thisWeek":"specific Australian action","envFit":"why environment suits them"}','Already shown: '+shown,'Same profile sensitivity rules. Sensitive: '+(A.feedback==='sensitive'||A.noise==='low'?'YES':'NO')];
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,system:sysLines.join('\n'),messages:[{role:'user',content:'Explorer: challenge='+(A.challenge||'moderate')+' branch='+(A.branch||'')+' values='+JSON.stringify(A.values||[])+' culture='+(A.culture||'')+'. Wants '+(isNow?'part-time now':'career paths')+'. Give 2 new different suggestions.'}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,system:sysLines.join('\n'),messages:[{role:'user',content:'Explorer: challenge='+(A.challenge||'moderate')+' branch='+(A.branch||'')+' values='+JSON.stringify(A.values||[])+' culture='+(A.culture||'')+'. Wants '+(isNow?'part-time now':'career paths')+'. Give 2 new different suggestions.'}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -3430,7 +3430,7 @@ function loadMore(typ){
 }
 
 function sendFeedback(v){
-  try{fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,system:'Reply: ok',messages:[{role:'user',content:'fb:'+v+' branch:'+(A.branch||'')+' challenge:'+(A.challenge||'')+' pt:'+IS_PT}]})});}catch(e){}
+  try{fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:10,system:'Reply: ok',messages:[{role:'user',content:'fb:'+v+' branch:'+(A.branch||'')+' challenge:'+(A.challenge||'')+' pt:'+IS_PT}]})});}catch(e){}
   var fb=g('fbrow');if(fb)fb.innerHTML='<span style="font-size:12px;color:var(--gr)">&#x2713; Thanks &mdash; this helps us improve.</span>';
 }
 
@@ -4349,7 +4349,7 @@ function genCV(){
   }
 
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2200,system:sysMsg,
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2200,system:sysMsg,
       messages:[{role:'user',content:userParts.join('\n')}]})
   })
   .then(function(r){return r.json();})
@@ -4757,7 +4757,7 @@ function explorePath(jobTitle,cardId){
   var schema=schemaByYear[sy]||schemaByYear['other'];
   var sysMsg='You are a warm, practical Australian career advisor.\nExplorer is interested in: '+jobTitle+'.\nSchool year: '+syLabel[sy]+'.\nProfile: name='+(A.name||'Explorer')+' noticed='+(A.noticed||'unknown')+' challenge='+(A.challenge||'moderate')+' subjects='+JSON.stringify(A.subjects||[])+' branch='+(A.branch||'unknown')+'.\nGenerate a personalised pathway guide. Use generic Australian subject names — not state-specific (e.g. "Maths" not "Mathematical Methods"). Reference real Australian pathways — TAFE, apprenticeships, university, direct entry. Be warm, honest and specific. No false promises.\nReturn ONLY valid JSON, zero markdown:\n'+schema;
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:sysMsg,messages:[{role:'user',content:'Explorer wants to get into: '+jobTitle+'. School year: '+sy+'. Build their personalised pathway.'}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,system:sysMsg,messages:[{role:'user',content:'Explorer wants to get into: '+jobTitle+'. School year: '+sy+'. Build their personalised pathway.'}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
@@ -4861,7 +4861,7 @@ function getReframe(jobTitle,reasons,cardId){
   var reasonText=reasons.map(function(r){return reasonLabels[r]||r;}).join(' and ');
   var sysMsg='You are a warm Australian career advisor.\nExplorer rejected "'+jobTitle+'" because of: '+reasonText+'.\nProfile: name='+(A.name||'Explorer')+' noticed='+(A.noticed||'')+' branch='+(A.branch||'')+' challenge='+(A.challenge||'moderate')+' values='+JSON.stringify(A.values||[])+'.\nRoles already shown: '+shownRoles.join(', ')+'.\nRoles already rejected: '+rejectedRoles.join(', ')+'.\nSuggest ONE genuinely different alternative — do NOT reframe the rejected role, do NOT suggest anything already shown or rejected. The alternative must directly address their rejection reason and fit their broader profile.\nReturn ONLY valid JSON, zero markdown:\n{"title":"role name","desc":"2 sentences about the role","whyInstead":"1 sentence referencing their specific rejection reason and something from their profile"}';
   fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:sysMsg,messages:[{role:'user',content:'Suggest one alternative to '+jobTitle+' for an Explorer who disliked it because of '+reasonText+'.'}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:300,system:sysMsg,messages:[{role:'user',content:'Suggest one alternative to '+jobTitle+' for an Explorer who disliked it because of '+reasonText+'.'}]})
   })
   .then(function(r){return r.json();})
   .then(function(d){
