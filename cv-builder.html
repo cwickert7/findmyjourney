@@ -16,70 +16,50 @@
   --bg:#FAF7F2;--bg2:#F5F0E8;--bg3:#fff;
   --border:#E8DFD0;--border2:#D4C4B0;
   --text:#2C2422;--mid:#6B6058;--muted:#9A8E84;--faint:#C8BFB5;
-  --success:#3D6B4F;--success-bg:#EDF7EE;
   --danger:#A32D2D;--danger-bg:#FCEBEB;
-  --radius:12px;--radius-lg:20px;
+  --radius:12px;
   --font-body:'DM Sans',sans-serif;
   --font-display:'Fraunces',serif;
 }
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Nav */
 .nav{background:var(--text);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-brand-text{display:flex;flex-direction:column;line-height:1}
 .nav-brand-top{font-size:8px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:1px}
 .nav-brand-name{font-family:var(--font-display);font-size:16px;font-weight:300;color:#fff}
 .nav-right{font-size:12px;color:var(--faint)}
-
-/* Layout */
 .app{display:grid;grid-template-columns:480px 1fr;min-height:calc(100vh - 56px)}
 @media(max-width:900px){.app{grid-template-columns:1fr}}
-
-/* Form panel */
 .form-panel{background:var(--bg3);border-right:1px solid var(--border);overflow-y:auto;height:calc(100vh - 56px);position:sticky;top:56px}
 .form-inner{padding:32px;max-width:480px}
-
-/* Preview panel */
 .preview-panel{background:var(--bg2);overflow-y:auto;height:calc(100vh - 56px);padding:32px;display:flex;flex-direction:column;align-items:center}
 .preview-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;text-align:center}
-.preview-doc{background:#fff;width:100%;max-width:595px;min-height:500px;box-shadow:0 8px 40px rgba(44,36,34,.12);border-radius:4px;padding:48px 52px;font-family:var(--font-body);font-size:11px;line-height:1.6;color:#1a1a1a}
+.preview-doc{background:#fff;width:100%;max-width:595px;min-height:500px;box-shadow:0 8px 40px rgba(44,36,34,.12);border-radius:4px;padding:48px 52px;font-size:11px;line-height:1.6;color:#1a1a1a}
 .preview-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;color:var(--muted);text-align:center;gap:12px}
 .preview-placeholder p{font-size:13px;max-width:200px;line-height:1.5}
 @media(max-width:900px){.preview-panel{display:none}.app{grid-template-columns:1fr}.form-panel{height:auto;position:static}}
-
-/* Progress */
 .progress-wrap{margin-bottom:28px}
 .progress-steps{display:flex;gap:4px;margin-bottom:8px}
 .progress-step{height:3px;flex:1;border-radius:2px;background:var(--border);transition:background .3s}
 .progress-step.done{background:var(--tc)}
 .progress-step.active{background:var(--tc);opacity:.6}
 .progress-label{font-size:11px;color:var(--muted)}
-
-/* Section heading */
 .section-head{margin-bottom:24px}
 .section-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tc);margin-bottom:6px}
 .section-title{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--text);line-height:1.2;margin-bottom:6px}
 .section-hint{font-size:13px;color:var(--muted);line-height:1.5}
-
-/* Fields */
 .field{margin-bottom:16px}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .field label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px}
-.field .optional{font-weight:400;color:var(--muted);margin-left:4px}
 .field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 13px;font-size:13px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;transition:border-color .15s,background .15s;resize:vertical}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--tc);background:#fff}
 .field textarea{min-height:80px}
 .field .hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
-
-/* Pills */
 .pill-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .pill{border:1.5px solid var(--border);border-radius:50px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--mid);background:var(--bg);transition:all .15s;user-select:none}
 .pill:hover{border-color:var(--tc);color:var(--tc)}
 .pill.selected{background:var(--tc);border-color:var(--tc);color:#fff}
-
-/* Repeat blocks */
 .repeat-block{border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;background:var(--bg)}
 .repeat-block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .repeat-block-label{font-size:12px;font-weight:600;color:var(--mid)}
@@ -87,15 +67,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .remove-btn:hover{color:var(--danger)}
 .add-btn{width:100%;border:1.5px dashed var(--border2);border-radius:var(--radius);padding:10px;font-size:12px;color:var(--muted);background:none;cursor:pointer;transition:all .15s;font-family:var(--font-body)}
 .add-btn:hover{border-color:var(--tc);color:var(--tc);background:var(--tc-light)}
-
-/* Profile box */
 .profile-box{background:var(--tc-light);border:1.5px solid rgba(196,113,74,.2);border-radius:var(--radius);padding:14px;margin-bottom:16px}
 .profile-box-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:6px}
 .profile-box-text{font-size:13px;color:var(--text);line-height:1.6}
 .profile-edit-btn{font-size:11px;color:var(--tc);background:none;border:none;cursor:pointer;padding:4px 0;font-family:var(--font-body);text-decoration:underline;margin-top:6px;display:block}
-
-/* JD toggle */
-.jd-toggle{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;margin-bottom:16px;background:var(--bg);transition:border-color .15s}
+.jd-toggle{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;margin-bottom:12px;background:var(--bg)}
 .jd-toggle:hover{border-color:var(--tc)}
 .jd-toggle-icon{width:32px;height:32px;border-radius:50%;background:var(--tc-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
 .jd-toggle-text{flex:1}
@@ -103,36 +79,23 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .jd-toggle-sub{font-size:11px;color:var(--muted)}
 .jd-toggle-arrow{color:var(--muted);font-size:18px;transition:transform .2s}
 .jd-toggle.open .jd-toggle-arrow{transform:rotate(90deg)}
-.jd-content{display:none;margin-bottom:16px}
+.jd-content{display:none;margin-bottom:12px}
 .jd-content.open{display:block}
-
-/* Buttons */
 .btn-row{display:flex;gap:10px;margin-top:24px}
 .btn-primary{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-size:14px;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:background .15s;flex:1}
 .btn-primary:hover{background:var(--tc-dark)}
 .btn-primary:disabled{opacity:.6;cursor:not-allowed}
-.btn-sec{background:transparent;color:var(--mid);border:1.5px solid var(--border);border-radius:50px;padding:12px 20px;font-size:14px;font-weight:500;font-family:var(--font-body);cursor:pointer;transition:all .15s}
+.btn-sec{background:transparent;color:var(--mid);border:1.5px solid var(--border);border-radius:50px;padding:12px 20px;font-size:14px;font-family:var(--font-body);cursor:pointer;transition:all .15s}
 .btn-sec:hover{border-color:var(--tc);color:var(--tc)}
-
-/* Path selector */
 .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 .path-card{border:2px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s;background:var(--bg)}
-.path-card:hover{border-color:var(--tc);background:var(--tc-light)}
-.path-card.selected{border-color:var(--tc);background:var(--tc-light)}
+.path-card:hover,.path-card.selected{border-color:var(--tc);background:var(--tc-light)}
 .path-card-icon{font-size:24px;margin-bottom:8px}
 .path-card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
 .path-card-desc{font-size:11px;color:var(--muted);line-height:1.4}
-
-/* Toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:50px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
-
-/* Result screen */
-.result-screen{padding:0}
-.result-title{font-family:var(--font-display);font-size:26px;font-weight:300;color:var(--text);margin-bottom:6px}
-.result-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
-.result-actions{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.result-action{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;background:var(--bg);transition:all .15s;text-decoration:none}
+.result-action{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;background:var(--bg);transition:all .15s;text-decoration:none;margin-bottom:10px}
 .result-action:hover{border-color:var(--tc);background:var(--tc-light)}
 .result-action-icon{width:36px;height:36px;border-radius:50%;background:var(--tc-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
 .result-action-text{flex:1}
@@ -142,18 +105,21 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .save-link-label{font-size:11px;font-weight:600;color:var(--mid);margin-bottom:8px}
 .save-link-row{display:flex;gap:8px}
 .save-link-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);background:#fff;font-family:var(--font-body);outline:none}
-.save-link-copy-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);white-space:nowrap}
+.save-link-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body)}
 .disclaimer{font-size:11px;color:var(--muted);line-height:1.5;padding:12px 14px;background:var(--bg2);border-radius:var(--radius);margin-top:16px}
-
-/* Loading */
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:16px;text-align:center}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--tc);border-radius:50%;animation:spin .8s linear infinite}
 .loading-msg{font-size:14px;color:var(--muted)}
-
-/* Error box */
 .error-box{background:var(--danger-bg);border:1.5px solid #F09595;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none}
-
-/* CV preview styles */
+.date-picker-row{display:flex;gap:6px;align-items:center}
+.date-picker-row select{flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none}
+.date-picker-row select:focus{border-color:var(--tc)}
+.date-picker-row label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer}
+.custom-subject-row{display:flex;gap:8px;margin-top:8px}
+.custom-subject-row input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none}
+.custom-subject-row input:focus{border-color:var(--tc)}
+.custom-subject-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:var(--font-body)}
+/* CV preview */
 .cv-name{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:2px}
 .cv-contact-row{font-size:10px;color:#6B6058;border-bottom:2px solid #C4714A;padding-bottom:8px;margin-bottom:12px}
 .cv-section-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C4714A;border-bottom:1px solid #E8DFD0;padding-bottom:3px;margin:12px 0 7px}
@@ -190,7 +156,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
     <div class="preview-doc" id="previewDoc">
       <div class="preview-placeholder">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <p>Your CV preview will appear here as you fill in your details</p>
+        <p>Your CV preview appears here as you fill in your details</p>
       </div>
     </div>
     <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center">Updates as you type</div>
@@ -200,585 +166,1075 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 <div class="toast" id="toast"></div>
 
 <script>
-// ── State ──
-var CV={};
-var PATH=null;
-var STEP=0;
-var ASSESSMENT_DATA=null;
-var CV_UUID=null;
-var JD_OPEN=false;
-var EXPERIENCE_BLOCKS=[];
-var EDUCATION_BLOCKS=[];
-var REFEREE_BLOCKS=[];
-var IS_GENERATING=false;
+// ── Constants ──
+var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var SOFT_SKILLS = ['Communication','Teamwork','Problem solving','Adaptability','Leadership','Time management','Attention to detail','Customer service','Initiative','Critical thinking','Empathy','Creativity','Reliability','Work ethic','Conflict resolution'];
+var SUBJECTS = ['English','Mathematics','Science','Biology','Chemistry','Physics','History','Geography','Art','Music','Physical Education','Technology','Computing','Economics','Business','Health','Legal Studies','Psychology','Languages','Drama'];
+var PROFICIENCY = ['Bilingual','Fluent','Conversational','Basic'];
+var YEAR_LEVELS = ['7','8','9','10','11','12'];
+var YEARS = [];
+(function(){ var y = new Date().getFullYear(); for(var i=y;i>=y-10;i--) YEARS.push(String(i)); })();
 
-var SOFT_SKILLS=['Communication','Teamwork','Problem solving','Adaptability','Leadership','Time management','Attention to detail','Customer service','Initiative','Critical thinking','Empathy','Creativity','Reliability','Work ethic','Conflict resolution'];
-var SUBJECTS=['English','Mathematics','Science','Biology','Chemistry','Physics','History','Geography','Art','Music','Physical Education','Technology','Computing','Economics','Business','Health','Legal Studies','Psychology','Languages','Drama'];
+// ── State ──
+var CV = {};
+var PATH = null;
+var STEP = 0;
+var ASSESSMENT_DATA = null;
+var CV_UUID = null;
+var JD_OPEN = false;
+var EXPERIENCE_BLOCKS = [];
+var EDUCATION_BLOCKS = [];
+var REFEREE_BLOCKS = [];
+var SPORT_BLOCKS = [];
+var VOLUNTEER_BLOCKS = [];
+var LANGUAGE_BLOCKS = [];
 
 // ── URL params ──
-var urlParams=new URLSearchParams(window.location.search);
-var fromAssessment=urlParams.get('from')==='assessment';
-var assessmentUUID=urlParams.get('uuid');
-var cvUUID=urlParams.get('cv');
+var urlParams = new URLSearchParams(window.location.search);
+var fromAssessment = urlParams.get('from') === 'assessment';
+var assessmentUUID = urlParams.get('uuid');
+var cvUUID = urlParams.get('cv');
 
-window.addEventListener('DOMContentLoaded',function(){
-  if(cvUUID){loadSavedCV(cvUUID);}
-  else if(fromAssessment&&assessmentUUID){loadAssessmentData(assessmentUUID);}
-  else{showPathSelector();}
+window.addEventListener('DOMContentLoaded', function() {
+  if (cvUUID) { loadSavedCV(cvUUID); }
+  else if (fromAssessment && assessmentUUID) { loadAssessmentData(assessmentUUID); }
+  else { showPathSelector(); }
 });
 
+// ── Utility: escape HTML ──
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Utility: show loading ──
+function showLoading(msg) {
+  var fi = document.getElementById('formInner');
+  if (!fi) return;
+  fi.innerHTML = '';
+  var wrap = document.createElement('div');
+  wrap.className = 'loading-screen';
+  var spin = document.createElement('div');
+  spin.className = 'spinner';
+  var txt = document.createElement('div');
+  txt.className = 'loading-msg';
+  txt.textContent = msg || 'Loading\u2026';
+  wrap.appendChild(spin);
+  wrap.appendChild(txt);
+  fi.appendChild(wrap);
+}
+
+// ── Utility: toast ──
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+// ── Utility: build select ──
+function buildSelect(id, options, selected, onchangeFn, placeholder) {
+  var sel = document.createElement('select');
+  if (id) sel.id = id;
+  if (onchangeFn) sel.addEventListener('change', onchangeFn);
+  if (placeholder) {
+    var opt0 = document.createElement('option');
+    opt0.value = '';
+    opt0.textContent = placeholder;
+    sel.appendChild(opt0);
+  }
+  options.forEach(function(o) {
+    var opt = document.createElement('option');
+    var val = typeof o === 'object' ? o.value : o;
+    var lbl = typeof o === 'object' ? o.label : o;
+    opt.value = val;
+    opt.textContent = lbl;
+    if (val === selected) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  return sel;
+}
+
+// ── Utility: build field ──
+function buildField(id, labelHTML, type, placeholder, onInput) {
+  var wrap = document.createElement('div');
+  wrap.className = 'field';
+  var lbl = document.createElement('label');
+  if (id) lbl.setAttribute('for', 'f_' + id);
+  lbl.innerHTML = labelHTML;
+  wrap.appendChild(lbl);
+  var input;
+  if (type === 'textarea') {
+    input = document.createElement('textarea');
+    input.placeholder = placeholder || '';
+  } else {
+    input = document.createElement('input');
+    input.type = type || 'text';
+    input.placeholder = placeholder || '';
+  }
+  if (id) {
+    input.id = 'f_' + id;
+    input.value = CV[id] || '';
+  }
+  input.addEventListener('input', function() {
+    if (id) CV[id] = this.value;
+    if (onInput) onInput(this.value);
+    updatePreview();
+  });
+  wrap.appendChild(input);
+  return wrap;
+}
+
+// ── Utility: build date picker row ──
+function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurrent, onChangeFn) {
+  var wrap = document.createElement('div');
+  wrap.className = 'field';
+  var lbl = document.createElement('label');
+  lbl.textContent = label;
+  wrap.appendChild(lbl);
+
+  var row = document.createElement('div');
+  row.className = 'date-picker-row';
+
+  var currentVal = blockArr ? blockArr[blockIdx][dateKey] : (CV[stateKey] || '');
+  var isCurrent = currentVal === 'Current';
+  var parts = (!isCurrent && currentVal) ? currentVal.split(' ') : [];
+  var curMonth = parts[0] || '';
+  var curYear = parts[1] || '';
+
+  var monthSel = buildSelect(null, MONTHS, curMonth, null, 'Month');
+  var yearSel = buildSelect(null, YEARS, curYear, null, 'Year');
+
+  function updateVal() {
+    var m = monthSel.value;
+    var y = yearSel.value;
+    var val = (m && y) ? (m + ' ' + y) : '';
+    if (blockArr) { blockArr[blockIdx][dateKey] = val; }
+    else { CV[stateKey] = val; }
+    if (onChangeFn) onChangeFn();
+    updatePreview();
+  }
+
+  monthSel.addEventListener('change', updateVal);
+  yearSel.addEventListener('change', updateVal);
+
+  if (isCurrent) {
+    monthSel.disabled = true;
+    yearSel.disabled = true;
+  }
+
+  row.appendChild(monthSel);
+  row.appendChild(yearSel);
+
+  if (allowCurrent) {
+    var curLbl = document.createElement('label');
+    var curChk = document.createElement('input');
+    curChk.type = 'checkbox';
+    curChk.checked = isCurrent;
+    curChk.addEventListener('change', function() {
+      if (this.checked) {
+        monthSel.disabled = true;
+        yearSel.disabled = true;
+        if (blockArr) { blockArr[blockIdx][dateKey] = 'Current'; }
+        else { CV[stateKey] = 'Current'; }
+      } else {
+        monthSel.disabled = false;
+        yearSel.disabled = false;
+        if (blockArr) { blockArr[blockIdx][dateKey] = ''; }
+        else { CV[stateKey] = ''; }
+      }
+      if (onChangeFn) onChangeFn();
+      updatePreview();
+    });
+    curLbl.appendChild(curChk);
+    curLbl.appendChild(document.createTextNode(' Current'));
+    row.appendChild(curLbl);
+  }
+
+  wrap.appendChild(row);
+  return wrap;
+}
+
 // ── Load assessment data ──
-async function loadAssessmentData(uuid){
+async function loadAssessmentData(uuid) {
   showLoading('Loading your assessment results\u2026');
-  try{
-    var r=await fetch('/api/get-result?uuid='+uuid);
-    if(r.ok){
-      var data=await r.json();
-      if(data&&data.result){
-        ASSESSMENT_DATA=data.result;
-        CV.first_name=data.result.name||'';
-        CV.email=data.result.email||'';
-        CV.profile_draft=data.result.summary||'';
+  try {
+    var r = await fetch('/api/get-result?uuid=' + uuid);
+    if (r.ok) {
+      var data = await r.json();
+      if (data && data.result) {
+        ASSESSMENT_DATA = data.result;
+        CV.first_name = data.result.name || '';
+        CV.email = data.result.email || '';
+        CV.profile_draft = data.result.summary || '';
       }
     }
-  }catch(e){}
+  } catch(e) {}
   showPathSelector();
 }
 
 // ── Load saved CV ──
-async function loadSavedCV(uuid){
+async function loadSavedCV(uuid) {
   showLoading('Loading your saved CV\u2026');
-  try{
-    var r=await fetch('/api/cv-get?uuid='+uuid);
-    if(r.ok){
-      var data=await r.json();
-      if(data&&data.cv){
-        CV=data.cv;PATH=data.cv.path;
-        EXPERIENCE_BLOCKS=data.cv.experience||[];
-        EDUCATION_BLOCKS=data.cv.education||[];
-        REFEREE_BLOCKS=data.cv.referees||[];
-        CV_UUID=uuid;
-        showStep(0);updatePreview();return;
+  try {
+    var r = await fetch('/api/cv-get?uuid=' + uuid);
+    if (r.ok) {
+      var data = await r.json();
+      if (data && data.cv) {
+        CV = data.cv;
+        PATH = data.cv.path;
+        EXPERIENCE_BLOCKS = data.cv.experience || [];
+        EDUCATION_BLOCKS = data.cv.education || [];
+        REFEREE_BLOCKS = data.cv.referees || [];
+        SPORT_BLOCKS = data.cv.sport_blocks || [];
+        VOLUNTEER_BLOCKS = data.cv.volunteer_blocks || [];
+        LANGUAGE_BLOCKS = data.cv.language_blocks || [];
+        CV_UUID = uuid;
+        showStep(0);
+        updatePreview();
+        return;
       }
     }
-    showToast('Could not load CV. Starting fresh.');showPathSelector();
-  }catch(e){showPathSelector();}
-}
-
-function showLoading(msg){
-  document.getElementById('formInner').innerHTML='<div class="loading-screen"><div class="spinner"></div><div class="loading-msg">'+(msg||'Loading\u2026')+'</div></div>';
+    showToast('Could not load CV. Starting fresh.');
+    showPathSelector();
+  } catch(e) { showPathSelector(); }
 }
 
 // ── Path selector ──
-function showPathSelector(){
-  STEP=-1;
-  var html='<div class="section-head"><div class="section-tag">Let\'s get started</div><div class="section-title">Where are you at right now?</div><div class="section-hint">This shapes the questions we ask and the CV we build for you.</div></div>';
-  html+='<div class="path-grid">';
-  [{v:'school',icon:'📚',title:'Still at school',desc:'Year 10, 11 or 12 \u2014 looking for part-time work or planning ahead'},
-   {v:'leaver',icon:'🎓',title:'Recently finished school',desc:'Just finished Year 12 or left school \u2014 looking for your first role'},
-   {v:'experience',icon:'💼',title:'Some experience',desc:'Had 1\u20132 jobs and building your career story'},
-   {v:'graduate',icon:'🚀',title:'Graduate or career changer',desc:'Completed a degree or TAFE, or changing direction'}
-  ].forEach(function(p){
-    html+='<div class="path-card" id="path_'+p.v+'" onclick="selectPath(\''+p.v+'\')">';
-    html+='<div class="path-card-icon">'+p.icon+'</div>';
-    html+='<div class="path-card-title">'+p.title+'</div>';
-    html+='<div class="path-card-desc">'+p.desc+'</div></div>';
-  });
-  html+='</div><div class="btn-row" style="margin-top:24px"><button class="btn-primary" id="pathNextBtn" onclick="startBuild()" disabled>Continue &rarr;</button></div>';
-  document.getElementById('formInner').innerHTML=html;
-}
+function showPathSelector() {
+  STEP = -1;
+  var fi = document.getElementById('formInner');
+  fi.innerHTML = '';
 
-function selectPath(v){
-  PATH=v;CV.path=v;
-  document.querySelectorAll('.path-card').forEach(function(c){c.classList.remove('selected');});
-  document.getElementById('path_'+v).classList.add('selected');
-  document.getElementById('pathNextBtn').disabled=false;
-}
+  var head = document.createElement('div');
+  head.className = 'section-head';
+  head.innerHTML = '<div class="section-tag">Let\'s get started</div><div class="section-title">Where are you at right now?</div><div class="section-hint">This shapes the questions we ask and the CV we build for you.</div>';
+  fi.appendChild(head);
 
-// ── Steps ──
-function getSteps(){
-  var s=[
-    {id:'personal',label:'Personal details',tag:'About you'},
-    {id:'education',label:'Education',tag:'Your background'},
-    {id:'experience',label:'Experience',tag:'What you\'ve done'}
+  var grid = document.createElement('div');
+  grid.className = 'path-grid';
+  var paths = [
+    {v:'school', icon:'📚', title:'Still at school', desc:'Year 10, 11 or 12 — looking for part-time work or planning ahead'},
+    {v:'leaver', icon:'🎓', title:'Recently finished school', desc:'Just finished Year 12 or left school — looking for your first role'},
+    {v:'experience', icon:'💼', title:'Some experience', desc:'Had 1–2 jobs and building your career story'},
+    {v:'graduate', icon:'🚀', title:'Graduate or career changer', desc:'Completed a degree or TAFE, or changing direction'}
   ];
-  if(PATH==='school'||PATH==='leaver'){
-    s.push({id:'life',label:'Life & activities',tag:'Beyond the classroom'});
+  paths.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'path-card';
+    card.id = 'path_' + p.v;
+    card.innerHTML = '<div class="path-card-icon">' + p.icon + '</div><div class="path-card-title">' + p.title + '</div><div class="path-card-desc">' + p.desc + '</div>';
+    card.addEventListener('click', function() { selectPath(p.v); });
+    grid.appendChild(card);
+  });
+  fi.appendChild(grid);
+
+  var btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+  btnRow.style.marginTop = '24px';
+  var btn = document.createElement('button');
+  btn.className = 'btn-primary';
+  btn.id = 'pathNextBtn';
+  btn.disabled = true;
+  btn.textContent = 'Continue \u2192';
+  btn.addEventListener('click', startBuild);
+  btnRow.appendChild(btn);
+  fi.appendChild(btnRow);
+}
+
+function selectPath(v) {
+  PATH = v;
+  CV.path = v;
+  document.querySelectorAll('.path-card').forEach(function(c){ c.classList.remove('selected'); });
+  var card = document.getElementById('path_' + v);
+  if (card) card.classList.add('selected');
+  var btn = document.getElementById('pathNextBtn');
+  if (btn) btn.disabled = false;
+}
+
+// ── Steps definition ──
+function getSteps() {
+  var s = [
+    {id:'personal', label:'Personal details', tag:'About you'},
+    {id:'education', label:'Education', tag:'Your background'},
+    {id:'experience', label:'Experience', tag:'What you\'ve done'}
+  ];
+  if (PATH === 'school' || PATH === 'leaver') {
+    s.push({id:'life', label:'Life & activities', tag:'Beyond the classroom'});
   }
-  s.push({id:'skills',label:'Skills & strengths',tag:'What you bring'});
-  s.push({id:'profile',label:'Professional profile',tag:'Your story'});
-  if(PATH==='experience'||PATH==='graduate'){
-    s.push({id:'extras',label:'Achievements & activities',tag:'Going further'});
+  s.push({id:'skills', label:'Skills & strengths', tag:'What you bring'});
+  s.push({id:'profile', label:'Professional profile', tag:'Your story'});
+  if (PATH === 'experience' || PATH === 'graduate') {
+    s.push({id:'extras', label:'Achievements & activities', tag:'Going further'});
   }
-  s.push({id:'jd',label:'Tailor & generate',tag:'Final step'});
+  s.push({id:'jd', label:'Tailor & generate', tag:'Final step'});
   return s;
 }
 
-function startBuild(){if(!PATH)return;STEP=0;showStep(0);}
+function startBuild() { if (PATH) showStep(0); }
 
 // ── Show step ──
-function showStep(i){
-  var steps=getSteps();
-  if(i<0){showPathSelector();return;}
-  if(i>=steps.length){generateCV();return;}
-  STEP=i;
-  var step=steps[i];
-  var html='';
+function showStep(i) {
+  var steps = getSteps();
+  if (i < 0) { showPathSelector(); return; }
+  if (i >= steps.length) { generateCV(); return; }
+  STEP = i;
+  var step = steps[i];
+
+  var fi = document.getElementById('formInner');
+  fi.innerHTML = '';
 
   // Progress
-  html+='<div class="progress-wrap"><div class="progress-steps">';
-  steps.forEach(function(s,idx){
-    var cls=idx<i?'done':idx===i?'active':'';
-    html+='<div class="progress-step '+cls+'"></div>';
+  var progWrap = document.createElement('div');
+  progWrap.className = 'progress-wrap';
+  var progSteps = document.createElement('div');
+  progSteps.className = 'progress-steps';
+  steps.forEach(function(s, idx) {
+    var ps = document.createElement('div');
+    ps.className = 'progress-step' + (idx < i ? ' done' : idx === i ? ' active' : '');
+    progSteps.appendChild(ps);
   });
-  html+='</div><div class="progress-label">Step '+(i+1)+' of '+steps.length+' \u2014 '+step.label+'</div></div>';
+  var progLabel = document.createElement('div');
+  progLabel.className = 'progress-label';
+  progLabel.textContent = 'Step ' + (i+1) + ' of ' + steps.length + ' \u2014 ' + step.label;
+  progWrap.appendChild(progSteps);
+  progWrap.appendChild(progLabel);
+  fi.appendChild(progWrap);
 
   // Heading
-  html+='<div class="section-head"><div class="section-tag">'+step.tag+'</div><div class="section-title">'+step.label+'</div></div>';
-  html+='<div id="errBox" class="error-box"></div>';
-  html+=buildStepContent(step.id);
+  var head = document.createElement('div');
+  head.className = 'section-head';
+  head.innerHTML = '<div class="section-tag">' + step.tag + '</div><div class="section-title">' + step.label + '</div>';
+  fi.appendChild(head);
+
+  // Error box
+  var errBox = document.createElement('div');
+  errBox.className = 'error-box';
+  errBox.id = 'errBox';
+  fi.appendChild(errBox);
+
+  // Step content
+  buildStepContent(step.id, fi);
 
   // Buttons
-  html+='<div class="btn-row">';
-  if(i>0)html+='<button class="btn-sec" onclick="showStep('+(i-1)+')">Back</button>';
-  var isLast=(i===steps.length-1);
-  html+='<button class="btn-primary" onclick="'+(isLast?'generateCV()':'nextStep('+i+')')+'">'+(isLast?'&#x2728; Build my CV':'Continue &rarr;')+'</button>';
-  html+='</div>';
+  var btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+  if (i > 0) {
+    var backBtn = document.createElement('button');
+    backBtn.className = 'btn-sec';
+    backBtn.textContent = 'Back';
+    (function(idx){ backBtn.addEventListener('click', function(){ showStep(idx - 1); }); })(i);
+    btnRow.appendChild(backBtn);
+  }
+  var nextBtn = document.createElement('button');
+  nextBtn.className = 'btn-primary';
+  var isLast = (i === steps.length - 1);
+  nextBtn.textContent = isLast ? '\u2728 Build my CV' : 'Continue \u2192';
+  (function(idx, last){
+    nextBtn.addEventListener('click', function(){
+      if (last) { generateCV(); }
+      else { nextStep(idx); }
+    });
+  })(i, isLast);
+  btnRow.appendChild(nextBtn);
+  fi.appendChild(btnRow);
 
-  document.getElementById('formInner').innerHTML=html;
-  restoreStepValues(step.id);
   updatePreview();
-  document.getElementById('formInner').scrollTop=0;
+  fi.scrollTop = 0;
 }
 
 // ── Build step content ──
-function buildStepContent(id){
-  var html='';
-  if(id==='personal'){
-    html+=fld('first_name','First name','e.g. Jordan','text');
-    html+=fld('last_name','Last name','e.g. Smith','text');
-    html+='<div class="field-row">'+fld('email','Email address','e.g. jordan@email.com','email')+fld('phone','Phone','e.g. 0412 345 678','text')+'</div>';
-    html+='<div class="field-row">'+fld('suburb','Suburb','e.g. Frankston','text')+fld('state','State','e.g. VIC','text')+'</div>';
-    if(PATH==='experience'||PATH==='graduate'){html+=fld('linkedin','LinkedIn URL <span class="optional">(optional)</span>','e.g. linkedin.com/in/jordansmith','text');}
-  }
-  else if(id==='education'){
-    if(PATH==='school'){
-      html+=fld('school_name','School name','e.g. Frankston High School','text');
-      html+='<div class="field-row"><div class="field"><label for="f_school_year">Current year level</label><select id="f_school_year" onchange="CV.school_year='Year '+this.value;updatePreview()"><option value="">Select year level</option><option value="7">Year 7</option><option value="8">Year 8</option><option value="9">Year 9</option><option value="10">Year 10</option><option value="11">Year 11</option><option value="12">Year 12</option></select></div>'+fld('school_grad','Expected graduation year','e.g. 2026','text')+'</div>';
-      html+='<div class="field"><label>Subjects <span class="optional">(select all that apply)</span></label><div class="pill-group" id="subjectPills">';
-      SUBJECTS.forEach(function(s){html+='<div class="pill" onclick="togglePill(this,\'subjects\',\''+s+'\')">'+s+'</div>';});
-      html+='</div><div style="margin-top:8px;display:flex;gap:8px"><input type="text" id="customSubjectInput" placeholder="Add another subject…" style="flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomSubject();}"><button onclick="addCustomSubject()" style="background:var(--tc);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:var(--font-body)">Add</button></div></div>';
-      html+=fld('school_achievements','Awards or recognition <span class="optional">(optional)</span>','e.g. Academic Excellence Award 2024','text');
-    }else if(PATH==='leaver'){
-      html+=fld('school_name','School name','e.g. Frankston High School','text');
-      html+='<div class="field-row">'+fld('school_year','Year finished','e.g. 2024','text')+fld('school_atar','ATAR <span class="optional">(optional)</span>','e.g. 78.5, or leave blank','text')+'</div>';
-      html+=fld('further_study','Further study <span class="optional">(optional)</span>','e.g. Enrolled in Cert III in Business at Box Hill TAFE 2025','textarea');
-    }else{
-      html+='<div id="educationBlocks"></div>';
-      html+='<button class="add-btn" onclick="addEducation()">+ Add qualification</button>';
-      html+='<div class="field"><div class="hint" style="margin-top:8px">Add your most recent qualification first.</div></div>';
+function buildStepContent(id, fi) {
+
+  if (id === 'personal') {
+    fi.appendChild(buildField('first_name', 'First name', 'text', 'e.g. Jordan'));
+    fi.appendChild(buildField('last_name', 'Last name', 'text', 'e.g. Smith'));
+    var row1 = document.createElement('div'); row1.className = 'field-row';
+    row1.appendChild(buildField('email', 'Email address', 'email', 'e.g. jordan@email.com'));
+    row1.appendChild(buildField('phone', 'Phone', 'text', 'e.g. 0412 345 678'));
+    fi.appendChild(row1);
+    var row2 = document.createElement('div'); row2.className = 'field-row';
+    row2.appendChild(buildField('suburb', 'Suburb', 'text', 'e.g. Frankston'));
+    row2.appendChild(buildField('state', 'State', 'text', 'e.g. VIC'));
+    fi.appendChild(row2);
+    if (PATH === 'experience' || PATH === 'graduate') {
+      fi.appendChild(buildField('linkedin', 'LinkedIn URL <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. linkedin.com/in/jordansmith'));
     }
   }
-  else if(id==='experience'){
-    if(PATH==='school'||PATH==='leaver'){html+='<div class="section-hint" style="margin-bottom:16px">Any paid or volunteer work \u2014 even occasional or informal. Skip if you have none yet.</div>';}
-    html+='<div id="experienceBlocks"></div>';
-    html+='<button class="add-btn" onclick="addExperience()">+ Add role</button>';
-  }
-  else if(id==='life'){
-    html+='<div class="section-hint" style="margin-bottom:16px">Life experience counts just as much as paid work.</div>';
-    html+='<div class="field"><label>Sport & physical activity <span class="optional">(optional)</span></label><div id="sportBlocks"></div><button class="add-btn" onclick="addSport()" style="margin-top:4px">+ Add sport or activity</button></div>';
-    html+='<div class="field" style="margin-top:4px"><label>Volunteering <span class="optional">(optional)</span></label><div id="volunteerBlocks"></div><button class="add-btn" onclick="addVolunteer()" style="margin-top:4px">+ Add volunteering role</button></div>';
-    html+=fld('responsibilities','Responsibilities at home <span class="optional">(optional)</span>','e.g. Help care for younger siblings, assist with family business on weekends','text');
-    html+=fld('other_activities','Other activities or interests <span class="optional">(optional)</span>','e.g. Run a gaming YouTube channel, manage school social media, build computers','textarea');
-    html+=fld('proud_moment','One thing you\'re proud of','e.g. Organised a school fundraiser that raised $800 for the bushfire appeal','textarea');
-  }
-  else if(id==='skills'){
-    html+=fld('hard_skills','Technical or hard skills <span class="optional">(optional)</span>','e.g. Microsoft Office, Adobe Photoshop, Python, barista trained, forklift licence','textarea');
-    html+='<div class="field"><label>Soft skills <span class="optional">(select up to 6)</span></label><div class="pill-group" id="softSkillPills">';
-    SOFT_SKILLS.forEach(function(s){html+='<div class="pill" onclick="togglePill(this,\'soft_skills\',\''+s+'\')">'+s+'</div>';});
-    html+='</div></div>';
-    html+='<div class="field"><label>Languages other than English <span class="optional">(optional)</span></label><div id="languageBlocks"></div><button class="add-btn" onclick="addLanguage()" style="margin-top:4px">+ Add language</button></div>';
-  }
-  else if(id==='profile'){
-    var hasAssessment=ASSESSMENT_DATA&&(ASSESSMENT_DATA.summary||CV.profile_draft);
-    if(hasAssessment){
-      html+='<div class="profile-box"><div class="profile-box-label">&#x2728; Drafted from your assessment</div>';
-      html+='<div class="profile-box-text" id="profileDraftText">'+(CV.profile_draft||ASSESSMENT_DATA.summary||'')+'</div>';
-      html+='<button class="profile-edit-btn" onclick="editProfile()">Edit this &darr;</button></div>';
-      html+='<div id="profileEditWrap" style="display:none">'+fld('profile','Edit your profile','Write 3\u20134 sentences about who you are, what you\'re good at, and what you\'re looking for.','textarea')+'</div>';
-    }else{
-      html+='<div class="section-hint" style="margin-bottom:16px">3\u20134 sentences. Who are you, what are you good at, what are you looking for?</div>';
-      html+=fld('profile','Your professional profile','e.g. I\'m a motivated Year 12 student with a passion for working with people\u2026','textarea');
+
+  else if (id === 'education') {
+    if (PATH === 'school') {
+      fi.appendChild(buildField('school_name', 'School name', 'text', 'e.g. Frankston High School'));
+      var eduRow = document.createElement('div'); eduRow.className = 'field-row';
+      // Year level dropdown
+      var yrWrap = document.createElement('div'); yrWrap.className = 'field';
+      var yrLbl = document.createElement('label'); yrLbl.textContent = 'Current year level';
+      yrWrap.appendChild(yrLbl);
+      var yrSel = buildSelect('f_school_year', YEAR_LEVELS.map(function(y){ return {value:y, label:'Year '+y}; }), CV.school_year ? CV.school_year.replace('Year ','') : '', function(){ CV.school_year = 'Year ' + this.value; updatePreview(); }, 'Select year');
+      yrWrap.appendChild(yrSel);
+      eduRow.appendChild(yrWrap);
+      eduRow.appendChild(buildField('school_grad', 'Graduation year', 'text', 'e.g. 2026'));
+      fi.appendChild(eduRow);
+      // Subjects
+      var subjWrap = document.createElement('div'); subjWrap.className = 'field';
+      var subjLbl = document.createElement('label');
+      subjLbl.innerHTML = 'Subjects <span style="font-weight:400;color:var(--muted)">(select all that apply)</span>';
+      subjWrap.appendChild(subjLbl);
+      var pillGroup = document.createElement('div'); pillGroup.className = 'pill-group'; pillGroup.id = 'subjectPills';
+      SUBJECTS.forEach(function(s) {
+        var pill = document.createElement('div');
+        pill.className = 'pill' + ((CV.subjects && CV.subjects.indexOf(s) > -1) ? ' selected' : '');
+        pill.textContent = s;
+        pill.addEventListener('click', function(){ togglePill(pill, 'subjects', s); });
+        pillGroup.appendChild(pill);
+      });
+      // Restore custom subjects
+      if (CV.subjects) {
+        CV.subjects.forEach(function(s) {
+          if (SUBJECTS.indexOf(s) === -1) {
+            var pill = document.createElement('div');
+            pill.className = 'pill selected';
+            pill.textContent = s;
+            pill.addEventListener('click', function(){ togglePill(pill, 'subjects', s); });
+            pillGroup.appendChild(pill);
+          }
+        });
+      }
+      subjWrap.appendChild(pillGroup);
+      // Custom subject input
+      var custRow = document.createElement('div'); custRow.className = 'custom-subject-row';
+      var custInput = document.createElement('input'); custInput.type = 'text'; custInput.id = 'customSubjectInput'; custInput.placeholder = 'Add another subject\u2026';
+      custInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); addCustomSubject(); } });
+      var custBtn = document.createElement('button'); custBtn.className = 'custom-subject-btn'; custBtn.textContent = 'Add';
+      custBtn.addEventListener('click', addCustomSubject);
+      custRow.appendChild(custInput); custRow.appendChild(custBtn);
+      subjWrap.appendChild(custRow);
+      fi.appendChild(subjWrap);
+      fi.appendChild(buildField('school_achievements', 'Awards or recognition <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. Academic Excellence Award 2024'));
+    }
+    else if (PATH === 'leaver') {
+      fi.appendChild(buildField('school_name', 'School name', 'text', 'e.g. Frankston High School'));
+      var lvRow = document.createElement('div'); lvRow.className = 'field-row';
+      lvRow.appendChild(buildField('school_year', 'Year finished', 'text', 'e.g. 2024'));
+      lvRow.appendChild(buildField('school_atar', 'ATAR <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. 78.5'));
+      fi.appendChild(lvRow);
+      fi.appendChild(buildField('further_study', 'Further study <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Enrolled in Cert III in Business at Box Hill TAFE 2025'));
+    }
+    else {
+      var eduBlocksWrap = document.createElement('div'); eduBlocksWrap.id = 'educationBlocks';
+      fi.appendChild(eduBlocksWrap);
+      renderEducationBlocks();
+      var addEduBtn = document.createElement('button'); addEduBtn.className = 'add-btn'; addEduBtn.textContent = '+ Add qualification';
+      addEduBtn.addEventListener('click', addEducation);
+      fi.appendChild(addEduBtn);
     }
   }
-  else if(id==='extras'){
-    html+=fld('achievements','Key achievements <span class="optional">(optional)</span>','e.g. Grew team Instagram 40% in 3 months. Led a team of 4 on a project delivered under budget.','textarea');
-    html+='<div class="field"><div class="hint">Start with an action verb: Grew\u2026 Led\u2026 Built\u2026 Add a number if you can.</div></div>';
-    html+=fld('extracurricular','Leadership & community <span class="optional">(optional)</span>','e.g. Vice President, Monash Marketing Society 2024. Volunteer basketball coach.','textarea');
-    html+='<div id="refereeBlocks"></div>';
-    html+='<button class="add-btn" onclick="addReferee()">+ Add referee <span style="color:var(--muted);font-weight:400">(optional)</span></button>';
-  }
-  else if(id==='jd'){
-    html+='<div class="section-hint" style="margin-bottom:20px">Almost done. Paste a job ad below to tailor your CV language and generate a matching cover letter \u2014 or skip straight to building.</div>';
-    html+='<div class="jd-toggle" id="jdToggle" onclick="toggleJD()">';
-    html+='<div class="jd-toggle-icon">&#x1F4CB;</div>';
-    html+='<div class="jd-toggle-text"><div class="jd-toggle-title">Paste a job description</div><div class="jd-toggle-sub">Optional \u2014 enables cover letter generation</div></div>';
-    html+='<div class="jd-toggle-arrow">&rsaquo;</div></div>';
-    html+='<div class="jd-content" id="jdContent">'+fld('jd','Job description','Paste the full job ad here \u2014 role title, requirements, responsibilities\u2026','textarea')+'</div>';
-    html+=fld('certs','Certifications & licences <span class="optional">(optional)</span>','e.g. RSA, First Aid Certificate, Driver\'s licence, Working With Children Check','text');
-  }
-  return html;
-}
 
-// ── Field helper ──
-function fld(id,label,placeholder,type){
-  var html='<div class="field"><label for="f_'+id+'">'+label+'</label>';
-  if(type==='textarea'){html+='<textarea id="f_'+id+'" placeholder="'+placeholder+'" oninput="CV[\''+id+'\']=this.value;updatePreview()"></textarea>';}
-  else{html+='<input type="'+(type||'text')+'" id="f_'+id+'" placeholder="'+placeholder+'" oninput="CV[\''+id+'\']=this.value;updatePreview()">';}
-  html+='</div>';return html;
-}
+  else if (id === 'experience') {
+    if (PATH === 'school' || PATH === 'leaver') {
+      var hint = document.createElement('div');
+      hint.className = 'section-hint';
+      hint.style.marginBottom = '16px';
+      hint.textContent = 'Any paid or volunteer work \u2014 even occasional or informal. Skip if you have none yet.';
+      fi.appendChild(hint);
+    }
+    var expWrap = document.createElement('div'); expWrap.id = 'experienceBlocks';
+    fi.appendChild(expWrap);
+    renderExperienceBlocks();
+    var addExpBtn = document.createElement('button'); addExpBtn.className = 'add-btn'; addExpBtn.textContent = '+ Add role';
+    addExpBtn.addEventListener('click', addExperience);
+    fi.appendChild(addExpBtn);
+  }
 
-function restoreStepValues(stepId){
-  Object.keys(CV).forEach(function(k){var el=document.getElementById('f_'+k);if(el)el.value=CV[k]||'';});
-  if(CV.soft_skills){CV.soft_skills.forEach(function(s){document.querySelectorAll('#softSkillPills .pill').forEach(function(p){if(p.textContent===s)p.classList.add('selected');});});}
-  if(CV.subjects){CV.subjects.forEach(function(s){document.querySelectorAll('#subjectPills .pill').forEach(function(p){if(p.textContent===s)p.classList.add('selected');});});}
-  if(stepId==='experience')renderExperienceBlocks();
-  if(stepId==='education'&&(PATH==='experience'||PATH==='graduate'))renderEducationBlocks();
-  if(stepId==='extras')renderRefereeBlocks();
+  else if (id === 'life') {
+    var lifeHint = document.createElement('div');
+    lifeHint.className = 'section-hint'; lifeHint.style.marginBottom = '16px';
+    lifeHint.textContent = 'Life experience counts just as much as paid work.';
+    fi.appendChild(lifeHint);
+    // Sport
+    var sportWrap = document.createElement('div'); sportWrap.className = 'field';
+    var sportLbl = document.createElement('label');
+    sportLbl.innerHTML = 'Sport & physical activity <span style="font-weight:400;color:var(--muted)">(optional)</span>';
+    sportWrap.appendChild(sportLbl);
+    var sportBlocks = document.createElement('div'); sportBlocks.id = 'sportBlocks';
+    sportWrap.appendChild(sportBlocks);
+    var addSportBtn = document.createElement('button'); addSportBtn.className = 'add-btn'; addSportBtn.style.marginTop = '4px'; addSportBtn.textContent = '+ Add sport or activity';
+    addSportBtn.addEventListener('click', addSport);
+    sportWrap.appendChild(addSportBtn);
+    fi.appendChild(sportWrap);
+    renderSportBlocks();
+    // Volunteering
+    var volWrap = document.createElement('div'); volWrap.className = 'field';
+    var volLbl = document.createElement('label');
+    volLbl.innerHTML = 'Volunteering <span style="font-weight:400;color:var(--muted)">(optional)</span>';
+    volWrap.appendChild(volLbl);
+    var volBlocks = document.createElement('div'); volBlocks.id = 'volunteerBlocks';
+    volWrap.appendChild(volBlocks);
+    var addVolBtn = document.createElement('button'); addVolBtn.className = 'add-btn'; addVolBtn.style.marginTop = '4px'; addVolBtn.textContent = '+ Add volunteering role';
+    addVolBtn.addEventListener('click', addVolunteer);
+    volWrap.appendChild(addVolBtn);
+    fi.appendChild(volWrap);
+    renderVolunteerBlocks();
+    fi.appendChild(buildField('responsibilities', 'Responsibilities at home <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. Help care for younger siblings, assist with family business on weekends'));
+    fi.appendChild(buildField('other_activities', 'Other activities & interests <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Run a gaming YouTube channel, manage school social media, build computers'));
+    fi.appendChild(buildField('proud_moment', 'One thing you\'re proud of', 'textarea', 'e.g. Organised a school fundraiser that raised $800 for the bushfire appeal'));
+  }
+
+  else if (id === 'skills') {
+    fi.appendChild(buildField('hard_skills', 'Technical or hard skills <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Microsoft Office, Adobe Photoshop, Python, barista trained, forklift licence'));
+    // Soft skills pills
+    var softWrap = document.createElement('div'); softWrap.className = 'field';
+    var softLbl = document.createElement('label');
+    softLbl.innerHTML = 'Soft skills <span style="font-weight:400;color:var(--muted)">(select up to 6)</span>';
+    softWrap.appendChild(softLbl);
+    var softPills = document.createElement('div'); softPills.className = 'pill-group'; softPills.id = 'softSkillPills';
+    SOFT_SKILLS.forEach(function(s) {
+      var pill = document.createElement('div');
+      pill.className = 'pill' + ((CV.soft_skills && CV.soft_skills.indexOf(s) > -1) ? ' selected' : '');
+      pill.textContent = s;
+      pill.addEventListener('click', function(){ togglePill(pill, 'soft_skills', s); });
+      softPills.appendChild(pill);
+    });
+    softWrap.appendChild(softPills);
+    fi.appendChild(softWrap);
+    // Languages
+    var langWrap = document.createElement('div'); langWrap.className = 'field';
+    var langLbl = document.createElement('label');
+    langLbl.innerHTML = 'Languages other than English <span style="font-weight:400;color:var(--muted)">(optional)</span>';
+    langWrap.appendChild(langLbl);
+    var langBlocks = document.createElement('div'); langBlocks.id = 'languageBlocks';
+    langWrap.appendChild(langBlocks);
+    var addLangBtn = document.createElement('button'); addLangBtn.className = 'add-btn'; addLangBtn.style.marginTop = '4px'; addLangBtn.textContent = '+ Add language';
+    addLangBtn.addEventListener('click', addLanguage);
+    langWrap.appendChild(addLangBtn);
+    fi.appendChild(langWrap);
+    renderLanguageBlocks();
+  }
+
+  else if (id === 'profile') {
+    var hasAssessment = ASSESSMENT_DATA && (ASSESSMENT_DATA.summary || CV.profile_draft);
+    if (hasAssessment) {
+      var profBox = document.createElement('div'); profBox.className = 'profile-box';
+      var profLbl = document.createElement('div'); profLbl.className = 'profile-box-label'; profLbl.textContent = '\u2728 Drafted from your assessment';
+      var profText = document.createElement('div'); profText.className = 'profile-box-text'; profText.id = 'profileDraftText';
+      profText.textContent = CV.profile_draft || ASSESSMENT_DATA.summary || '';
+      var editBtn = document.createElement('button'); editBtn.className = 'profile-edit-btn'; editBtn.textContent = 'Edit this \u2193';
+      editBtn.addEventListener('click', editProfile);
+      profBox.appendChild(profLbl); profBox.appendChild(profText); profBox.appendChild(editBtn);
+      fi.appendChild(profBox);
+      var editWrap = document.createElement('div'); editWrap.id = 'profileEditWrap'; editWrap.style.display = 'none';
+      editWrap.appendChild(buildField('profile', 'Edit your profile', 'textarea', 'Write 3\u20134 sentences about who you are, what you\'re good at, and what you\'re looking for.'));
+      fi.appendChild(editWrap);
+    } else {
+      var profHint = document.createElement('div'); profHint.className = 'section-hint'; profHint.style.marginBottom = '16px';
+      profHint.textContent = '3\u20134 sentences. Who are you, what are you good at, what are you looking for?';
+      fi.appendChild(profHint);
+      fi.appendChild(buildField('profile', 'Your professional profile', 'textarea', 'e.g. I\'m a motivated Year 12 student with a passion for working with people\u2026'));
+    }
+  }
+
+  else if (id === 'extras') {
+    fi.appendChild(buildField('achievements', 'Key achievements <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Grew team Instagram 40% in 3 months. Led a team of 4 delivered under budget.'));
+    var achHint = document.createElement('div'); achHint.className = 'field';
+    var achHintInner = document.createElement('div'); achHintInner.className = 'hint';
+    achHintInner.textContent = 'Start with an action verb: Grew\u2026 Led\u2026 Built\u2026 Add a number if you can.';
+    achHint.appendChild(achHintInner); fi.appendChild(achHint);
+    fi.appendChild(buildField('extracurricular', 'Leadership & community <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Vice President, Monash Marketing Society 2024. Volunteer basketball coach.'));
+    var refWrap = document.createElement('div'); refWrap.id = 'refereeBlocks';
+    fi.appendChild(refWrap);
+    renderRefereeBlocks();
+    var addRefBtn = document.createElement('button'); addRefBtn.className = 'add-btn'; addRefBtn.innerHTML = '+ Add referee <span style="color:var(--muted);font-weight:400">(optional)</span>';
+    addRefBtn.addEventListener('click', addReferee);
+    fi.appendChild(addRefBtn);
+  }
+
+  else if (id === 'jd') {
+    var jdHint = document.createElement('div'); jdHint.className = 'section-hint'; jdHint.style.marginBottom = '20px';
+    jdHint.textContent = 'Almost done. Paste a job ad below to tailor your CV language and generate a matching cover letter \u2014 or skip straight to building.';
+    fi.appendChild(jdHint);
+    // JD toggle
+    var jdToggle = document.createElement('div'); jdToggle.className = 'jd-toggle' + (JD_OPEN ? ' open' : ''); jdToggle.id = 'jdToggle';
+    jdToggle.innerHTML = '<div class="jd-toggle-icon">\uD83D\uDCCB</div><div class="jd-toggle-text"><div class="jd-toggle-title">Paste a job description</div><div class="jd-toggle-sub">Optional \u2014 enables cover letter generation</div></div><div class="jd-toggle-arrow">&rsaquo;</div>';
+    jdToggle.addEventListener('click', toggleJD);
+    fi.appendChild(jdToggle);
+    var jdContent = document.createElement('div'); jdContent.className = 'jd-content' + (JD_OPEN ? ' open' : ''); jdContent.id = 'jdContent';
+    jdContent.appendChild(buildField('jd', 'Job description', 'textarea', 'Paste the full job ad here \u2014 role title, requirements, responsibilities\u2026'));
+    fi.appendChild(jdContent);
+    fi.appendChild(buildField('certs', 'Certifications & licences <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. RSA, First Aid Certificate, Driver\'s licence, Working With Children Check'));
+  }
 }
 
 // ── Pill toggle ──
-function togglePill(el,key,val){
-  if(!CV[key])CV[key]=[];
-  var max=key==='soft_skills'?6:999;
-  if(el.classList.contains('selected')){el.classList.remove('selected');CV[key]=CV[key].filter(function(v){return v!==val;});}
-  else{if(CV[key].length>=max){showToast('Maximum '+max+' selections');return;}el.classList.add('selected');CV[key].push(val);}
+function togglePill(el, key, val) {
+  if (!CV[key]) CV[key] = [];
+  var max = key === 'soft_skills' ? 6 : 999;
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    CV[key] = CV[key].filter(function(v){ return v !== val; });
+  } else {
+    if (CV[key].length >= max) { showToast('Maximum ' + max + ' selections'); return; }
+    el.classList.add('selected');
+    CV[key].push(val);
+  }
   updatePreview();
 }
 
-// ── Experience blocks ──
-function addExperience(){EXPERIENCE_BLOCKS.push({employer:'',role:'',start:'',end:'',duties:''});CV.experience=EXPERIENCE_BLOCKS;renderExperienceBlocks();}
-function removeExperience(i){EXPERIENCE_BLOCKS.splice(i,1);CV.experience=EXPERIENCE_BLOCKS;renderExperienceBlocks();updatePreview();}
-function renderExperienceBlocks(){
-  var wrap=document.getElementById('experienceBlocks');if(!wrap)return;
-  var html='';
-  EXPERIENCE_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Role '+(i+1)+'</span><button class="remove-btn" onclick="removeExperience('+i+')">Remove</button></div>';
-    html+='<div class="field-row"><div class="field"><label>Employer</label><input type="text" placeholder="e.g. Woolworths" value="'+(b.employer||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].employer=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div>';
-    html+='<div class="field"><label>Role title</label><input type="text" placeholder="e.g. Customer Service" value="'+(b.role||'')+'" oninput="EXPERIENCE_BLOCKS['+i+'].role=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()"></div></div>';
-    html+='<div class="field-row"><div class="field"><label>Start</label>'+monthYearPicker('exp_start_'+i,b.start,'EXPERIENCE_BLOCKS['+i+'].start','CV.experience=EXPERIENCE_BLOCKS;sortExperience();updatePreview()')+'</div>';
-    html+='<div class="field"><label>End <span class="optional">(or Current)</span></label>'+monthYearPicker('exp_end_'+i,b.end,'EXPERIENCE_BLOCKS['+i+'].end','CV.experience=EXPERIENCE_BLOCKS;sortExperience();updatePreview()',true)+'</div></div>';
-    html+='<div class="field"><label>Key responsibilities</label><textarea placeholder="What did you do in this role? 2\u20133 sentences." oninput="EXPERIENCE_BLOCKS['+i+'].duties=this.value;CV.experience=EXPERIENCE_BLOCKS;updatePreview()">'+(b.duties||'')+'</textarea></div></div>';
-  });
-  wrap.innerHTML=html;
-}
-
-// ── Education blocks ──
-function addEducation(){EDUCATION_BLOCKS.push({institution:'',qualification:'',year:'',major:''});renderEducationBlocks();}
-function removeEducation(i){EDUCATION_BLOCKS.splice(i,1);CV.education=EDUCATION_BLOCKS;renderEducationBlocks();updatePreview();}
-function renderEducationBlocks(){
-  var wrap=document.getElementById('educationBlocks');if(!wrap)return;
-  var html='';
-  EDUCATION_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Qualification '+(i+1)+'</span><button class="remove-btn" onclick="removeEducation('+i+')">Remove</button></div>';
-    html+='<div class="field"><label>Institution</label><input type="text" placeholder="e.g. Monash University" value="'+(b.institution||'')+'" oninput="EDUCATION_BLOCKS['+i+'].institution=this.value;CV.education=EDUCATION_BLOCKS;updatePreview()"></div>';
-    html+='<div class="field-row"><div class="field"><label>Qualification</label><input type="text" placeholder="e.g. Bachelor of Commerce" value="'+(b.qualification||'')+'" oninput="EDUCATION_BLOCKS['+i+'].qualification=this.value;CV.education=EDUCATION_BLOCKS;updatePreview()"></div>';
-    html+='<div class="field"><label>Year completed</label><input type="text" placeholder="e.g. 2024" value="'+(b.year||'')+'" oninput="EDUCATION_BLOCKS['+i+'].year=this.value;CV.education=EDUCATION_BLOCKS;updatePreview()"></div></div>';
-    if(PATH==='graduate'){html+='<div class="field"><label>Major <span class="optional">(optional)</span></label><input type="text" placeholder="e.g. Marketing, or Data Science" value="'+(b.major||'')+'" oninput="EDUCATION_BLOCKS['+i+'].major=this.value;CV.education=EDUCATION_BLOCKS;updatePreview()"></div>';}
-    html+='</div>';
-  });
-  wrap.innerHTML=html;
-}
-
-// ── Referee blocks ──
-function addReferee(){REFEREE_BLOCKS.push({name:'',title:'',org:'',phone:'',email:''});renderRefereeBlocks();}
-function removeReferee(i){REFEREE_BLOCKS.splice(i,1);CV.referees=REFEREE_BLOCKS;renderRefereeBlocks();}
-function renderRefereeBlocks(){
-  var wrap=document.getElementById('refereeBlocks');if(!wrap)return;
-  var html='';
-  REFEREE_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Referee '+(i+1)+'</span><button class="remove-btn" onclick="removeReferee('+i+')">Remove</button></div>';
-    html+='<div class="field-row"><div class="field"><label>Name</label><input type="text" placeholder="e.g. Sarah Chen" value="'+(b.name||'')+'" oninput="REFEREE_BLOCKS['+i+'].name=this.value;CV.referees=REFEREE_BLOCKS"></div>';
-    html+='<div class="field"><label>Title</label><input type="text" placeholder="e.g. Store Manager" value="'+(b.title||'')+'" oninput="REFEREE_BLOCKS['+i+'].title=this.value;CV.referees=REFEREE_BLOCKS"></div></div>';
-    html+='<div class="field-row"><div class="field"><label>Organisation</label><input type="text" placeholder="e.g. Woolworths Frankston" value="'+(b.org||'')+'" oninput="REFEREE_BLOCKS['+i+'].org=this.value;CV.referees=REFEREE_BLOCKS"></div>';
-    html+='<div class="field"><label>Phone</label><input type="text" placeholder="e.g. 0412 345 678" value="'+(b.phone||'')+'" oninput="REFEREE_BLOCKS['+i+'].phone=this.value;CV.referees=REFEREE_BLOCKS"></div></div>';
-    html+='<div class="field"><label>Email</label><input type="email" placeholder="e.g. sarah@woolworths.com.au" value="'+(b.email||'')+'" oninput="REFEREE_BLOCKS['+i+'].email=this.value;CV.referees=REFEREE_BLOCKS"></div></div>';
-  });
-  wrap.innerHTML=html;
+// ── Custom subject ──
+function addCustomSubject() {
+  var input = document.getElementById('customSubjectInput');
+  if (!input || !input.value.trim()) return;
+  var val = input.value.trim();
+  if (!CV.subjects) CV.subjects = [];
+  if (CV.subjects.indexOf(val) > -1) { showToast('Already added'); return; }
+  CV.subjects.push(val);
+  var group = document.getElementById('subjectPills');
+  if (group) {
+    var pill = document.createElement('div');
+    pill.className = 'pill selected';
+    pill.textContent = val;
+    pill.addEventListener('click', function(){ togglePill(pill, 'subjects', val); });
+    group.appendChild(pill);
+  }
+  input.value = '';
 }
 
 // ── JD toggle ──
-function toggleJD(){
-  JD_OPEN=!JD_OPEN;
-  var t=document.getElementById('jdToggle');var c=document.getElementById('jdContent');
-  if(t)t.classList.toggle('open',JD_OPEN);if(c)c.classList.toggle('open',JD_OPEN);
+function toggleJD() {
+  JD_OPEN = !JD_OPEN;
+  var t = document.getElementById('jdToggle');
+  var c = document.getElementById('jdContent');
+  if (t) t.classList.toggle('open', JD_OPEN);
+  if (c) c.classList.toggle('open', JD_OPEN);
 }
 
 // ── Profile edit ──
-function editProfile(){
-  var wrap=document.getElementById('profileEditWrap');
-  if(wrap){wrap.style.display='block';var ta=document.getElementById('f_profile');if(ta)ta.value=CV.profile_draft||(ASSESSMENT_DATA&&ASSESSMENT_DATA.summary)||'';}
+function editProfile() {
+  var wrap = document.getElementById('profileEditWrap');
+  if (wrap) {
+    wrap.style.display = 'block';
+    var ta = document.getElementById('f_profile');
+    if (ta) ta.value = CV.profile_draft || (ASSESSMENT_DATA && ASSESSMENT_DATA.summary) || '';
+  }
+}
+
+// ── Experience blocks ──
+function addExperience() {
+  EXPERIENCE_BLOCKS.push({employer:'', role:'', start:'', end:'', duties:''});
+  CV.experience = EXPERIENCE_BLOCKS;
+  renderExperienceBlocks();
+}
+function removeExperience(i) {
+  EXPERIENCE_BLOCKS.splice(i, 1);
+  CV.experience = EXPERIENCE_BLOCKS;
+  renderExperienceBlocks();
+  updatePreview();
+}
+function sortExperience() {
+  EXPERIENCE_BLOCKS.sort(function(a, b) {
+    var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
+    var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
+    return be.localeCompare(ae);
+  });
+  CV.experience = EXPERIENCE_BLOCKS;
+}
+function dateToSort(d) {
+  if (!d) return '0000-00';
+  var parts = d.split(' ');
+  if (parts.length !== 2) return '0000-00';
+  var mi = MONTHS.indexOf(parts[0]);
+  return parts[1] + '-' + (mi >= 0 ? String(mi+1).padStart(2,'0') : '00');
+}
+function renderExperienceBlocks() {
+  var wrap = document.getElementById('experienceBlocks');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  EXPERIENCE_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var blockHead = document.createElement('div'); blockHead.className = 'repeat-block-head';
+    var blockLbl = document.createElement('span'); blockLbl.className = 'repeat-block-label'; blockLbl.textContent = 'Role ' + (i+1);
+    var removeBtn = document.createElement('button'); removeBtn.className = 'remove-btn'; removeBtn.textContent = 'Remove';
+    (function(idx){ removeBtn.addEventListener('click', function(){ removeExperience(idx); }); })(i);
+    blockHead.appendChild(blockLbl); blockHead.appendChild(removeBtn);
+    block.appendChild(blockHead);
+    // Employer + Role row
+    var row1 = document.createElement('div'); row1.className = 'field-row';
+    var empWrap = document.createElement('div'); empWrap.className = 'field';
+    empWrap.innerHTML = '<label>Employer</label>';
+    var empInput = document.createElement('input'); empInput.type = 'text'; empInput.placeholder = 'e.g. Woolworths'; empInput.value = b.employer || '';
+    (function(idx){ empInput.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].employer = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
+    empWrap.appendChild(empInput);
+    var roleWrap = document.createElement('div'); roleWrap.className = 'field';
+    roleWrap.innerHTML = '<label>Role title</label>';
+    var roleInput = document.createElement('input'); roleInput.type = 'text'; roleInput.placeholder = 'e.g. Customer Service'; roleInput.value = b.role || '';
+    (function(idx){ roleInput.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].role = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
+    roleWrap.appendChild(roleInput);
+    row1.appendChild(empWrap); row1.appendChild(roleWrap);
+    block.appendChild(row1);
+    // Date row
+    var row2 = document.createElement('div'); row2.className = 'field-row';
+    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'start', 'Start date', false, function(){ sortExperience(); renderExperienceBlocks(); updatePreview(); }));
+    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'end', 'End date', true, function(){ sortExperience(); renderExperienceBlocks(); updatePreview(); }));
+    block.appendChild(row2);
+    // Duties
+    var dutiesWrap = document.createElement('div'); dutiesWrap.className = 'field';
+    dutiesWrap.innerHTML = '<label>Key responsibilities</label>';
+    var dutiesTA = document.createElement('textarea'); dutiesTA.placeholder = 'What did you do in this role? 2\u20133 sentences.'; dutiesTA.value = b.duties || '';
+    (function(idx){ dutiesTA.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].duties = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
+    dutiesWrap.appendChild(dutiesTA);
+    block.appendChild(dutiesWrap);
+    wrap.appendChild(block);
+  });
+}
+
+// ── Education blocks ──
+function addEducation() {
+  EDUCATION_BLOCKS.push({institution:'', qualification:'', year:'', major:''});
+  CV.education = EDUCATION_BLOCKS;
+  renderEducationBlocks();
+}
+function removeEducation(i) {
+  EDUCATION_BLOCKS.splice(i, 1);
+  CV.education = EDUCATION_BLOCKS;
+  renderEducationBlocks();
+  updatePreview();
+}
+function renderEducationBlocks() {
+  var wrap = document.getElementById('educationBlocks');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  EDUCATION_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var blockHead = document.createElement('div'); blockHead.className = 'repeat-block-head';
+    var blockLbl = document.createElement('span'); blockLbl.className = 'repeat-block-label'; blockLbl.textContent = 'Qualification ' + (i+1);
+    var removeBtn = document.createElement('button'); removeBtn.className = 'remove-btn'; removeBtn.textContent = 'Remove';
+    (function(idx){ removeBtn.addEventListener('click', function(){ removeEducation(idx); }); })(i);
+    blockHead.appendChild(blockLbl); blockHead.appendChild(removeBtn);
+    block.appendChild(blockHead);
+    var instWrap = document.createElement('div'); instWrap.className = 'field';
+    instWrap.innerHTML = '<label>Institution</label>';
+    var instInput = document.createElement('input'); instInput.type = 'text'; instInput.placeholder = 'e.g. Monash University'; instInput.value = b.institution || '';
+    (function(idx){ instInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].institution = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
+    instWrap.appendChild(instInput);
+    block.appendChild(instWrap);
+    var qualRow = document.createElement('div'); qualRow.className = 'field-row';
+    var qualWrap = document.createElement('div'); qualWrap.className = 'field';
+    qualWrap.innerHTML = '<label>Qualification</label>';
+    var qualInput = document.createElement('input'); qualInput.type = 'text'; qualInput.placeholder = 'e.g. Bachelor of Commerce'; qualInput.value = b.qualification || '';
+    (function(idx){ qualInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].qualification = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
+    qualWrap.appendChild(qualInput);
+    var yearWrap = document.createElement('div'); yearWrap.className = 'field';
+    yearWrap.innerHTML = '<label>Year completed</label>';
+    var yearInput = document.createElement('input'); yearInput.type = 'text'; yearInput.placeholder = 'e.g. 2024'; yearInput.value = b.year || '';
+    (function(idx){ yearInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].year = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
+    yearWrap.appendChild(yearInput);
+    qualRow.appendChild(qualWrap); qualRow.appendChild(yearWrap);
+    block.appendChild(qualRow);
+    if (PATH === 'graduate') {
+      var majWrap = document.createElement('div'); majWrap.className = 'field';
+      majWrap.innerHTML = '<label>Major <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
+      var majInput = document.createElement('input'); majInput.type = 'text'; majInput.placeholder = 'e.g. Marketing, or Data Science'; majInput.value = b.major || '';
+      (function(idx){ majInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].major = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
+      majWrap.appendChild(majInput);
+      block.appendChild(majWrap);
+    }
+    wrap.appendChild(block);
+  });
+}
+
+// ── Sport blocks ──
+function addSport() { SPORT_BLOCKS.push({name:'',role:'',start:'',end:''}); CV.sport_blocks = SPORT_BLOCKS; renderSportBlocks(); }
+function removeSport(i) { SPORT_BLOCKS.splice(i,1); CV.sport_blocks = SPORT_BLOCKS; renderSportBlocks(); }
+function renderSportBlocks() {
+  var wrap = document.getElementById('sportBlocks'); if (!wrap) return;
+  wrap.innerHTML = '';
+  SPORT_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
+    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Activity ' + (i+1);
+    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
+    (function(idx){ rb.addEventListener('click', function(){ removeSport(idx); }); })(i);
+    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
+    var r1 = document.createElement('div'); r1.className = 'field-row';
+    var nw = document.createElement('div'); nw.className = 'field'; nw.innerHTML = '<label>Sport or activity</label>';
+    var ni = document.createElement('input'); ni.type = 'text'; ni.placeholder = 'e.g. Soccer'; ni.value = b.name||'';
+    (function(idx){ ni.addEventListener('input', function(){ SPORT_BLOCKS[idx].name=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    nw.appendChild(ni);
+    var rw = document.createElement('div'); rw.className = 'field'; rw.innerHTML = '<label>Your role</label>';
+    var ri = document.createElement('input'); ri.type = 'text'; ri.placeholder = 'e.g. Captain, Player'; ri.value = b.role||'';
+    (function(idx){ ri.addEventListener('input', function(){ SPORT_BLOCKS[idx].role=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    rw.appendChild(ri);
+    r1.appendChild(nw); r1.appendChild(rw); block.appendChild(r1);
+    var r2 = document.createElement('div'); r2.className = 'field-row';
+    var sw = document.createElement('div'); sw.className = 'field'; sw.innerHTML = '<label>From year</label>';
+    var si = document.createElement('input'); si.type = 'text'; si.placeholder = 'e.g. 2022'; si.value = b.start||'';
+    (function(idx){ si.addEventListener('input', function(){ SPORT_BLOCKS[idx].start=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    sw.appendChild(si);
+    var ew = document.createElement('div'); ew.className = 'field'; ew.innerHTML = '<label>To year</label>';
+    var ei = document.createElement('input'); ei.type = 'text'; ei.placeholder = 'e.g. 2024 or Current'; ei.value = b.end||'';
+    (function(idx){ ei.addEventListener('input', function(){ SPORT_BLOCKS[idx].end=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    ew.appendChild(ei);
+    r2.appendChild(sw); r2.appendChild(ew); block.appendChild(r2);
+    wrap.appendChild(block);
+  });
+}
+
+// ── Volunteer blocks ──
+function addVolunteer() { VOLUNTEER_BLOCKS.push({org:'',role:'',period:''}); CV.volunteer_blocks = VOLUNTEER_BLOCKS; renderVolunteerBlocks(); }
+function removeVolunteer(i) { VOLUNTEER_BLOCKS.splice(i,1); CV.volunteer_blocks = VOLUNTEER_BLOCKS; renderVolunteerBlocks(); }
+function renderVolunteerBlocks() {
+  var wrap = document.getElementById('volunteerBlocks'); if (!wrap) return;
+  wrap.innerHTML = '';
+  VOLUNTEER_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
+    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Role ' + (i+1);
+    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
+    (function(idx){ rb.addEventListener('click', function(){ removeVolunteer(idx); }); })(i);
+    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
+    var r1 = document.createElement('div'); r1.className = 'field-row';
+    var ow = document.createElement('div'); ow.className = 'field'; ow.innerHTML = '<label>Organisation</label>';
+    var oi = document.createElement('input'); oi.type='text'; oi.placeholder='e.g. Local food bank'; oi.value=b.org||'';
+    (function(idx){ oi.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].org=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
+    ow.appendChild(oi);
+    var rw = document.createElement('div'); rw.className = 'field'; rw.innerHTML = '<label>Your role</label>';
+    var ri = document.createElement('input'); ri.type='text'; ri.placeholder='e.g. Kitchen hand'; ri.value=b.role||'';
+    (function(idx){ ri.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].role=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
+    rw.appendChild(ri);
+    r1.appendChild(ow); r1.appendChild(rw); block.appendChild(r1);
+    var pw = document.createElement('div'); pw.className='field'; pw.innerHTML='<label>Period <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
+    var pi = document.createElement('input'); pi.type='text'; pi.placeholder='e.g. 2023\u20132024 or ongoing'; pi.value=b.period||'';
+    (function(idx){ pi.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].period=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
+    pw.appendChild(pi); block.appendChild(pw);
+    wrap.appendChild(block);
+  });
+}
+
+// ── Language blocks ──
+function addLanguage() { LANGUAGE_BLOCKS.push({language:'',proficiency:''}); CV.language_blocks = LANGUAGE_BLOCKS; renderLanguageBlocks(); }
+function removeLanguage(i) { LANGUAGE_BLOCKS.splice(i,1); CV.language_blocks = LANGUAGE_BLOCKS; renderLanguageBlocks(); }
+function renderLanguageBlocks() {
+  var wrap = document.getElementById('languageBlocks'); if (!wrap) return;
+  wrap.innerHTML = '';
+  LANGUAGE_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
+    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Language ' + (i+1);
+    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
+    (function(idx){ rb.addEventListener('click', function(){ removeLanguage(idx); }); })(i);
+    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
+    var r1 = document.createElement('div'); r1.className = 'field-row';
+    var lw = document.createElement('div'); lw.className = 'field'; lw.innerHTML = '<label>Language</label>';
+    var li = document.createElement('input'); li.type='text'; li.placeholder='e.g. Mandarin'; li.value=b.language||'';
+    (function(idx){ li.addEventListener('input',function(){ LANGUAGE_BLOCKS[idx].language=this.value; CV.language_blocks=LANGUAGE_BLOCKS; }); })(i);
+    lw.appendChild(li);
+    var pw = document.createElement('div'); pw.className='field'; pw.innerHTML='<label>Proficiency</label>';
+    var ps = buildSelect(null, PROFICIENCY, b.proficiency, null, 'Select\u2026');
+    (function(idx){ ps.addEventListener('change',function(){ LANGUAGE_BLOCKS[idx].proficiency=this.value; CV.language_blocks=LANGUAGE_BLOCKS; }); })(i);
+    pw.appendChild(ps);
+    r1.appendChild(lw); r1.appendChild(pw); block.appendChild(r1);
+    wrap.appendChild(block);
+  });
+}
+
+// ── Referee blocks ──
+function addReferee() { REFEREE_BLOCKS.push({name:'',title:'',org:'',phone:'',email:''}); CV.referees = REFEREE_BLOCKS; renderRefereeBlocks(); }
+function removeReferee(i) { REFEREE_BLOCKS.splice(i,1); CV.referees = REFEREE_BLOCKS; renderRefereeBlocks(); }
+function renderRefereeBlocks() {
+  var wrap = document.getElementById('refereeBlocks'); if (!wrap) return;
+  wrap.innerHTML = '';
+  REFEREE_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
+    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Referee ' + (i+1);
+    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
+    (function(idx){ rb.addEventListener('click', function(){ removeReferee(idx); }); })(i);
+    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
+    var r1 = document.createElement('div'); r1.className = 'field-row';
+    ['name','title'].forEach(function(key, ki) {
+      var fw = document.createElement('div'); fw.className = 'field';
+      fw.innerHTML = '<label>' + (ki===0?'Name':'Title') + '</label>';
+      var fi2 = document.createElement('input'); fi2.type='text';
+      fi2.placeholder = ki===0 ? 'e.g. Sarah Chen' : 'e.g. Store Manager';
+      fi2.value = b[key]||'';
+      (function(idx,k){ fi2.addEventListener('input',function(){ REFEREE_BLOCKS[idx][k]=this.value; CV.referees=REFEREE_BLOCKS; }); })(i,key);
+      fw.appendChild(fi2); r1.appendChild(fw);
+    });
+    block.appendChild(r1);
+    var r2 = document.createElement('div'); r2.className = 'field-row';
+    ['org','phone'].forEach(function(key, ki) {
+      var fw = document.createElement('div'); fw.className = 'field';
+      fw.innerHTML = '<label>' + (ki===0?'Organisation':'Phone') + '</label>';
+      var fi2 = document.createElement('input'); fi2.type='text';
+      fi2.placeholder = ki===0 ? 'e.g. Woolworths Frankston' : 'e.g. 0412 345 678';
+      fi2.value = b[key]||'';
+      (function(idx,k){ fi2.addEventListener('input',function(){ REFEREE_BLOCKS[idx][k]=this.value; CV.referees=REFEREE_BLOCKS; }); })(i,key);
+      fw.appendChild(fi2); r2.appendChild(fw);
+    });
+    block.appendChild(r2);
+    var ew = document.createElement('div'); ew.className='field'; ew.innerHTML='<label>Email</label>';
+    var ei = document.createElement('input'); ei.type='email'; ei.placeholder='e.g. sarah@woolworths.com.au'; ei.value=b.email||'';
+    (function(idx){ ei.addEventListener('input',function(){ REFEREE_BLOCKS[idx].email=this.value; CV.referees=REFEREE_BLOCKS; }); })(i);
+    ew.appendChild(ei); block.appendChild(ew);
+    wrap.appendChild(block);
+  });
 }
 
 // ── Validation ──
-function nextStep(i){
-  var steps=getSteps();var step=steps[i];
-  var err=validateStep(step.id);
-  if(err){var eb=document.getElementById('errBox');if(eb){eb.textContent=err;eb.style.display='block';}return;}
-  showStep(i+1);
-}
-
-function validateStep(id){
-  if(id==='personal'){
-    if(!CV.first_name)return'Please enter your first name.';
-    if(!CV.last_name)return'Please enter your last name.';
-    if(!CV.email)return'Please enter your email address.';
-    if(!CV.phone)return'Please enter your phone number.';
-    if(!CV.suburb)return'Please enter your suburb.';
-    if(!CV.state)return'Please enter your state.';
+function nextStep(i) {
+  var steps = getSteps();
+  var err = validateStep(steps[i].id);
+  if (err) {
+    var eb = document.getElementById('errBox');
+    if (eb) { eb.textContent = err; eb.style.display = 'block'; }
+    return;
   }
-  if(id==='education'&&PATH==='school'){if(!CV.school_name)return'Please enter your school name.';}
+  showStep(i + 1);
+}
+function validateStep(id) {
+  if (id === 'personal') {
+    if (!CV.first_name) return 'Please enter your first name.';
+    if (!CV.last_name) return 'Please enter your last name.';
+    if (!CV.email) return 'Please enter your email address.';
+    if (!CV.phone) return 'Please enter your phone number.';
+    if (!CV.suburb) return 'Please enter your suburb.';
+    if (!CV.state) return 'Please enter your state.';
+  }
+  if (id === 'education' && PATH === 'school') {
+    if (!CV.school_name) return 'Please enter your school name.';
+  }
   return null;
 }
 
 // ── Generate CV ──
-async function generateCV(){
-  if(IS_GENERATING)return;IS_GENERATING=true;
-  var jdEl=document.getElementById('f_jd');if(jdEl)CV.jd=jdEl.value;
-  var certsEl=document.getElementById('f_certs');if(certsEl)CV.certs=certsEl.value;
-  CV.experience=EXPERIENCE_BLOCKS;CV.education=EDUCATION_BLOCKS;CV.referees=REFEREE_BLOCKS;
-  var hasJD=CV.jd&&CV.jd.trim().length>20;
-  showLoading(hasJD?'Building your CV and cover letter\u2026':'Building your CV\u2026');
-  try{
-    var r=await fetch('/api/cv-generate',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({cv:CV,path:PATH,assessment:ASSESSMENT_DATA,hasJD:hasJD})
+async function generateCV() {
+  var jdEl = document.getElementById('f_jd'); if (jdEl) CV.jd = jdEl.value;
+  var certsEl = document.getElementById('f_certs'); if (certsEl) CV.certs = certsEl.value;
+  CV.experience = EXPERIENCE_BLOCKS;
+  CV.education = EDUCATION_BLOCKS;
+  CV.referees = REFEREE_BLOCKS;
+  CV.sport_blocks = SPORT_BLOCKS;
+  CV.volunteer_blocks = VOLUNTEER_BLOCKS;
+  CV.language_blocks = LANGUAGE_BLOCKS;
+  var hasJD = CV.jd && CV.jd.trim().length > 20;
+  showLoading(hasJD ? 'Building your CV and cover letter\u2026' : 'Building your CV\u2026');
+  try {
+    var r = await fetch('/api/cv-generate', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({cv: CV, path: PATH, assessment: ASSESSMENT_DATA, hasJD: hasJD})
     });
-    var data=await r.json();
-    if(!r.ok||data.error){
-      IS_GENERATING=false;showStep(getSteps().length-1);
-      var eb=document.getElementById('errBox');if(eb){eb.textContent=data.error||'Something went wrong. Please try again.';eb.style.display='block';}
+    var data = await r.json();
+    if (!r.ok || data.error) {
+      showStep(getSteps().length - 1);
+      var eb = document.getElementById('errBox');
+      if (eb) { eb.textContent = data.error || 'Something went wrong. Please try again.'; eb.style.display = 'block'; }
       return;
     }
-    CV_UUID=data.uuid;IS_GENERATING=false;showResultScreen(data);
-  }catch(e){IS_GENERATING=false;showStep(getSteps().length-1);var eb=document.getElementById('errBox');if(eb){eb.textContent='Something went wrong building your CV. Please check your details and try again.';eb.style.display='block';}}
+    CV_UUID = data.uuid;
+    showResultScreen(data);
+  } catch(e) {
+    showStep(getSteps().length - 1);
+    var eb2 = document.getElementById('errBox');
+    if (eb2) { eb2.textContent = 'Connection error. Please check your internet and try again.'; eb2.style.display = 'block'; }
+  }
 }
 
 // ── Result screen ──
-function showResultScreen(data){
-  var hasJD=CV.jd&&CV.jd.trim().length>20;
-  var html='<div class="section-tag">&#x2728; All done</div>';
-  html+='<div class="result-title">Your CV is ready'+(CV.first_name?', '+CV.first_name:'')+'.</div>';
-  html+='<div class="result-sub">Download below. Come back any time with your personal link to edit and update.</div>';
-  html+='<div class="result-actions">';
-  html+='<a class="result-action" href="/api/cv-download?uuid='+CV_UUID+'&format=pdf" target="_blank"><div class="result-action-icon">&#x1F4C4;</div><div class="result-action-text"><div class="result-action-title">Download as PDF</div><div class="result-action-sub">Best for emailing and applying online</div></div></a>';
-  html+='<a class="result-action" href="/api/cv-download?uuid='+CV_UUID+'&format=docx" target="_blank"><div class="result-action-icon">&#x1F4DD;</div><div class="result-action-text"><div class="result-action-title">Download as Word</div><div class="result-action-sub">Editable in Microsoft Word or Google Docs</div></div></a>';
-  if(hasJD){html+='<a class="result-action" href="/api/cv-download?uuid='+CV_UUID+'&format=cover" target="_blank"><div class="result-action-icon">&#x2709;&#xFE0F;</div><div class="result-action-text"><div class="result-action-title">Download cover letter</div><div class="result-action-sub">Tailored to the job you applied for</div></div></a>';}
-  html+='<div class="result-action" onclick="editCV()" style="cursor:pointer"><div class="result-action-icon">&#x270F;&#xFE0F;</div><div class="result-action-text"><div class="result-action-title">Edit my CV</div><div class="result-action-sub">Go back and make changes</div></div></div>';
-  html+='</div>';
-  var saveLink=window.location.origin+'/cv-builder.html?cv='+CV_UUID;
-  html+='<div class="save-link-wrap"><div class="save-link-label">Your personal CV link \u2014 bookmark this to come back and edit</div>';
-  html+='<div class="save-link-row"><input class="save-link-input" id="cvSaveLink" value="'+saveLink+'" readonly><button class="save-link-copy-btn" id="cvCopyBtn" onclick="copyCVLink()">Copy link</button></div></div>';
-  html+='<div class="disclaimer">&#x26A0;&#xFE0F; This CV was generated with AI assistance. Please review all content carefully before sending. Find My Journey does not fabricate experience, qualifications or skills \u2014 all content is based on what you provided.</div>';
-  document.getElementById('formInner').innerHTML=html;
-  if(data.cv_html)document.getElementById('previewDoc').innerHTML=data.cv_html;
-}
+function showResultScreen(data) {
+  var hasJD = CV.jd && CV.jd.trim().length > 20;
+  var fi = document.getElementById('formInner');
+  fi.innerHTML = '';
 
-function editCV(){STEP=0;showStep(0);}
+  var tag = document.createElement('div'); tag.className = 'section-tag'; tag.textContent = '\u2728 All done';
+  fi.appendChild(tag);
+  var title = document.createElement('div'); title.style.cssText = 'font-family:var(--font-display);font-size:26px;font-weight:300;color:var(--text);margin-bottom:6px';
+  title.textContent = 'Your CV is ready' + (CV.first_name ? ', ' + CV.first_name : '') + '.';
+  fi.appendChild(title);
+  var sub = document.createElement('div'); sub.style.cssText = 'font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5';
+  sub.textContent = 'Download below. Come back any time with your personal link to edit and update.';
+  fi.appendChild(sub);
 
-function copyCVLink(){
-  var input=document.getElementById('cvSaveLink');
-  if(input){navigator.clipboard.writeText(input.value).then(function(){var btn=document.getElementById('cvCopyBtn');if(btn){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy link';},2000);}});}
+  function makeAction(icon, title2, sub2, href, clickFn) {
+    var a = href ? document.createElement('a') : document.createElement('div');
+    a.className = 'result-action';
+    if (href) { a.href = href; a.target = '_blank'; }
+    if (clickFn) { a.style.cursor = 'pointer'; a.addEventListener('click', clickFn); }
+    a.innerHTML = '<div class="result-action-icon">' + icon + '</div><div class="result-action-text"><div class="result-action-title">' + title2 + '</div><div class="result-action-sub">' + sub2 + '</div></div>';
+    return a;
+  }
+
+  fi.appendChild(makeAction('\uD83D\uDCC4', 'Download as PDF', 'Best for emailing and applying online', '/api/cv-download?uuid=' + CV_UUID + '&format=pdf'));
+  fi.appendChild(makeAction('\uD83D\uDCDD', 'Download as Word', 'Editable in Microsoft Word or Google Docs', '/api/cv-download?uuid=' + CV_UUID + '&format=docx'));
+  if (hasJD) {
+    fi.appendChild(makeAction('\u2709\uFE0F', 'Download cover letter', 'Tailored to the job you applied for', '/api/cv-download?uuid=' + CV_UUID + '&format=cover'));
+  }
+  fi.appendChild(makeAction('\u270F\uFE0F', 'Edit my CV', 'Go back and make changes', null, function(){ showStep(0); }));
+
+  // Save link
+  var saveLink = window.location.origin + '/cv-builder.html?cv=' + CV_UUID;
+  var slWrap = document.createElement('div'); slWrap.className = 'save-link-wrap';
+  var slLbl = document.createElement('div'); slLbl.className = 'save-link-label'; slLbl.textContent = 'Your personal CV link \u2014 bookmark this to come back and edit';
+  var slRow = document.createElement('div'); slRow.className = 'save-link-row';
+  var slInput = document.createElement('input'); slInput.className = 'save-link-input'; slInput.id = 'cvSaveLink'; slInput.value = saveLink; slInput.readOnly = true;
+  var slBtn = document.createElement('button'); slBtn.className = 'save-link-btn'; slBtn.id = 'cvCopyBtn'; slBtn.textContent = 'Copy link';
+  slBtn.addEventListener('click', function() {
+    navigator.clipboard.writeText(saveLink).then(function() {
+      slBtn.textContent = 'Copied!';
+      setTimeout(function(){ slBtn.textContent = 'Copy link'; }, 2000);
+    });
+  });
+  slRow.appendChild(slInput); slRow.appendChild(slBtn);
+  slWrap.appendChild(slLbl); slWrap.appendChild(slRow);
+  fi.appendChild(slWrap);
+
+  var disclaimer = document.createElement('div'); disclaimer.className = 'disclaimer';
+  disclaimer.textContent = '\u26A0\uFE0F This CV was generated with AI assistance. Please review all content carefully before sending. Find My Journey does not fabricate experience, qualifications or skills \u2014 all content is based on what you provided.';
+  fi.appendChild(disclaimer);
+
+  if (data.cv_html) document.getElementById('previewDoc').innerHTML = data.cv_html;
 }
 
 // ── Live preview ──
-function updatePreview(){
-  var doc=document.getElementById('previewDoc');if(!doc)return;
-  var name=(CV.first_name||'')+(CV.last_name?' '+CV.last_name:'');
-  if(!name.trim())return;
-  var html='';
-  html+='<div class="cv-name">'+esc(name)+'</div>';
-  var contact=[];
-  if(CV.phone)contact.push(esc(CV.phone));
-  if(CV.email)contact.push(esc(CV.email));
-  if(CV.suburb&&CV.state)contact.push(esc(CV.suburb+', '+CV.state));
-  if(CV.linkedin)contact.push(esc(CV.linkedin));
-  html+='<div class="cv-contact-row">'+contact.join(' &nbsp;|&nbsp; ')+'</div>';
-  var profile=CV.profile||CV.profile_draft||(ASSESSMENT_DATA&&ASSESSMENT_DATA.summary);
-  if(profile){html+='<div class="cv-section-title">Professional Profile</div><div class="cv-profile">'+esc(profile)+'</div>';}
-  var hasEdu=CV.school_name||(EDUCATION_BLOCKS&&EDUCATION_BLOCKS.length>0);
-  if(hasEdu){
-    html+='<div class="cv-section-title">Education</div>';
-    if(CV.school_name){html+='<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">'+esc(CV.school_name)+'</span><span class="cv-item-date">'+esc(CV.school_year||'')+'</span></div></div>';}
-    EDUCATION_BLOCKS.forEach(function(b){if(!b.institution)return;html+='<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">'+esc(b.qualification||'')+'</span><span class="cv-item-date">'+esc(b.year||'')+'</span></div><div class="cv-item-org">'+esc(b.institution)+(b.major?' \u2014 '+esc(b.major):'')+'</div></div>';});
-  }
-  if(EXPERIENCE_BLOCKS&&EXPERIENCE_BLOCKS.length>0){
-    html+='<div class="cv-section-title">Experience</div>';
-    EXPERIENCE_BLOCKS.forEach(function(b){
-      if(!b.employer&&!b.role)return;
-      html+='<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">'+esc(b.role||'')+'</span><span class="cv-item-date">'+esc((b.start||'')+(b.end?' \u2013 '+b.end:''))+'</span></div><div class="cv-item-org">'+esc(b.employer||'')+'</div>';
-      if(b.duties)html+='<div class="cv-item-body">'+esc(b.duties)+'</div>';
-      html+='</div>';
+function updatePreview() {
+  var doc = document.getElementById('previewDoc'); if (!doc) return;
+  var name = (CV.first_name || '') + (CV.last_name ? ' ' + CV.last_name : '');
+  if (!name.trim()) return;
+  var h = '';
+  h += '<div class="cv-name">' + esc(name) + '</div>';
+  var contact = [];
+  if (CV.phone) contact.push(esc(CV.phone));
+  if (CV.email) contact.push(esc(CV.email));
+  if (CV.suburb && CV.state) contact.push(esc(CV.suburb + ', ' + CV.state));
+  if (CV.linkedin) contact.push(esc(CV.linkedin));
+  h += '<div class="cv-contact-row">' + contact.join(' &nbsp;|&nbsp; ') + '</div>';
+  var profile = CV.profile || CV.profile_draft || (ASSESSMENT_DATA && ASSESSMENT_DATA.summary);
+  if (profile) { h += '<div class="cv-section-title">Professional Profile</div><div class="cv-profile">' + esc(profile) + '</div>'; }
+  var hasEdu = CV.school_name || (EDUCATION_BLOCKS && EDUCATION_BLOCKS.length > 0);
+  if (hasEdu) {
+    h += '<div class="cv-section-title">Education</div>';
+    if (CV.school_name) { h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(CV.school_name) + '</span><span class="cv-item-date">' + esc(CV.school_year || '') + '</span></div></div>'; }
+    EDUCATION_BLOCKS.forEach(function(b) {
+      if (!b.institution) return;
+      h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(b.qualification||'') + '</span><span class="cv-item-date">' + esc(b.year||'') + '</span></div><div class="cv-item-org">' + esc(b.institution) + (b.major ? ' \u2014 ' + esc(b.major) : '') + '</div></div>';
     });
   }
-  var allSkills=(CV.soft_skills||[]).concat((CV.hard_skills||'').split(',').map(function(s){return s.trim();}).filter(Boolean));
-  if(allSkills.length>0){
-    html+='<div class="cv-section-title">Skills</div><div class="cv-skills-wrap">';
-    allSkills.slice(0,12).forEach(function(s){html+='<span class="cv-skill">'+esc(s)+'</span>';});
-    html+='</div>';
+  if (EXPERIENCE_BLOCKS && EXPERIENCE_BLOCKS.length > 0) {
+    h += '<div class="cv-section-title">Experience</div>';
+    EXPERIENCE_BLOCKS.forEach(function(b) {
+      if (!b.employer && !b.role) return;
+      h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(b.role||'') + '</span><span class="cv-item-date">' + esc((b.start||'') + (b.end ? ' \u2013 ' + b.end : '')) + '</span></div><div class="cv-item-org">' + esc(b.employer||'') + '</div>';
+      if (b.duties) h += '<div class="cv-item-body">' + esc(b.duties) + '</div>';
+      h += '</div>';
+    });
   }
-  doc.innerHTML=html;
-}
-
-function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-// ── Month/year picker ──
-var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function monthYearPicker(id,currentVal,stateExpr,onchange,allowCurrent){
-  var curMonth='';var curYear='';
-  if(currentVal&&currentVal!=='Current'){var parts=currentVal.split(' ');if(parts.length===2){curMonth=parts[0];curYear=parts[1];}}
-  var isCurrent=currentVal==='Current';
-  var html='<div style="display:flex;gap:6px;align-items:center">';
-  if(allowCurrent&&isCurrent){
-    html+='<select style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" disabled><option>Current</option></select>';
-    html+='<select style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" disabled><option>Current</option></select>';
-    html+='<label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer"><input type="checkbox" checked onchange="handleCurrentToggle(this,''+id+'',''+stateExpr+'',''+onchange+'')"> Current</label>';
-  } else {
-    html+='<select id="'+id+'_m" style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" onchange="updateMonthYear(''+id+'',''+stateExpr+'',''+onchange+'')">';
-    html+='<option value="">Month</option>';
-    MONTHS.forEach(function(m){html+='<option value="'+m+'"'+(m===curMonth?' selected':'')+'>'+m+'</option>';});
-    html+='</select>';
-    html+='<select id="'+id+'_y" style="flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none" onchange="updateMonthYear(''+id+'',''+stateExpr+'',''+onchange+'')">';
-    html+='<option value="">Year</option>';
-    var yr=new Date().getFullYear();for(var y=yr;y>=yr-10;y--){html+='<option value="'+y+'"'+(String(y)===curYear?' selected':'')+'>'+y+'</option>';}
-    html+='</select>';
-    if(allowCurrent){html+='<label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer"><input type="checkbox" id="'+id+'_cur" onchange="handleCurrentToggle(this,''+id+'',''+stateExpr+'',''+onchange+'')"> Current</label>';}
+  var allSkills = (CV.soft_skills || []).concat((CV.hard_skills || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean));
+  if (allSkills.length > 0) {
+    h += '<div class="cv-section-title">Skills</div><div class="cv-skills-wrap">';
+    allSkills.slice(0,12).forEach(function(s){ h += '<span class="cv-skill">' + esc(s) + '</span>'; });
+    h += '</div>';
   }
-  html+='</div>';
-  return html;
+  doc.innerHTML = h;
 }
-function updateMonthYear(id,stateExpr,onchange){
-  var m=document.getElementById(id+'_m');var y=document.getElementById(id+'_y');
-  if(!m||!y)return;
-  var val=(m.value&&y.value)?(m.value+' '+y.value):'';
-  try{eval(stateExpr+'=''+val+''');}catch(e){}
-  if(onchange)try{eval(onchange);}catch(e){}
-}
-function handleCurrentToggle(cb,id,stateExpr,onchange){
-  if(cb.checked){
-    try{eval(stateExpr+'='Current'');}catch(e){}
-    if(onchange)try{eval(onchange);}catch(e){}
-    // Re-render to show disabled state
-    sortExperience();updatePreview();
-  } else {
-    try{eval(stateExpr+'=''');}catch(e){}
-    if(onchange)try{eval(onchange);}catch(e){}
-    sortExperience();updatePreview();
-  }
-}
-
-// ── Sort experience chronologically (most recent first) ──
-function sortExperience(){
-  EXPERIENCE_BLOCKS.sort(function(a,b){
-    var aEnd=a.end==='Current'?'9999-99':dateToSort(a.end);
-    var bEnd=b.end==='Current'?'9999-99':dateToSort(b.end);
-    return bEnd.localeCompare(aEnd);
-  });
-  CV.experience=EXPERIENCE_BLOCKS;
-  renderExperienceBlocks();
-}
-function dateToSort(d){
-  if(!d)return'0000-00';
-  var parts=d.split(' ');if(parts.length!==2)return'0000-00';
-  var mi=MONTHS.indexOf(parts[0]);
-  return parts[1]+'-'+(mi>=0?String(mi+1).padStart(2,'0'):'00');
-}
-
-// ── Sport blocks ──
-var SPORT_BLOCKS=[];
-function addSport(){SPORT_BLOCKS.push({name:'',role:'',start:'',end:''});renderSportBlocks();}
-function removeSport(i){SPORT_BLOCKS.splice(i,1);CV.sport_blocks=SPORT_BLOCKS;renderSportBlocks();}
-function renderSportBlocks(){
-  var wrap=document.getElementById('sportBlocks');if(!wrap)return;
-  var html='';
-  SPORT_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Activity '+(i+1)+'</span><button class="remove-btn" onclick="removeSport('+i+')">Remove</button></div>';
-    html+='<div class="field-row"><div class="field"><label>Sport or activity</label><input type="text" placeholder="e.g. Soccer" value="'+(b.name||'')+'" oninput="SPORT_BLOCKS['+i+'].name=this.value;CV.sport_blocks=SPORT_BLOCKS"></div>';
-    html+='<div class="field"><label>Your role</label><input type="text" placeholder="e.g. Captain, Player" value="'+(b.role||'')+'" oninput="SPORT_BLOCKS['+i+'].role=this.value;CV.sport_blocks=SPORT_BLOCKS"></div></div>';
-    html+='<div class="field-row"><div class="field"><label>From year</label><input type="text" placeholder="e.g. 2022" value="'+(b.start||'')+'" oninput="SPORT_BLOCKS['+i+'].start=this.value;CV.sport_blocks=SPORT_BLOCKS"></div>';
-    html+='<div class="field"><label>To year</label><input type="text" placeholder="e.g. 2024 or Current" value="'+(b.end||'')+'" oninput="SPORT_BLOCKS['+i+'].end=this.value;CV.sport_blocks=SPORT_BLOCKS"></div></div>';
-    html+='</div>';
-  });
-  wrap.innerHTML=html;
-}
-
-// ── Volunteer blocks ──
-var VOLUNTEER_BLOCKS=[];
-function addVolunteer(){VOLUNTEER_BLOCKS.push({org:'',role:'',period:''});renderVolunteerBlocks();}
-function removeVolunteer(i){VOLUNTEER_BLOCKS.splice(i,1);CV.volunteer_blocks=VOLUNTEER_BLOCKS;renderVolunteerBlocks();}
-function renderVolunteerBlocks(){
-  var wrap=document.getElementById('volunteerBlocks');if(!wrap)return;
-  var html='';
-  VOLUNTEER_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Role '+(i+1)+'</span><button class="remove-btn" onclick="removeVolunteer('+i+')">Remove</button></div>';
-    html+='<div class="field-row"><div class="field"><label>Organisation</label><input type="text" placeholder="e.g. Local food bank" value="'+(b.org||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].org=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div>';
-    html+='<div class="field"><label>Your role</label><input type="text" placeholder="e.g. Kitchen hand" value="'+(b.role||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].role=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div></div>';
-    html+='<div class="field"><label>Period <span class="optional">(optional)</span></label><input type="text" placeholder="e.g. 2023–2024 or ongoing" value="'+(b.period||'')+'" oninput="VOLUNTEER_BLOCKS['+i+'].period=this.value;CV.volunteer_blocks=VOLUNTEER_BLOCKS"></div>';
-    html+='</div>';
-  });
-  wrap.innerHTML=html;
-}
-
-// ── Language blocks ──
-var LANGUAGE_BLOCKS=[];
-function addLanguage(){LANGUAGE_BLOCKS.push({language:'',proficiency:''});renderLanguageBlocks();}
-function removeLanguage(i){LANGUAGE_BLOCKS.splice(i,1);CV.language_blocks=LANGUAGE_BLOCKS;renderLanguageBlocks();}
-function renderLanguageBlocks(){
-  var wrap=document.getElementById('languageBlocks');if(!wrap)return;
-  var html='';
-  LANGUAGE_BLOCKS.forEach(function(b,i){
-    html+='<div class="repeat-block"><div class="repeat-block-head"><span class="repeat-block-label">Language '+(i+1)+'</span><button class="remove-btn" onclick="removeLanguage('+i+')">Remove</button></div>';
-    html+='<div class="field-row"><div class="field"><label>Language</label><input type="text" placeholder="e.g. Mandarin" value="'+(b.language||'')+'" oninput="LANGUAGE_BLOCKS['+i+'].language=this.value;CV.language_blocks=LANGUAGE_BLOCKS"></div>';
-    html+='<div class="field"><label>Proficiency</label><select oninput="LANGUAGE_BLOCKS['+i+'].proficiency=this.value;CV.language_blocks=LANGUAGE_BLOCKS" style="width:100%;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 13px;font-size:13px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none"><option value="">Select…</option><option'+(b.proficiency==='Bilingual'?' selected':'')+' value="Bilingual">Bilingual</option><option'+(b.proficiency==='Fluent'?' selected':'')+' value="Fluent">Fluent</option><option'+(b.proficiency==='Conversational'?' selected':'')+' value="Conversational">Conversational</option><option'+(b.proficiency==='Basic'?' selected':'')+' value="Basic">Basic</option></select></div></div>';
-    html+='</div>';
-  });
-  wrap.innerHTML=html;
-}
-
-// ── Custom subject ──
-function addCustomSubject(){
-  var input=document.getElementById('customSubjectInput');
-  if(!input||!input.value.trim())return;
-  var val=input.value.trim();
-  if(!CV.subjects)CV.subjects=[];
-  if(CV.subjects.indexOf(val)>-1){showToast('Already added');return;}
-  CV.subjects.push(val);
-  // Add pill to group
-  var group=document.getElementById('subjectPills');
-  if(group){
-    var pill=document.createElement('div');
-    pill.className='pill selected';
-    pill.textContent=val;
-    pill.onclick=function(){togglePill(pill,'subjects',val);};
-    group.appendChild(pill);
-  }
-  input.value='';
-}
-
-// ── Restore life blocks on step restore ──
-var _origRestoreStepValues=restoreStepValues;
-function restoreStepValues(stepId){
-  _origRestoreStepValues(stepId);
-  if(stepId==='life'){
-    if(CV.sport_blocks){SPORT_BLOCKS=CV.sport_blocks;renderSportBlocks();}
-    if(CV.volunteer_blocks){VOLUNTEER_BLOCKS=CV.volunteer_blocks;renderVolunteerBlocks();}
-  }
-  if(stepId==='skills'){
-    if(CV.language_blocks){LANGUAGE_BLOCKS=CV.language_blocks;renderLanguageBlocks();}
-  }
-}
-
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 </script>
 </body>
 </html>
