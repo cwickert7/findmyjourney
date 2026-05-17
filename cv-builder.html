@@ -111,10 +111,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--tc);border-radius:50%;animation:spin .8s linear infinite}
 .loading-msg{font-size:14px;color:var(--muted)}
 .error-box{background:var(--danger-bg);border:1.5px solid #F09595;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none}
-.date-picker-row{display:flex;gap:6px;align-items:center}
-.date-picker-row select{flex:1;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none}
+.date-picker-row{display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
+.date-picker-row select{width:100px;min-width:90px;border:1.5px solid var(--border);border-radius:var(--radius);padding:9px 10px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;flex-shrink:0}
 .date-picker-row select:focus{border-color:var(--tc)}
-.date-picker-row label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer}
+.date-picker-row label{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer;flex-shrink:0}
 .custom-subject-row{display:flex;gap:8px;margin-top:8px}
 .custom-subject-row input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none}
 .custom-subject-row input:focus{border-color:var(--tc)}
@@ -188,6 +188,7 @@ var REFEREE_BLOCKS = [];
 var SPORT_BLOCKS = [];
 var VOLUNTEER_BLOCKS = [];
 var LANGUAGE_BLOCKS = [];
+var CERT_BLOCKS = [];
 
 // ── URL params ──
 var urlParams = new URLSearchParams(window.location.search);
@@ -290,20 +291,31 @@ function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurr
   var wrap = document.createElement('div');
   wrap.className = 'field';
   var lbl = document.createElement('label');
-  lbl.textContent = label;
+  lbl.textContent = label + (allowCurrent ? '' : '');
   wrap.appendChild(lbl);
 
   var row = document.createElement('div');
   row.className = 'date-picker-row';
 
+  // Get current value — read directly from source of truth
   var currentVal = blockArr ? blockArr[blockIdx][dateKey] : (CV[stateKey] || '');
   var isCurrent = currentVal === 'Current';
   var parts = (!isCurrent && currentVal) ? currentVal.split(' ') : [];
   var curMonth = parts[0] || '';
   var curYear = parts[1] || '';
 
-  var monthSel = buildSelect(null, MONTHS, curMonth, null, 'Month');
-  var yearSel = buildSelect(null, YEARS, curYear, null, 'Year');
+  // Build month select — pre-select if value exists
+  var monthOpts = MONTHS.map(function(m){ return {value:m, label:m}; });
+  var monthSel = buildSelect(null, monthOpts, curMonth, null, 'Month');
+
+  // Build year select — pre-select if value exists
+  var yearOpts = YEARS.map(function(y){ return {value:y, label:y}; });
+  var yearSel = buildSelect(null, yearOpts, curYear, null, 'Year');
+
+  if (isCurrent) {
+    monthSel.disabled = true;
+    yearSel.disabled = true;
+  }
 
   function updateVal() {
     var m = monthSel.value;
@@ -317,11 +329,6 @@ function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurr
 
   monthSel.addEventListener('change', updateVal);
   yearSel.addEventListener('change', updateVal);
-
-  if (isCurrent) {
-    monthSel.disabled = true;
-    yearSel.disabled = true;
-  }
 
   row.appendChild(monthSel);
   row.appendChild(yearSel);
@@ -760,7 +767,17 @@ function buildStepContent(id, fi) {
     var jdContent = document.createElement('div'); jdContent.className = 'jd-content' + (JD_OPEN ? ' open' : ''); jdContent.id = 'jdContent';
     jdContent.appendChild(buildField('jd', 'Job description', 'textarea', 'Paste the full job ad here \u2014 role title, requirements, responsibilities\u2026'));
     fi.appendChild(jdContent);
-    fi.appendChild(buildField('certs', 'Certifications & licences <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. RSA, First Aid Certificate, Driver\'s licence, Working With Children Check'));
+    var certWrap = document.createElement('div'); certWrap.className = 'field';
+    var certLbl = document.createElement('label');
+    certLbl.innerHTML = 'Certifications & licences <span style="font-weight:400;color:var(--muted)">(optional)</span>';
+    certWrap.appendChild(certLbl);
+    var certBlocks = document.createElement('div'); certBlocks.id = 'certBlocks';
+    certWrap.appendChild(certBlocks);
+    var addCertBtn = document.createElement('button'); addCertBtn.className = 'add-btn'; addCertBtn.style.marginTop = '4px'; addCertBtn.textContent = '+ Add certification or licence';
+    addCertBtn.addEventListener('click', addCert);
+    certWrap.appendChild(addCertBtn);
+    fi.appendChild(certWrap);
+    renderCertBlocks();
   }
 }
 
@@ -966,12 +983,14 @@ function renderSportBlocks() {
     r1.appendChild(nw); r1.appendChild(rw); block.appendChild(r1);
     var r2 = document.createElement('div'); r2.className = 'field-row';
     var sw = document.createElement('div'); sw.className = 'field'; sw.innerHTML = '<label>From year</label>';
-    var si = document.createElement('input'); si.type = 'text'; si.placeholder = 'e.g. 2022'; si.value = b.start||'';
-    (function(idx){ si.addEventListener('input', function(){ SPORT_BLOCKS[idx].start=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    var sportYearOpts = YEARS.concat(['Current']).map(function(y){ return {value:y,label:y}; });
+    var si = buildSelect(null, YEARS.map(function(y){return {value:y,label:y};}), b.start||'', null, 'Year');
+    (function(idx){ si.addEventListener('change', function(){ SPORT_BLOCKS[idx].start=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
     sw.appendChild(si);
     var ew = document.createElement('div'); ew.className = 'field'; ew.innerHTML = '<label>To year</label>';
-    var ei = document.createElement('input'); ei.type = 'text'; ei.placeholder = 'e.g. 2024 or Current'; ei.value = b.end||'';
-    (function(idx){ ei.addEventListener('input', function(){ SPORT_BLOCKS[idx].end=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
+    var toYears = YEARS.map(function(y){return {value:y,label:y};}).concat([{value:'Current',label:'Current'}]);
+    var ei = buildSelect(null, toYears, b.end||'', null, 'Year or current');
+    (function(idx){ ei.addEventListener('change', function(){ SPORT_BLOCKS[idx].end=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
     ew.appendChild(ei);
     r2.appendChild(sw); r2.appendChild(ew); block.appendChild(r2);
     wrap.appendChild(block);
@@ -1102,7 +1121,47 @@ function validateStep(id) {
   if (id === 'education' && PATH === 'school') {
     if (!CV.school_name) return 'Please enter your school name.';
   }
+  if (id === 'experience') {
+    for (var i = 0; i < EXPERIENCE_BLOCKS.length; i++) {
+      var b = EXPERIENCE_BLOCKS[i];
+      if (b.employer || b.role) {
+        if (!b.start) return 'Please enter a start date for Role ' + (i+1) + '.';
+        if (!b.end) return 'Please enter an end date for Role ' + (i+1) + ', or select Current.';
+      }
+    }
+  }
   return null;
+}
+
+// ── Cert blocks ──
+function addCert() { CERT_BLOCKS.push({name:'',issuer:'',year:''}); CV.cert_blocks = CERT_BLOCKS; renderCertBlocks(); }
+function removeCert(i) { CERT_BLOCKS.splice(i,1); CV.cert_blocks = CERT_BLOCKS; renderCertBlocks(); }
+function renderCertBlocks() {
+  var wrap = document.getElementById('certBlocks'); if (!wrap) return;
+  wrap.innerHTML = '';
+  CERT_BLOCKS.forEach(function(b, i) {
+    var block = document.createElement('div'); block.className = 'repeat-block';
+    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
+    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Certification ' + (i+1);
+    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
+    (function(idx){ rb.addEventListener('click', function(){ removeCert(idx); }); })(i);
+    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
+    var nw = document.createElement('div'); nw.className = 'field'; nw.innerHTML = '<label>Certification or licence name</label>';
+    var ni = document.createElement('input'); ni.type='text'; ni.placeholder="e.g. RSA, First Aid Certificate, Driver's licence"; ni.value=b.name||'';
+    (function(idx){ ni.addEventListener('input',function(){ CERT_BLOCKS[idx].name=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
+    nw.appendChild(ni); block.appendChild(nw);
+    var r1 = document.createElement('div'); r1.className = 'field-row';
+    var iw = document.createElement('div'); iw.className='field'; iw.innerHTML='<label>Issued by <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
+    var ii = document.createElement('input'); ii.type='text'; ii.placeholder='e.g. Red Cross Australia'; ii.value=b.issuer||'';
+    (function(idx){ ii.addEventListener('input',function(){ CERT_BLOCKS[idx].issuer=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
+    iw.appendChild(ii);
+    var yw = document.createElement('div'); yw.className='field'; yw.innerHTML='<label>Year obtained <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
+    var ys = buildSelect(null, YEARS.map(function(y){return {value:y,label:y};}), b.year||'', null, 'Year');
+    (function(idx){ ys.addEventListener('change',function(){ CERT_BLOCKS[idx].year=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
+    yw.appendChild(ys);
+    r1.appendChild(iw); r1.appendChild(yw); block.appendChild(r1);
+    wrap.appendChild(block);
+  });
 }
 
 // ── Generate CV ──
@@ -1115,6 +1174,7 @@ async function generateCV() {
   CV.sport_blocks = SPORT_BLOCKS;
   CV.volunteer_blocks = VOLUNTEER_BLOCKS;
   CV.language_blocks = LANGUAGE_BLOCKS;
+  CV.cert_blocks = CERT_BLOCKS;
   var hasJD = CV.jd && CV.jd.trim().length > 20;
   showLoading(hasJD ? 'Building your CV and cover letter\u2026' : 'Building your CV\u2026');
   try {
