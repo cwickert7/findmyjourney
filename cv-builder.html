@@ -870,16 +870,27 @@ function removeExperience(i) {
   updatePreview();
 }
 function sortExperienceSilent() {
-  // Sort without re-rendering — safe to call from date picker callbacks
+  // Get current order before sort
+  var before = EXPERIENCE_BLOCKS.map(function(b){ return b.employer + b.role + b.start; }).join('|');
   EXPERIENCE_BLOCKS.sort(function(a, b) {
     var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
     var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
     return be.localeCompare(ae);
   });
   CV.experience = EXPERIENCE_BLOCKS;
+  // Only re-render if order changed — keeps date pickers intact when order unchanged
+  var after = EXPERIENCE_BLOCKS.map(function(b){ return b.employer + b.role + b.start; }).join('|');
+  if (before !== after) {
+    renderExperienceBlocks();
+  }
 }
 function sortExperience() {
-  sortExperienceSilent();
+  EXPERIENCE_BLOCKS.sort(function(a, b) {
+    var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
+    var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
+    return be.localeCompare(ae);
+  });
+  CV.experience = EXPERIENCE_BLOCKS;
   renderExperienceBlocks();
 }
 function dateToSort(d) {
