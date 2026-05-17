@@ -1,1338 +1,450 @@
 <!DOCTYPE html>
 <!-- FILE: cv-builder.html -->
-<!-- Find My Journey — Standalone CV Builder -->
+<!-- Explorer-facing CV Builder feature page -->
 <html lang="en">
 <head>
+<script>
+(function(){
+  var VERSION='2';
+  var COOKIE_NAME='fmj_access_v'+VERSION;
+  if(window.location.pathname==='/password.html')return;
+  if(document.cookie.indexOf(COOKIE_NAME+'=granted')===-1){
+    window.location.replace('/password.html?r='+encodeURIComponent(window.location.pathname+window.location.search));
+  }
+})();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYPMPJGP10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QYPMPJGP10');
+</script>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CV Builder — Find My Journey</title>
+<meta name="description" content="Build a tailored CV in minutes. Find My Journey pre-fills your CV from your career discovery results — so it reflects who you actually are.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --tc:#C4714A;--tc-dark:#A85C38;--tc-light:#FEF3EC;
-  --bg:#FAF7F2;--bg2:#F5F0E8;--bg3:#fff;
-  --border:#E8DFD0;--border2:#D4C4B0;
-  --text:#2C2422;--mid:#6B6058;--muted:#9A8E84;--faint:#C8BFB5;
-  --danger:#A32D2D;--danger-bg:#FCEBEB;
-  --radius:12px;
-  --font-body:'DM Sans',sans-serif;
-  --font-display:'Fraunces',serif;
+  --cream:#FAF7F2;--warm:#FDF9F4;--warm2:#F5F0E8;
+  --sand:#E8DFD0;--sand2:#D4C8B4;
+  --tc:#C4714A;--tcl:#D98B65;--tcd:#A85A35;
+  --gr:#3D6B4F;--grl:#5A8F6E;
+  --ch:#2C2422;--mid:#6B6058;--lt:#9A8E84;
 }
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ch);overflow-x:hidden}
 @keyframes spin{to{transform:rotate(360deg)}}
-.nav{background:var(--text);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-brand-text{display:flex;flex-direction:column;line-height:1}
-.nav-brand-top{font-size:8px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,113,74,.7);margin-bottom:1px}
-.nav-brand-name{font-family:var(--font-display);font-size:16px;font-weight:300;color:#fff}
-.nav-right{font-size:12px;color:var(--faint)}
-.app{display:grid;grid-template-columns:480px 1fr;min-height:calc(100vh - 56px)}
-@media(max-width:900px){.app{grid-template-columns:1fr}}
-.form-panel{background:var(--bg3);border-right:1px solid var(--border);overflow-y:auto;height:calc(100vh - 56px);position:sticky;top:56px}
-.form-inner{padding:32px;max-width:480px}
-.preview-panel{background:var(--bg2);overflow-y:auto;height:calc(100vh - 56px);padding:32px;display:flex;flex-direction:column;align-items:center}
-.preview-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;text-align:center}
-.preview-doc{background:#fff;width:100%;max-width:595px;min-height:500px;box-shadow:0 8px 40px rgba(44,36,34,.12);border-radius:4px;padding:48px 52px;font-size:11px;line-height:1.6;color:#1a1a1a}
-.preview-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;color:var(--muted);text-align:center;gap:12px}
-.preview-placeholder p{font-size:13px;max-width:200px;line-height:1.5}
-@media(max-width:900px){.preview-panel{display:none}.app{grid-template-columns:1fr}.form-panel{height:auto;position:static}}
-.progress-wrap{margin-bottom:28px}
-.progress-steps{display:flex;gap:4px;margin-bottom:8px}
-.progress-step{height:3px;flex:1;border-radius:2px;background:var(--border);transition:background .3s}
-.progress-step.done{background:var(--tc)}
-.progress-step.active{background:var(--tc);opacity:.6}
-.progress-label{font-size:11px;color:var(--muted)}
-.section-head{margin-bottom:24px}
-.section-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tc);margin-bottom:6px}
-.section-title{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--text);line-height:1.2;margin-bottom:6px}
-.section-hint{font-size:13px;color:var(--muted);line-height:1.5}
-.field{margin-bottom:16px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px}
-.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 13px;font-size:13px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;transition:border-color .15s,background .15s;resize:vertical}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--tc);background:#fff}
-.field textarea{min-height:80px}
-.field .hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
-.pill-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.pill{border:1.5px solid var(--border);border-radius:50px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--mid);background:var(--bg);transition:all .15s;user-select:none}
-.pill:hover{border-color:var(--tc);color:var(--tc)}
-.pill.selected{background:var(--tc);border-color:var(--tc);color:#fff}
-.repeat-block{border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;background:var(--bg)}
-.repeat-block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.repeat-block-label{font-size:12px;font-weight:600;color:var(--mid)}
-.remove-btn{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:4px}
-.remove-btn:hover{color:var(--danger)}
-.add-btn{width:100%;border:1.5px dashed var(--border2);border-radius:var(--radius);padding:10px;font-size:12px;color:var(--muted);background:none;cursor:pointer;transition:all .15s;font-family:var(--font-body)}
-.add-btn:hover{border-color:var(--tc);color:var(--tc);background:var(--tc-light)}
-.profile-box{background:var(--tc-light);border:1.5px solid rgba(196,113,74,.2);border-radius:var(--radius);padding:14px;margin-bottom:16px}
-.profile-box-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:6px}
-.profile-box-text{font-size:13px;color:var(--text);line-height:1.6}
-.profile-edit-btn{font-size:11px;color:var(--tc);background:none;border:none;cursor:pointer;padding:4px 0;font-family:var(--font-body);text-decoration:underline;margin-top:6px;display:block}
-.jd-toggle{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;margin-bottom:12px;background:var(--bg)}
-.jd-toggle:hover{border-color:var(--tc)}
-.jd-toggle-icon{width:32px;height:32px;border-radius:50%;background:var(--tc-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-.jd-toggle-text{flex:1}
-.jd-toggle-title{font-size:13px;font-weight:600;color:var(--text)}
-.jd-toggle-sub{font-size:11px;color:var(--muted)}
-.jd-toggle-arrow{color:var(--muted);font-size:18px;transition:transform .2s}
-.jd-toggle.open .jd-toggle-arrow{transform:rotate(90deg)}
-.jd-content{display:none;margin-bottom:12px}
-.jd-content.open{display:block}
-.btn-row{display:flex;gap:10px;margin-top:24px}
-.btn-primary{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-size:14px;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:background .15s;flex:1}
-.btn-primary:hover{background:var(--tc-dark)}
-.btn-primary:disabled{opacity:.6;cursor:not-allowed}
-.btn-sec{background:transparent;color:var(--mid);border:1.5px solid var(--border);border-radius:50px;padding:12px 20px;font-size:14px;font-family:var(--font-body);cursor:pointer;transition:all .15s}
-.btn-sec:hover{border-color:var(--tc);color:var(--tc)}
-.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-.path-card{border:2px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s;background:var(--bg)}
-.path-card:hover,.path-card.selected{border-color:var(--tc);background:var(--tc-light)}
-.path-card-icon{font-size:24px;margin-bottom:8px}
-.path-card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
-.path-card-desc{font-size:11px;color:var(--muted);line-height:1.4}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:50px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1}
-.result-action{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;background:var(--bg);transition:all .15s;text-decoration:none;margin-bottom:10px}
-.result-action:hover{border-color:var(--tc);background:var(--tc-light)}
-.result-action-icon{width:36px;height:36px;border-radius:50%;background:var(--tc-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.result-action-text{flex:1}
-.result-action-title{font-size:13px;font-weight:600;color:var(--text)}
-.result-action-sub{font-size:11px;color:var(--muted)}
-.save-link-wrap{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:16px}
-.save-link-label{font-size:11px;font-weight:600;color:var(--mid);margin-bottom:8px}
-.save-link-row{display:flex;gap:8px}
-.save-link-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);background:#fff;font-family:var(--font-body);outline:none}
-.save-link-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body)}
-.disclaimer{font-size:11px;color:var(--muted);line-height:1.5;padding:12px 14px;background:var(--bg2);border-radius:var(--radius);margin-top:16px}
-.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:16px;text-align:center}
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--tc);border-radius:50%;animation:spin .8s linear infinite}
-.loading-msg{font-size:14px;color:var(--muted)}
-.error-box{background:var(--danger-bg);border:1.5px solid #F09595;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none}
-.date-picker-row{display:flex;gap:5px;align-items:center;flex-wrap:nowrap;width:100%}
-.date-picker-row select{flex:1;min-width:0;border:1.5px solid var(--border);border-radius:var(--radius);padding:8px 6px;font-size:12px;color:var(--text);font-family:var(--font-body);background:var(--bg);outline:none;overflow:hidden;text-overflow:ellipsis}
-.date-picker-row select:focus{border-color:var(--tc)}
-.date-picker-row .cur-label{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--muted);white-space:nowrap;cursor:pointer;flex-shrink:0}
-.custom-subject-row{display:flex;gap:8px;margin-top:8px}
-.custom-subject-row input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font-body);background:var(--bg);outline:none}
-.custom-subject-row input:focus{border-color:var(--tc)}
-.custom-subject-btn{background:var(--tc);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:var(--font-body)}
-/* CV preview */
-.cv-name{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:2px}
-.cv-contact-row{font-size:10px;color:#6B6058;border-bottom:2px solid #C4714A;padding-bottom:8px;margin-bottom:12px}
-.cv-section-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C4714A;border-bottom:1px solid #E8DFD0;padding-bottom:3px;margin:12px 0 7px}
-.cv-profile{font-size:10px;color:#2C2422;line-height:1.6}
-.cv-item{margin-bottom:9px}
-.cv-item-head{display:flex;justify-content:space-between;align-items:baseline}
-.cv-item-title{font-size:10px;font-weight:700;color:#1a1a1a}
-.cv-item-date{font-size:9px;color:#9A8E84}
-.cv-item-org{font-size:9px;color:#6B6058;margin-bottom:2px}
-.cv-item-body{font-size:9px;color:#2C2422;line-height:1.5}
-.cv-skills-wrap{display:flex;flex-wrap:wrap;gap:4px}
-.cv-skill{background:#FAF7F2;border:1px solid #E8DFD0;border-radius:3px;padding:2px 6px;font-size:9px;color:#2C2422}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--sand)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-ring{width:30px;height:30px;border:2px solid var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tc);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-name{font-family:"Fraunces",serif;font-size:15px;letter-spacing:.05em;color:var(--ch)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--tc)}
+.nav-cta{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--tcd)}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--ch);border-radius:2px;transition:all .25s}
+.nav-mobile{display:none;position:fixed;top:66px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--sand);padding:20px 24px 24px;z-index:99;flex-direction:column}
+.nav-mobile.open{display:flex!important}
+.nav-mobile a{display:block;font-size:16px;color:var(--mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--sand);transition:color .2s}
+.nav-mobile a.nav-cta-mob{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px 24px;text-align:center;font-weight:600;margin-top:8px;border-bottom:none}
+
+
+/* HERO */
+.hero{background:var(--ch);padding:128px 48px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,255,255,.013) 60px,rgba(255,255,255,.013) 61px)}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;z-index:2}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:18px;display:flex;align-items:center;gap:10px;animation:fadeUp .4s ease both}
+.hero-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--tc)}
+.hero-worth{font-family:'Fraunces',serif;font-size:17px;font-weight:300;font-style:italic;color:rgba(255,255,255,.35);margin-bottom:8px;animation:fadeUp .45s ease both;font-variant-ligatures:none}
+.hero-h1{font-family:'Fraunces',serif;font-size:clamp(46px,6vw,80px);font-weight:200;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:22px;font-variant-ligatures:none;animation:fadeUp .5s ease both}
+.hero-h1 em{font-style:italic;color:var(--tcl)}
+.hero-sub{font-size:18px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.75;max-width:580px;margin-bottom:36px;animation:fadeUp .55s ease both}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .6s ease both}
+.btn-primary{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:16px 34px;font-size:16px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-primary:hover{background:var(--tcl)}
+.btn-secondary{background:transparent;color:rgba(255,255,255,.55);border:1.5px solid rgba(255,255,255,.18);border-radius:50px;padding:15px 28px;font-size:15px;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-secondary:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.hero-note{font-size:12px;color:rgba(255,255,255,.22);margin-top:14px;animation:fadeUp .65s ease both}
+
+/* SECTION */
+.section{padding:80px 48px}
+.section-inner{max-width:960px;margin:0 auto}
+.sec-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--tc)}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(34px,4vw,52px);font-weight:300;line-height:1.06;color:var(--ch);margin-bottom:14px;letter-spacing:-.01em;font-variant-ligatures:none}
+.sec-h2 em{font-style:italic;color:var(--tc)}
+.sec-lead{font-size:17px;font-weight:300;color:var(--mid);line-height:1.75;max-width:600px;margin-bottom:52px}
+
+/* HOW IT WORKS STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:0}
+.step{background:#fff;border:1.5px solid var(--sand);border-radius:16px;padding:32px 28px;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--tc);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.step-icon{font-size:28px;margin-bottom:12px;display:block}
+.step-title{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:var(--ch);margin-bottom:8px;font-variant-ligatures:none}
+.step-desc{font-size:14px;color:var(--mid);line-height:1.7}
+.step-connector{position:absolute;top:50px;right:-18px;font-size:18px;color:var(--sand2);z-index:1}
+
+/* FORKS */
+.fork-section{background:var(--warm2)}
+.fork-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.fork-card{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:20px 16px;text-align:center}
+.fork-icon{font-size:26px;margin-bottom:10px}
+.fork-title{font-size:13px;font-weight:700;color:var(--ch);margin-bottom:4px;line-height:1.3}
+.fork-desc{font-size:11px;color:var(--lt);line-height:1.55}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.feature{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:24px}
+.feature-icon{width:40px;height:40px;border-radius:10px;background:var(--warm2);border:1px solid var(--sand);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feature-title{font-size:14px;font-weight:700;color:var(--ch);margin-bottom:4px}
+.feature-desc{font-size:13px;color:var(--mid);line-height:1.65}
+
+/* CTA SECTION */
+.cta-section{background:var(--ch);padding:88px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(196,113,74,.08) 0%,transparent 65%)}
+.cta-inner{max-width:640px;margin:0 auto;position:relative}
+.cta-worth{font-family:'Fraunces',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(255,255,255,.35);margin-bottom:12px;font-variant-ligatures:none}
+.cta-h2{font-family:'Fraunces',serif;font-size:clamp(38px,5vw,62px);font-weight:200;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:16px;font-variant-ligatures:none}
+.cta-h2 em{font-style:italic;color:var(--tcl)}
+.cta-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.75;margin-bottom:32px}
+.cta-note{font-size:12px;color:rgba(255,255,255,.2);margin-top:14px}
+
+footer{background:#1E1613;padding:56px 48px 28px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-brand-name{font-family:"Fraunces",serif;font-size:15px;color:#fff;letter-spacing:.04em}
+.footer-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.28);line-height:1.65}
+.footer-col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.footer-col a:hover{color:rgba(255,255,255,.7)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;font-weight:300;color:rgba(255,255,255,.18);line-height:1.6;max-width:680px}
+.footer-legal{display:flex;gap:18px;flex-shrink:0}
+.footer-legal a{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.55)}
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .hero{padding:80px 20px 48px;min-height:auto;grid-template-columns:1fr;gap:32px}
+  .hero-photos{display:none}
+  .hero::before{display:none}
+  .hero-h1{font-size:clamp(42px,11vw,64px);margin-bottom:20px}
+  .hero-bottom{grid-template-columns:1fr;gap:28px}
+  .hero-sub{font-size:16px;max-width:100%}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .btn-primary,.btn-secondary{text-align:center;padding:15px 24px}
+  .section{padding:56px 20px}
+  .personas-section{padding:56px 20px}
+  .why-section{padding:56px 20px}
+  .sec-h2{font-size:clamp(32px,8vw,44px)}
+  .sec-sub{font-size:15px}
+  .how-grid{grid-template-columns:1fr;gap:1.5px;margin-top:36px}
+  .how-card{padding:32px 24px}
+  .how-icon{width:64px;height:64px;font-size:28px}
+  .personas-h2{font-size:clamp(32px,8vw,44px)}
+  .personas-sub{font-size:15px;margin-bottom:36px}
+  .personas-grid{grid-template-columns:1fr;gap:14px}
+  .pcard{padding:22px}
+  .why-inner{grid-template-columns:1fr;gap:40px}
+  .compare-table th,.compare-table td{padding:10px 12px;font-size:12px}
+  .inst-grid{grid-template-columns:1fr;gap:16px;margin-top:36px}
+  .inst-card{padding:26px}
+  .cta-section{padding:64px 20px}
+  .cta-h2{font-size:clamp(40px,10vw,64px)}
+  .cta-sub{font-size:15px}
+  .btn-cta-large{font-size:16px;padding:16px 32px;display:block;text-align:center}
+  footer{padding:40px 20px 24px}
+  .footer-top{grid-template-columns:1fr;gap:32px;margin-bottom:32px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:10px}
+
+  /* ── Shared content page elements ── */
+  .card-grid-2{grid-template-columns:1fr;gap:14px}
+  .card-grid-3{grid-template-columns:1fr;gap:14px}
+  .card{padding:22px}
+  .card-dark{padding:22px}
+  .card-title{font-size:17px}
+  .card-body{font-size:13px}
+  .card-num{font-size:34px}
+  .sec-eyebrow{font-size:10px}
+  .sec-lead{font-size:15px;margin-bottom:32px;max-width:100%}
+  .back-link{font-size:12px}
+  .cta-strip{padding:40px 20px}
+  .cta-strip-h{font-size:clamp(26px,7vw,38px)}
+  .cta-strip-sub{font-size:14px}
+  .steps{grid-template-columns:1fr;gap:14px}
+  .step-connector{display:none}
+  .fork-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .fork-card{padding:16px 12px}
+  .features-grid{grid-template-columns:1fr;gap:14px}
+  .feature{padding:18px;gap:12px}
+  .hero-note{font-size:11px}}
+@media(max-width:480px){
+  .card{padding:16px}
+  .card-dark{padding:16px}
+  .card-title{font-size:16px}
+  .card-body{font-size:12px}
+  .sec-h2{font-size:clamp(26px,9vw,36px)}
+  .sec-lead{font-size:14px}
+  .page-h1{font-size:clamp(36px,11vw,52px)}
+  .page-sub{font-size:15px}
+  .cta-strip{padding:32px 16px}
+  .cta-strip-h{font-size:clamp(22px,8vw,32px)}
+  .cta-strip-btn{padding:12px 24px;font-size:14px}
+
+  .fork-grid{grid-template-columns:1fr}
+  .fork-card{padding:14px 12px}
+  .fork-title{font-size:13px}
+  .fork-icon{font-size:22px}
+  .hero{padding:68px 16px 36px}
+  .section{padding:40px 16px}
+  .cta-section{padding:48px 16px}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:clamp(38px,12vw,52px)}
+  .cta-h2{font-size:38px}
+}
+
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  .hero{padding:100px 20px 56px}
+  .section{padding:52px 20px}
+  .steps{grid-template-columns:1fr;gap:16px}
+  .step-connector{display:none}
+  .fork-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .features-grid{grid-template-columns:1fr}
+  .cta-section{padding:64px 20px}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .footer-top{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+
+.fmj{color:#C4714A;font-weight:500}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="/" class="nav-brand">
-    <svg width="22" height="22" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2.5" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.25)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.8)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4" fill="#C4714A"/><circle cx="30" cy="30" r="1.8" fill="#1E1613"/></svg>
-    <div class="nav-brand-text">
-      <span class="nav-brand-top">find my</span>
-      <span class="nav-brand-name">Journey</span>
-    </div>
-  </a>
-  <span class="nav-right">CV Builder</span>
-</nav>
-
-<div class="app">
-  <div class="form-panel">
-    <div class="form-inner" id="formInner"></div>
-  </div>
-  <div class="preview-panel">
-    <div class="preview-title">Live preview</div>
-    <div class="preview-doc" id="previewDoc">
-      <div class="preview-placeholder">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <p>Your CV preview appears here as you fill in your details</p>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="/" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 60 60" fill="none" style="animation:spin 14s linear infinite;flex-shrink:0"><circle cx="30" cy="30" r="26" stroke="rgba(196,113,74,.35)" stroke-width="2" fill="none"/><path d="M30 30 L30 50" stroke="rgba(196,113,74,.3)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 4"/><path d="M30 30 L30 10" stroke="rgba(196,113,74,.85)" stroke-width="4" stroke-linecap="round"/><path d="M23 16 L30 8 L37 16" fill="#C4714A"/><circle cx="30" cy="30" r="4.5" fill="#C4714A"/><circle cx="30" cy="30" r="2" fill="#2C2422"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:0">
+        <span style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tcl);margin-bottom:1px">find my</span>
+        <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:300;color:var(--ch);letter-spacing:-.01em;font-variant-ligatures:none;line-height:1">Journey</span>
       </div>
+    </a>
+    <div class="nav-links">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/real-explorers.html">Real Explorers</a>
+      <a href="/why-find-my-journey.html">Why Find My Journey</a>
+      <a href="/a-real-result.html">A Real Result</a>
+      <a href="/cv-builder.html" class="active">CV Builder</a>
+      <a href="/assessment" target="_blank" class="nav-cta">Begin your journey &#x2192;</a>
     </div>
-    <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center">Updates as you type</div>
+    <button class="nav-hamburger" id="navHam" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</nav>
+<div class="nav-mobile" id="navMobile" style="display:none">
+  <a href="/how-it-works.html" onclick="closeNav()">How it works</a>
+  <a href="/real-explorers.html" onclick="closeNav()">Real Explorers</a>
+  <a href="/why-find-my-journey.html" onclick="closeNav()">Why Find My Journey</a>
+  <a href="/a-real-result.html" onclick="closeNav()">A Real Result</a>
+  <a href="/cv-builder.html" onclick="closeNav()" class="active">CV Builder</a>
+  <a href="/assessment" target="_blank" class="nav-cta-mob">Begin your journey &#x2192;</a>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">CV Builder</div>
+    <div class="hero-worth">&ldquo;You&rsquo;re worth finding.&rdquo;</div>
+    <h1 class="hero-h1">A CV that sounds<br>like <em>you.</em></h1>
+    <p class="hero-sub">Most CVs sound the same. <span class="fmj">Find My Journey</span> builds yours around your actual assessed branch, personality and values are translated into genuine professional skills &mdash; so it genuinely represents who you are. Starting fresh? No problem &mdash; we build it from your answers.</p>
+    <div class="hero-actions">
+      <a href="/cv-builder-tool.html" target="_blank" class="btn-primary">Build my CV &rarr;</a>
+      <a href="https://findmyjourney.com.au" target="_blank" class="btn-secondary">Take the assessment first</a>
+    </div>
+    <p class="hero-note">&#x1F512; Private &nbsp;&middot;&nbsp; No account needed &nbsp;&middot;&nbsp; Takes about 10 minutes</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">How it works</div>
+    <h2 class="sec-h2">Three steps to a CV<br>that actually <em>fits.</em></h2>
+    <p class="sec-lead">Whether you&rsquo;ve just completed your <span class="fmj">Find My Journey</span> assessment or you&rsquo;re starting fresh &mdash; the CV Builder meets you where you are.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <span class="step-icon">&#x1F9ED;</span>
+        <div class="step-title">Choose your path</div>
+        <div class="step-desc">Tell us where you&rsquo;re at &mdash; first job, school leaver, some experience, graduate, or career change. We tailor the whole experience from there.</div>
+        <div class="step-connector">&rarr;</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <span class="step-icon">&#x270D;&#xFE0F;</span>
+        <div class="step-title">We pre-fill what we know</div>
+        <div class="step-desc">If you&rsquo;ve completed the assessment, your name is pre-filled, your assessed strengths are translated into professional skills, and your full Explorer profile shapes how Claude writes your CV. Just add your history.</div>
+        <div class="step-connector">&rarr;</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <span class="step-icon">&#x1F4C4;</span>
+        <div class="step-title">Download and go</div>
+        <div class="step-desc">A clean, professional CV in plain text &mdash; ready to paste into any application, tailor for a specific role, or share with a pathways advisor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORKS -->
+<section class="section fork-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">Built for your situation</div>
+    <h2 class="sec-h2">Five pathways,<br>one <em>honest CV.</em></h2>
+    <p class="sec-lead">The CV Builder adapts entirely to where you are in life. No generic template that doesn&rsquo;t fit. No awkward gaps to explain away.</p>
+
+    <div class="fork-grid">
+      <div class="fork-card">
+        <div class="fork-icon">&#x1F331;</div>
+        <div class="fork-title">First job</div>
+        <div class="fork-desc">No experience yet? We build around your strengths, school and interests.</div>
+      </div>
+      <div class="fork-card">
+        <div class="fork-icon">&#x1F393;</div>
+        <div class="fork-title">School leaver</div>
+        <div class="fork-desc">Just finished Year 12? We highlight your achievements and what comes next.</div>
+      </div>
+      <div class="fork-card">
+        <div class="fork-icon">&#x1F4BC;</div>
+        <div class="fork-title">Some experience</div>
+        <div class="fork-desc">A few roles behind you? We help you frame them in a way that actually lands.</div>
+      </div>
+      <div class="fork-card">
+        <div class="fork-icon">&#x1F3CB;&#xFE0F;</div>
+        <div class="fork-title">Graduate</div>
+        <div class="fork-desc">University done. Now what? We bridge your degree to the real world.</div>
+      </div>
+      <div class="fork-card">
+        <div class="fork-icon">&#x1F504;</div>
+        <div class="fork-title">Career change</div>
+        <div class="fork-desc">Pivoting directions? We reframe your past as exactly the right foundation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">What makes it different</div>
+    <h2 class="sec-h2">Not a template.<br>A <em>real reflection</em> of you.</h2>
+    <p class="sec-lead">The <span class="fmj">Find My Journey</span> CV Builder isn&rsquo;t a form you fill in and format. It&rsquo;s a conversation that becomes a document.</p>
+
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">&#x1F9E0;</div>
+        <div>
+          <div class="feature-title">Pre-filled from your assessment</div>
+          <div class="feature-desc">Complete the career discovery and your name is pre-filled, your branch and personality profile are translated into genuine professional skills, and your Explorer narrative shapes how Claude writes your profile summary. No blank page.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x270F;&#xFE0F;</div>
+        <div>
+          <div class="feature-title">AI writes your profile summary</div>
+          <div class="feature-desc">We generate a personal profile statement in plain, honest language &mdash; not buzzword-filled corporate speak. Sounds like a person, not a template.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F1E6;&#x1F1FA;</div>
+        <div>
+          <div class="feature-title">Australian jobs and context</div>
+          <div class="feature-desc">Built for the Australian job market. Australian spelling, Australian role titles, Australian pathways. Not a US or UK tool retrofitted for here.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F91D;</div>
+        <div>
+          <div class="feature-title">Works for everyone</div>
+          <div class="feature-desc">Designed to be calm, low-pressure and accessible. No timed sections, no confusing forms. Works especially well for young people with learning differences or anxiety.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F4CB;</div>
+        <div>
+          <div class="feature-title">Paste into any application</div>
+          <div class="feature-desc">Plain text output that works everywhere &mdash; Seek, LinkedIn, email, Google Docs. No proprietary format that only works in one place.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">&#x1F512;</div>
+        <div>
+          <div class="feature-title">Private and secure</div>
+          <div class="feature-desc">Your CV content is yours. We don&rsquo;t store it beyond your session unless you choose to save your results. No selling your data. No ads.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-worth">&ldquo;You&rsquo;re worth finding.&rdquo;</div>
+    <h2 class="cta-h2">Ready to build<br>your <em>real</em> CV?</h2>
+    <p class="cta-sub">Takes about 10 minutes. No account. No payment. Just an honest CV that actually sounds like you.</p>
+    <a href="/cv-builder-tool.html" target="_blank" class="btn-primary">Build my CV &rarr;</a>
+    <p class="cta-note">&#x1F512; Private &nbsp;&middot;&nbsp; Australian &nbsp;&middot;&nbsp; Psychology-backed</p>
+  </div>
+</section>
+
+<div id="fmj-footer"></div>
+<script>
+fetch('/footer.html').then(function(r){return r.text();}).then(function(html){
+  document.getElementById('fmj-footer').outerHTML=html;
+});
+</script>
 
 <script>
-// ── Constants ──
-var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var SOFT_SKILLS = ['Communication','Teamwork','Problem solving','Adaptability','Leadership','Time management','Attention to detail','Customer service','Initiative','Critical thinking','Empathy','Creativity','Reliability','Work ethic','Conflict resolution'];
-var SUBJECTS = ['English','Mathematics','Science','Biology','Chemistry','Physics','History','Geography','Art','Music','Physical Education','Technology','Computing','Economics','Business','Health','Legal Studies','Psychology','Languages','Drama'];
-var PROFICIENCY = ['Bilingual','Fluent','Conversational','Basic'];
-var YEAR_LEVELS = ['7','8','9','10','11','12'];
-var YEARS = [];
-(function(){ var y = new Date().getFullYear(); for(var i=y;i>=y-10;i--) YEARS.push(String(i)); })();
-
-// ── State ──
-var CV = {};
-var PATH = null;
-var STEP = 0;
-var ASSESSMENT_DATA = null;
-var CV_UUID = null;
-var JD_OPEN = false;
-var EXPERIENCE_BLOCKS = [];
-var EDUCATION_BLOCKS = [];
-var REFEREE_BLOCKS = [];
-var SPORT_BLOCKS = [];
-var VOLUNTEER_BLOCKS = [];
-var LANGUAGE_BLOCKS = [];
-var CERT_BLOCKS = [];
-
-// ── URL params ──
-var urlParams = new URLSearchParams(window.location.search);
-var fromAssessment = urlParams.get('from') === 'assessment';
-var assessmentUUID = urlParams.get('uuid');
-var cvUUID = urlParams.get('cv');
-
-window.addEventListener('DOMContentLoaded', function() {
-  if (cvUUID) { loadSavedCV(cvUUID); }
-  else if (fromAssessment && assessmentUUID) { loadAssessmentData(assessmentUUID); }
-  else { showPathSelector(); }
-});
-
-// ── Utility: escape HTML ──
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── Utility: show loading ──
-function showLoading(msg) {
-  var fi = document.getElementById('formInner');
-  if (!fi) return;
-  fi.innerHTML = '';
-  var wrap = document.createElement('div');
-  wrap.className = 'loading-screen';
-  var spin = document.createElement('div');
-  spin.className = 'spinner';
-  var txt = document.createElement('div');
-  txt.className = 'loading-msg';
-  txt.textContent = msg || 'Loading\u2026';
-  wrap.appendChild(spin);
-  wrap.appendChild(txt);
-  fi.appendChild(wrap);
-}
-
-// ── Utility: toast ──
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2500);
-}
-
-// ── Utility: build select ──
-function buildSelect(id, options, selected, onchangeFn, placeholder) {
-  var sel = document.createElement('select');
-  if (id) sel.id = id;
-  if (onchangeFn) sel.addEventListener('change', onchangeFn);
-  if (placeholder) {
-    var opt0 = document.createElement('option');
-    opt0.value = '';
-    opt0.textContent = placeholder;
-    sel.appendChild(opt0);
-  }
-  options.forEach(function(o) {
-    var opt = document.createElement('option');
-    var val = typeof o === 'object' ? o.value : o;
-    var lbl = typeof o === 'object' ? o.label : o;
-    opt.value = val;
-    opt.textContent = lbl;
-    if (val === selected) opt.selected = true;
-    sel.appendChild(opt);
-  });
-  return sel;
-}
-
-// ── Utility: build field ──
-function buildField(id, labelHTML, type, placeholder, onInput) {
-  var wrap = document.createElement('div');
-  wrap.className = 'field';
-  var lbl = document.createElement('label');
-  if (id) lbl.setAttribute('for', 'f_' + id);
-  lbl.innerHTML = labelHTML;
-  wrap.appendChild(lbl);
-  var input;
-  if (type === 'textarea') {
-    input = document.createElement('textarea');
-    input.placeholder = placeholder || '';
+function toggleNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  var open=m.classList.toggle('open');
+  var spans=h.querySelectorAll('span');
+  if(open){
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
   } else {
-    input = document.createElement('input');
-    input.type = type || 'text';
-    input.placeholder = placeholder || '';
-  }
-  if (id) {
-    input.id = 'f_' + id;
-    input.value = CV[id] || '';
-  }
-  input.addEventListener('input', function() {
-    if (id) CV[id] = this.value;
-    if (onInput) onInput(this.value);
-    updatePreview();
-  });
-  wrap.appendChild(input);
-  return wrap;
-}
-
-// ── Utility: build date picker row ──
-function buildDatePicker(stateKey, blockArr, blockIdx, dateKey, label, allowCurrent, onChangeFn) {
-  var wrap = document.createElement('div');
-  wrap.className = 'field';
-  var lbl = document.createElement('label');
-  lbl.textContent = label + (allowCurrent ? '' : '');
-  wrap.appendChild(lbl);
-
-  var row = document.createElement('div');
-  row.className = 'date-picker-row';
-
-  // Get current value — read directly from source of truth
-  var currentVal = blockArr ? blockArr[blockIdx][dateKey] : (CV[stateKey] || '');
-  var isCurrent = currentVal === 'Current';
-  var parts = (!isCurrent && currentVal) ? currentVal.split(' ') : [];
-  var curMonth = parts[0] || '';
-  var curYear = parts[1] || '';
-
-  // Build month select — pre-select if value exists
-  var monthOpts = MONTHS.map(function(m){ return {value:m, label:m}; });
-  var monthSel = buildSelect(null, monthOpts, curMonth, null, 'Month');
-
-  // Build year select — pre-select if value exists
-  var yearOpts = YEARS.map(function(y){ return {value:y, label:y}; });
-  var yearSel = buildSelect(null, yearOpts, curYear, null, 'Year');
-
-  if (isCurrent) {
-    monthSel.disabled = true;
-    yearSel.disabled = true;
-  }
-
-  function updateVal() {
-    if (isCurrent) { updatePreview(); return; }
-    var m = monthSel.value;
-    var y = yearSel.value;
-    var val = (m && y) ? (m + ' ' + y) : '';
-    if (blockArr) { blockArr[blockIdx][dateKey] = val; }
-    else { CV[stateKey] = val; }
-    if (onChangeFn) onChangeFn();
-    updatePreview();
-  }
-
-  // Save partial values immediately on each select change
-  monthSel.addEventListener('change', function() {
-    if (!isCurrent) {
-      var m = monthSel.value;
-      var y = yearSel.value;
-      var val = m ? (y ? m + ' ' + y : m + ' ?') : '';
-      if (m && y) val = m + ' ' + y; else val = '';
-      if (blockArr) { blockArr[blockIdx][dateKey] = val; }
-      else { CV[stateKey] = val; }
-    }
-    updateVal();
-  });
-  yearSel.addEventListener('change', function() {
-    if (!isCurrent) {
-      var m = monthSel.value;
-      var y = yearSel.value;
-      var val = (m && y) ? m + ' ' + y : '';
-      if (blockArr) { blockArr[blockIdx][dateKey] = val; }
-      else { CV[stateKey] = val; }
-    }
-    updateVal();
-  });
-
-  row.appendChild(monthSel);
-  row.appendChild(yearSel);
-
-  if (allowCurrent) {
-    var curLbl = document.createElement('label');
-    curLbl.className = 'cur-label';
-    var curChk = document.createElement('input');
-    curChk.type = 'checkbox';
-    curChk.checked = isCurrent;
-    curChk.addEventListener('change', function() {
-      isCurrent = this.checked;
-      if (isCurrent) {
-        monthSel.disabled = true;
-        yearSel.disabled = true;
-        if (blockArr) { blockArr[blockIdx][dateKey] = 'Current'; }
-        else { CV[stateKey] = 'Current'; }
-      } else {
-        monthSel.disabled = false;
-        yearSel.disabled = false;
-        if (blockArr) { blockArr[blockIdx][dateKey] = ''; }
-        else { CV[stateKey] = ''; }
-      }
-      if (onChangeFn) onChangeFn();
-      updatePreview();
-    });
-    curLbl.appendChild(curChk);
-    curLbl.appendChild(document.createTextNode(' Current'));
-    row.appendChild(curLbl);
-  }
-
-  wrap.appendChild(row);
-  return wrap;
-}
-
-// ── Load assessment data ──
-async function loadAssessmentData(uuid) {
-  showLoading('Loading your assessment results\u2026');
-  try {
-    var r = await fetch('/api/get-result?uuid=' + uuid);
-    if (r.ok) {
-      var data = await r.json();
-      if (data && data.result) {
-        ASSESSMENT_DATA = data.result;
-        CV.first_name = data.result.name || '';
-        CV.email = data.result.email || '';
-        CV.profile_draft = data.result.summary || '';
-      }
-    }
-  } catch(e) {}
-  showPathSelector();
-}
-
-// ── Load saved CV ──
-async function loadSavedCV(uuid) {
-  showLoading('Loading your saved CV\u2026');
-  try {
-    var r = await fetch('/api/cv-get?uuid=' + uuid);
-    if (r.ok) {
-      var data = await r.json();
-      if (data && data.cv) {
-        CV = data.cv;
-        PATH = data.cv.path;
-        EXPERIENCE_BLOCKS = data.cv.experience || [];
-        EDUCATION_BLOCKS = data.cv.education || [];
-        REFEREE_BLOCKS = data.cv.referees || [];
-        SPORT_BLOCKS = data.cv.sport_blocks || [];
-        VOLUNTEER_BLOCKS = data.cv.volunteer_blocks || [];
-        LANGUAGE_BLOCKS = data.cv.language_blocks || [];
-        CV_UUID = uuid;
-        showStep(0);
-        updatePreview();
-        return;
-      }
-    }
-    showToast('Could not load CV. Starting fresh.');
-    showPathSelector();
-  } catch(e) { showPathSelector(); }
-}
-
-// ── Path selector ──
-function showPathSelector() {
-  STEP = -1;
-  var fi = document.getElementById('formInner');
-  fi.innerHTML = '';
-
-  var head = document.createElement('div');
-  head.className = 'section-head';
-  head.innerHTML = '<div class="section-tag">Let\'s get started</div><div class="section-title">Where are you at right now?</div><div class="section-hint">This shapes the questions we ask and the CV we build for you.</div>';
-  fi.appendChild(head);
-
-  var grid = document.createElement('div');
-  grid.className = 'path-grid';
-  var paths = [
-    {v:'school', icon:'📚', title:'Still at school', desc:'Year 10, 11 or 12 — looking for part-time work or planning ahead'},
-    {v:'leaver', icon:'🎓', title:'Recently finished school', desc:'Just finished Year 12 or left school — looking for your first role'},
-    {v:'experience', icon:'💼', title:'Some experience', desc:'Had 1–2 jobs and building your career story'},
-    {v:'graduate', icon:'🚀', title:'Graduate or career changer', desc:'Completed a degree or TAFE, or changing direction'}
-  ];
-  paths.forEach(function(p) {
-    var card = document.createElement('div');
-    card.className = 'path-card';
-    card.id = 'path_' + p.v;
-    card.innerHTML = '<div class="path-card-icon">' + p.icon + '</div><div class="path-card-title">' + p.title + '</div><div class="path-card-desc">' + p.desc + '</div>';
-    card.addEventListener('click', function() { selectPath(p.v); });
-    grid.appendChild(card);
-  });
-  fi.appendChild(grid);
-
-  var btnRow = document.createElement('div');
-  btnRow.className = 'btn-row';
-  btnRow.style.marginTop = '24px';
-  var btn = document.createElement('button');
-  btn.className = 'btn-primary';
-  btn.id = 'pathNextBtn';
-  btn.disabled = true;
-  btn.textContent = 'Continue \u2192';
-  btn.addEventListener('click', startBuild);
-  btnRow.appendChild(btn);
-  fi.appendChild(btnRow);
-}
-
-function selectPath(v) {
-  PATH = v;
-  CV.path = v;
-  document.querySelectorAll('.path-card').forEach(function(c){ c.classList.remove('selected'); });
-  var card = document.getElementById('path_' + v);
-  if (card) card.classList.add('selected');
-  var btn = document.getElementById('pathNextBtn');
-  if (btn) btn.disabled = false;
-}
-
-// ── Steps definition ──
-function getSteps() {
-  var s = [
-    {id:'personal', label:'Personal details', tag:'About you'},
-    {id:'education', label:'Education', tag:'Your background'},
-    {id:'experience', label:'Experience', tag:'What you\'ve done'}
-  ];
-  if (PATH === 'school' || PATH === 'leaver') {
-    s.push({id:'life', label:'Life & activities', tag:'Beyond the classroom'});
-  }
-  s.push({id:'skills', label:'Skills & strengths', tag:'What you bring'});
-  s.push({id:'profile', label:'Professional profile', tag:'Your story'});
-  if (PATH === 'experience' || PATH === 'graduate') {
-    s.push({id:'extras', label:'Achievements & activities', tag:'Going further'});
-  }
-  s.push({id:'jd', label:'Tailor & generate', tag:'Final step'});
-  return s;
-}
-
-function startBuild() { if (PATH) showStep(0); }
-
-// ── Show step ──
-function showStep(i) {
-  var steps = getSteps();
-  if (i < 0) { showPathSelector(); return; }
-  if (i >= steps.length) { generateCV(); return; }
-  STEP = i;
-  var step = steps[i];
-
-  var fi = document.getElementById('formInner');
-  fi.innerHTML = '';
-
-  // Progress
-  var progWrap = document.createElement('div');
-  progWrap.className = 'progress-wrap';
-  var progSteps = document.createElement('div');
-  progSteps.className = 'progress-steps';
-  steps.forEach(function(s, idx) {
-    var ps = document.createElement('div');
-    ps.className = 'progress-step' + (idx < i ? ' done' : idx === i ? ' active' : '');
-    progSteps.appendChild(ps);
-  });
-  var progLabel = document.createElement('div');
-  progLabel.className = 'progress-label';
-  progLabel.textContent = 'Step ' + (i+1) + ' of ' + steps.length + ' \u2014 ' + step.label;
-  progWrap.appendChild(progSteps);
-  progWrap.appendChild(progLabel);
-  fi.appendChild(progWrap);
-
-  // Heading
-  var head = document.createElement('div');
-  head.className = 'section-head';
-  head.innerHTML = '<div class="section-tag">' + step.tag + '</div><div class="section-title">' + step.label + '</div>';
-  fi.appendChild(head);
-
-  // Error box
-  var errBox = document.createElement('div');
-  errBox.className = 'error-box';
-  errBox.id = 'errBox';
-  fi.appendChild(errBox);
-
-  // Step content
-  buildStepContent(step.id, fi);
-
-  // Buttons
-  var btnRow = document.createElement('div');
-  btnRow.className = 'btn-row';
-  if (i > 0) {
-    var backBtn = document.createElement('button');
-    backBtn.className = 'btn-sec';
-    backBtn.textContent = 'Back';
-    (function(idx){ backBtn.addEventListener('click', function(){ showStep(idx - 1); }); })(i);
-    btnRow.appendChild(backBtn);
-  }
-  var nextBtn = document.createElement('button');
-  nextBtn.className = 'btn-primary';
-  var isLast = (i === steps.length - 1);
-  nextBtn.textContent = isLast ? '\u2728 Build my CV' : 'Continue \u2192';
-  (function(idx, last){
-    nextBtn.addEventListener('click', function(){
-      if (last) { generateCV(); }
-      else { nextStep(idx); }
-    });
-  })(i, isLast);
-  btnRow.appendChild(nextBtn);
-  fi.appendChild(btnRow);
-
-  updatePreview();
-  fi.scrollTop = 0;
-}
-
-// ── Build step content ──
-function buildStepContent(id, fi) {
-
-  if (id === 'personal') {
-    fi.appendChild(buildField('first_name', 'First name', 'text', 'e.g. Jordan'));
-    fi.appendChild(buildField('last_name', 'Last name', 'text', 'e.g. Smith'));
-    var row1 = document.createElement('div'); row1.className = 'field-row';
-    row1.appendChild(buildField('email', 'Email address', 'email', 'e.g. jordan@email.com'));
-    row1.appendChild(buildField('phone', 'Phone', 'text', 'e.g. 0412 345 678'));
-    fi.appendChild(row1);
-    var row2 = document.createElement('div'); row2.className = 'field-row';
-    row2.appendChild(buildField('suburb', 'Suburb', 'text', 'e.g. Frankston'));
-    row2.appendChild(buildField('state', 'State', 'text', 'e.g. VIC'));
-    fi.appendChild(row2);
-    if (PATH === 'experience' || PATH === 'graduate') {
-      fi.appendChild(buildField('linkedin', 'LinkedIn URL <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. linkedin.com/in/jordansmith'));
-    }
-  }
-
-  else if (id === 'education') {
-    if (PATH === 'school') {
-      fi.appendChild(buildField('school_name', 'School name', 'text', 'e.g. Frankston High School'));
-      var eduRow = document.createElement('div'); eduRow.className = 'field-row';
-      // Year level dropdown
-      var yrWrap = document.createElement('div'); yrWrap.className = 'field';
-      var yrLbl = document.createElement('label'); yrLbl.textContent = 'Current year level';
-      yrWrap.appendChild(yrLbl);
-      var yrSel = buildSelect('f_school_year', YEAR_LEVELS.map(function(y){ return {value:y, label:'Year '+y}; }), CV.school_year ? CV.school_year.replace('Year ','') : '', function(){ CV.school_year = 'Year ' + this.value; updatePreview(); }, 'Select year');
-      yrWrap.appendChild(yrSel);
-      eduRow.appendChild(yrWrap);
-      eduRow.appendChild(buildField('school_grad', 'Graduation year', 'text', 'e.g. 2026'));
-      fi.appendChild(eduRow);
-      // Subjects
-      var subjWrap = document.createElement('div'); subjWrap.className = 'field';
-      var subjLbl = document.createElement('label');
-      subjLbl.innerHTML = 'Subjects <span style="font-weight:400;color:var(--muted)">(select all that apply)</span>';
-      subjWrap.appendChild(subjLbl);
-      var pillGroup = document.createElement('div'); pillGroup.className = 'pill-group'; pillGroup.id = 'subjectPills';
-      SUBJECTS.forEach(function(s) {
-        var pill = document.createElement('div');
-        pill.className = 'pill' + ((CV.subjects && CV.subjects.indexOf(s) > -1) ? ' selected' : '');
-        pill.textContent = s;
-        pill.addEventListener('click', function(){ togglePill(pill, 'subjects', s); });
-        pillGroup.appendChild(pill);
-      });
-      // Restore custom subjects
-      if (CV.subjects) {
-        CV.subjects.forEach(function(s) {
-          if (SUBJECTS.indexOf(s) === -1) {
-            var pill = document.createElement('div');
-            pill.className = 'pill selected';
-            pill.textContent = s;
-            pill.addEventListener('click', function(){ togglePill(pill, 'subjects', s); });
-            pillGroup.appendChild(pill);
-          }
-        });
-      }
-      subjWrap.appendChild(pillGroup);
-      // Custom subject input
-      var custRow = document.createElement('div'); custRow.className = 'custom-subject-row';
-      var custInput = document.createElement('input'); custInput.type = 'text'; custInput.id = 'customSubjectInput'; custInput.placeholder = 'Add another subject\u2026';
-      custInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); addCustomSubject(); } });
-      var custBtn = document.createElement('button'); custBtn.className = 'custom-subject-btn'; custBtn.textContent = 'Add';
-      custBtn.addEventListener('click', addCustomSubject);
-      custRow.appendChild(custInput); custRow.appendChild(custBtn);
-      subjWrap.appendChild(custRow);
-      fi.appendChild(subjWrap);
-      fi.appendChild(buildField('school_achievements', 'Awards or recognition <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. Academic Excellence Award 2024'));
-    }
-    else if (PATH === 'leaver') {
-      fi.appendChild(buildField('school_name', 'School name', 'text', 'e.g. Frankston High School'));
-      var lvRow = document.createElement('div'); lvRow.className = 'field-row';
-      lvRow.appendChild(buildField('school_year', 'Year finished', 'text', 'e.g. 2024'));
-      lvRow.appendChild(buildField('school_atar', 'ATAR <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. 78.5'));
-      fi.appendChild(lvRow);
-      fi.appendChild(buildField('further_study', 'Further study <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Enrolled in Cert III in Business at Box Hill TAFE 2025'));
-    }
-    else {
-      var eduBlocksWrap = document.createElement('div'); eduBlocksWrap.id = 'educationBlocks';
-      fi.appendChild(eduBlocksWrap);
-      renderEducationBlocks();
-      var addEduBtn = document.createElement('button'); addEduBtn.className = 'add-btn'; addEduBtn.textContent = '+ Add qualification';
-      addEduBtn.addEventListener('click', addEducation);
-      fi.appendChild(addEduBtn);
-    }
-  }
-
-  else if (id === 'experience') {
-    if (PATH === 'school' || PATH === 'leaver') {
-      var hint = document.createElement('div');
-      hint.className = 'section-hint';
-      hint.style.marginBottom = '16px';
-      hint.textContent = 'Any paid or volunteer work \u2014 even occasional or informal. Skip if you have none yet.';
-      fi.appendChild(hint);
-    }
-    var expWrap = document.createElement('div'); expWrap.id = 'experienceBlocks';
-    fi.appendChild(expWrap);
-    renderExperienceBlocks();
-    var addExpBtn = document.createElement('button'); addExpBtn.className = 'add-btn'; addExpBtn.textContent = '+ Add role';
-    addExpBtn.addEventListener('click', addExperience);
-    fi.appendChild(addExpBtn);
-  }
-
-  else if (id === 'life') {
-    var lifeHint = document.createElement('div');
-    lifeHint.className = 'section-hint'; lifeHint.style.marginBottom = '16px';
-    lifeHint.textContent = 'Life experience counts just as much as paid work.';
-    fi.appendChild(lifeHint);
-    // Sport
-    var sportWrap = document.createElement('div'); sportWrap.className = 'field';
-    var sportLbl = document.createElement('label');
-    sportLbl.innerHTML = 'Sport & physical activity <span style="font-weight:400;color:var(--muted)">(optional)</span>';
-    sportWrap.appendChild(sportLbl);
-    var sportBlocks = document.createElement('div'); sportBlocks.id = 'sportBlocks';
-    sportWrap.appendChild(sportBlocks);
-    var addSportBtn = document.createElement('button'); addSportBtn.className = 'add-btn'; addSportBtn.style.marginTop = '4px'; addSportBtn.textContent = '+ Add sport or activity';
-    addSportBtn.addEventListener('click', addSport);
-    sportWrap.appendChild(addSportBtn);
-    fi.appendChild(sportWrap);
-    renderSportBlocks();
-    // Volunteering
-    var volWrap = document.createElement('div'); volWrap.className = 'field';
-    var volLbl = document.createElement('label');
-    volLbl.innerHTML = 'Volunteering <span style="font-weight:400;color:var(--muted)">(optional)</span>';
-    volWrap.appendChild(volLbl);
-    var volBlocks = document.createElement('div'); volBlocks.id = 'volunteerBlocks';
-    volWrap.appendChild(volBlocks);
-    var addVolBtn = document.createElement('button'); addVolBtn.className = 'add-btn'; addVolBtn.style.marginTop = '4px'; addVolBtn.textContent = '+ Add volunteering role';
-    addVolBtn.addEventListener('click', addVolunteer);
-    volWrap.appendChild(addVolBtn);
-    fi.appendChild(volWrap);
-    renderVolunteerBlocks();
-    fi.appendChild(buildField('responsibilities', 'Responsibilities at home <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'text', 'e.g. Help care for younger siblings, assist with family business on weekends'));
-    fi.appendChild(buildField('other_activities', 'Other activities & interests <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Run a gaming YouTube channel, manage school social media, build computers'));
-    fi.appendChild(buildField('proud_moment', 'One thing you\'re proud of', 'textarea', 'e.g. Organised a school fundraiser that raised $800 for the bushfire appeal'));
-  }
-
-  else if (id === 'skills') {
-    fi.appendChild(buildField('hard_skills', 'Technical or hard skills <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Microsoft Office, Adobe Photoshop, Python, barista trained, forklift licence'));
-    // Soft skills pills
-    var softWrap = document.createElement('div'); softWrap.className = 'field';
-    var softLbl = document.createElement('label');
-    softLbl.innerHTML = 'Soft skills <span style="font-weight:400;color:var(--muted)">(select up to 6)</span>';
-    softWrap.appendChild(softLbl);
-    var softPills = document.createElement('div'); softPills.className = 'pill-group'; softPills.id = 'softSkillPills';
-    SOFT_SKILLS.forEach(function(s) {
-      var pill = document.createElement('div');
-      pill.className = 'pill' + ((CV.soft_skills && CV.soft_skills.indexOf(s) > -1) ? ' selected' : '');
-      pill.textContent = s;
-      pill.addEventListener('click', function(){ togglePill(pill, 'soft_skills', s); });
-      softPills.appendChild(pill);
-    });
-    softWrap.appendChild(softPills);
-    fi.appendChild(softWrap);
-    // Languages
-    var langWrap = document.createElement('div'); langWrap.className = 'field';
-    var langLbl = document.createElement('label');
-    langLbl.innerHTML = 'Languages other than English <span style="font-weight:400;color:var(--muted)">(optional)</span>';
-    langWrap.appendChild(langLbl);
-    var langBlocks = document.createElement('div'); langBlocks.id = 'languageBlocks';
-    langWrap.appendChild(langBlocks);
-    var addLangBtn = document.createElement('button'); addLangBtn.className = 'add-btn'; addLangBtn.style.marginTop = '4px'; addLangBtn.textContent = '+ Add language';
-    addLangBtn.addEventListener('click', addLanguage);
-    langWrap.appendChild(addLangBtn);
-    fi.appendChild(langWrap);
-    renderLanguageBlocks();
-  }
-
-  else if (id === 'profile') {
-    var hasAssessment = ASSESSMENT_DATA && (ASSESSMENT_DATA.summary || CV.profile_draft);
-    if (hasAssessment) {
-      var profBox = document.createElement('div'); profBox.className = 'profile-box';
-      var profLbl = document.createElement('div'); profLbl.className = 'profile-box-label'; profLbl.textContent = '\u2728 Drafted from your assessment';
-      var profText = document.createElement('div'); profText.className = 'profile-box-text'; profText.id = 'profileDraftText';
-      profText.textContent = CV.profile_draft || ASSESSMENT_DATA.summary || '';
-      var editBtn = document.createElement('button'); editBtn.className = 'profile-edit-btn'; editBtn.textContent = 'Edit this \u2193';
-      editBtn.addEventListener('click', editProfile);
-      profBox.appendChild(profLbl); profBox.appendChild(profText); profBox.appendChild(editBtn);
-      fi.appendChild(profBox);
-      var editWrap = document.createElement('div'); editWrap.id = 'profileEditWrap'; editWrap.style.display = 'none';
-      editWrap.appendChild(buildField('profile', 'Edit your profile', 'textarea', 'Write 3\u20134 sentences about who you are, what you\'re good at, and what you\'re looking for.'));
-      fi.appendChild(editWrap);
-    } else {
-      var profHint = document.createElement('div'); profHint.className = 'section-hint'; profHint.style.marginBottom = '16px';
-      profHint.textContent = '3\u20134 sentences. Who are you, what are you good at, what are you looking for?';
-      fi.appendChild(profHint);
-      fi.appendChild(buildField('profile', 'Your professional profile', 'textarea', 'e.g. I\'m a motivated Year 12 student with a passion for working with people\u2026'));
-    }
-  }
-
-  else if (id === 'extras') {
-    fi.appendChild(buildField('achievements', 'Key achievements <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Grew team Instagram 40% in 3 months. Led a team of 4 delivered under budget.'));
-    var achHint = document.createElement('div'); achHint.className = 'field';
-    var achHintInner = document.createElement('div'); achHintInner.className = 'hint';
-    achHintInner.textContent = 'Start with an action verb: Grew\u2026 Led\u2026 Built\u2026 Add a number if you can.';
-    achHint.appendChild(achHintInner); fi.appendChild(achHint);
-    fi.appendChild(buildField('extracurricular', 'Leadership & community <span style="font-weight:400;color:var(--muted)">(optional)</span>', 'textarea', 'e.g. Vice President, Monash Marketing Society 2024. Volunteer basketball coach.'));
-    var refWrap = document.createElement('div'); refWrap.id = 'refereeBlocks';
-    fi.appendChild(refWrap);
-    renderRefereeBlocks();
-    var addRefBtn = document.createElement('button'); addRefBtn.className = 'add-btn'; addRefBtn.innerHTML = '+ Add referee <span style="color:var(--muted);font-weight:400">(optional)</span>';
-    addRefBtn.addEventListener('click', addReferee);
-    fi.appendChild(addRefBtn);
-  }
-
-  else if (id === 'jd') {
-    var jdHint = document.createElement('div'); jdHint.className = 'section-hint'; jdHint.style.marginBottom = '20px';
-    jdHint.textContent = 'Almost done. Paste a job ad below to tailor your CV language and generate a matching cover letter \u2014 or skip straight to building.';
-    fi.appendChild(jdHint);
-    // JD toggle
-    var jdToggle = document.createElement('div'); jdToggle.className = 'jd-toggle' + (JD_OPEN ? ' open' : ''); jdToggle.id = 'jdToggle';
-    jdToggle.innerHTML = '<div class="jd-toggle-icon">\uD83D\uDCCB</div><div class="jd-toggle-text"><div class="jd-toggle-title">Paste a job description</div><div class="jd-toggle-sub">Optional \u2014 enables cover letter generation</div></div><div class="jd-toggle-arrow">&rsaquo;</div>';
-    jdToggle.addEventListener('click', toggleJD);
-    fi.appendChild(jdToggle);
-    var jdContent = document.createElement('div'); jdContent.className = 'jd-content' + (JD_OPEN ? ' open' : ''); jdContent.id = 'jdContent';
-    jdContent.appendChild(buildField('jd', 'Job description', 'textarea', 'Paste the full job ad here \u2014 role title, requirements, responsibilities\u2026'));
-    fi.appendChild(jdContent);
-    var certWrap = document.createElement('div'); certWrap.className = 'field';
-    var certLbl = document.createElement('label');
-    certLbl.innerHTML = 'Certifications & licences <span style="font-weight:400;color:var(--muted)">(optional)</span>';
-    certWrap.appendChild(certLbl);
-    var certBlocks = document.createElement('div'); certBlocks.id = 'certBlocks';
-    certWrap.appendChild(certBlocks);
-    var addCertBtn = document.createElement('button'); addCertBtn.className = 'add-btn'; addCertBtn.style.marginTop = '4px'; addCertBtn.textContent = '+ Add certification or licence';
-    addCertBtn.addEventListener('click', addCert);
-    certWrap.appendChild(addCertBtn);
-    fi.appendChild(certWrap);
-    renderCertBlocks();
+    spans[0].style.transform='';
+    spans[1].style.opacity='';
+    spans[2].style.transform='';
   }
 }
-
-// ── Pill toggle ──
-function togglePill(el, key, val) {
-  if (!CV[key]) CV[key] = [];
-  var max = key === 'soft_skills' ? 6 : 999;
-  if (el.classList.contains('selected')) {
-    el.classList.remove('selected');
-    CV[key] = CV[key].filter(function(v){ return v !== val; });
-  } else {
-    if (CV[key].length >= max) { showToast('Maximum ' + max + ' selections'); return; }
-    el.classList.add('selected');
-    CV[key].push(val);
-  }
-  updatePreview();
-}
-
-// ── Custom subject ──
-function addCustomSubject() {
-  var input = document.getElementById('customSubjectInput');
-  if (!input || !input.value.trim()) return;
-  var val = input.value.trim();
-  if (!CV.subjects) CV.subjects = [];
-  if (CV.subjects.indexOf(val) > -1) { showToast('Already added'); return; }
-  CV.subjects.push(val);
-  var group = document.getElementById('subjectPills');
-  if (group) {
-    var pill = document.createElement('div');
-    pill.className = 'pill selected';
-    pill.textContent = val;
-    pill.addEventListener('click', function(){ togglePill(pill, 'subjects', val); });
-    group.appendChild(pill);
-  }
-  input.value = '';
-}
-
-// ── JD toggle ──
-function toggleJD() {
-  JD_OPEN = !JD_OPEN;
-  var t = document.getElementById('jdToggle');
-  var c = document.getElementById('jdContent');
-  if (t) t.classList.toggle('open', JD_OPEN);
-  if (c) c.classList.toggle('open', JD_OPEN);
-}
-
-// ── Profile edit ──
-function editProfile() {
-  var wrap = document.getElementById('profileEditWrap');
-  if (wrap) {
-    wrap.style.display = 'block';
-    var ta = document.getElementById('f_profile');
-    if (ta) ta.value = CV.profile_draft || (ASSESSMENT_DATA && ASSESSMENT_DATA.summary) || '';
-  }
-}
-
-// ── Experience blocks ──
-function addExperience() {
-  EXPERIENCE_BLOCKS.push({employer:'', role:'', start:'', end:'', duties:''});
-  CV.experience = EXPERIENCE_BLOCKS;
-  renderExperienceBlocks();
-}
-function removeExperience(i) {
-  EXPERIENCE_BLOCKS.splice(i, 1);
-  CV.experience = EXPERIENCE_BLOCKS;
-  renderExperienceBlocks();
-  updatePreview();
-}
-function sortExperienceSilent() {
-  // Get current order before sort
-  var before = EXPERIENCE_BLOCKS.map(function(b){ return b.employer + b.role + b.start; }).join('|');
-  EXPERIENCE_BLOCKS.sort(function(a, b) {
-    var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
-    var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
-    return be.localeCompare(ae);
-  });
-  CV.experience = EXPERIENCE_BLOCKS;
-  // Only re-render if order changed — keeps date pickers intact when order unchanged
-  var after = EXPERIENCE_BLOCKS.map(function(b){ return b.employer + b.role + b.start; }).join('|');
-  if (before !== after) {
-    renderExperienceBlocks();
-  }
-}
-function sortExperience() {
-  EXPERIENCE_BLOCKS.sort(function(a, b) {
-    var ae = a.end === 'Current' ? '9999-99' : dateToSort(a.end);
-    var be = b.end === 'Current' ? '9999-99' : dateToSort(b.end);
-    return be.localeCompare(ae);
-  });
-  CV.experience = EXPERIENCE_BLOCKS;
-  renderExperienceBlocks();
-}
-function dateToSort(d) {
-  if (!d) return '0000-00';
-  var parts = d.split(' ');
-  if (parts.length !== 2) return '0000-00';
-  var mi = MONTHS.indexOf(parts[0]);
-  return parts[1] + '-' + (mi >= 0 ? String(mi+1).padStart(2,'0') : '00');
-}
-function renderExperienceBlocks() {
-  var wrap = document.getElementById('experienceBlocks');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  EXPERIENCE_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var blockHead = document.createElement('div'); blockHead.className = 'repeat-block-head';
-    var blockLbl = document.createElement('span'); blockLbl.className = 'repeat-block-label'; blockLbl.textContent = 'Role ' + (i+1);
-    var removeBtn = document.createElement('button'); removeBtn.className = 'remove-btn'; removeBtn.textContent = 'Remove';
-    (function(idx){ removeBtn.addEventListener('click', function(){ removeExperience(idx); }); })(i);
-    blockHead.appendChild(blockLbl); blockHead.appendChild(removeBtn);
-    block.appendChild(blockHead);
-    // Employer + Role row
-    var row1 = document.createElement('div'); row1.className = 'field-row';
-    var empWrap = document.createElement('div'); empWrap.className = 'field';
-    empWrap.innerHTML = '<label>Employer</label>';
-    var empInput = document.createElement('input'); empInput.type = 'text'; empInput.placeholder = 'e.g. Woolworths'; empInput.value = b.employer || '';
-    (function(idx){ empInput.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].employer = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
-    empWrap.appendChild(empInput);
-    var roleWrap = document.createElement('div'); roleWrap.className = 'field';
-    roleWrap.innerHTML = '<label>Role title</label>';
-    var roleInput = document.createElement('input'); roleInput.type = 'text'; roleInput.placeholder = 'e.g. Customer Service'; roleInput.value = b.role || '';
-    (function(idx){ roleInput.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].role = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
-    roleWrap.appendChild(roleInput);
-    row1.appendChild(empWrap); row1.appendChild(roleWrap);
-    block.appendChild(row1);
-    // Date row — onChangeFn must NOT call renderExperienceBlocks() as that resets the pickers
-    var row2 = document.createElement('div'); row2.className = 'field-row';
-    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'start', 'Start date', false, function(){ sortExperienceSilent(); updatePreview(); }));
-    row2.appendChild(buildDatePicker(null, EXPERIENCE_BLOCKS, i, 'end', 'End date', true, function(){ sortExperienceSilent(); updatePreview(); }));
-    block.appendChild(row2);
-    // Duties
-    var dutiesWrap = document.createElement('div'); dutiesWrap.className = 'field';
-    dutiesWrap.innerHTML = '<label>Key responsibilities</label>';
-    var dutiesTA = document.createElement('textarea'); dutiesTA.placeholder = 'What did you do in this role? 2\u20133 sentences.'; dutiesTA.value = b.duties || '';
-    (function(idx){ dutiesTA.addEventListener('input', function(){ EXPERIENCE_BLOCKS[idx].duties = this.value; CV.experience = EXPERIENCE_BLOCKS; updatePreview(); }); })(i);
-    dutiesWrap.appendChild(dutiesTA);
-    block.appendChild(dutiesWrap);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Education blocks ──
-function addEducation() {
-  EDUCATION_BLOCKS.push({institution:'', qualification:'', year:'', major:''});
-  CV.education = EDUCATION_BLOCKS;
-  renderEducationBlocks();
-}
-function removeEducation(i) {
-  EDUCATION_BLOCKS.splice(i, 1);
-  CV.education = EDUCATION_BLOCKS;
-  renderEducationBlocks();
-  updatePreview();
-}
-function renderEducationBlocks() {
-  var wrap = document.getElementById('educationBlocks');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-  EDUCATION_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var blockHead = document.createElement('div'); blockHead.className = 'repeat-block-head';
-    var blockLbl = document.createElement('span'); blockLbl.className = 'repeat-block-label'; blockLbl.textContent = 'Qualification ' + (i+1);
-    var removeBtn = document.createElement('button'); removeBtn.className = 'remove-btn'; removeBtn.textContent = 'Remove';
-    (function(idx){ removeBtn.addEventListener('click', function(){ removeEducation(idx); }); })(i);
-    blockHead.appendChild(blockLbl); blockHead.appendChild(removeBtn);
-    block.appendChild(blockHead);
-    var instWrap = document.createElement('div'); instWrap.className = 'field';
-    instWrap.innerHTML = '<label>Institution</label>';
-    var instInput = document.createElement('input'); instInput.type = 'text'; instInput.placeholder = 'e.g. Monash University'; instInput.value = b.institution || '';
-    (function(idx){ instInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].institution = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
-    instWrap.appendChild(instInput);
-    block.appendChild(instWrap);
-    var qualRow = document.createElement('div'); qualRow.className = 'field-row';
-    var qualWrap = document.createElement('div'); qualWrap.className = 'field';
-    qualWrap.innerHTML = '<label>Qualification</label>';
-    var qualInput = document.createElement('input'); qualInput.type = 'text'; qualInput.placeholder = 'e.g. Bachelor of Commerce'; qualInput.value = b.qualification || '';
-    (function(idx){ qualInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].qualification = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
-    qualWrap.appendChild(qualInput);
-    var yearWrap = document.createElement('div'); yearWrap.className = 'field';
-    yearWrap.innerHTML = '<label>Year completed</label>';
-    var yearInput = document.createElement('input'); yearInput.type = 'text'; yearInput.placeholder = 'e.g. 2024'; yearInput.value = b.year || '';
-    (function(idx){ yearInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].year = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
-    yearWrap.appendChild(yearInput);
-    qualRow.appendChild(qualWrap); qualRow.appendChild(yearWrap);
-    block.appendChild(qualRow);
-    if (PATH === 'graduate') {
-      var majWrap = document.createElement('div'); majWrap.className = 'field';
-      majWrap.innerHTML = '<label>Major <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
-      var majInput = document.createElement('input'); majInput.type = 'text'; majInput.placeholder = 'e.g. Marketing, or Data Science'; majInput.value = b.major || '';
-      (function(idx){ majInput.addEventListener('input', function(){ EDUCATION_BLOCKS[idx].major = this.value; CV.education = EDUCATION_BLOCKS; updatePreview(); }); })(i);
-      majWrap.appendChild(majInput);
-      block.appendChild(majWrap);
-    }
-    wrap.appendChild(block);
-  });
-}
-
-// ── Sport blocks ──
-function addSport() { SPORT_BLOCKS.push({name:'',role:'',start:'',end:''}); CV.sport_blocks = SPORT_BLOCKS; renderSportBlocks(); }
-function removeSport(i) { SPORT_BLOCKS.splice(i,1); CV.sport_blocks = SPORT_BLOCKS; renderSportBlocks(); }
-function renderSportBlocks() {
-  var wrap = document.getElementById('sportBlocks'); if (!wrap) return;
-  wrap.innerHTML = '';
-  SPORT_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
-    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Activity ' + (i+1);
-    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
-    (function(idx){ rb.addEventListener('click', function(){ removeSport(idx); }); })(i);
-    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
-    var r1 = document.createElement('div'); r1.className = 'field-row';
-    var nw = document.createElement('div'); nw.className = 'field'; nw.innerHTML = '<label>Sport or activity</label>';
-    var ni = document.createElement('input'); ni.type = 'text'; ni.placeholder = 'e.g. Soccer'; ni.value = b.name||'';
-    (function(idx){ ni.addEventListener('input', function(){ SPORT_BLOCKS[idx].name=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
-    nw.appendChild(ni);
-    var rw = document.createElement('div'); rw.className = 'field'; rw.innerHTML = '<label>Your role</label>';
-    var ri = document.createElement('input'); ri.type = 'text'; ri.placeholder = 'e.g. Captain, Player'; ri.value = b.role||'';
-    (function(idx){ ri.addEventListener('input', function(){ SPORT_BLOCKS[idx].role=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
-    rw.appendChild(ri);
-    r1.appendChild(nw); r1.appendChild(rw); block.appendChild(r1);
-    var r2 = document.createElement('div'); r2.className = 'field-row';
-    var sw = document.createElement('div'); sw.className = 'field'; sw.innerHTML = '<label>From year</label>';
-    var sportYearOpts = YEARS.concat(['Current']).map(function(y){ return {value:y,label:y}; });
-    var si = buildSelect(null, YEARS.map(function(y){return {value:y,label:y};}), b.start||'', null, 'Year');
-    (function(idx){ si.addEventListener('change', function(){ SPORT_BLOCKS[idx].start=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
-    sw.appendChild(si);
-    var ew = document.createElement('div'); ew.className = 'field'; ew.innerHTML = '<label>To year</label>';
-    var toYears = YEARS.map(function(y){return {value:y,label:y};}).concat([{value:'Current',label:'Current'}]);
-    var ei = buildSelect(null, toYears, b.end||'', null, 'Year or current');
-    (function(idx){ ei.addEventListener('change', function(){ SPORT_BLOCKS[idx].end=this.value; CV.sport_blocks=SPORT_BLOCKS; }); })(i);
-    ew.appendChild(ei);
-    r2.appendChild(sw); r2.appendChild(ew); block.appendChild(r2);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Volunteer blocks ──
-function addVolunteer() { VOLUNTEER_BLOCKS.push({org:'',role:'',period:''}); CV.volunteer_blocks = VOLUNTEER_BLOCKS; renderVolunteerBlocks(); }
-function removeVolunteer(i) { VOLUNTEER_BLOCKS.splice(i,1); CV.volunteer_blocks = VOLUNTEER_BLOCKS; renderVolunteerBlocks(); }
-function renderVolunteerBlocks() {
-  var wrap = document.getElementById('volunteerBlocks'); if (!wrap) return;
-  wrap.innerHTML = '';
-  VOLUNTEER_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
-    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Role ' + (i+1);
-    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
-    (function(idx){ rb.addEventListener('click', function(){ removeVolunteer(idx); }); })(i);
-    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
-    var r1 = document.createElement('div'); r1.className = 'field-row';
-    var ow = document.createElement('div'); ow.className = 'field'; ow.innerHTML = '<label>Organisation</label>';
-    var oi = document.createElement('input'); oi.type='text'; oi.placeholder='e.g. Local food bank'; oi.value=b.org||'';
-    (function(idx){ oi.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].org=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
-    ow.appendChild(oi);
-    var rw = document.createElement('div'); rw.className = 'field'; rw.innerHTML = '<label>Your role</label>';
-    var ri = document.createElement('input'); ri.type='text'; ri.placeholder='e.g. Kitchen hand'; ri.value=b.role||'';
-    (function(idx){ ri.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].role=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
-    rw.appendChild(ri);
-    r1.appendChild(ow); r1.appendChild(rw); block.appendChild(r1);
-    var pw = document.createElement('div'); pw.className='field'; pw.innerHTML='<label>Period <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
-    var pi = document.createElement('input'); pi.type='text'; pi.placeholder='e.g. 2023\u20132024 or ongoing'; pi.value=b.period||'';
-    (function(idx){ pi.addEventListener('input',function(){ VOLUNTEER_BLOCKS[idx].period=this.value; CV.volunteer_blocks=VOLUNTEER_BLOCKS; }); })(i);
-    pw.appendChild(pi); block.appendChild(pw);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Language blocks ──
-function addLanguage() { LANGUAGE_BLOCKS.push({language:'',proficiency:''}); CV.language_blocks = LANGUAGE_BLOCKS; renderLanguageBlocks(); }
-function removeLanguage(i) { LANGUAGE_BLOCKS.splice(i,1); CV.language_blocks = LANGUAGE_BLOCKS; renderLanguageBlocks(); }
-function renderLanguageBlocks() {
-  var wrap = document.getElementById('languageBlocks'); if (!wrap) return;
-  wrap.innerHTML = '';
-  LANGUAGE_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
-    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Language ' + (i+1);
-    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
-    (function(idx){ rb.addEventListener('click', function(){ removeLanguage(idx); }); })(i);
-    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
-    var r1 = document.createElement('div'); r1.className = 'field-row';
-    var lw = document.createElement('div'); lw.className = 'field'; lw.innerHTML = '<label>Language</label>';
-    var li = document.createElement('input'); li.type='text'; li.placeholder='e.g. Mandarin'; li.value=b.language||'';
-    (function(idx){ li.addEventListener('input',function(){ LANGUAGE_BLOCKS[idx].language=this.value; CV.language_blocks=LANGUAGE_BLOCKS; }); })(i);
-    lw.appendChild(li);
-    var pw = document.createElement('div'); pw.className='field'; pw.innerHTML='<label>Proficiency</label>';
-    var ps = buildSelect(null, PROFICIENCY, b.proficiency, null, 'Select\u2026');
-    (function(idx){ ps.addEventListener('change',function(){ LANGUAGE_BLOCKS[idx].proficiency=this.value; CV.language_blocks=LANGUAGE_BLOCKS; }); })(i);
-    pw.appendChild(ps);
-    r1.appendChild(lw); r1.appendChild(pw); block.appendChild(r1);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Referee blocks ──
-function addReferee() { REFEREE_BLOCKS.push({name:'',title:'',org:'',phone:'',email:''}); CV.referees = REFEREE_BLOCKS; renderRefereeBlocks(); }
-function removeReferee(i) { REFEREE_BLOCKS.splice(i,1); CV.referees = REFEREE_BLOCKS; renderRefereeBlocks(); }
-function renderRefereeBlocks() {
-  var wrap = document.getElementById('refereeBlocks'); if (!wrap) return;
-  wrap.innerHTML = '';
-  REFEREE_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
-    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Referee ' + (i+1);
-    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
-    (function(idx){ rb.addEventListener('click', function(){ removeReferee(idx); }); })(i);
-    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
-    var r1 = document.createElement('div'); r1.className = 'field-row';
-    ['name','title'].forEach(function(key, ki) {
-      var fw = document.createElement('div'); fw.className = 'field';
-      fw.innerHTML = '<label>' + (ki===0?'Name':'Title') + '</label>';
-      var fi2 = document.createElement('input'); fi2.type='text';
-      fi2.placeholder = ki===0 ? 'e.g. Sarah Chen' : 'e.g. Store Manager';
-      fi2.value = b[key]||'';
-      (function(idx,k){ fi2.addEventListener('input',function(){ REFEREE_BLOCKS[idx][k]=this.value; CV.referees=REFEREE_BLOCKS; }); })(i,key);
-      fw.appendChild(fi2); r1.appendChild(fw);
-    });
-    block.appendChild(r1);
-    var r2 = document.createElement('div'); r2.className = 'field-row';
-    ['org','phone'].forEach(function(key, ki) {
-      var fw = document.createElement('div'); fw.className = 'field';
-      fw.innerHTML = '<label>' + (ki===0?'Organisation':'Phone') + '</label>';
-      var fi2 = document.createElement('input'); fi2.type='text';
-      fi2.placeholder = ki===0 ? 'e.g. Woolworths Frankston' : 'e.g. 0412 345 678';
-      fi2.value = b[key]||'';
-      (function(idx,k){ fi2.addEventListener('input',function(){ REFEREE_BLOCKS[idx][k]=this.value; CV.referees=REFEREE_BLOCKS; }); })(i,key);
-      fw.appendChild(fi2); r2.appendChild(fw);
-    });
-    block.appendChild(r2);
-    var ew = document.createElement('div'); ew.className='field'; ew.innerHTML='<label>Email</label>';
-    var ei = document.createElement('input'); ei.type='email'; ei.placeholder='e.g. sarah@woolworths.com.au'; ei.value=b.email||'';
-    (function(idx){ ei.addEventListener('input',function(){ REFEREE_BLOCKS[idx].email=this.value; CV.referees=REFEREE_BLOCKS; }); })(i);
-    ew.appendChild(ei); block.appendChild(ew);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Validation ──
-function nextStep(i) {
-  var steps = getSteps();
-  var err = validateStep(steps[i].id);
-  if (err) {
-    var eb = document.getElementById('errBox');
-    if (eb) { eb.textContent = err; eb.style.display = 'block'; }
-    return;
-  }
-  showStep(i + 1);
-}
-function validateStep(id) {
-  if (id === 'personal') {
-    if (!CV.first_name) return 'Please enter your first name.';
-    if (!CV.last_name) return 'Please enter your last name.';
-    if (!CV.email) return 'Please enter your email address.';
-    if (!CV.phone) return 'Please enter your phone number.';
-    if (!CV.suburb) return 'Please enter your suburb.';
-    if (!CV.state) return 'Please enter your state.';
-  }
-  if (id === 'education' && PATH === 'school') {
-    if (!CV.school_name) return 'Please enter your school name.';
-  }
-  if (id === 'experience') {
-    for (var i = 0; i < EXPERIENCE_BLOCKS.length; i++) {
-      var b = EXPERIENCE_BLOCKS[i];
-      if (b.employer || b.role) {
-        if (!b.start) return 'Please enter a start date for Role ' + (i+1) + '.';
-        if (!b.end) return 'Please enter an end date for Role ' + (i+1) + ', or select Current.';
-      }
-    }
-  }
-  return null;
-}
-
-// ── Cert blocks ──
-function addCert() { CERT_BLOCKS.push({name:'',issuer:'',year:''}); CV.cert_blocks = CERT_BLOCKS; renderCertBlocks(); }
-function removeCert(i) { CERT_BLOCKS.splice(i,1); CV.cert_blocks = CERT_BLOCKS; renderCertBlocks(); }
-function renderCertBlocks() {
-  var wrap = document.getElementById('certBlocks'); if (!wrap) return;
-  wrap.innerHTML = '';
-  CERT_BLOCKS.forEach(function(b, i) {
-    var block = document.createElement('div'); block.className = 'repeat-block';
-    var bh = document.createElement('div'); bh.className = 'repeat-block-head';
-    var bl = document.createElement('span'); bl.className = 'repeat-block-label'; bl.textContent = 'Certification ' + (i+1);
-    var rb = document.createElement('button'); rb.className = 'remove-btn'; rb.textContent = 'Remove';
-    (function(idx){ rb.addEventListener('click', function(){ removeCert(idx); }); })(i);
-    bh.appendChild(bl); bh.appendChild(rb); block.appendChild(bh);
-    var nw = document.createElement('div'); nw.className = 'field'; nw.innerHTML = '<label>Certification or licence name</label>';
-    var ni = document.createElement('input'); ni.type='text'; ni.placeholder="e.g. RSA, First Aid Certificate, Driver's licence"; ni.value=b.name||'';
-    (function(idx){ ni.addEventListener('input',function(){ CERT_BLOCKS[idx].name=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
-    nw.appendChild(ni); block.appendChild(nw);
-    var r1 = document.createElement('div'); r1.className = 'field-row';
-    var iw = document.createElement('div'); iw.className='field'; iw.innerHTML='<label>Issued by <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
-    var ii = document.createElement('input'); ii.type='text'; ii.placeholder='e.g. Red Cross Australia'; ii.value=b.issuer||'';
-    (function(idx){ ii.addEventListener('input',function(){ CERT_BLOCKS[idx].issuer=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
-    iw.appendChild(ii);
-    var yw = document.createElement('div'); yw.className='field'; yw.innerHTML='<label>Year obtained <span style="font-weight:400;color:var(--muted)">(optional)</span></label>';
-    var ys = buildSelect(null, YEARS.map(function(y){return {value:y,label:y};}), b.year||'', null, 'Year');
-    (function(idx){ ys.addEventListener('change',function(){ CERT_BLOCKS[idx].year=this.value; CV.cert_blocks=CERT_BLOCKS; }); })(i);
-    yw.appendChild(ys);
-    r1.appendChild(iw); r1.appendChild(yw); block.appendChild(r1);
-    wrap.appendChild(block);
-  });
-}
-
-// ── Generate CV ──
-async function generateCV() {
-  var jdEl = document.getElementById('f_jd'); if (jdEl) CV.jd = jdEl.value;
-  var certsEl = document.getElementById('f_certs'); if (certsEl) CV.certs = certsEl.value;
-  CV.experience = EXPERIENCE_BLOCKS;
-  CV.education = EDUCATION_BLOCKS;
-  CV.referees = REFEREE_BLOCKS;
-  CV.sport_blocks = SPORT_BLOCKS;
-  CV.volunteer_blocks = VOLUNTEER_BLOCKS;
-  CV.language_blocks = LANGUAGE_BLOCKS;
-  CV.cert_blocks = CERT_BLOCKS;
-  var hasJD = CV.jd && CV.jd.trim().length > 20;
-  showLoading(hasJD ? 'Building your CV and cover letter\u2026' : 'Building your CV\u2026');
-  try {
-    var r = await fetch('/api/cv-generate', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({cv: CV, path: PATH, assessment: ASSESSMENT_DATA, hasJD: hasJD})
-    });
-    var data = await r.json();
-    if (!r.ok || data.error) {
-      showStep(getSteps().length - 1);
-      var eb = document.getElementById('errBox');
-      if (eb) { eb.textContent = data.error || 'Something went wrong. Please try again.'; eb.style.display = 'block'; }
-      return;
-    }
-    CV_UUID = data.uuid;
-    showResultScreen(data);
-  } catch(e) {
-    showStep(getSteps().length - 1);
-    var eb2 = document.getElementById('errBox');
-    if (eb2) { eb2.textContent = 'Connection error. Please check your internet and try again.'; eb2.style.display = 'block'; }
-  }
-}
-
-// ── Result screen ──
-function showResultScreen(data) {
-  var hasJD = CV.jd && CV.jd.trim().length > 20;
-  var fi = document.getElementById('formInner');
-  fi.innerHTML = '';
-
-  var tag = document.createElement('div'); tag.className = 'section-tag'; tag.textContent = '\u2728 All done';
-  fi.appendChild(tag);
-  var title = document.createElement('div'); title.style.cssText = 'font-family:var(--font-display);font-size:26px;font-weight:300;color:var(--text);margin-bottom:6px';
-  title.textContent = 'Your CV is ready' + (CV.first_name ? ', ' + CV.first_name : '') + '.';
-  fi.appendChild(title);
-  var sub = document.createElement('div'); sub.style.cssText = 'font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5';
-  sub.textContent = 'Download below. Come back any time with your personal link to edit and update.';
-  fi.appendChild(sub);
-
-  function makeAction(icon, title2, sub2, href, clickFn) {
-    var a = href ? document.createElement('a') : document.createElement('div');
-    a.className = 'result-action';
-    if (href) { a.href = href; a.target = '_blank'; }
-    if (clickFn) { a.style.cursor = 'pointer'; a.addEventListener('click', clickFn); }
-    a.innerHTML = '<div class="result-action-icon">' + icon + '</div><div class="result-action-text"><div class="result-action-title">' + title2 + '</div><div class="result-action-sub">' + sub2 + '</div></div>';
-    return a;
-  }
-
-  fi.appendChild(makeAction('\uD83D\uDCC4', 'Download as PDF', 'Best for emailing and applying online', '/api/cv-download?uuid=' + CV_UUID + '&format=pdf'));
-  fi.appendChild(makeAction('\uD83D\uDCDD', 'Download as Word', 'Editable in Microsoft Word or Google Docs', '/api/cv-download?uuid=' + CV_UUID + '&format=docx'));
-  if (hasJD) {
-    fi.appendChild(makeAction('\u2709\uFE0F', 'Download cover letter', 'Tailored to the job you applied for', '/api/cv-download?uuid=' + CV_UUID + '&format=cover'));
-  }
-  fi.appendChild(makeAction('\u270F\uFE0F', 'Edit my CV', 'Go back and make changes', null, function(){ showStep(0); }));
-
-  // Save link
-  var saveLink = window.location.origin + '/cv-builder.html?cv=' + CV_UUID;
-  var slWrap = document.createElement('div'); slWrap.className = 'save-link-wrap';
-  var slLbl = document.createElement('div'); slLbl.className = 'save-link-label'; slLbl.textContent = 'Your personal CV link \u2014 bookmark this to come back and edit';
-  var slRow = document.createElement('div'); slRow.className = 'save-link-row';
-  var slInput = document.createElement('input'); slInput.className = 'save-link-input'; slInput.id = 'cvSaveLink'; slInput.value = saveLink; slInput.readOnly = true;
-  var slBtn = document.createElement('button'); slBtn.className = 'save-link-btn'; slBtn.id = 'cvCopyBtn'; slBtn.textContent = 'Copy link';
-  slBtn.addEventListener('click', function() {
-    navigator.clipboard.writeText(saveLink).then(function() {
-      slBtn.textContent = 'Copied!';
-      setTimeout(function(){ slBtn.textContent = 'Copy link'; }, 2000);
-    });
-  });
-  slRow.appendChild(slInput); slRow.appendChild(slBtn);
-  slWrap.appendChild(slLbl); slWrap.appendChild(slRow);
-  fi.appendChild(slWrap);
-
-  var disclaimer = document.createElement('div'); disclaimer.className = 'disclaimer';
-  disclaimer.textContent = '\u26A0\uFE0F This CV was generated with AI assistance. Please review all content carefully before sending. Find My Journey does not fabricate experience, qualifications or skills \u2014 all content is based on what you provided.';
-  fi.appendChild(disclaimer);
-
-  if (data.cv_html) document.getElementById('previewDoc').innerHTML = data.cv_html;
-}
-
-// ── Live preview ──
-function updatePreview() {
-  var doc = document.getElementById('previewDoc'); if (!doc) return;
-  var name = (CV.first_name || '') + (CV.last_name ? ' ' + CV.last_name : '');
-  if (!name.trim()) return;
-  var h = '';
-  h += '<div class="cv-name">' + esc(name) + '</div>';
-  var contact = [];
-  if (CV.phone) contact.push(esc(CV.phone));
-  if (CV.email) contact.push(esc(CV.email));
-  if (CV.suburb && CV.state) contact.push(esc(CV.suburb + ', ' + CV.state));
-  if (CV.linkedin) contact.push(esc(CV.linkedin));
-  h += '<div class="cv-contact-row">' + contact.join(' &nbsp;|&nbsp; ') + '</div>';
-  var profile = CV.profile || CV.profile_draft || (ASSESSMENT_DATA && ASSESSMENT_DATA.summary);
-  if (profile) { h += '<div class="cv-section-title">Professional Profile</div><div class="cv-profile">' + esc(profile) + '</div>'; }
-  var hasEdu = CV.school_name || (EDUCATION_BLOCKS && EDUCATION_BLOCKS.length > 0);
-  if (hasEdu) {
-    h += '<div class="cv-section-title">Education</div>';
-    if (CV.school_name) { h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(CV.school_name) + '</span><span class="cv-item-date">' + esc(CV.school_year || '') + '</span></div></div>'; }
-    EDUCATION_BLOCKS.forEach(function(b) {
-      if (!b.institution) return;
-      h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(b.qualification||'') + '</span><span class="cv-item-date">' + esc(b.year||'') + '</span></div><div class="cv-item-org">' + esc(b.institution) + (b.major ? ' \u2014 ' + esc(b.major) : '') + '</div></div>';
-    });
-  }
-  if (EXPERIENCE_BLOCKS && EXPERIENCE_BLOCKS.length > 0) {
-    h += '<div class="cv-section-title">Experience</div>';
-    EXPERIENCE_BLOCKS.forEach(function(b) {
-      if (!b.employer && !b.role) return;
-      h += '<div class="cv-item"><div class="cv-item-head"><span class="cv-item-title">' + esc(b.role||'') + '</span><span class="cv-item-date">' + esc((b.start||'') + (b.end ? ' \u2013 ' + b.end : '')) + '</span></div><div class="cv-item-org">' + esc(b.employer||'') + '</div>';
-      if (b.duties) h += '<div class="cv-item-body">' + esc(b.duties) + '</div>';
-      h += '</div>';
-    });
-  }
-  var allSkills = (CV.soft_skills || []).concat((CV.hard_skills || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean));
-  if (allSkills.length > 0) {
-    h += '<div class="cv-section-title">Skills</div><div class="cv-skills-wrap">';
-    allSkills.slice(0,12).forEach(function(s){ h += '<span class="cv-skill">' + esc(s) + '</span>'; });
-    h += '</div>';
-  }
-  doc.innerHTML = h;
+function closeNav(){
+  var m=document.getElementById('navMobile');
+  var h=document.getElementById('navHam');
+  m.classList.remove('open');
+  h.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
 }
 </script>
 </body>
