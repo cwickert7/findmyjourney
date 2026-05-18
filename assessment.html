@@ -831,6 +831,29 @@ footer{width:100%;max-width:860px;padding:0 24px 40px}
   .footer-bottom{flex-direction:column;gap:10px}
   .footer-copy{max-width:100%}
 }
+
+/* ── Explorer gate screen ── */
+.gate-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;padding:32px 20px;text-align:center;max-width:480px;margin:0 auto}
+.gate-logo{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:var(--ch);margin-bottom:8px}
+.gate-sub{font-size:14px;color:var(--mid);margin-bottom:32px;line-height:1.5}
+.gate-options{width:100%;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.gate-btn-primary{background:var(--tc);color:#fff;border:none;border-radius:50px;padding:14px 28px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;width:100%}
+.gate-btn-primary:hover{background:#A85C38}
+.gate-btn-primary:disabled{opacity:.6;cursor:not-allowed}
+.gate-price-tag{font-size:12px;opacity:.8;margin-left:8px}
+.gate-divider{display:flex;align-items:center;gap:12px;color:var(--lt);font-size:12px;margin:4px 0}
+.gate-divider::before,.gate-divider::after{content:'';flex:1;height:1px;background:var(--sand)}
+.gate-panel{background:var(--bg);border:1.5px solid var(--sand);border-radius:16px;padding:20px;width:100%;text-align:left}
+.gate-panel-title{font-size:13px;font-weight:600;color:var(--ch);margin-bottom:12px}
+.gate-input{width:100%;border:1.5px solid var(--sand);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--ch);font-family:'DM Sans',sans-serif;background:#fff;outline:none;margin-bottom:10px}
+.gate-input:focus{border-color:var(--tc)}
+.gate-input-btn{width:100%;background:var(--ch);color:#fff;border:none;border-radius:50px;padding:11px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s}
+.gate-input-btn:hover{background:#3d2e2a}
+.gate-input-btn:disabled{opacity:.6;cursor:not-allowed}
+.gate-toggle{font-size:12px;color:var(--tc);cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+.gate-error{color:#A32D2D;font-size:12px;margin-top:6px;display:none}
+.gate-success{color:#3D6B4F;font-size:12px;margin-top:6px;display:none}
+.gate-footer{font-size:11px;color:var(--lt);line-height:1.6;margin-top:16px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
@@ -1129,6 +1152,10 @@ function buildQL(enjoys,challenge,noticed,age,subjects,place){
 
 // ── STATE ──
 var A={},QL=[],QI=0,PH='safe',CB=null,RS=null,EM='',TIV=null,TV='',MS={},SS=null,PS={},FC_SEL={};
+
+// ── Explorer gate state ──
+var EXPLORER_SESSION=null; // {type,email,credits,accountId,codeId,campusId,institutionId,source}
+var GATE_ACTIVE=true; // set false for institution-linked sessions (they bypass gate)
 var IS_PT=false;
 
 function g(id){return document.getElementById(id);}
@@ -1289,6 +1316,178 @@ function GB(){
   var pv=QI-1;
   if(pv>=0&&QL[pv]&&QL[QI]&&QL[pv].ph!==QL[QI].ph&&QL[pv].ph!=='pt'&&QL[QI].ph!=='pt'){CB=QL[pv].ph;scrollUp();sC();return;}
   ri();QI=pv;scrollUp();sQ();
+}
+
+
+// ── Explorer gate functions ──
+
+function checkURLGate(){
+  var params=new URLSearchParams(window.location.search);
+  var token=params.get('token');
+  var email=params.get('email');
+  var payment=params.get('payment');
+  var instUUID=params.get('student'); // institution-sent link
+  var code=params.get('code');
+
+  // Institution-sent Explorers bypass gate
+  if(instUUID){GATE_ACTIVE=false;return;}
+
+  // Payment success — verify session via token
+  if(payment==='success'&&token&&email){
+    verifyMagicToken(token,email,function(session){
+      if(session){EXPLORER_SESSION=session;GATE_ACTIVE=false;}
+      else{showGate();}
+    });
+    return;
+  }
+
+  // Magic link token in URL
+  if(token&&email){
+    verifyMagicToken(token,email,function(session){
+      if(session){EXPLORER_SESSION=session;GATE_ACTIVE=false;sSf();}
+      else{showGate();}
+    });
+    return;
+  }
+
+  // Check localStorage for existing valid session
+  try{
+    var stored=localStorage.getItem('fmj_explorer_session');
+    if(stored){
+      var sess=JSON.parse(stored);
+      if(sess&&sess.email&&sess.credits>0&&sess.expiry&&new Date(sess.expiry)>new Date()){
+        EXPLORER_SESSION=sess;GATE_ACTIVE=false;return;
+      }
+    }
+  }catch(e){}
+
+  // No valid session — show gate
+  showGate();
+}
+
+function verifyMagicToken(token,email,cb){
+  fetch('/api/explorer-verify',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:token,email:email})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.ok){
+      var sess={type:data.type,email:data.email,credits:data.credits,accountId:data.accountId,expiry:new Date(Date.now()+7*24*60*60*1000).toISOString()};
+      EXPLORER_SESSION=sess;
+      try{localStorage.setItem('fmj_explorer_session',JSON.stringify(sess));}catch(e){}
+      if(cb)cb(sess);
+    } else {
+      if(cb)cb(null);
+    }
+  }).catch(function(){if(cb)cb(null);});
+}
+
+function showGate(){
+  var qw=document.getElementById('qwrap');
+  if(!qw)return;
+  qw.innerHTML='<div class="gate-wrap">'+
+    '<div class="gate-logo" style="font-family:Fraunces,serif;font-size:32px;font-weight:300;color:#2C2422;margin-bottom:4px">Find My Journey</div>'+
+    '<div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#C4714A;margin-bottom:16px">Explorer Assessment</div>'+
+    '<div class="gate-sub">Discover careers that genuinely fit who you are &mdash; built on real psychology, not guesswork.<br><br>One assessment. Your CV. A direction that makes sense.</div>'+
+    '<div class="gate-options">'+
+    '<button class="gate-btn-primary" onclick="startStripeCheckout(&quot;three&quot;)">Get 3 credits <span class="gate-price-tag">$15</span></button>'+
+    '<button class="gate-btn-primary" onclick="startStripeCheckout(&quot;one&quot;)" style="background:#6B6058">Get 1 credit <span class="gate-price-tag">$7</span></button>'+
+    '</div>'+
+    '<div class="gate-divider">or</div>'+
+    '<div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-top:8px">'+
+    '<button class="gate-toggle" onclick="toggleGatePanel(&quot;code&quot;)">I have an access code</button>'+
+    '<button class="gate-toggle" onclick="toggleGatePanel(&quot;login&quot;)">I have an account</button>'+
+    '</div>'+
+    '<div id="gatePanelCode" class="gate-panel" style="display:none;margin-top:12px">'+
+    '<div class="gate-panel-title">Enter your access code</div>'+
+    '<input class="gate-input" id="gateCodeInput" placeholder="e.g. EXPLORE2026" maxlength="20" oninput="this.value=this.value.toUpperCase()">'+
+    '<button class="gate-input-btn" id="gateCodeBtn" onclick="submitAccessCode()">Continue &rarr;</button>'+
+    '<div class="gate-error" id="gateCodeError"></div>'+
+    '</div>'+
+    '<div id="gatePanelLogin" class="gate-panel" style="display:none;margin-top:12px">'+
+    '<div class="gate-panel-title">Sign in to your account</div>'+
+    '<input class="gate-input" id="gateEmailInput" type="email" placeholder="your@email.com">'+
+    '<button class="gate-input-btn" id="gateLoginBtn" onclick="submitMagicLink()">Send sign-in link &rarr;</button>'+
+    '<div class="gate-error" id="gateLoginError"></div>'+
+    '<div class="gate-success" id="gateLoginSuccess"></div>'+
+    '</div>'+
+    '<div class="gate-footer">&#x1F512; Your results are private &nbsp;&middot;&nbsp; Credits don't expire &nbsp;&middot;&nbsp; Under 15? Let a parent or guardian know.</div>'+
+    '</div>';
+}
+
+function toggleGatePanel(which){
+  var code=document.getElementById('gatePanelCode');
+  var login=document.getElementById('gatePanelLogin');
+  if(!code||!login)return;
+  if(which==='code'){code.style.display=code.style.display==='none'?'block':'none';login.style.display='none';}
+  else{login.style.display=login.style.display==='none'?'block':'none';code.style.display='none';}
+}
+
+function startStripeCheckout(plan){
+  var priceId=plan==='three'
+    ? (window.FMJ_STRIPE_PRICE_3||'price_3credits')
+    : (window.FMJ_STRIPE_PRICE_1||'price_1credit');
+  var emailEl=document.getElementById('gateEmailInput');
+  var email=emailEl?emailEl.value:'';
+  fetch('/api/stripe-checkout',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({priceId:priceId,email:email||undefined})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.url){window.location.href=data.url;}
+    else{alert('Payment setup failed. Please try again.');}
+  }).catch(function(){alert('Connection error. Please try again.');});
+}
+
+function submitAccessCode(){
+  var input=document.getElementById('gateCodeInput');
+  var btn=document.getElementById('gateCodeBtn');
+  var errEl=document.getElementById('gateCodeError');
+  if(!input||!input.value.trim()){return;}
+  btn.disabled=true;btn.textContent='Checking…';
+  errEl.style.display='none';
+  fetch('/api/explorer-verify',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({code:input.value.trim()})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.ok){
+      EXPLORER_SESSION={type:'access_code',credits:data.credits,codeId:data.codeId,campusId:data.campusId,institutionId:data.institutionId,source:'access_code'};
+      GATE_ACTIVE=false;
+      sSf();
+    } else {
+      errEl.textContent=data.error||'Invalid code. Please try again.';
+      errEl.style.display='block';
+      btn.disabled=false;btn.textContent='Continue →';
+    }
+  }).catch(function(){
+    errEl.textContent='Connection error. Please try again.';
+    errEl.style.display='block';
+    btn.disabled=false;btn.textContent='Continue →';
+  });
+}
+
+function submitMagicLink(){
+  var input=document.getElementById('gateEmailInput');
+  var btn=document.getElementById('gateLoginBtn');
+  var errEl=document.getElementById('gateLoginError');
+  var sucEl=document.getElementById('gateLoginSuccess');
+  if(!input||!input.value.includes('@')){errEl.textContent='Please enter a valid email address.';errEl.style.display='block';return;}
+  btn.disabled=true;btn.textContent='Sending…';
+  errEl.style.display='none';sucEl.style.display='none';
+  fetch('/api/explorer-auth',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:input.value.trim()})
+  }).then(function(r){return r.json();}).then(function(data){
+    sucEl.textContent='Sign-in link sent! Check your email.';
+    sucEl.style.display='block';
+    btn.disabled=false;btn.textContent='Send sign-in link →';
+  }).catch(function(){
+    errEl.textContent='Connection error. Please try again.';
+    errEl.style.display='block';
+    btn.disabled=false;btn.textContent='Send sign-in link →';
+  });
 }
 
 function sSf(){
@@ -2466,6 +2665,10 @@ function buildQL(enjoys,challenge,noticed,age,subjects,place){
 
 // ── STATE ──
 var A={},QL=[],QI=0,PH='safe',CB=null,RS=null,EM='',TIV=null,TV='',MS={},SS=null,PS={},FC_SEL={};
+
+// ── Explorer gate state ──
+var EXPLORER_SESSION=null; // {type,email,credits,accountId,codeId,campusId,institutionId,source}
+var GATE_ACTIVE=true; // set false for institution-linked sessions (they bypass gate)
 var IS_PT=false;
 
 function g(id){return document.getElementById(id);}
@@ -5761,8 +5964,30 @@ async function checkURLResult(){
   var params=new URLSearchParams(window.location.search);
   var uuid=params.get('results');
   var goCV=params.get('cv');
+  var token=params.get('token');
+  var email=params.get('email');
+  var payment=params.get('payment');
+  var instStudent=params.get('student');
+
+  // Institution-sent Explorers bypass gate
+  if(instStudent){GATE_ACTIVE=false;}
+
+  // Handle magic link verification (from email or post-payment)
+  if(token&&email){
+    verifyMagicToken(token,email,function(session){
+      if(session){
+        EXPLORER_SESSION=session;GATE_ACTIVE=false;
+        if(uuid){retrieveByUUID(uuid);}
+        else{sSf();}
+      } else {
+        checkURLGate();
+      }
+    });
+    return;
+  }
+
   if(uuid){
-    PH='retrieving'; // Prevent fallback timer from firing during fetch
+    PH='retrieving';
     sc().innerHTML='<div class="tw"><div class="ds"><div class="d d1"></div><div class="d d2"></div><div class="d d3"></div></div><p class="tp">Retrieving your results…</p></div>';
     try{
       var r=await fetch('/api/get-result?id='+encodeURIComponent(uuid));
@@ -5771,7 +5996,6 @@ async function checkURLResult(){
       if(r.ok&&data.result){
         showRetrievedResults(data.result);
       } else {
-        // Show the actual error in the UI so we can debug
         var errMsg=data.error||'Unknown error';
         sc().innerHTML='<div class="tw"><p class="tp" style="color:var(--tc)">&#x26A0;&#xFE0F; We couldn&rsquo;t find those results.</p>'
           +'<p class="tp" style="font-size:12px;color:var(--lt);margin-top:8px">Error: '+errMsg+'</p>'
@@ -5783,12 +6007,15 @@ async function checkURLResult(){
         +'<button class="bnx" style="margin-top:16px" onclick="sSf()">Start a new discovery &#x2192;</button></div>';
     }
   } else if(goCV==='true'||goCV==='1'){
-    sSf();
-    setTimeout(function(){
-      if(typeof sCVBuilder==='function'){sCVBuilder(false);}
-    },300);
+    checkURLGate();
+    if(!GATE_ACTIVE){
+      setTimeout(function(){
+        if(typeof sCVBuilder==='function'){sCVBuilder(false);}
+      },300);
+    }
   } else {
-    sSf();
+    checkURLGate();
+    if(!GATE_ACTIVE){sSf();}
   }
 }
 // Defensive fallback — only fire if page hasn't already loaded something
