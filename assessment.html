@@ -901,6 +901,11 @@ function confirmLeave(){
 
 
 <script>
+// ── Stripe configuration ──
+window.FMJ_STRIPE_PUBLISHABLE = 'pk_live_51TYGWDK7QToYZixzioE3NOIVifPfI2guUfJwWtmz8s5AtIZOmuqGJujc3J48KDCvH1sHMLfG6mu83x1atmNPpubq00HAkcl97h';
+window.FMJ_STRIPE_PRICE_3 = null; // Set via STRIPE_PRICE_3_CREDITS env var — passed at runtime
+window.FMJ_STRIPE_PRICE_1 = null; // Set via STRIPE_PRICE_1_CREDIT env var — passed at runtime
+
 // ── READ URL PARAMS (in-room and institution-linked sessions) ──
 var URL_PARAMS = new URLSearchParams(window.location.search);
 var PARAM_FIRST = URL_PARAMS.get('first') || '';
@@ -5953,6 +5958,12 @@ function copyResultsLink(){
     input.select();document.execCommand('copy');
   });
 }
+
+// ── Fetch Stripe price IDs on load ──
+fetch('/api/stripe-config').then(function(r){return r.json();}).then(function(d){
+  if(d.price3) window.FMJ_STRIPE_PRICE_3=d.price3;
+  if(d.price1) window.FMJ_STRIPE_PRICE_1=d.price1;
+}).catch(function(){});
 
 // Ensure DOM is ready before rendering landing screen
 if(document.readyState==='loading'){
